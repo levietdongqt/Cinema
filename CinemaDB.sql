@@ -48,14 +48,15 @@ CREATE TABLE Bill (
   exchangePoints INT,
   FOREIGN KEY (cusPhone) REFERENCES Customer(cusPhone),
   FOREIGN KEY (promoID) REFERENCES Promotion(promoID),
-  FOREIGN KEY (userName) REFERENCES Employee(empPhone)
+  FOREIGN KEY (userName) REFERENCES Employee(userName)
 );
+go
 CREATE TABLE WorkSession (
   sessionID INT IDENTITY(1,1) PRIMARY KEY,
-  empPhone INT,
+  userName varchar(100),
   startTime DATETIME,
   endTime DATETIME,
-  FOREIGN KEY (empPhone) REFERENCES Employee(empPhone)
+  FOREIGN KEY (userName) REFERENCES Employee(userName)
 );
 go
 CREATE TABLE Product (
