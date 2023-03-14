@@ -9,7 +9,7 @@ use CinemaDB
 go
 
 CREATE TABLE Customer (
-  cusPhone INT PRIMARY KEY,
+  cusPhone varchar(15) PRIMARY KEY,
   customerName VARCHAR(100) not null,
   birthDate DATE,
   address VARCHAR(255),
@@ -28,26 +28,27 @@ CREATE TABLE Promotion (
 go
 
 CREATE TABLE Employee (
-  empPhone INT PRIMARY KEY,
+  userName varchar(100) primary key,
   empName VARCHAR(100) not null,
-  password VARCHAR(50) not null,
+  password VARCHAR(255) not null,
   position VARCHAR(50) not null,
   birthDate DATE,
   startDate DATE default getDate(),
   email VARCHAR(100),
-  status BIT default 0
+  status BIT default 0,
+  empPhone varchar(20)
 );
 go
 CREATE TABLE Bill (
   billID VARCHAR(20) PRIMARY KEY,
   printDate DATETIME,
-  cusPhone INT ,
+  cusPhone varchar(15),
   promoID INT,
-  empPhone INT,
+  userName varchar(100),
   exchangePoints INT,
   FOREIGN KEY (cusPhone) REFERENCES Customer(cusPhone),
   FOREIGN KEY (promoID) REFERENCES Promotion(promoID),
-  FOREIGN KEY (empPhone) REFERENCES Employee(empPhone)
+  FOREIGN KEY (userName) REFERENCES Employee(empPhone)
 );
 CREATE TABLE WorkSession (
   sessionID INT IDENTITY(1,1) PRIMARY KEY,
