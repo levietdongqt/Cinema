@@ -175,3 +175,14 @@ CREATE TABLE Schedule (
 	FOREIGN KEY (timeDetailsID) REFERENCES TimeDetails(timeDetailsID)
 )
 go
+
+Create table Ticket (
+	[ticketID] int identity primary key,
+	[billID] VARCHAR(20),
+	[scheduleID] varchar(20),
+	[seatMap] varchar(10),
+	[status] bit default(0),	
+	FOREIGN KEY (scheduleID) REFERENCES Schedule(scheduleID),
+	FOREIGN KEY (billID) REFERENCES Bill(billID)
+)
+go
