@@ -1,7 +1,6 @@
 # Cinema
 EProject -sem2
-???
-????
-Toi la tan phuoc
-1234567
-sadasdasd
+He
+Hello,
+sdgdfgdsgfsd
+VietDong
