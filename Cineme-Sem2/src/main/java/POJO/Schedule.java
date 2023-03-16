@@ -22,12 +22,14 @@ public class Schedule {
     @JoinColumn(name = "filmID")
     private Film film;
     
+
     @OneToOne
     @JoinColumn(name = "timeDetailsID")
     private TimeDetail timeDetail;
     
     @OneToMany(mappedBy = "schedule")
     private Set<Ticket> listTicket;
+
     //Constructor
     public Schedule() {
     }

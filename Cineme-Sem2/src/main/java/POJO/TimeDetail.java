@@ -39,6 +39,7 @@ public class TimeDetail {
     
     @OneToOne(mappedBy = "timeDetail")
     private Schedule schedule;
+
     
     private LocalDate date;
     private boolean status;

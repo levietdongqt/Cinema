@@ -23,17 +23,17 @@ public class ShowTime {
     private String sTimeID;
     private LocalTime startTime;
      @OneToMany(mappedBy = "showTime")
-    private Set<TimeDetail> timeDetails;
+    private Set<TimeDetail> timeDetailList;
 
      
      
     public ShowTime() {
     }
 
-    public ShowTime(String sTimeID, LocalTime startTime, Set<TimeDetail> timeDetails) {
+    public ShowTime(String sTimeID, LocalTime startTime, Set<TimeDetail> timeDetailList) {
         this.sTimeID = sTimeID;
         this.startTime = startTime;
-        this.timeDetails = timeDetails;
+        this.timeDetailList = timeDetailList;
     }
 
     /**
@@ -65,17 +65,17 @@ public class ShowTime {
     }
 
     /**
-     * @return the timeDetails
+     * @return the timeDetailList
      */
-    public Set<TimeDetail> getTimeDetails() {
-        return timeDetails;
+    public Set<TimeDetail> getTimeDetailList() {
+        return timeDetailList;
     }
 
     /**
-     * @param timeDetails the timeDetails to set
+     * @param timeDetailList the timeDetailList to set
      */
-    public void setTimeDetails(Set<TimeDetail> timeDetails) {
-        this.timeDetails = timeDetails;
+    public void setTimeDetailList(Set<TimeDetail> timeDetailList) {
+        this.timeDetailList = timeDetailList;
     }
-     
+    
 }

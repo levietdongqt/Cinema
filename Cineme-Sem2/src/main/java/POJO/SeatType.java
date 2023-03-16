@@ -22,16 +22,16 @@ public class SeatType {
     private String sTypeName;
     private int seatPrice;
     @OneToMany(mappedBy = "seatType")
-    private Set <RoomSeatDetail> roomSeatDetails;
+    private Set <RoomSeatDetail> roomSeatDetailList;
 
     public SeatType() {
     }
 
-    public SeatType(String sTypeID, String sTypeName, int seatPrice, Set<RoomSeatDetail> roomSeatDetails) {
+    public SeatType(String sTypeID, String sTypeName, int seatPrice, Set<RoomSeatDetail> roomSeatDetailList) {
         this.sTypeID = sTypeID;
         this.sTypeName = sTypeName;
         this.seatPrice = seatPrice;
-        this.roomSeatDetails = roomSeatDetails;
+        this.roomSeatDetailList = roomSeatDetailList;
     }
 
     /**
@@ -77,17 +77,18 @@ public class SeatType {
     }
 
     /**
-     * @return the roomSeatDetails
+     * @return the roomSeatDetailList
      */
-    public Set <RoomSeatDetail> getRoomSeatDetails() {
-        return roomSeatDetails;
+    public Set <RoomSeatDetail> getRoomSeatDetailList() {
+        return roomSeatDetailList;
     }
 
     /**
-     * @param roomSeatDetails the roomSeatDetails to set
+     * @param roomSeatDetailList the roomSeatDetailList to set
      */
-    public void setRoomSeatDetails(Set <RoomSeatDetail> roomSeatDetails) {
-        this.roomSeatDetails = roomSeatDetails;
+    public void setRoomSeatDetailList(Set <RoomSeatDetail> roomSeatDetailList) {
+        this.roomSeatDetailList = roomSeatDetailList;
     }
+
     
 }

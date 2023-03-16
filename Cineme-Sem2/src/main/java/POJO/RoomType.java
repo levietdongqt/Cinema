@@ -23,19 +23,19 @@ public class RoomType {
     private String Description;
     
     @OneToMany(mappedBy = "roomType")
-    private Set <Room> rooms;
+    private Set <Room> roomList;
     @OneToMany(mappedBy = "roomSeatDetail")
-    private Set <RoomSeatDetail> roomSeatDetails;
+    private Set <RoomSeatDetail> roomSeatDetailList;
 
     public RoomType() {
     }
 
-    public RoomType(String rTypeID, String rTypeName, String Description, Set<Room> rooms, Set<RoomSeatDetail> roomSeatDetails) {
+    public RoomType(String rTypeID, String rTypeName, String Description, Set<Room> roomList, Set<RoomSeatDetail> roomSeatDetailList) {
         this.rTypeID = rTypeID;
         this.rTypeName = rTypeName;
         this.Description = Description;
-        this.rooms = rooms;
-        this.roomSeatDetails = roomSeatDetails;
+        this.roomList = roomList;
+        this.roomSeatDetailList = roomSeatDetailList;
     }
 
     /**
@@ -81,33 +81,32 @@ public class RoomType {
     }
 
     /**
-     * @return the rooms
+     * @return the roomList
      */
-    public Set <Room> getRooms() {
-        return rooms;
+    public Set <Room> getRoomList() {
+        return roomList;
     }
 
     /**
-     * @param rooms the rooms to set
+     * @param roomList the roomList to set
      */
-    public void setRooms(Set <Room> rooms) {
-        this.rooms = rooms;
+    public void setRoomList(Set <Room> roomList) {
+        this.roomList = roomList;
     }
 
     /**
-     * @return the roomSeatDetails
+     * @return the roomSeatDetailList
      */
-    public Set <RoomSeatDetail> getRoomSeatDetails() {
-        return roomSeatDetails;
+    public Set <RoomSeatDetail> getRoomSeatDetailList() {
+        return roomSeatDetailList;
     }
 
     /**
-     * @param roomSeatDetails the roomSeatDetails to set
+     * @param roomSeatDetailList the roomSeatDetailList to set
      */
-    public void setRoomSeatDetails(Set <RoomSeatDetail> roomSeatDetails) {
-        this.roomSeatDetails = roomSeatDetails;
+    public void setRoomSeatDetailList(Set <RoomSeatDetail> roomSeatDetailList) {
+        this.roomSeatDetailList = roomSeatDetailList;
     }
-    
-    
+
     
 }

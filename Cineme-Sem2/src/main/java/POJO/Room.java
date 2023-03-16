@@ -22,7 +22,7 @@ public class Room {
     private RoomType roomType;
     
     @OneToMany(mappedBy = "room")
-    private Set<TimeDetail> timeDetails;
+    private Set<TimeDetail> timeDetailList;
 
     public Room() {
     }
@@ -32,7 +32,7 @@ public class Room {
         this.roomName = roomName;
         this.seatQuanlity = seatQuanlity;
         this.roomType = roomType;
-        this.timeDetails = timeDetails;
+        this.timeDetailList = timeDetails;
     }
     
     /**
@@ -95,14 +95,14 @@ public class Room {
      * @return the timeDetails
      */
     public Set<TimeDetail> getTimeDetails() {
-        return timeDetails;
+        return timeDetailList;
     }
 
     /**
      * @param timeDetails the timeDetails to set
      */
     public void setTimeDetails(Set<TimeDetail> timeDetails) {
-        this.timeDetails = timeDetails;
+        this.timeDetailList = timeDetails;
     }
 
    
