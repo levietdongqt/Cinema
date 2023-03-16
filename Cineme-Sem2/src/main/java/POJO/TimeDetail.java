@@ -37,7 +37,7 @@ public class TimeDetail {
     private ShowTime showTime;
     
     @OneToMany(mappedBy = "timeDetail")
-    private Set<Schedule> schedules;
+    private Set<Schedule> scheduleL;
     
     private LocalDate date;
     private boolean status;
