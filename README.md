@@ -1,5 +1,6 @@
 # Cinema
 EProject -sem2
-???
-nhatminh
+He
+Hello,
+sdgdfgdsgfsd
 VietDong
