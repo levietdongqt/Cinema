@@ -1,47 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package POJO;
 
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Product")
 public class Product {
+
     @Id
-    private String productID;
+    @Column(name = "productid")
+    private String productId;
+
+    @Column(name = "productname")
     private String productName;
+
+    @Column(name = "type")
     private String type;
+
+    @Column(name = "cost")
     private Float cost;
+
+    @Column(name = "status")
     private Boolean status;
-    
-    @OneToMany(mappedBy = "ProductDetail")
-    private Set<productDetail> productDetailList;
-    
-    public Product(){
-    
+
+    @OneToMany(mappedBy = "product")
+    private Set<ProductDetail> productDetails;
+
+    public Product() {
+        
     }
 
-    public Product(String productID, String productName, String type, Float cost, Boolean status, Set<productDetail> productDetailList) {
-        this.productID = productID;
+    public Product(String productId, String productName, String type, Float cost, Boolean status, Set<ProductDetail> productDetails) {
+        this.productId = productId;
         this.productName = productName;
         this.type = type;
         this.cost = cost;
         this.status = status;
-        this.productDetailList = productDetailList;
+        this.productDetails = productDetails;
     }
 
-    public String getProductID() {
-        return productID;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setProductID(String productID) {
-        this.productID = productID;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
@@ -76,13 +79,12 @@ public class Product {
         this.status = status;
     }
 
-    public Set<productDetail> getProductDetailList() {
-        return productDetailList;
+    public Set<ProductDetail> getProductDetails() {
+        return productDetails;
     }
 
-    public void setProductDetailList(Set<productDetail> productDetailList) {
-        this.productDetailList = productDetailList;
+    public void setProductDetails(Set<ProductDetail> productDetails) {
+        this.productDetails = productDetails;
     }
-    
-    
+       
 }
