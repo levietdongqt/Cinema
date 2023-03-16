@@ -19,7 +19,6 @@ public class Schedule {
     @JoinColumn(name = "filmID")
     private Film film;
     
-    
     //Constructor
     public Schedule() {
     }
