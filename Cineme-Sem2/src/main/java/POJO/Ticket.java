@@ -9,7 +9,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticketID")
-    private String id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "billID", referencedColumnName = "billID")
@@ -20,15 +20,15 @@ public class Ticket {
     private Schedule schedule;
 
     @Column(name = "seatMap")
-    private String seatMap;
+    private SeatMap seatMap;
 
     @Column(name = "status")
     private Boolean status;
     
  
     public Ticket() {}
-    
-    public Ticket(String id, Bill bill, Schedule schedule, String seatMap, boolean status) {
+
+    public Ticket(int id, Bill bill, Schedule schedule, SeatMap seatMap, Boolean status) {
         this.id = id;
         this.bill = bill;
         this.schedule = schedule;
@@ -36,47 +36,75 @@ public class Ticket {
         this.status = status;
     }
 
-    public String getId() {
+    /**
+     * @return the id
+     */
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return the bill
+     */
     public Bill getBill() {
         return bill;
     }
 
+    /**
+     * @param bill the bill to set
+     */
     public void setBill(Bill bill) {
         this.bill = bill;
     }
 
+    /**
+     * @return the schedule
+     */
     public Schedule getSchedule() {
         return schedule;
     }
 
+    /**
+     * @param schedule the schedule to set
+     */
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
     }
 
-    public String getSeatMap() {
+    /**
+     * @return the seatMap
+     */
+    public SeatMap getSeatMap() {
         return seatMap;
     }
 
-    public void setSeatMap(String seatMap) {
+    /**
+     * @param seatMap the seatMap to set
+     */
+    public void setSeatMap(SeatMap seatMap) {
         this.seatMap = seatMap;
     }
 
+    /**
+     * @return the status
+     */
     public Boolean getStatus() {
         return status;
     }
 
+    /**
+     * @param status the status to set
+     */
     public void setStatus(Boolean status) {
         this.status = status;
     }
     
-    
-    
-
+   
 }

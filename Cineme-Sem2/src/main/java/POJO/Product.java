@@ -9,81 +9,119 @@ import javax.persistence.*;
 public class Product {
 
     @Id
-    @Column(name = "productid")
+    @Column(name = "productId")
     private String productId;
 
-    @Column(name = "productname")
+    @Column(name = "productName")
     private String productName;
 
     @Column(name = "type")
     private String type;
 
-    @Column(name = "cost")
-    private BigDecimal cost;
+    @Column(name = "price")
+    private BigDecimal price;
 
     @Column(name = "status")
     private Boolean status;
 
     @OneToMany(mappedBy = "product")
-    private Set<ProductDetail> productDetails;
+    private Set<ProductBill> productBills;
 
     public Product() {}
 
-    public Product(String productId, String productName, String type, BigDecimal cost, Boolean status, Set<ProductDetail> productDetails) {
+    public Product(String productId, String productName, String type, BigDecimal price, Boolean status, Set<ProductBill> productBills) {
         this.productId = productId;
         this.productName = productName;
         this.type = type;
-        this.cost = cost;
+        this.price = price;
         this.status = status;
-        this.productDetails = productDetails;
+        this.productBills = productBills;
     }
 
+    /**
+     * @return the productId
+     */
     public String getProductId() {
         return productId;
     }
 
+    /**
+     * @param productId the productId to set
+     */
     public void setProductId(String productId) {
         this.productId = productId;
     }
 
+    /**
+     * @return the productName
+     */
     public String getProductName() {
         return productName;
     }
 
+    /**
+     * @param productName the productName to set
+     */
     public void setProductName(String productName) {
         this.productName = productName;
     }
 
+    /**
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @param type the type to set
+     */
     public void setType(String type) {
         this.type = type;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    /**
+     * @return the price
+     */
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
+    /**
+     * @return the status
+     */
     public Boolean getStatus() {
         return status;
     }
 
+    /**
+     * @param status the status to set
+     */
     public void setStatus(Boolean status) {
         this.status = status;
     }
 
-    public Set<ProductDetail> getProductDetails() {
-        return productDetails;
+    /**
+     * @return the productBills
+     */
+    public Set<ProductBill> getProductBills() {
+        return productBills;
     }
 
-    public void setProductDetails(Set<ProductDetail> productDetails) {
-        this.productDetails = productDetails;
+    /**
+     * @param productBills the productBills to set
+     */
+    public void setProductBills(Set<ProductBill> productBills) {
+        this.productBills = productBills;
     }
+
+    
     
 }
