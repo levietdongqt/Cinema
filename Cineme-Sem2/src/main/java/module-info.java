@@ -8,6 +8,7 @@ module com.group2.cineme.sem2 {
     requires java.sql;
     requires java.persistence;
 
+    opens POJO;
     opens com.group2.cineme.sem2 to javafx.fxml;
     exports com.group2.cineme.sem2;
 }

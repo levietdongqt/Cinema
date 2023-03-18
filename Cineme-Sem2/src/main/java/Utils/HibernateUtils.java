@@ -59,6 +59,11 @@ public class HibernateUtils {
         conf.addAnnotatedClass(ShowTime.class);
         conf.addAnnotatedClass(Ticket.class);
         conf.addAnnotatedClass(TimeDetail.class);
+        conf.addAnnotatedClass(Bill.class);
+        conf.addAnnotatedClass(WorkSession.class);
+        conf.addAnnotatedClass(Customer.class);
+        conf.addAnnotatedClass(Promotion.class);
+        conf.addAnnotatedClass(Employee.class);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);

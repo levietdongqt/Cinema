@@ -20,7 +20,7 @@ public class Ticket {
     private Schedule schedule;
 
     @Column(name = "seatMap")
-    private SeatMap seatMap;
+    private String seatMap;
 
     @Column(name = "status")
     private Boolean status;
@@ -28,7 +28,7 @@ public class Ticket {
  
     public Ticket() {}
 
-    public Ticket(int id, Bill bill, Schedule schedule, SeatMap seatMap, Boolean status) {
+    public Ticket(int id, Bill bill, Schedule schedule, String seatMap, Boolean status) {
         this.id = id;
         this.bill = bill;
         this.schedule = schedule;
@@ -81,14 +81,14 @@ public class Ticket {
     /**
      * @return the seatMap
      */
-    public SeatMap getSeatMap() {
+    public String getSeatMap() {
         return seatMap;
     }
 
     /**
      * @param seatMap the seatMap to set
      */
-    public void setSeatMap(SeatMap seatMap) {
+    public void setSeatMap(String seatMap) {
         this.seatMap = seatMap;
     }
 
