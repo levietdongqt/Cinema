@@ -1,94 +1,82 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package POJO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Ticket")
 public class Ticket {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ticketID;
-    
-    private String seatMap;
-    
-    private boolean status;
-    
+    @Column(name = "ticketID")
+    private String id;
+
     @ManyToOne
-    @JoinColumn(name = "scheduleID")
+    @JoinColumn(name = "billID", referencedColumnName = "billID")
+    private Bill bill;
+
+    @ManyToOne
+    @JoinColumn(name = "scheduleID", referencedColumnName = "scheduleID")
     private Schedule schedule;
 
-    public Ticket() {
-    }
+    @Column(name = "seatMap")
+    private String seatMap;
 
-    public Ticket(int ticketID, String seatMap, boolean status) {
-        this.ticketID = ticketID;
+    @Column(name = "status")
+    private Boolean status;
+    
+ 
+    public Ticket() {}
+    
+    public Ticket(String id, Bill bill, Schedule schedule, String seatMap, boolean status) {
+        this.id = id;
+        this.bill = bill;
+        this.schedule = schedule;
         this.seatMap = seatMap;
         this.status = status;
     }
 
-    /**
-     * @return the ticketID
-     */
-    public int getTicketID() {
-        return ticketID;
+    public String getId() {
+        return id;
     }
 
-    /**
-     * @param ticketID the ticketID to set
-     */
-    public void setTicketID(int ticketID) {
-        this.ticketID = ticketID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    /**
-     * @return the seatMap
-     */
-    public String getSeatMap() {
-        return seatMap;
+    public Bill getBill() {
+        return bill;
     }
 
-    /**
-     * @param seatMap the seatMap to set
-     */
-    public void setSeatMap(String seatMap) {
-        this.seatMap = seatMap;
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
-    /**
-     * @return the status
-     */
-    public boolean isStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    /**
-     * @return the schedule
-     */
     public Schedule getSchedule() {
         return schedule;
     }
 
-    /**
-     * @param schedule the schedule to set
-     */
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
     }
+
+    public String getSeatMap() {
+        return seatMap;
+    }
+
+    public void setSeatMap(String seatMap) {
+        this.seatMap = seatMap;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
     
     
+    
+
 }
