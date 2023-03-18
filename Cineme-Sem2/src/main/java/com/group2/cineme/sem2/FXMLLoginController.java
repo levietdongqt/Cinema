@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-
 package com.group2.cineme.sem2;
+
 import DAO.*;
 import DAO.GenericDAO;
 import POJO.Employee;
@@ -12,7 +12,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -20,6 +24,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 /**
  * FXML Controller class
@@ -42,29 +53,29 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private Label welcom;
-    
-    public void close(){
+
+    public void close() {
         System.exit(0);
     }
-    
-    
-    public void login() throws Exception{
-     EmployeeDAO dao = new EmployeeDAO();
-        System.out.println("123");
-        
-    boolean a= dao.checkaccount( user.getText(), pass.getText());
-             System.out.println(a);
+
+    public void login(ActionEvent event) throws Exception {
+        EmployeeDAO dao = new EmployeeDAO();
+        boolean log = dao.checkaccount(user.getText(), pass.getText());
+        if (log) {
+            App.setRoot("FXMLHome");
+//            Parent root = FXMLLoader.load(getClass().getResource("FXMLHome.fxml"));
+//            Scene scene = new Scene(root);
+//            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            stage.setScene(scene);
+//            stage.show();
+        }
 
     }
-  
-  
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
 
-        
-             //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
+        //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
         DropShadow original = new DropShadow(20, Color.valueOf("blue"));
         welcom.setEffect(original);
         cgv.setEffect(original);
@@ -107,9 +118,8 @@ public class FXMLLoginController implements Initializable {
             welcom.setEffect(shadow);
             cgv.setEffect(shadow);
 
-        });   
-        
-        
-    }    
-    
+        });
+
+    }
+
 }
