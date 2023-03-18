@@ -24,8 +24,8 @@ public class Ticket {
 
     @Column(name = "status")
     private Boolean status;
-
-
+    
+ 
     public Ticket() {}
     
     public Ticket(String id, Bill bill, Schedule schedule, String seatMap, boolean status) {

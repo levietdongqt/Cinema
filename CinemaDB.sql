@@ -40,7 +40,7 @@ CREATE TABLE Employee (
 );
 go
 CREATE TABLE Bill (
-  [billID] VARCHAR(20) PRIMARY KEY,
+  [billID] int identity PRIMARY KEY,
   [printDate] DATETIME,
   [cusPhone] varchar(15),
   [promoID] INT,
@@ -70,7 +70,7 @@ go
 CREATE TABLE ProductBill (
   [proBillID] VARCHAR(20) PRIMARY KEY,
   [productID] VARCHAR(10),
-  [billID] VARCHAR(20),
+  [billID] int,
   [quantity] INT,
   FOREIGN KEY (productID) REFERENCES Product(productID),
   FOREIGN KEY (billID) REFERENCES Bill(billID)
@@ -185,7 +185,7 @@ go
 
 Create table Ticket (
 	[ticketID] int identity primary key,
-	[billID] VARCHAR(20),
+	[billID] int,
 	[scheduleID] varchar(20),
 	[seatMap] varchar(10),
 	[status] bit default(0),	

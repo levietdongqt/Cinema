@@ -5,6 +5,7 @@
 
 package Utils;
 
+import POJO.*;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -45,7 +46,20 @@ public class HibernateUtils {
         //chỉ định giới hạn tối đa cho số lượng đối tượng được lưu trữ trong cache
         
         conf.setProperties(props);
-//        conf.addAnnotatedClass(Phim.class);
+        //Khai bao Annotation
+        conf.addAnnotatedClass(Actors.class);
+        conf.addAnnotatedClass(FilmGenre.class);
+        conf.addAnnotatedClass(Film.class);
+        conf.addAnnotatedClass(Room.class);
+        conf.addAnnotatedClass(RoomSeatDetail.class);
+        conf.addAnnotatedClass(RoomType.class);
+        conf.addAnnotatedClass(Schedule.class);
+        conf.addAnnotatedClass(SeatMap.class);
+        conf.addAnnotatedClass(SeatType.class);
+        conf.addAnnotatedClass(ShowTime.class);
+        conf.addAnnotatedClass(Ticket.class);
+        conf.addAnnotatedClass(TimeDetail.class);
+
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);
 //        System.out.println(props.getProperty(Environment.DRIVER));
