@@ -1,5 +1,6 @@
 package POJO;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class Product {
     private String type;
 
     @Column(name = "cost")
-    private Float cost;
+    private BigDecimal cost;
 
     @Column(name = "status")
     private Boolean status;
@@ -26,11 +27,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<ProductDetail> productDetails;
 
-    public Product() {
-        
-    }
+    public Product() {}
 
-    public Product(String productId, String productName, String type, Float cost, Boolean status, Set<ProductDetail> productDetails) {
+    public Product(String productId, String productName, String type, BigDecimal cost, Boolean status, Set<ProductDetail> productDetails) {
         this.productId = productId;
         this.productName = productName;
         this.type = type;
@@ -63,11 +62,11 @@ public class Product {
         this.type = type;
     }
 
-    public Float getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Float cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
@@ -86,5 +85,5 @@ public class Product {
     public void setProductDetails(Set<ProductDetail> productDetails) {
         this.productDetails = productDetails;
     }
-       
+    
 }
