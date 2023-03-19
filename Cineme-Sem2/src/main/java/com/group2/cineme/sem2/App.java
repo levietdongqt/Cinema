@@ -26,8 +26,15 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
+    static void setFull(String fxml) throws IOException {
+        Stage stage = (Stage) scene.getWindow(); // Lấy đối tượng Stage hiện tại
+        Scene newScene = new Scene(loadFXML(fxml));
+        stage.setScene(newScene); // Cài đặt Scene mới vào Stage hiện tại
+        stage.setFullScreen(true);
+    }
+
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml+".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
