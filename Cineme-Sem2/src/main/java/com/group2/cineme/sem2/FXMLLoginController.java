@@ -62,7 +62,7 @@ public class FXMLLoginController implements Initializable {
         EmployeeDAO dao = new EmployeeDAO();
         boolean log = dao.checkaccount(user.getText(), pass.getText());
         if (log) {
-            App.setRoot("FXMLHome");
+            App.setFull("FXMLHome");
 //            Parent root = FXMLLoader.load(getClass().getResource("FXMLHome.fxml"));
 //            Scene scene = new Scene(root);
 //            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

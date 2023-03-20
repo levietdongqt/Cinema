@@ -17,8 +17,8 @@ public class Room {
     private String roomID;
     @Column(nullable = false,unique = true)
     private String roomName;
-    private int seatQuanlity;
-    
+    @Column(nullable = true)
+    private int seatQuanlity;   
     @ManyToOne
     @JoinColumn(name = "rTypeID")
     private RoomType roomType;
