@@ -48,17 +48,18 @@ public class FXMLSeatMapController implements Initializable {
     AnchorPane anchorPane;
     @FXML
     Button btnNextStep;
-    List<String> infoList = new ArrayList<>();
+    List<RoomSeatDetail> infoList = new ArrayList<>();
     String info = "";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setSeatGird();
         btnNextStep.setOnAction((t) -> {
-            info ="Number of seats selected: "+ infoList.size() + "\n";
-            Collections.sort(infoList);
+            info = "Number of seats selected: " + infoList.size() + "\n";
+            Collections.sort(infoList, (o1, o2) -> o1.getSeatMap().getsMapID().compareTo(o2.getSeatMap().getsMapID()));
             infoList.forEach(p -> {
-                info = info.concat(p).concat("  ");
+                String seatName = p.getSeatMap().getsMapID();
+                info = info + seatName + "( " + p.getSeatType().getSeatPrice() + ")" + " ";
             });
             Alert alert = AlertUtils.getAlert(info, Alert.AlertType.INFORMATION);
             alert.show();
@@ -66,30 +67,37 @@ public class FXMLSeatMapController implements Initializable {
     }
 
     public void setSeatGird() {
-
         screenLabel.setStyle("-fx-background-color: #99CCFF;");
         seatGrid.setPadding(new Insets(20));
 
-        List<String> seatList = new ArrayList<>();
+        List<RoomSeatDetail> seatList = new ArrayList<>();
         Session ses = HibernateUtils.getFACTORY().openSession();
         try {
             ses.getTransaction().begin();
             Room room = ses.get(Room.class, "P01");
-            room.getRoomType().getRoomSeatDetailList().forEach(p -> seatList.add(p.getSeatMap().getsMapID()));
-            Collections.sort(seatList);
+            room.getRoomType().getRoomSeatDetailList().forEach(p -> seatList.add(p));
+            Collections.sort(seatList, (o1, o2) -> o1.getSeatMap().getsMapID().compareTo(o2.getSeatMap().getsMapID()));
             ses.getTransaction().commit();
             ses.close();
+
         } catch (Exception ex) {
             Logger.getLogger(FXMLSeatMapController.class.getName()).log(Level.SEVERE, null, ex);
         }
         char[] row = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N'};
         int rowIndex = 0;
-        for (String item : seatList) {
-            Button bt = new Button(item);
+        for (RoomSeatDetail item : seatList) {
+            String seatName = item.getSeatMap().getsMapID();
+            String seatType = item.getSeatType().getsTypeName();
+            Button bt = new Button(seatName);
             bt.setPrefSize(50, 30);
-            bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
-            int columIndex = Integer.parseInt(item.substring(1)) - 1;
-            if (item.charAt(0) != row[rowIndex]) {
+            if (seatType.equalsIgnoreCase("Normal")) {
+                bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
+            }
+            if (seatType.equalsIgnoreCase("VIP")) {
+                bt.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white;");
+            }
+            int columIndex = Integer.parseInt(seatName.substring(1)) - 1;
+            if (seatName.charAt(0) != row[rowIndex]) {
                 rowIndex++;
             }
             seatGrid.add(bt, columIndex, rowIndex);
@@ -116,16 +124,23 @@ public class FXMLSeatMapController implements Initializable {
         anchorPane.setMinHeight(columNum * columnWidth);
     }
 
-    public void onActionButton(String item, Button bt) {
+    public void onActionButton(RoomSeatDetail item, Button bt) {
         String color = bt.getStyle().toLowerCase();
         if (color.contains("#9900cc")) {    //Khi người dùng chọn ghế
             bt.setStyle("-fx-background-color: #ff00ff; -fx-text-fill: white;");
             infoList.add(item);
+            return;
 
-        } else {          ////Khi người dùng bỏ chọn ghế
-            bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
-            infoList.remove(item);
         }
+        if (color.contains("#ff3333")) {    //Khi người dùng chọn ghế
+            bt.setStyle("-fx-background-color: #ff00ff; -fx-text-fill: white;");
+            infoList.add(item);
+            return;
+        }
+        ////Khi người dùng bỏ chọn ghế
+        bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
+        infoList.remove(item);
+
     }
 
 }
