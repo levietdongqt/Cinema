@@ -118,6 +118,7 @@ public abstract class GenericDAO<T,A> //T là tên class, A là kiểu dữ li�
 //            if (!"Course,Batch,Student".contains(className)) {
 //                throw new Exception();
 //            }
+
             session.getTransaction().begin();
             var hql = "FROM " + className;
             Query query = session.createQuery(hql);

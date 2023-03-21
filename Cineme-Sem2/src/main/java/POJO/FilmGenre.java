@@ -72,6 +72,11 @@ public class FilmGenre {
     public void setListFilm(Set<Film> listFilm) {
         this.listFilm = listFilm;
     }
+
+    @Override
+    public String toString() {
+        return this.fGenreName;
+    }
     
     
     
