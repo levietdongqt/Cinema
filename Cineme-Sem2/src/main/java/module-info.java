@@ -7,6 +7,7 @@ module com.group2.cineme.sem2 {
     requires org.hibernate.orm.core;
     requires java.sql;
     requires java.persistence;
+    requires com.jfoenix;
 
     opens POJO;
     opens com.group2.cineme.sem2 to javafx.fxml;

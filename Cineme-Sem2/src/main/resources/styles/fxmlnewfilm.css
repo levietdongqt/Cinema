@@ -1,0 +1,18 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+*{
+    -fx-font-family:verdana;
+}
+GridPane{
+    -fx-padding:5;
+    -fx-spacing:50;
+}
+Label{
+    -fx-font-size:13;
+    -fx-font-weight:bold
+}
