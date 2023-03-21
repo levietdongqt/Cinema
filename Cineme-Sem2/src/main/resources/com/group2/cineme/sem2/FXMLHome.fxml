@@ -17,16 +17,12 @@
    <top>
       <AnchorPane BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <cursor>
-                  <Cursor fx:constant="NONE" />
-               </cursor>
-            </JFXHamburger>
+            <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="572.0" opacity="0.8" prefHeight="349.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="859.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ImageView fitHeight="114.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../../../Users/ADMIN/Downloads/0b9527bae9745cb758262804580651a8.png" />
+                        <Image url="@../../../../images/icon/avatar.png" />
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="141.0" styleClass="labelpopup">
@@ -35,7 +31,7 @@
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
-                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Film Mananing" visible="false" />
+                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Film Mananing" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
@@ -68,4 +64,7 @@
 
       </Text>
    </center>
+   <cursor>
+      <Cursor fx:constant="NONE" />
+   </cursor>
 </BorderPane>
