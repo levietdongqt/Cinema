@@ -89,7 +89,7 @@ public class FXMLSeatMapController implements Initializable {
             String seatName = item.getSeatMap().getsMapID();
             String seatType = item.getSeatType().getsTypeName();
             Button bt = new Button(seatName);
-            bt.setPrefSize(50, 30);
+            bt.setPrefSize(60, 40);
             if (seatType.equalsIgnoreCase("Normal")) {
                 bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
             }
@@ -107,8 +107,8 @@ public class FXMLSeatMapController implements Initializable {
 
             });
         }
-        int columnWidth = 55;
-        int rowHight = 35;
+        int columnWidth = 65;
+        int rowHight = 45;
         ColumnConstraints colConstraints = new ColumnConstraints(columnWidth);
         RowConstraints rowContraints = new RowConstraints(rowHight);
         int columNum = seatGrid.getColumnCount();

@@ -62,7 +62,7 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger,event.getSceneX()-500,event.getScreenY() );
             }
         });
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLNewFilm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLSeatMap.fxml"));
         try {
             home.setCenter(fxmlLoader.load());
         } catch (IOException ex) {
