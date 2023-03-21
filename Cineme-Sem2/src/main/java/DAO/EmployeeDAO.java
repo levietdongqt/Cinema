@@ -72,7 +72,7 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             if (!list.isEmpty()) {
 //                System.out.println("Logged in successfully");
                 // hiện thông báo đăng nhập thành công
-                new Alert(Alert.AlertType.INFORMATION, "Logged in successfully").show();
+             //   new Alert(Alert.AlertType.INFORMATION, "Logged in successfully").show();
                 return true;
             } else {
                 new Alert(Alert.AlertType.ERROR, "Username or password is incorrect").show();

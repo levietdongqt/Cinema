@@ -64,8 +64,11 @@ public class Employee {
     /**
      * @param userName the userName to set
      */
-    public void setUserName(String userName) {
+    public void setUserName(String userName) throws Exception{
         this.userName = userName;
+        if(1<2){
+            throw new Exception("Ten phai lon 2 ki tu");
+        }
     }
 
     /**
