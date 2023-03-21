@@ -115,9 +115,10 @@ public abstract class GenericDAO<T,A> //T là tên class, A là kiểu dữ li�
         List<T> list = new LinkedList<>();
         Session session = HibernateUtils.getFACTORY().openSession();
         try {
-            if (!"FilmGenre".contains(className)) {
-                throw new Exception();
-            }
+//            if (!"Course,Batch,Student".contains(className)) {
+//                throw new Exception();
+//            }
+
             session.getTransaction().begin();
             var hql = "FROM " + className;
             Query query = session.createQuery(hql);
