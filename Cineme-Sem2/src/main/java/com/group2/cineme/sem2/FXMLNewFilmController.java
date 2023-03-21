@@ -24,6 +24,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
@@ -131,7 +132,17 @@ public class FXMLNewFilmController implements Initializable {
         
     }
     
-    public void saveButtonHandler(ActionEvent event){
+    public void saveButtonHandler(ActionEvent event) throws IOException{
+//        FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("FXMLSeatMap.fxml"));
+//        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+//        App.scene.setRoot(fxmlLoader.load());
+//        FXMLHomeController home11 = fxmlLoader.getController();
+//        
+//             
+//         home11.hienThi(fxmlLoader1.load());
+        App.setView("FXMLSeatMap");
+
+       
         
     }
     
@@ -146,4 +157,5 @@ public class FXMLNewFilmController implements Initializable {
         this.imageViewFilm.setImage(null);
         this.listViewGender.getSelectionModel().clearSelection();
     }
+    
 }

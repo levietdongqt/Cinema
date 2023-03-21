@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.layout.BorderPane;
 
 /**
  * JavaFX App
@@ -22,10 +25,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
+  
 
     static void setFull(String fxml) throws IOException {
         Stage stage = (Stage) scene.getWindow(); // Lấy đối tượng Stage hiện tại
@@ -38,9 +38,20 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-
+    
+    //Ham nay la ham de setView vao Home
+    static void setView(String fxml) throws IOException{
+        System.out.println("hello");
+        FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource(fxml+".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+        scene.setRoot(fxmlLoader.load());
+        FXMLHomeController home11 = fxmlLoader.getController();
+         home11.hienThi(fxmlLoader1.load());
+        
+    }
+   
     public static void main(String[] args) {
         launch();
     }
-
+    
 }
