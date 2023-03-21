@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,12 +62,27 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger,event.getSceneX()-500,event.getScreenY() );
             }
         });
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLNewFilm.fxml"));
+
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLNewFilm.fxml"));
         try {
-            home.setCenter(fxmlLoader.load());
+            this.home.setCenter(fxmlLoader.load());
         } catch (IOException ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+          
+    }  
+    
+    public void setViewInHome(String fxml){
+         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml+".fxml"));
+        try {
+            this.home.setCenter(fxmlLoader.load());
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void hienThi(Parent fxml) throws IOException{
+        this.home.setCenter(fxml);
+    }
     
 }
