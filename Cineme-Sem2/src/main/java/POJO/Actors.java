@@ -109,6 +109,11 @@ public class Actors {
     public void setListFilm(Set<Film> listFilm) {
         this.listFilm = listFilm;
     }
+
+    @Override
+    public String toString() {
+        return this.actorName;
+    }
     
     
     

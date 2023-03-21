@@ -4,7 +4,9 @@
  */
 package com.group2.cineme.sem2;
 
+import DAO.ActorsDAO;
 import DAO.FilmGenreDAO;
+import POJO.Actors;
 import POJO.FilmGenre;
 import Utils.AlertUtils;
 import java.io.File;
@@ -49,12 +51,18 @@ public class FXMLNewFilmController implements Initializable {
     private TextArea txtDescription;
     @FXML
     private TextField txtDuration;
+    
+    @FXML
+    private TextField txtGender;
+    @FXML
+    private TextField txtActor;
     @FXML
     private DatePicker txtStart;
     @FXML
     private DatePicker txtEnd;
     @FXML
     private TextField txtImage;
+    
     
     @FXML
     private ChoiceBox<Integer> limitAge;
@@ -63,7 +71,7 @@ public class FXMLNewFilmController implements Initializable {
     @FXML
     private ListView<FilmGenre> listViewGender;
     @FXML
-    private ComboBox<FilmGenre> actor;
+    private ListView<Actors> listActors;
     
     @FXML
     private ImageView imageViewFilm;
@@ -75,16 +83,23 @@ public class FXMLNewFilmController implements Initializable {
         limitAge.setItems(FXCollections.observableList(limitAgeList));
         
         FilmGenreDAO fgd = new FilmGenreDAO();
-        List<FilmGenre> listGenre = new ArrayList<>();
+        ActorsDAO ad = new ActorsDAO();
+        List<FilmGenre> listGenre;
+        List<Actors> listActor;
         try {
             listGenre = fgd.getAll("FilmGenre");
+            listActor = ad.getAll("Actors");
             listGenre.sort((o1, o2) -> o1.getfGenreName().compareTo(o2.getfGenreName()));
-            System.out.println(listGenre);
+            listActor.sort((o1, o2) -> o1.getActorName().compareTo(o2.getActorName()));
             listViewGender.setItems(FXCollections.observableList(listGenre));
             listViewGender.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            listActors.setItems(FXCollections.observableList(listActor));
+            listActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         } catch (Exception ex) {
             Logger.getLogger(FXMLNewFilmController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.txtGender.textProperty().addListener((observable) -> {
+        });
         
     }    
     
@@ -97,9 +112,8 @@ public class FXMLNewFilmController implements Initializable {
         File selectedFile = filechooser.showOpenDialog(null);
         if(selectedFile!=null){
             Path copied = Paths.get(selectedFile.getPath());
-            String s = copied.getFileName().toString();
-            String projectPath =System.getProperty("user.dir"); // Lay Path cua Project
-            f = new File(projectPath +"\\src\\main\\resources\\images\\" + s);
+            String s = copied.getFileName().toString();          
+            f = new File("src\\main\\resources\\images\\" + s);
             Path target = f.toPath();
             try {
                 Files.copy(copied, target, StandardCopyOption.REPLACE_EXISTING);
