@@ -40,7 +40,7 @@ public class FXMLHomeController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        File fileHome = new File("C:\\my-code\\My Code\\Cinema-Project\\Cinema\\Cineme-Sem2\\src\\main\\resources\\images\\home.png");
+        File fileHome = new File("src/main/resources/images/home.png");
         Image iconHome = new Image(fileHome.toURI().toString());
         ImageView imageViewHome = new ImageView(iconHome);
         imageViewHome.setFitWidth(16);
