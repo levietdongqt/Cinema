@@ -13,10 +13,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="450.0" prefWidth="622.0" stylesheets="@../../../../styles/fxmlnewfilm.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLNewFilmController">
+<GridPane alignment="CENTER" prefHeight="496.0" prefWidth="622.0" stylesheets="@../../../../styles/fxmlnewfilm.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLNewFilmController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="57.0" prefWidth="135.0" />
     <ColumnConstraints hgrow="ALWAYS" maxWidth="338.5" minWidth="205.0" prefWidth="263.0" />
@@ -25,8 +26,8 @@
   </columnConstraints>
   <rowConstraints>
       <RowConstraints prefHeight="30.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="45.5" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="26.0" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="45.5" valignment="TOP" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="50.0" vgrow="ALWAYS" />
     <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
@@ -36,30 +37,57 @@
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
   </rowConstraints>
    <children>
-      <Label text="FILM ID:" GridPane.rowIndex="1" />
+      <Label alignment="CENTER" text="FILM ID:" GridPane.rowIndex="1" />
       <Label text="FILM NAME:" GridPane.rowIndex="2" />
       <Label text="LIMIT AGE:" GridPane.rowIndex="4" />
       <Label text="START DATE:" GridPane.rowIndex="5" />
-      <TextField fx:id="txtID" prefHeight="25.0" prefWidth="272.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <DatePicker fx:id="txtStart" prefHeight="25.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <DatePicker fx:id="txtEnd" prefHeight="25.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <TextField fx:id="txtName" />
+            <Label text="Label" />
+         </children>
+      </VBox>
+      <VBox GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <children>
+            <DatePicker fx:id="txtStart" prefHeight="25.0" prefWidth="204.0" />
+            <Label text="Label" />
+         </children>
+      </VBox>
+      <VBox GridPane.columnIndex="1" GridPane.rowIndex="6">
+         <children>
+            <DatePicker fx:id="txtEnd" prefHeight="25.0" prefWidth="201.0" />
+            <Label text="Label" />
+         </children>
+      </VBox>
       <Label text="END DATE:" GridPane.rowIndex="6" />
       <Label text="DURATION:" GridPane.rowIndex="7" />
-      <TextField fx:id="txtDuration" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <TextArea fx:id="txtDescription" prefHeight="200.0" prefWidth="134.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <VBox GridPane.columnIndex="1" GridPane.rowIndex="7">
+         <children>
+            <TextField fx:id="txtDuration" />
+            <Label text="Label" />
+         </children>
+      </VBox>
+      <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <TextArea fx:id="txtDescription" prefHeight="200.0" prefWidth="134.0" wrapText="true" />
+            <Label text="Label" />
+         </children>
+      </VBox>
       <Label text="DESCRIPTION:" GridPane.rowIndex="3" />
       <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
          <children>
-            <ImageView fx:id="imageViewFilm" fitHeight="249.0" fitWidth="230.0" layoutY="-30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="-30.0" AnchorPane.topAnchor="-50.0" />
+            <ImageView fx:id="imageViewFilm" fitHeight="199.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
       <TextField fx:id="txtImage" prefHeight="25.0" prefWidth="159.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Button mnemonicParsing="false" onAction="#uploadImageHandler" prefHeight="25.0" prefWidth="186.0" text="LOAD FILE" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Button mnemonicParsing="false" onAction="#uploadImageHandler" prefHeight="23.0" prefWidth="211.0" text="LOAD FILE" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <Label text="GENDER | ACTOR:" GridPane.rowIndex="9" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="11">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
          <children>
             <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
             <Button mnemonicParsing="false" onAction="#resetButtonHandler" prefHeight="23.0" prefWidth="75.0" text="RESET" />
@@ -72,6 +100,14 @@
          </font>
       </Text>
       <ListView fx:id="listViewGender" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <ListView fx:id="listActors" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <TextField fx:id="txtGender" promptText="Search Gender......" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <TextField fx:id="txtActor" promptText="Search Actor......" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+      <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <TextField fx:id="txtID" prefHeight="25.0" prefWidth="272.0" />
+            <Label text="Label" />
+         </children>
+      </VBox>
    </children>
 </GridPane>
