@@ -14,7 +14,7 @@ CREATE TABLE Customer (
   [birthDate] DATE,
   [address] VARCHAR(255),
   [email] VARCHAR(100),
-  [totalpoints] INT default 0
+  [totalpoints] INT default 1
 );
 go
 
@@ -35,7 +35,7 @@ CREATE TABLE Employee (
   [birthDate] DATE,
   [startDate] DATE default getDate(),
   [email] VARCHAR(100),
-  [status] BIT default 0,
+  [status] BIT default 1,
   [empPhone] varchar(20)
 );
 go
@@ -64,7 +64,7 @@ CREATE TABLE Product (
   [productName] VARCHAR(100) not null,
   [type] VARCHAR(50),
   [price] DECIMAL(10,2) not null,
-  [status] BIT default 0
+  [status] BIT default 1
 );
 go
 CREATE TABLE ProductBill (
@@ -128,13 +128,16 @@ go
 CREATE TABLE RoomType (
 	[rTypeID] varchar(5) primary key,
 	[rTypeName]  varchar(100) not null,
-	[Description] varchar(255)
+	[Description] varchar(255),
+	[typeGroup] varchar(20),
+	[status] bit default 1
 )
 go
 CREATE TABLE SeatType (
 	[sTypeID] varchar(5) primary key,
 	[sTypeName]  varchar(100),
-	[seatPrice] int default 0
+	[seatPrice] int default 0,
+	[status] bit default 1
 )
 go
 CREATE TABLE SeatMap (
@@ -159,6 +162,7 @@ CREATE TABLE Room (
 	[roomName]  varchar(50) not null,
 	[rTypeID] varchar(5),
 	[seatQuanlity] int, 
+	[status] bit default 1,
 	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID)
 )
 go
@@ -167,7 +171,7 @@ CREATE TABLE TimeDetails (
 	[roomID]  varchar(5),
 	[sTimeID] varchar(5),
 	[showDate] Date default getdate(),
-	status bit default 0, 
+	status bit default 1, 
 	FOREIGN KEY (roomID) REFERENCES Room(roomID),
 	FOREIGN KEY (sTimeID) REFERENCES ShowTime(sTimeID)
 )
@@ -177,7 +181,7 @@ CREATE TABLE Schedule (
 	[filmID]  varchar(20),
 	[timeDetailsID] int,
 	[ticketQuanlity] int,
-	[status] bit default 0, 
+	[status] bit default 1, 
 	FOREIGN KEY (filmID) REFERENCES Film(filmID),
 	FOREIGN KEY (timeDetailsID) REFERENCES TimeDetails(timeDetailsID)
 )
@@ -188,7 +192,7 @@ Create table Ticket (
 	[billID] int,
 	[scheduleID] varchar(20),
 	[seatMap] varchar(10),
-	[status] bit default(0),	
+	[status] bit default(1),	
 	FOREIGN KEY (scheduleID) REFERENCES Schedule(scheduleID),
 	FOREIGN KEY (billID) REFERENCES Bill(billID)
 )
