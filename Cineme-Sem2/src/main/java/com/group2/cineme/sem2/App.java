@@ -41,12 +41,11 @@ public class App extends Application {
     
     //Ham nay la ham de setView vao Home
     static void setView(String fxml) throws IOException{
-        System.out.println("hello");
         FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource(fxml+".fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
         scene.setRoot(fxmlLoader.load());
-        FXMLHomeController home11 = fxmlLoader.getController();
-         home11.hienThi(fxmlLoader1.load());
+        FXMLHomeController homeController = fxmlLoader.getController();
+        homeController.setCenter(fxmlLoader1.load());
         
     }
    
