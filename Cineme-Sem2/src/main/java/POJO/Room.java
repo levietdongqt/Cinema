@@ -17,8 +17,9 @@ public class Room {
     private String roomID;
     @Column(nullable = false,unique = true)
     private String roomName;
-    @Column(nullable = true)
-    private int seatQuanlity;   
+//    @Column(nullable = true)
+//    private int seatQuanlity;   
+    private boolean status;
     @ManyToOne
     @JoinColumn(name = "rTypeID")
     private RoomType roomType;
@@ -29,10 +30,10 @@ public class Room {
     public Room() {
     }
 
-    public Room(String roomID, String roomName, int seatQuanlity, RoomType roomType, Set<TimeDetail> timeDetails) {
+    public Room(String roomID, String roomName, RoomType roomType, Set<TimeDetail> timeDetails) {
         this.roomID = roomID;
         this.roomName = roomName;
-        this.seatQuanlity = seatQuanlity;
+//        this.seatQuanlity = seatQuanlity;
         this.roomType = roomType;
         this.timeDetailList = timeDetails;
     }
@@ -68,16 +69,16 @@ public class Room {
     /**
      * @return the seatQuanlity
      */
-    public int getSeatQuanlity() {
-        return seatQuanlity;
-    }
-
-    /**
-     * @param seatQuanlity the seatQuanlity to set
-     */
-    public void setSeatQuanlity(int seatQuanlity) {
-        this.seatQuanlity = seatQuanlity;
-    }
+//    public int getSeatQuanlity() {
+//        return seatQuanlity;
+//    }
+//
+//    /**
+//     * @param seatQuanlity the seatQuanlity to set
+//     */
+//    public void setSeatQuanlity(int seatQuanlity) {
+//        this.seatQuanlity = seatQuanlity;
+//    }
 
     /**
      * @return the roomType
@@ -105,6 +106,20 @@ public class Room {
      */
     public void setTimeDetails(Set<TimeDetail> timeDetails) {
         this.timeDetailList = timeDetails;
+    }
+
+    /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
    

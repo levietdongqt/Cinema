@@ -74,7 +74,7 @@ public class FXMLSeatMapController implements Initializable {
         Session ses = HibernateUtils.getFACTORY().openSession();
         try {
             ses.getTransaction().begin();
-            Room room = ses.get(Room.class, "P01");
+            Room room = ses.get(Room.class, "R01");
             room.getRoomType().getRoomSeatDetailList().forEach(p -> seatList.add(p));
             Collections.sort(seatList, (o1, o2) -> o1.getSeatMap().getsMapID().compareTo(o2.getSeatMap().getsMapID()));
             ses.getTransaction().commit();
@@ -87,25 +87,28 @@ public class FXMLSeatMapController implements Initializable {
         int rowIndex = 0;
         for (RoomSeatDetail item : seatList) {
             String seatName = item.getSeatMap().getsMapID();
-            String seatType = item.getSeatType().getsTypeName();
+            String seatType = item.getSeatType().getTypeGroup();
             Button bt = new Button(seatName);
             bt.setPrefSize(60, 40);
-            if (seatType.equalsIgnoreCase("Normal")) {
-                bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
-            }
-            if (seatType.equalsIgnoreCase("VIP")) {
-                bt.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white;");
-            }
             int columIndex = Integer.parseInt(seatName.substring(1)) - 1;
             if (seatName.charAt(0) != row[rowIndex]) {
                 rowIndex++;
             }
             seatGrid.add(bt, columIndex, rowIndex);
+            if (seatType.equalsIgnoreCase("Normal")) {
+                bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
+                bt.setOnAction((t) -> {
+                    onActionButton(item,bt, "#9900cc","#00CC00");
 
-            bt.setOnAction((t) -> {
-                onActionButton(item, bt);
+                });
+            }
+            if (seatType.equalsIgnoreCase("VIP")) {
+                bt.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white;");
+                bt.setOnAction((t) -> {
+                    onActionButton(item,bt, "#ff3333","#00CC00");
 
-            });
+                });
+            }
         }
         int columnWidth = 65;
         int rowHight = 45;
@@ -124,21 +127,16 @@ public class FXMLSeatMapController implements Initializable {
         anchorPane.setMinHeight(columNum * columnWidth);
     }
 
-    public void onActionButton(RoomSeatDetail item, Button bt) {
+    public void onActionButton(RoomSeatDetail item,Button bt, String currentColor,String futureColor) {
         String color = bt.getStyle().toLowerCase();
-        if (color.contains("#9900cc")) {    //Khi người dùng chọn ghế
-            bt.setStyle("-fx-background-color: #ff00ff; -fx-text-fill: white;");
+        if (color.contains(currentColor)) {    //Khi người dùng chọn ghế
+            bt.setStyle("-fx-background-color:" + futureColor + "; -fx-text-fill: white;");
             infoList.add(item);
             return;
 
         }
-        if (color.contains("#ff3333")) {    //Khi người dùng chọn ghế
-            bt.setStyle("-fx-background-color: #ff00ff; -fx-text-fill: white;");
-            infoList.add(item);
-            return;
-        }
         ////Khi người dùng bỏ chọn ghế
-        bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");
+        bt.setStyle("-fx-background-color:" + currentColor + "; -fx-text-fill: white;");
         infoList.remove(item);
 
     }
