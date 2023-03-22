@@ -129,13 +129,13 @@ CREATE TABLE RoomType (
 	[rTypeID] varchar(5) primary key,
 	[rTypeName]  varchar(100) not null,
 	[Description] varchar(255),
-	[typeGroup] varchar(20),
 	[status] bit default 1
 )
 go
 CREATE TABLE SeatType (
 	[sTypeID] varchar(5) primary key,
 	[sTypeName]  varchar(100),
+	[typeGroup] varchar(20),
 	[seatPrice] int default 0,
 	[status] bit default 1
 )
