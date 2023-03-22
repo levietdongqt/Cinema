@@ -41,21 +41,35 @@ public class FXMLHomeController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
-        System.out.println(fileHome.toURI().toString());
-        Image iconHome = new Image(fileHome.toURI().toString());
-        ImageView imageViewHome = new ImageView(iconHome);
-        imageViewHome.setFitWidth(16);
-        imageViewHome.setFitHeight(16);
-        buttonHome.setGraphic(imageViewHome);
-        
-        
-
-        
+        loadDataImageView();
+        loadDataPopup();
+    }  
+    
+    //Xu ly Button handler
+   
+    
+    
+    
+    
+    
+    //Load Trang( de truyen vao App)
+    public void setCenter(Parent fxml) throws IOException{
+        this.home.setCenter(fxml);
+    }
+    
+    //Su dung nay neu button nam tai trang home
+    public void loadInHome(String fxml){
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml+".fxml"));
+        try {
+            setCenter(fxmlLoader.load());
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void loadDataPopup(){
         Popup popup = new Popup();
         popup.getContent().add(vbox);     
-        hamburger.setOnMouseClicked((event) -> {
+        this.hamburger.setOnMouseClicked((event) -> {
             if(popup.isShowing()){
                 popup.hide();
             }else{
@@ -63,27 +77,16 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger,event.getSceneX()-500,event.getScreenY() );
             }
         });
-
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLNewFilm.fxml"));
-        try {
-            this.home.setCenter(fxmlLoader.load());
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-          
-    }  
-    
-    public void setViewInHome(String fxml){
-         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml+".fxml"));
-        try {
-            this.home.setCenter(fxmlLoader.load());
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+           loadInHome("FXMLNewFilm");
+    }
+    public void loadDataImageView(){
+        File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
+        Image iconHome = new Image(fileHome.toURI().toString());
+        ImageView imageViewHome = new ImageView(iconHome);
+        imageViewHome.setFitWidth(16);
+        imageViewHome.setFitHeight(16);
+        this.buttonHome.setGraphic(imageViewHome);
     }
     
-    public void hienThi(Parent fxml) throws IOException{
-        this.home.setCenter(fxml);
-    }
     
 }
