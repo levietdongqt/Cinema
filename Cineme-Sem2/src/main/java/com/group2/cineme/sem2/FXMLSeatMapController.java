@@ -10,6 +10,7 @@ import DAO.SeatMapDAO;
 import POJO.Room;
 import POJO.RoomSeatDetail;
 import POJO.RoomType;
+import POJO.RoomTypeDetails;
 import POJO.SeatMap;
 import POJO.SeatType;
 import POJO.Ticket;
@@ -87,8 +88,8 @@ public class FXMLSeatMapController implements Initializable {
         
         try(Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
-            Room room = ses.get(Room.class, "R02");
-            room.getRoomType().getRoomSeatDetailList().forEach(p -> seatList.add(p));
+            RoomTypeDetails rtDetail = ses.get(RoomTypeDetails.class, 1);
+            rtDetail.getRoomType().getRoomSeatDetailList().forEach(p -> seatList.add(p));
             ses.getTransaction().commit();
             ses.close();
 
