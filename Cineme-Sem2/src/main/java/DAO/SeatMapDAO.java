@@ -13,7 +13,7 @@ import org.hibernate.Session;
  * @author DONG
  */
 public class SeatMapDAO extends GenericDAO<SeatMap, String> {
-
+    
     public void addSeatMapList() {
         Session ses = HibernateUtils.getFACTORY().openSession();
         try {
