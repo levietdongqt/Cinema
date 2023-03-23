@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="382.0" stylesheets="@../../../../styles/fxmllogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLSigupController">
+   <children>
+      <AnchorPane layoutY="-4.0" prefHeight="700.0" prefWidth="379.0">
+         <children>
+            <AnchorPane layoutY="1.0" prefHeight="708.0" prefWidth="382.0" styleClass="login-r" stylesheets="@../../../../styles/login.css">
+               <children>
+                  <FontAwesomeIcon fill="WHITE" glyphName="USER_PLUS" layoutX="145.0" layoutY="88.0" size="8em" text="" wrappingWidth="78.28571319580078" />
+                  <Label layoutX="123.0" layoutY="102.0" text="Sign Up" textFill="WHITE">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="40.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="suuser" layoutX="84.0" layoutY="174.0" prefHeight="33.0" prefWidth="228.0" promptText="User Name" styleClass="fill-text" stylesheets="@../../../../../HK2/JAVAFX/testlogin%20(1)/src/main/resources/com/mycompany/testlogin/fxml.css">
+                     <font>
+                        <Font name="Comic Sans MS" size="16.0" />
+                     </font>
+                  </TextField>
+                  <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="83.0" layoutY="199.0" size="2em" text="" />
+                  <PasswordField fx:id="supass" layoutX="80.0" layoutY="400.0" prefHeight="33.0" prefWidth="234.0" promptText="Password" styleClass="fill-text" stylesheets="@../../../../../HK2/JAVAFX/testlogin%20(1)/src/main/resources/com/mycompany/testlogin/fxml.css">
+                     <font>
+                        <Font name="Comic Sans MS" size="16.0" />
+                     </font>
+                  </PasswordField>
+                  <FontAwesomeIcon fill="WHITE" glyphName="LOCK" layoutX="84.0" layoutY="426.0" size="2em" />
+                  <Button layoutX="349.0" layoutY="6.0" mnemonicParsing="false" styleClass="bnt-close" stylesheets="@../../../../../../../../../../HK2/JAVAFX/testlogin%20(1)/src/main/resources/com/mycompany/testlogin/fxml.css">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" styleClass="x-close" wrappingWidth="8.428571701049805" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="su_btn" alignment="CENTER" layoutX="139.0" layoutY="635.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="105.0" styleClass="btn-submit" stylesheets="@../../../../../../../../../../HK2/JAVAFX/testlogin%20(1)/src/main/resources/com/mycompany/testlogin/fxml.css" text="Submit" textFill="WHITE">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="suname" layoutX="84.0" layoutY="229.0" prefHeight="33.0" prefWidth="228.0" promptText="Full Name" styleClass="fill-text" stylesheets="@../../../../../HK2/JAVAFX/testlogin%20(1)/src/main/resources/com/mycompany/testlogin/fxml.css">
+                     <font>
+                        <Font name="Comic Sans MS" size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label fx:id="erruser" layoutX="86.0" layoutY="207.0" prefHeight="17.0" prefWidth="228.0" text="Label" visible="false" />
+                  <TextField fx:id="suphone" layoutX="85.0" layoutY="282.0" prefHeight="33.0" prefWidth="228.0" promptText="Phone Number " styleClass="fill-text" stylesheets="@../../../../../HK2/JAVAFX/testlogin%20(1)/src/main/resources/com/mycompany/testlogin/fxml.css">
+                     <font>
+                        <Font name="Comic Sans MS" size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label fx:id="errname" layoutX="84.0" layoutY="262.0" prefHeight="17.0" prefWidth="228.0" text="Labeln" visible="false" />
+                  <Label fx:id="errphone" layoutX="86.0" layoutY="315.0" prefHeight="17.0" prefWidth="228.0" text="Label" visible="false" />
+                  <Label fx:id="errpass" layoutX="83.0" layoutY="433.0" prefHeight="17.0" prefWidth="228.0" text="Label" visible="false" />
+                  <FontAwesomeIcon fill="WHITE" glyphName="PHONE" layoutX="87.0" layoutY="304.0" size="2 em" />
+                  <FontAwesomeIcon fill="WHITE" glyphName="PHONE" layoutX="85.0" layoutY="310.0" size="2EM" />
+                  <FontAwesomeIcon fill="WHITE" layoutX="81.0" layoutY="254.0" size="2em" />
+                  <DatePicker fx:id="subirth" layoutX="81.0" layoutY="462.0" prefHeight="25.0" prefWidth="234.0" promptText="Birth Day" />
+                  <Label fx:id="errbirth" layoutX="83.0" layoutY="487.0" prefHeight="17.0" prefWidth="228.0" text="Label" visible="false" />
+                  <ChoiceBox fx:id="suposition" accessibleRole="CHECK_MENU_ITEM" layoutX="81.0" layoutY="513.0" prefHeight="25.0" prefWidth="234.0" />
+                  <TextField fx:id="sumail" layoutX="86.0" layoutY="343.0" prefHeight="33.0" prefWidth="228.0" promptText="Email" styleClass="fill-text" stylesheets="@../../../../../HK2/JAVAFX/testlogin%20(1)/src/main/resources/com/mycompany/testlogin/fxml.css">
+                     <font>
+                        <Font name="Comic Sans MS" size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label fx:id="ermail" layoutX="87.0" layoutY="376.0" prefHeight="17.0" prefWidth="228.0" text="Label" visible="false" />
+                  <FontAwesomeIcon fill="WHITE" glyphName="ENVELOPE" layoutX="86.0" layoutY="371.0" size="2em" />
+                  <Label fx:id="errposition" layoutX="82.0" layoutY="544.0" prefHeight="17.0" prefWidth="234.0" text="Label" visible="false" />
+                  <ChoiceBox fx:id="sustaus" accessibleRole="CHECK_MENU_ITEM" layoutX="80.0" layoutY="568.0" prefHeight="25.0" prefWidth="234.0" />
+                  <Label fx:id="errstaus" layoutX="81.0" layoutY="599.0" prefHeight="17.0" prefWidth="234.0" text="Label" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

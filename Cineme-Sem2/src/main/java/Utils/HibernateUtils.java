@@ -30,7 +30,7 @@ public class HibernateUtils {
 //        props.put(Environment.PASS, "Thuhuy123");
          props.put(Environment.URL, "jdbc:sqlserver://cinema-project.database.windows.net;database=CinemaDB");
         props.put(Environment.USER, "admin123");
-        props.put(Environment.PASS, "Thuhuy123");
+        props.put(Environment.PASS, "Vietdong123");
         props.put(Environment.SHOW_SQL, "true"); 
         props.put(Environment.FORMAT_SQL, "false"); 
             // Cấu hình cache 
