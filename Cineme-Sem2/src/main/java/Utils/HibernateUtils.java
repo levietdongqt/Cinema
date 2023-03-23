@@ -28,7 +28,7 @@ public class HibernateUtils {
 //        props.put(Environment.URL, "jdbc:sqlserver://cinema-123.database.windows.net;database=dbCinema");
 //        props.put(Environment.USER, "admin123");
 //        props.put(Environment.PASS, "Thuhuy123");
-         props.put(Environment.URL, "jdbc:sqlserver://cinema-sem2.database.windows.net;database=Cinema-sem2");
+         props.put(Environment.URL, "jdbc:sqlserver://cinema-sem2.database.windows.net;database=CinemaDB");
         props.put(Environment.USER, "admin123");
         props.put(Environment.PASS, "Vietdong123");
         props.put(Environment.SHOW_SQL, "true"); 
