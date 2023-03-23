@@ -64,7 +64,7 @@ public class HibernateUtils {
         conf.addAnnotatedClass(Customer.class);
         conf.addAnnotatedClass(Promotion.class);
         conf.addAnnotatedClass(Employee.class);
-
+        conf.addAnnotatedClass(RoomTypeDetails.class);
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);
 //        System.out.println(props.getProperty(Environment.DRIVER));
