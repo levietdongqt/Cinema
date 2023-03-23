@@ -3,6 +3,7 @@ package POJO;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,9 +64,14 @@ public class Actors {
 
     /**
      * @param actorName the actorName to set
+     * @throws java.lang.Exception
      */
-    public void setActorName(String actorName) {
-        this.actorName = actorName;
+    public void setActorName(String actorName) throws Exception {
+        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w ]+", actorName)){
+            throw new Exception("Actors Name Fails");
+        }else{
+            this.actorName = actorName;
+        }
     }
 
     /**
@@ -77,9 +83,16 @@ public class Actors {
 
     /**
      * @param birthDate the birthDate to set
+     * @throws java.lang.Exception
      */
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthDate(Date birthDate) throws Exception {
+        Date patternBD1 = Date.valueOf("1933-01-01");
+        Date patternBD2 = Date.valueOf("2010-01-01");
+        if(birthDate.before(patternBD1) || birthDate.after(patternBD2)){
+            throw new Exception("BirthDay fails");
+        }else{
+            this.birthDate = birthDate;
+        }
     }
 
     /**

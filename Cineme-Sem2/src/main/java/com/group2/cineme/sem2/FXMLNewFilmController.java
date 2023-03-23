@@ -19,6 +19,8 @@ import java.nio.file.StandardCopyOption;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -102,6 +104,19 @@ public class FXMLNewFilmController implements Initializable {
     private Label labelGender;
     @FXML
     private Label labelActor;
+    
+    @FXML
+    private VBox vBoxActors;
+    private TextField txtActorsName;
+    private Label errActorsName;
+    private DatePicker txtBirthDay;
+    private Label errBirthDay;
+    private TextField txtHomeTown;
+    private Label errHomeTown;
+    private Actors actor;
+    private Button buttonSave;
+    private Button buttonClear;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Set du lieu cho Label
@@ -115,6 +130,10 @@ public class FXMLNewFilmController implements Initializable {
         
         //Kiem tra su thay doi cua theo TextField cua Gender va Actor
         checkKeyword();
+        
+        createVBoxActors();
+        
+        
         
     }    
     
@@ -264,5 +283,104 @@ public class FXMLNewFilmController implements Initializable {
         this.labelImageURL.setText("");
         this.labelActor.setText("");  
     }
+    
+    
+    //Khu vuc tao khung cho Trang(Bao gom ca nhung action cho khung duoc tao)
+    public void createVBoxActors(){
+        //Tao khung
+        HBox hBoxName = new HBox();
+        VBox vBoxName = new VBox();
+        Label labelActorsName = new Label("Actor Name:");
+        txtActorsName = new TextField();
+        errActorsName = new Label();
+        errActorsName.setVisible(false);
+        vBoxName.getChildren().addAll(txtActorsName,errActorsName);
+        hBoxName.getChildren().addAll(labelActorsName,vBoxName);
+        
+        HBox hBoxBDate = new HBox();
+        VBox vBoxDate = new VBox();
+        Label labelBDate = new Label("BOD:");
+        txtBirthDay = new DatePicker();
+        txtBirthDay.setEditable(false);
+        errBirthDay = new Label();
+        errBirthDay.setVisible(false);
+        vBoxDate.getChildren().addAll(txtBirthDay,errBirthDay);
+        hBoxBDate.getChildren().addAll(labelBDate,vBoxDate);
+        
+        HBox hBoxHomeTown = new HBox();
+        VBox vBoxHomeTown = new VBox();
+        Label labelHomeTown = new Label("Home Town:");
+        txtHomeTown = new TextField();
+        errHomeTown = new Label();
+        errHomeTown.setVisible(false);
+        vBoxHomeTown.getChildren().addAll(txtHomeTown,errHomeTown);
+        hBoxHomeTown.getChildren().addAll(labelHomeTown,vBoxHomeTown);
+            
+        HBox buttonActors = new HBox();
+        buttonSave = new Button("Save");
+        buttonClear = new Button("Clear");
+        buttonActors.getChildren().addAll(buttonSave,buttonClear);
+        
+        vBoxActors.getChildren().addAll(hBoxName,hBoxBDate,hBoxHomeTown,buttonActors);
+        
+        //Khu vuc check loi   
+        checkActors();
+        
+        
+        
+        
+        
+  
+        //Xu ly action cho nut
+        ActorsDAO ad = new ActorsDAO();
+        buttonSave.setOnAction((event) -> {
+            
+        });
+        
+        buttonClear.setOnAction((event) -> {
+            txtActorsName.clear();
+            txtBirthDay.getEditor().clear();
+            txtHomeTown.clear();
+        });
+    }
+    
+    public void checkActors(){
+        Actors checkActors = new Actors();
+        txtActorsName.textProperty().addListener((observable) -> {
+            boolean errorName = false;
+        try {
+            checkActors.setActorName(txtActorsName.getText()); 
+            errorName=true;
+        } catch (Exception ex) {
+            errActorsName.setVisible(true);
+            errActorsName.setText(ex.getMessage());
+        }finally{
+            if(errorName == true){
+                errActorsName.setVisible(false);
+            }
+        }   
+        });
+        System.out.println(errActorsName.getText());
+        txtBirthDay.setOnAction((event) -> {
+            boolean errorBD = false;
+            try {
+                checkActors.setBirthDate(java.sql.Date.valueOf(txtBirthDay.getValue()));
+                errorBD=true;
+            } catch(Exception ex){
+                errBirthDay.setVisible(true);
+                errBirthDay.setText(ex.getMessage());            
+            }finally{
+                if(errorBD==true){
+                    errBirthDay.setVisible(false);
+                }
+            }
+        });
+        checkActors.setHomeTown(txtHomeTown.getText().trim());
+        System.out.println(errActorsName.getText());
+        System.out.println(errBirthDay.getText());
+        
+    }
+    
+    
     
 }
