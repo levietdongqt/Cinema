@@ -160,20 +160,26 @@ go
 CREATE TABLE Room (
 	[roomID] varchar(10) primary key,
 	[roomName]  varchar(50) not null,
-	[rTypeID] varchar(10),
 	[seatQuanlity] int, 
 	description varchar(255),
 	[status] bit default 1,
+)
+Create table RoomTypeDetails (
+	[rtDetailsID] int identity primary key,
+	[roomID] varchar(10),
+	[rTypeID] varchar(10),	
+	FOREIGN KEY (roomID) REFERENCES Room(roomID),
 	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID)
 )
 go
+go
 CREATE TABLE TimeDetails (
 	[timeDetailsID] int identity primary key,
-	[roomID]  varchar(10),
+	[rtDetailsID]  int,
 	[sTimeID] varchar(10),
 	[showDate] Date default getdate(),
 	status bit default 1, 
-	FOREIGN KEY (roomID) REFERENCES Room(roomID),
+	FOREIGN KEY (rtDetailsID) REFERENCES RoomTypeDetails(rtDetailsID),
 	FOREIGN KEY (sTimeID) REFERENCES ShowTime(sTimeID)
 )
 go
@@ -198,3 +204,5 @@ Create table Ticket (
 	FOREIGN KEY (billID) REFERENCES Bill(billID)
 )
 go
+
+
