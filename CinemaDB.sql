@@ -121,12 +121,12 @@ CREATE TABLE ActorOfFilm (
 )
 go
 CREATE TABLE ShowTime (
-	[sTimeID] varchar(5) primary key,
+	[sTimeID] varchar(10) primary key,
 	[startTime] Time not null
 )
 go
 CREATE TABLE RoomType (
-	[rTypeID] varchar(5) primary key,
+	[rTypeID] varchar(10) primary key,
 	[rTypeName]  varchar(100) not null,
 	[Description] varchar(255),
 	[status] bit default 1
@@ -148,7 +148,7 @@ CREATE TABLE SeatMap (
 go
 
 CREATE TABLE RoomSeatDetails (
-	[rsDetailsID] varchar(10) primary key,
+	[rsDetailsID] varchar(20) primary key,
 	[sTypeID] varchar(5),
 	[rTypeID] varchar(5),
 	[sMapID] varchar(5),
@@ -158,7 +158,7 @@ CREATE TABLE RoomSeatDetails (
 )
 go
 CREATE TABLE Room (
-	[roomID] varchar(5) primary key,
+	[roomID] varchar(10) primary key,
 	[roomName]  varchar(50) not null,
 	[rTypeID] varchar(5),
 	[seatQuanlity] int, 
