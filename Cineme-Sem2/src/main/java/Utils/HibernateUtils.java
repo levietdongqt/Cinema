@@ -76,14 +76,14 @@ public class HibernateUtils {
     public static SessionFactory getFACTORY() {
         return FACTORY;
     }
-    public static void main(String[] args) {
-        if(HibernateUtils.getFACTORY() == null)
-        {
-            System.out.println("No");
-        }
-        else
-            System.out.println("YEs");
-    }
+//    public static void main(String[] args) {
+//        if(HibernateUtils.getFACTORY() == null)
+//        {
+//            System.out.println("No");
+//        }
+//        else
+//            System.out.println("YEs");
+//    }
 
   
 }

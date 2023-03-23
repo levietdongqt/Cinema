@@ -21,23 +21,18 @@ public class Room {
 //    private int seatQuanlity;
     private String description;
     private boolean status;
-    @ManyToOne
-    @JoinColumn(name = "rTypeID")
-    private RoomType roomType;
     
     @OneToMany(mappedBy = "room")
-    private Set<TimeDetail> timeDetailList;
+    private Set<RoomTypeDetails> roomTypeDetailList;
 
     public Room() {
     }
 
-    public Room(String roomID, String roomName, String description, boolean status, RoomType roomType, Set<TimeDetail> timeDetailList) {
+    public Room(String roomID, String roomName, String description, Set<RoomTypeDetails> roomTypeDetailList) {
         this.roomID = roomID;
         this.roomName = roomName;
         this.description = description;
-        this.status = status;
-        this.roomType = roomType;
-        this.timeDetailList = timeDetailList;
+        this.roomTypeDetailList = roomTypeDetailList;
     }
 
     /**
@@ -97,32 +92,18 @@ public class Room {
     }
 
     /**
-     * @return the roomType
+     * @return the roomTypeDetailList
      */
-    public RoomType getRoomType() {
-        return roomType;
+    public Set<RoomTypeDetails> getRoomTypeDetailList() {
+        return roomTypeDetailList;
     }
 
     /**
-     * @param roomType the roomType to set
+     * @param roomTypeDetailList the roomTypeDetailList to set
      */
-    public void setRoomType(RoomType roomType) {
-        this.roomType = roomType;
+    public void setRoomTypeDetailList(Set<RoomTypeDetails> roomTypeDetailList) {
+        this.roomTypeDetailList = roomTypeDetailList;
     }
 
-    /**
-     * @return the timeDetailList
-     */
-    public Set<TimeDetail> getTimeDetailList() {
-        return timeDetailList;
-    }
-
-    /**
-     * @param timeDetailList the timeDetailList to set
-     */
-    public void setTimeDetailList(Set<TimeDetail> timeDetailList) {
-        this.timeDetailList = timeDetailList;
-    }
-
-   
+    
 }

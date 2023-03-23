@@ -23,18 +23,18 @@ public class RoomType {
     private String Description;
     private boolean status;
     @OneToMany(mappedBy = "roomType")
-    private Set <Room> roomList;
+    private Set <RoomTypeDetails> roomTypeDetailsList;
     @OneToMany(mappedBy = "roomType")
     private Set <RoomSeatDetail> roomSeatDetailList;
 
     public RoomType() {
     }
 
-    public RoomType(String rTypeID, String rTypeName, String Description, Set<Room> roomList, Set<RoomSeatDetail> roomSeatDetailList) {
+    public RoomType(String rTypeID, String rTypeName, String Description,  Set<RoomTypeDetails> roomTypeDetailsList, Set<RoomSeatDetail> roomSeatDetailList) {
         this.rTypeID = rTypeID;
         this.rTypeName = rTypeName;
         this.Description = Description;
-        this.roomList = roomList;
+        this.roomTypeDetailsList = roomTypeDetailsList;
         this.roomSeatDetailList = roomSeatDetailList;
     }
 
@@ -95,17 +95,17 @@ public class RoomType {
     }
 
     /**
-     * @return the roomList
+     * @return the roomTypeDetailsList
      */
-    public Set <Room> getRoomList() {
-        return roomList;
+    public Set <RoomTypeDetails> getRoomTypeDetailsList() {
+        return roomTypeDetailsList;
     }
 
     /**
-     * @param roomList the roomList to set
+     * @param roomTypeDetailsList the roomTypeDetailsList to set
      */
-    public void setRoomList(Set <Room> roomList) {
-        this.roomList = roomList;
+    public void setRoomTypeDetailsList(Set <RoomTypeDetails> roomTypeDetailsList) {
+        this.roomTypeDetailsList = roomTypeDetailsList;
     }
 
     /**
