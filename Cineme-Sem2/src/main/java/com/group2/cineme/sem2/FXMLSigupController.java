@@ -100,10 +100,13 @@ public class FXMLSigupController  {
 //            errname.setText(e.getMessage());
 //        }
 //    }
+    
+    
+    @FXML
 public void checkName() throws IOException {
     System.out.println("1111");
     String name = suname.getText().trim();
-    System.out.println("123");
+    System.out.println(name);
         if (name == null) {
             System.out.println("q456");
             errname.setText("Employee name cannot be null");
@@ -123,7 +126,8 @@ public void checkName() throws IOException {
 
 public void checkUser()throws IOException{
     String user = suuser.getText().trim();
-    System.out.println("123");
+    System.out.println(user);
+    
 }
 
     public void initialize(URL url, ResourceBundle rb) {

@@ -73,7 +73,7 @@
                   <FontAwesomeIcon fill="WHITE" glyphName="ENVELOPE" layoutX="86.0" layoutY="371.0" size="2em" />
                   <Label fx:id="errposition" layoutX="82.0" layoutY="544.0" prefHeight="17.0" prefWidth="234.0" text="Label" visible="false" />
                   <ChoiceBox fx:id="sustaus" accessibleRole="CHECK_MENU_ITEM" layoutX="80.0" layoutY="568.0" prefHeight="25.0" prefWidth="234.0" />
-                  <Label fx:id="errstaus" layoutX="81.0" layoutY="599.0" prefHeight="17.0" prefWidth="234.0" text="Label" />
+                  <Label fx:id="errstaus" layoutX="81.0" layoutY="599.0" prefHeight="17.0" prefWidth="234.0" text="Label" visible="false" />
                </children>
             </AnchorPane>
          </children>
