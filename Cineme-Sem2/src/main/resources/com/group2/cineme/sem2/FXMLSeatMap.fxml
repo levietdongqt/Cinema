@@ -20,12 +20,12 @@
    <children>
       <VBox alignment="CENTER" layoutY="21.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="445.0" prefWidth="790.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="404.0" text="SCREEN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="512.0" text="SCREEN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="790.0">
                <children>
                   <GridPane id="seatGrid" fx:id="seatGrid" alignment="CENTER">
                     <columnConstraints>
@@ -42,10 +42,10 @@
                   </GridPane>
                </children>
                <VBox.margin>
-                  <Insets bottom="30.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0">
+            <HBox alignment="CENTER" prefHeight="33.0" prefWidth="790.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9900cc" height="25.0" stroke="#9900cc" strokeType="INSIDE" width="40.0">
                      <HBox.margin>
@@ -67,12 +67,12 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff99ff" height="25.0" stroke="#ff99ff" strokeType="INSIDE" width="40.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="MAGENTA" height="25.0" stroke="MAGENTA" strokeType="INSIDE" width="40.0">
                      <HBox.margin>
                         <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Rectangle>
-                  <Label text="Double">
+                  <Label text="Couple">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -94,7 +94,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="MAGENTA" height="25.0" stroke="MAGENTA" strokeType="INSIDE" width="40.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00cc00" height="25.0" stroke="#00cc00" strokeType="INSIDE" width="40.0">
                      <HBox.margin>
                         <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
                      </HBox.margin>
@@ -108,9 +108,9 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="600.0">
                <children>
-                  <Button fx:id="btnNextStep" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Next Step" HBox.hgrow="ALWAYS">
+                  <Button fx:id="btnNextStep" mnemonicParsing="false" text="Next Step">
                      <font>
-                        <Font size="19.0" />
+                        <Font size="16.0" />
                      </font>
                   </Button>
                </children>

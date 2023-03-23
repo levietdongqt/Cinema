@@ -21,7 +21,7 @@ public class RoomType {
     private String rTypeID;
     private String rTypeName;
     private String Description;
-    
+    private boolean status;
     @OneToMany(mappedBy = "roomType")
     private Set <Room> roomList;
     @OneToMany(mappedBy = "roomType")
@@ -78,6 +78,20 @@ public class RoomType {
      */
     public void setDescription(String Description) {
         this.Description = Description;
+    }
+
+    /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     /**

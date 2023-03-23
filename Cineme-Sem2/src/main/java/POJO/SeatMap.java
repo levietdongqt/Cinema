@@ -19,8 +19,8 @@ import javax.persistence.Table;
 public class SeatMap {
     @Id
     private String sMapID;
-//    private String seatRow;
-//    private int seatNum;
+    private String seatRow;
+    private int seatNum;
     @OneToMany(mappedBy = "seatMap")
     private Set<RoomSeatDetail> roomSeatDetailList;
 
@@ -51,30 +51,30 @@ public class SeatMap {
     /**
      * @return the seatRow
      */
-//    public String getSeatRow() {
-//        return seatRow;
-//    }
-//
-//    /**
-//     * @param seatRow the seatRow to set
-//     */
-//    public void setSeatRow(String seatRow) {
-//        this.seatRow = seatRow;
-//    }
-//
-//    /**
-//     * @return the seatNum
-//     */
-//    public int getSeatNum() {
-//        return seatNum;
-//    }
-//
-//    /**
-//     * @param seatNum the seatNum to set
-//     */
-//    public void setSeatNum(int seatNum) {
-//        this.seatNum = seatNum;
-//    }
+    public String getSeatRow() {
+        return seatRow;
+    }
+
+    /**
+     * @param seatRow the seatRow to set
+     */
+    public void setSeatRow(String seatRow) {
+        this.seatRow = seatRow;
+    }
+
+    /**
+     * @return the seatNum
+     */
+    public int getSeatNum() {
+        return seatNum;
+    }
+
+    /**
+     * @param seatNum the seatNum to set
+     */
+    public void setSeatNum(int seatNum) {
+        this.seatNum = seatNum;
+    }
 
     /**
      * @return the roomSeatDetailList

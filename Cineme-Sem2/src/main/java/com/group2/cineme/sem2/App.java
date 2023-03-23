@@ -1,5 +1,6 @@
 package com.group2.cineme.sem2;
 
+import Utils.HibernateUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.layout.BorderPane;
+import org.hibernate.Session;
 
 /**
  * JavaFX App
@@ -20,12 +22,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
+        Session ses = HibernateUtils.getFACTORY().openSession();
+        ses.clear();
+        ses.close();    
         scene = new Scene(loadFXML("FXMLHome"));
         stage.setScene(scene);
         stage.show();
     }
-  
 
     static void setFull(String fxml) throws IOException {
         Stage stage = (Stage) scene.getWindow(); // Lấy đối tượng Stage hiện tại
@@ -38,19 +41,19 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-    
+
     //Ham nay la ham de setView vao Home
-    static void setView(String fxml) throws IOException{
-        FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource(fxml+".fxml"));
+    static void setView(String fxml) throws IOException {
+        FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
         scene.setRoot(fxmlLoader.load());
         FXMLHomeController homeController = fxmlLoader.getController();
         homeController.setCenter(fxmlLoader1.load());
-        
+
     }
-   
+
     public static void main(String[] args) {
         launch();
     }
-    
+
 }
