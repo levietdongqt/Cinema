@@ -181,7 +181,7 @@ CREATE TABLE Schedule (
 	[scheduleID] varchar(20) primary key,
 	[filmID]  varchar(20),
 	[timeDetailsID] int,
-	[ticketQuanlity] int,
+	[note] varchar(255),
 	[status] bit default 1, 
 	FOREIGN KEY (filmID) REFERENCES Film(filmID),
 	FOREIGN KEY (timeDetailsID) REFERENCES TimeDetails(timeDetailsID)
