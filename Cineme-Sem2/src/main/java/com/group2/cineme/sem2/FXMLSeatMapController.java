@@ -15,7 +15,6 @@ import POJO.SeatType;
 import POJO.Ticket;
 import Utils.AlertUtils;
 import Utils.HibernateUtils;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +32,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -176,8 +174,8 @@ public class FXMLSeatMapController implements Initializable {
             seatGrid.getRowConstraints().add(i, rowContraints);
         }
 
-        // anchorPane.setMinWidth(seatGrid.getColumnCount()*columnWidth);
-        anchorPane.setMinHeight(columNum * columnWidth);
+       // anchorPane.setMinWidth(row*columnWidth);
+       // anchorPane.setMinHeight(columNum * rowHight);
     }
 
     private void singleButtonHandler(RoomSeatDetail item, Button bt, String currentColor) {

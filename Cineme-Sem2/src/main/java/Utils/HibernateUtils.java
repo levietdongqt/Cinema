@@ -28,9 +28,9 @@ public class HibernateUtils {
 //        props.put(Environment.URL, "jdbc:sqlserver://cinema-123.database.windows.net;database=dbCinema");
 //        props.put(Environment.USER, "admin123");
 //        props.put(Environment.PASS, "Thuhuy123");
-         props.put(Environment.URL, "jdbc:sqlserver://cinema-project.database.windows.net;database=CinemaDB");
+         props.put(Environment.URL, "jdbc:sqlserver://cinema-sem2.database.windows.net;database=Cinema-sem2");
         props.put(Environment.USER, "admin123");
-        props.put(Environment.PASS, "Thuhuy123");
+        props.put(Environment.PASS, "Vietdong123");
         props.put(Environment.SHOW_SQL, "true"); 
         props.put(Environment.FORMAT_SQL, "false"); 
             // Cấu hình cache 
@@ -76,14 +76,14 @@ public class HibernateUtils {
     public static SessionFactory getFACTORY() {
         return FACTORY;
     }
-//    public static void main(String[] args) {
-//        if(HibernateUtils.getFACTORY() == null)
-//        {
-//            System.out.println("No");
-//        }
-//        else
-//            System.out.println("YEs");
-//    }
+    public static void main(String[] args) {
+        if(HibernateUtils.getFACTORY() == null)
+        {
+            System.out.println("No");
+        }
+        else
+            System.out.println("YEs");
+    }
    
   
 }

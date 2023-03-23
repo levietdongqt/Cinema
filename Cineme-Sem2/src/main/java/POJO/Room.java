@@ -1,4 +1,4 @@
-package POJO;
+    package POJO;
 
 import java.util.Set;
 import javax.persistence.Column;
@@ -18,7 +18,8 @@ public class Room {
     @Column(nullable = false,unique = true)
     private String roomName;
 //    @Column(nullable = true)
-//    private int seatQuanlity;   
+//    private int seatQuanlity;
+    private String description;
     private boolean status;
     @ManyToOne
     @JoinColumn(name = "rTypeID")
@@ -30,14 +31,15 @@ public class Room {
     public Room() {
     }
 
-    public Room(String roomID, String roomName, RoomType roomType, Set<TimeDetail> timeDetails) {
+    public Room(String roomID, String roomName, String description, boolean status, RoomType roomType, Set<TimeDetail> timeDetailList) {
         this.roomID = roomID;
         this.roomName = roomName;
-//        this.seatQuanlity = seatQuanlity;
+        this.description = description;
+        this.status = status;
         this.roomType = roomType;
-        this.timeDetailList = timeDetails;
+        this.timeDetailList = timeDetailList;
     }
-    
+
     /**
      * @return the roomID
      */
@@ -67,18 +69,32 @@ public class Room {
     }
 
     /**
-     * @return the seatQuanlity
+     * @return the description
      */
-//    public int getSeatQuanlity() {
-//        return seatQuanlity;
-//    }
-//
-//    /**
-//     * @param seatQuanlity the seatQuanlity to set
-//     */
-//    public void setSeatQuanlity(int seatQuanlity) {
-//        this.seatQuanlity = seatQuanlity;
-//    }
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     /**
      * @return the roomType
@@ -95,31 +111,17 @@ public class Room {
     }
 
     /**
-     * @return the timeDetails
+     * @return the timeDetailList
      */
-    public Set<TimeDetail> getTimeDetails() {
+    public Set<TimeDetail> getTimeDetailList() {
         return timeDetailList;
     }
 
     /**
-     * @param timeDetails the timeDetails to set
+     * @param timeDetailList the timeDetailList to set
      */
-    public void setTimeDetails(Set<TimeDetail> timeDetails) {
-        this.timeDetailList = timeDetails;
-    }
-
-    /**
-     * @return the status
-     */
-    public boolean isStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setTimeDetailList(Set<TimeDetail> timeDetailList) {
+        this.timeDetailList = timeDetailList;
     }
 
    
