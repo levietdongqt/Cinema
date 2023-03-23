@@ -150,7 +150,7 @@ go
 CREATE TABLE RoomSeatDetails (
 	[rsDetailsID] varchar(20) primary key,
 	[sTypeID] varchar(5),
-	[rTypeID] varchar(5),
+	[rTypeID] varchar(10),
 	[sMapID] varchar(5),
 	FOREIGN KEY (sTypeID) REFERENCES SeatType(sTypeID),
 	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID),
@@ -160,7 +160,7 @@ go
 CREATE TABLE Room (
 	[roomID] varchar(10) primary key,
 	[roomName]  varchar(50) not null,
-	[rTypeID] varchar(5),
+	[rTypeID] varchar(10),
 	[seatQuanlity] int, 
 	description varchar(255),
 	[status] bit default 1,
@@ -169,8 +169,8 @@ CREATE TABLE Room (
 go
 CREATE TABLE TimeDetails (
 	[timeDetailsID] int identity primary key,
-	[roomID]  varchar(5),
-	[sTimeID] varchar(5),
+	[roomID]  varchar(10),
+	[sTimeID] varchar(10),
 	[showDate] Date default getdate(),
 	status bit default 1, 
 	FOREIGN KEY (roomID) REFERENCES Room(roomID),
