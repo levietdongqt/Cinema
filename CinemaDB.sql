@@ -162,6 +162,7 @@ CREATE TABLE Room (
 	[roomName]  varchar(50) not null,
 	[rTypeID] varchar(5),
 	[seatQuanlity] int, 
+	description varchar(255),
 	[status] bit default 1,
 	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID)
 )
