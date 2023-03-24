@@ -178,7 +178,7 @@ CREATE TABLE TimeDetails (
 	[timeDetailsID] int identity primary key,
 	[rtDetailsID]  int,
 	[sTimeID] varchar(10),
-	[showDate] Date default getdate(),
+	[showDate] Datetime default getdate(),
 	status bit default 1, 
 	FOREIGN KEY (rtDetailsID) REFERENCES RoomTypeDetails(rtDetailsID),
 	FOREIGN KEY (sTimeID) REFERENCES ShowTime(sTimeID)
