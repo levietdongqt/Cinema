@@ -344,12 +344,12 @@ public class FXMLNewFilmController implements Initializable {
         });
     }
     
-    public void checkActors(){
-        Actors checkActors = new Actors();
+    public boolean checkActors(){
+        boolean check = false;
         txtActorsName.textProperty().addListener((observable) -> {
             boolean errorName = false;
         try {
-            checkActors.setActorName(txtActorsName.getText()); 
+            actor.setActorName(txtActorsName.getText()); 
             errorName=true;
         } catch (Exception ex) {
             errActorsName.setVisible(true);
@@ -360,11 +360,10 @@ public class FXMLNewFilmController implements Initializable {
             }
         }   
         });
-        System.out.println(errActorsName.getText());
         txtBirthDay.setOnAction((event) -> {
             boolean errorBD = false;
             try {
-                checkActors.setBirthDate(java.sql.Date.valueOf(txtBirthDay.getValue()));
+                actor.setBirthDate(java.sql.Date.valueOf(txtBirthDay.getValue()));
                 errorBD=true;
             } catch(Exception ex){
                 errBirthDay.setVisible(true);
@@ -375,9 +374,8 @@ public class FXMLNewFilmController implements Initializable {
                 }
             }
         });
-        checkActors.setHomeTown(txtHomeTown.getText().trim());
-        System.out.println(errActorsName.getText());
-        System.out.println(errBirthDay.getText());
+        actor.setHomeTown(txtHomeTown.getText().trim());
+        return check;
         
     }
     
