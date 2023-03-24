@@ -167,7 +167,8 @@ CREATE TABLE Room (
 Create table RoomTypeDetails (
 	[rtDetailsID] int identity primary key,
 	[roomID] varchar(10),
-	[rTypeID] varchar(10),	
+	[rTypeID] varchar(10),
+	[status] bit default 1,
 	FOREIGN KEY (roomID) REFERENCES Room(roomID),
 	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID)
 )
