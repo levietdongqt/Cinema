@@ -7,6 +7,7 @@ package com.group2.cineme.sem2;
 import DAO.*;
 import DAO.GenericDAO;
 import POJO.Employee;
+import Utils.HibernateUtils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -71,7 +72,7 @@ public class FXMLLoginController implements Initializable {
         }
 
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

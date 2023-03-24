@@ -28,9 +28,9 @@ public class HibernateUtils {
 //        props.put(Environment.URL, "jdbc:sqlserver://cinema-123.database.windows.net;database=dbCinema");
 //        props.put(Environment.USER, "admin123");
 //        props.put(Environment.PASS, "Thuhuy123");
-         props.put(Environment.URL, "jdbc:sqlserver://cinema-project.database.windows.net;database=CinemaDB");
+         props.put(Environment.URL, "jdbc:sqlserver://cinema-sem2.database.windows.net;database=CinemaDB");
         props.put(Environment.USER, "admin123");
-        props.put(Environment.PASS, "Thuhuy123");
+        props.put(Environment.PASS, "Vietdong123");
         props.put(Environment.SHOW_SQL, "true"); 
         props.put(Environment.FORMAT_SQL, "false"); 
             // Cấu hình cache 
@@ -64,7 +64,7 @@ public class HibernateUtils {
         conf.addAnnotatedClass(Customer.class);
         conf.addAnnotatedClass(Promotion.class);
         conf.addAnnotatedClass(Employee.class);
-
+        conf.addAnnotatedClass(RoomTypeDetails.class);
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);
 //        System.out.println(props.getProperty(Environment.DRIVER));
@@ -84,6 +84,6 @@ public class HibernateUtils {
 //        else
 //            System.out.println("YEs");
 //    }
-   
+
   
 }
