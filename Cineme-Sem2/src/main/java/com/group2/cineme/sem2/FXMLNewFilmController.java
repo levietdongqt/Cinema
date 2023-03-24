@@ -7,6 +7,7 @@ package com.group2.cineme.sem2;
 import DAO.ActorsDAO;
 import DAO.FilmGenreDAO;
 import POJO.Actors;
+import POJO.Film;
 import POJO.FilmGenre;
 import Utils.AlertUtils;
 import java.io.File;
@@ -16,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.ResourceBundle;
@@ -106,6 +109,20 @@ public class FXMLNewFilmController implements Initializable {
     private Label labelActor;
     
     @FXML
+    private Label errorFilmName;
+    @FXML
+    private Label errorFilmDes;
+    @FXML
+    private Label errorStart;
+    @FXML
+    private Label errorEnd;
+    @FXML
+    private Label errorImage;
+    @FXML
+    private Label errorDuration;
+    
+    
+    @FXML
     private VBox vBoxActors;
     private TextField txtActorsName;
     private Label errActorsName;
@@ -113,7 +130,6 @@ public class FXMLNewFilmController implements Initializable {
     private Label errBirthDay;
     private TextField txtHomeTown;
     private Label errHomeTown;
-    private Actors actor;
     private Button buttonSave;
     private Button buttonClear;
     
@@ -123,7 +139,7 @@ public class FXMLNewFilmController implements Initializable {
         loadNullLabel();
         loadDataLabel();
         //Set du lieu cho LimitAge
-        loadDataLimitAge();
+        loadDataOrSetDefault();
         //Set du lieu cho ListView Gender Actor
         loadDataActors("");
         loadDataGender("");
@@ -131,7 +147,12 @@ public class FXMLNewFilmController implements Initializable {
         //Kiem tra su thay doi cua theo TextField cua Gender va Actor
         checkKeyword();
         
+        //Actors 
         createVBoxActors();
+        validateActors();
+        buttonSaveHandlerActor(validateActors());
+        buttonResetHandlerActor();
+        validateFilm();
         
         
         
@@ -183,6 +204,12 @@ public class FXMLNewFilmController implements Initializable {
         loadNullLabel();
         setFilmGenre.clear();
         setActors.clear();
+        this.errorFilmName.setText("");
+        this.errorDuration.setText("");
+        this.errorEnd.setText("");
+        this.errorStart.setText("");
+        this.errorImage.setText("");
+        this.errorFilmDes.setText("");
     }
     public void showInformationButtonHandler(){
        if(this.hboxShowInfor.isVisible()==false && this.vboxShowInfor.isVisible()==false){
@@ -193,15 +220,37 @@ public class FXMLNewFilmController implements Initializable {
            this.vboxShowInfor.setVisible(false);
        }    
     }
-    public void checkKeyword(){
-        this.keywordGender.textProperty().addListener((o) -> {
-            this.loadDataGender(this.keywordGender.getText());
-        });
-        this.keywordActor.textProperty().addListener((o) -> {
-            this.loadDataActors(this.keywordActor.getText());
+   
+    public void addActorButtonHandler(){
+        if(this.vBoxActors.isVisible()==false){
+            this.vBoxActors.setVisible(true);
+        }else{
+            this.vBoxActors.setVisible(false);
+        }
+    }
+     public void buttonSaveHandlerActor(Actors actor){
+        buttonSave.setOnAction((event) -> {
+           if(errActorsName.isVisible()==true || errBirthDay.isVisible()==true){
+               AlertUtils.getAlert("Actor's Name or Actor's BirthDay wrong!!!", Alert.AlertType.WARNING).show();
+           }else{
+               ActorsDAO ad = new ActorsDAO();
+               try {                 
+                   ad.add(actor);
+                   AlertUtils.getAlert(ad.getMessAdd(), Alert.AlertType.INFORMATION).show();
+                   loadDataActors("");
+                   clearDataInActor();
+               } catch (Exception ex) {
+                   AlertUtils.getAlert(ad.getMessAdd(), Alert.AlertType.WARNING).show();
+               }   
+           }
         });
     }
-    
+    public void buttonResetHandlerActor(){
+        buttonClear.setOnAction((event) -> {
+            clearDataInActor();
+            
+        });
+    }
     
     
     //Khu vuc load data
@@ -224,9 +273,25 @@ public class FXMLNewFilmController implements Initializable {
         this.listActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
     
-    public void loadDataLimitAge(){
+    public void loadDataOrSetDefault(){
         List<Integer> limitAgeList = List.of(13, 16, 18);
         this.limitAge.setItems(FXCollections.observableList(limitAgeList));
+        
+        this.txtStart.setEditable(false);
+        this.txtStart.setValue(LocalDate.now());
+        
+        this.txtEnd.setEditable(false);
+        this.txtEnd.setValue(LocalDate.now().plusDays(10));
+        
+        this.txtImage.setEditable(false);
+        
+        this.errorFilmName.setText("");
+        this.errorDuration.setText("");
+        this.errorEnd.setText("");
+        this.errorStart.setText("");
+        this.errorImage.setText("");
+        this.errorFilmDes.setText("");
+        
     }
     public void loadDataLabel(){
         this.txtName.textProperty().addListener((observable) -> {
@@ -283,7 +348,14 @@ public class FXMLNewFilmController implements Initializable {
         this.labelImageURL.setText("");
         this.labelActor.setText("");  
     }
-    
+    public void clearDataInActor(){
+        txtActorsName.clear();
+        errActorsName.setText("");
+        txtBirthDay.getEditor().clear();
+        errBirthDay.setText("");
+        txtHomeTown.clear();
+        errBirthDay.setText("");
+    }
     
     //Khu vuc tao khung cho Trang(Bao gom ca nhung action cho khung duoc tao)
     public void createVBoxActors(){
@@ -292,8 +364,8 @@ public class FXMLNewFilmController implements Initializable {
         VBox vBoxName = new VBox();
         Label labelActorsName = new Label("Actor Name:");
         txtActorsName = new TextField();
-        errActorsName = new Label();
-        errActorsName.setVisible(false);
+        errActorsName = new Label("");
+        errActorsName.setWrapText(true);
         vBoxName.getChildren().addAll(txtActorsName,errActorsName);
         hBoxName.getChildren().addAll(labelActorsName,vBoxName);
         
@@ -302,8 +374,8 @@ public class FXMLNewFilmController implements Initializable {
         Label labelBDate = new Label("BOD:");
         txtBirthDay = new DatePicker();
         txtBirthDay.setEditable(false);
-        errBirthDay = new Label();
-        errBirthDay.setVisible(false);
+        errBirthDay = new Label("");
+        errBirthDay.setWrapText(true);
         vBoxDate.getChildren().addAll(txtBirthDay,errBirthDay);
         hBoxBDate.getChildren().addAll(labelBDate,vBoxDate);
         
@@ -311,8 +383,8 @@ public class FXMLNewFilmController implements Initializable {
         VBox vBoxHomeTown = new VBox();
         Label labelHomeTown = new Label("Home Town:");
         txtHomeTown = new TextField();
-        errHomeTown = new Label();
-        errHomeTown.setVisible(false);
+        errHomeTown = new Label("");
+        errHomeTown.setWrapText(true);
         vBoxHomeTown.getChildren().addAll(txtHomeTown,errHomeTown);
         hBoxHomeTown.getChildren().addAll(labelHomeTown,vBoxHomeTown);
             
@@ -321,31 +393,13 @@ public class FXMLNewFilmController implements Initializable {
         buttonClear = new Button("Clear");
         buttonActors.getChildren().addAll(buttonSave,buttonClear);
         
-        vBoxActors.getChildren().addAll(hBoxName,hBoxBDate,hBoxHomeTown,buttonActors);
-        
-        //Khu vuc check loi   
-        checkActors();
-        
-        
-        
-        
-        
-  
-        //Xu ly action cho nut
-        ActorsDAO ad = new ActorsDAO();
-        buttonSave.setOnAction((event) -> {
-            
-        });
-        
-        buttonClear.setOnAction((event) -> {
-            txtActorsName.clear();
-            txtBirthDay.getEditor().clear();
-            txtHomeTown.clear();
-        });
+        vBoxActors.getChildren().addAll(hBoxName,hBoxBDate,hBoxHomeTown,buttonActors);     
     }
     
-    public boolean checkActors(){
-        boolean check = false;
+    
+    //Check Loi or check keyWord
+    public Actors validateActors(){
+        Actors actor= new Actors();
         txtActorsName.textProperty().addListener((observable) -> {
             boolean errorName = false;
         try {
@@ -359,7 +413,7 @@ public class FXMLNewFilmController implements Initializable {
                 errActorsName.setVisible(false);
             }
         }   
-        });
+        });      
         txtBirthDay.setOnAction((event) -> {
             boolean errorBD = false;
             try {
@@ -374,11 +428,119 @@ public class FXMLNewFilmController implements Initializable {
                 }
             }
         });
-        actor.setHomeTown(txtHomeTown.getText().trim());
-        return check;
+        txtHomeTown.textProperty().addListener((observable) -> {
+            actor.setHomeTown(txtHomeTown.getText().trim());
+        });
         
+       return actor;
+    }
+   
+    
+    
+     public void checkKeyword(){
+        this.keywordGender.textProperty().addListener((o) -> {
+            this.loadDataGender(this.keywordGender.getText());
+        });
+        this.keywordActor.textProperty().addListener((o) -> {
+            this.loadDataActors(this.keywordActor.getText());
+        });
     }
     
-    
-    
+     public void validateFilm(){
+         Film film = new Film();
+         
+        this.txtName.textProperty().addListener((observable) -> {
+             boolean errorName = false;     
+        try {
+            film.setFilmName(txtName.getText().trim()); 
+            errorName=true;
+            String[] words = this.txtName.getText().split(" ");
+            String result = "P";
+            for (String word : words) {
+                result+=word.charAt(0);
+            }
+            result+=(LocalDate.now().getMonth().toString()+LocalDate.now().getDayOfMonth()+LocalTime.now().getMinute());
+            this.txtID.setText(result);
+        } catch (Exception ex) {
+            errorFilmName.setVisible(true);
+            errorFilmName.setText(ex.getMessage());
+        }finally{
+            if(errorName == true){
+                errorFilmName.setVisible(false);
+            }
+        }   
+        });
+        
+        this.txtDescription.textProperty().addListener((observable) -> {
+            film.setDescription(txtDescription.getText().trim());
+        });
+        
+        this.limitAge.setOnAction((event) -> {
+            film.setLimitAge(limitAge.getValue());
+        });
+        
+        txtStart.setOnAction((event) -> {
+            boolean errorBD = false;
+            try {
+                film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
+                errorBD=true;
+            } catch(Exception ex){
+                errorStart.setVisible(true);
+                errorStart.setText(ex.getMessage());            
+            }finally{
+                if(errorBD==true){
+                    errorStart.setVisible(false);
+                }
+            }
+        });
+        txtEnd.setOnAction((event) -> {
+            boolean errorBD = false;
+            try {
+                film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
+                errorBD=true;
+            } catch(Exception ex){
+                errorEnd.setVisible(true);
+                errorEnd.setText(ex.getMessage());            
+            }finally{
+                if(errorBD==true){
+                    errorEnd.setVisible(false);
+                }
+            }
+        });
+        txtImage.textProperty().addListener((observable) -> {
+            boolean errorName = false;
+        try {
+            film.setImageUrl(txtImage.getText()); 
+            errorName=true;
+        } catch (Exception ex) {
+            errorImage.setVisible(true);
+            errorImage.setText(ex.getMessage());
+        }finally{
+            if(errorName == true){
+                errorImage.setVisible(false);
+            }
+        }   
+        });   
+        txtDuration.textProperty().addListener((observable) -> {
+                boolean errorName = false;
+            try {
+                film.setDuration(Integer.parseInt(this.txtDuration.getText().trim()));
+                if(Integer.parseInt(this.txtDuration.getText().trim())<85 ||Integer.parseInt(this.txtDuration.getText().trim())>210){
+                    throw new Error("Duration must be 85<=duration<=210");
+                }
+                errorName = true;
+            } catch (Exception e) {
+                errorDuration.setVisible(true);
+                errorDuration.setText("Duration must be Integer");
+            }catch(Error ex){
+                errorDuration.setVisible(true);
+                errorDuration.setText(ex.getMessage());
+            }finally{
+                if(errorName == true){
+                errorDuration.setVisible(false);
+            }
+            }
+        });
+        
+    }
 }

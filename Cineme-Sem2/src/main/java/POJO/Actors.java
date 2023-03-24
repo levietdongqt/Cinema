@@ -67,8 +67,8 @@ public class Actors {
      * @throws java.lang.Exception
      */
     public void setActorName(String actorName) throws Exception {
-        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w ]+", actorName)){
-            throw new Exception("Actors Name Fails");
+        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w .]+", actorName)){
+            throw new Exception("Actors name don't have[&^@#$%] or empty");
         }else{
             this.actorName = actorName;
         }
@@ -89,7 +89,7 @@ public class Actors {
         Date patternBD1 = Date.valueOf("1933-01-01");
         Date patternBD2 = Date.valueOf("2010-01-01");
         if(birthDate.before(patternBD1) || birthDate.after(patternBD2)){
-            throw new Exception("BirthDay fails");
+            throw new Exception("BirthDay must 1933<yyyy<2010");
         }else{
             this.birthDate = birthDate;
         }

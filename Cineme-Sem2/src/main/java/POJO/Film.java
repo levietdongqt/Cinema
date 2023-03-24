@@ -2,8 +2,11 @@
 package POJO;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.*;
+import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -97,9 +100,14 @@ public class Film {
 
     /**
      * @param filmName the filmName to set
+     * @throws java.lang.Exception
      */
-    public void setFilmName(String filmName) {
-        this.filmName = filmName;
+    public void setFilmName(String filmName) throws Exception {
+         if(filmName.trim().isEmpty() || !Pattern.matches("[\\w ]+", filmName)){
+            throw new Exception("Film name don't have[&^@#$%] or empty");
+        }else{
+            this.filmName = filmName;
+        }
     }
 
     /**
@@ -126,8 +134,13 @@ public class Film {
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDate(Date startDate) throws Exception {
+        Date patternNow = Date.valueOf(LocalDate.now());
+        if(startDate.before(patternNow)){
+            throw new Exception("Start Date Film must > "+LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        }else{
+            this.startDate=startDate;
+        }
     }
 
     /**
@@ -140,8 +153,14 @@ public class Film {
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEndDate(Date endDate) throws Exception {
+        LocalDate startDatePlus = LocalDate.parse(this.startDate.toString()).plusDays(10);
+        Date patternEndDate = Date.valueOf(startDatePlus);
+        if(endDate.after(patternEndDate)){
+            throw new Exception("End Date must be >" + startDatePlus);
+        }else{
+            this.endDate=endDate;
+        }
     }
 
     /**
@@ -156,6 +175,7 @@ public class Film {
      */
     public void setDuration(int duration) {
         this.duration = duration;
+        
     }
 
     /**
@@ -168,8 +188,12 @@ public class Film {
     /**
      * @param imageUrl the imageUrl to set
      */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String imageUrl) throws Exception {
+        if(imageUrl.trim().isEmpty()){
+            throw new Exception("Image is not null");
+        }else{
+            this.imageUrl=imageUrl;
+        }
     }
 
     /**

@@ -50,33 +50,33 @@
       <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
             <TextField fx:id="txtName" />
-            <Label text="Label" />
+            <Label fx:id="errorFilmName" text="Label" />
          </children>
       </VBox>
       <VBox GridPane.columnIndex="1" GridPane.rowIndex="5">
          <children>
             <DatePicker fx:id="txtStart" prefHeight="25.0" prefWidth="204.0" />
-            <Label text="Label" />
+            <Label fx:id="errorStart" text="Label" />
          </children>
       </VBox>
       <VBox GridPane.columnIndex="1" GridPane.rowIndex="6">
          <children>
             <DatePicker fx:id="txtEnd" prefHeight="25.0" prefWidth="201.0" />
-            <Label text="Label" />
+            <Label fx:id="errorEnd" text="Label" />
          </children>
       </VBox>
       <Label text="END DATE:" GridPane.rowIndex="6" />
       <Label text="DURATION:" GridPane.rowIndex="7" />
       <VBox GridPane.columnIndex="1" GridPane.rowIndex="7">
          <children>
-            <TextField fx:id="txtDuration" />
-            <Label text="Label" />
+            <TextField fx:id="txtDuration" prefHeight="23.0" prefWidth="30.0" />
+            <Label fx:id="errorDuration" text="Label" />
          </children>
       </VBox>
       <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
             <TextArea fx:id="txtDescription" prefHeight="200.0" prefWidth="134.0" wrapText="true" />
-            <Label text="Label" />
+            <Label fx:id="errorFilmDes" text="Label" />
          </children>
       </VBox>
       <Label text="DESCRIPTION:" GridPane.rowIndex="3" />
@@ -167,6 +167,7 @@
          </children>
       </VBox>
       <VBox fx:id="vBoxActors" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-      <Button mnemonicParsing="false" text="ADD ACTORS" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+      <Button mnemonicParsing="false" onAction="#addActorButtonHandler" text="ADD ACTORS" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+      <Label fx:id="errorImage" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
    </children>
 </GridPane>
