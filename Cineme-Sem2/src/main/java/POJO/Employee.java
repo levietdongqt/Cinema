@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javassist.compiler.TokenId;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "Employee")
@@ -38,6 +40,7 @@ public class Employee {
     private LocalDate birthDate;
     private LocalDate startDate;
     private String email;
+  
     private boolean status;
 
     public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, String empPhone, Set<Bill> billList, Set<WorkSession> worksessionList) {
@@ -209,9 +212,14 @@ public class Employee {
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(LocalDate startDate) {
-
-        this.startDate = startDate == null ? LocalDate.now() : startDate;
+    public void setStartDate(LocalDate startDate) throws IOException {
+        if (startDate == null) {
+            throw new IOException("Start date cannot null");
+        } 
+        if (startDate.isAfter(LocalDate.now())) {
+            throw new IOException("Start date cannot be in the future");
+        }
+        this.startDate = startDate;
 
     }
 

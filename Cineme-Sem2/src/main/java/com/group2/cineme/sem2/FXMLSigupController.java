@@ -28,7 +28,10 @@ import javafx.scene.control.TextField;
 public class FXMLSigupController implements Initializable {
 
     Employee em = new Employee();
-
+    @FXML
+    private DatePicker suStart;
+    @FXML
+    private Label errStart;
     @FXML
     private Label errBirth;
 
@@ -79,7 +82,6 @@ public class FXMLSigupController implements Initializable {
 
     @FXML
     private TextField suUser;
-
 
     public void checkUser() {
         suUser.setOnKeyTyped(event -> {
@@ -178,9 +180,31 @@ public class FXMLSigupController implements Initializable {
     }
 
     public void checkStaus() {
+         suStatus.setSelected(true);
         boolean status = suStatus.isSelected();
-        suStatus.setSelected(true);
         em.setStatus(status);
+    }
+
+    public void checkStart()  {
+        suStart.setValue(LocalDate.now());
+        try {   
+            em.setStartDate(suStart.getValue());
+        } catch (Exception e) {
+            System.out.println("123");
+        }
+        
+
+        suStart.setOnAction(even -> {
+            LocalDate start = suStart.getValue();
+            try {
+                em.setStartDate(start);
+                errStart.setVisible(false);
+            } catch (IOException e) {
+                errStart.setVisible(true);
+                errStart.setText(e.getMessage());
+            }
+        });
+
     }
 
     public void close() {
@@ -189,6 +213,7 @@ public class FXMLSigupController implements Initializable {
 
     public void submit(ActionEvent event) throws Exception {
         try {
+            System.out.println(em.isStatus());
             EmployeeDAO dao = new EmployeeDAO();
             dao.add(em);
             this.suMail.clear();
@@ -211,6 +236,7 @@ public class FXMLSigupController implements Initializable {
         checkBirth();
         checkPosi();
         checkStaus();
+        checkStart();
 
     }
 
