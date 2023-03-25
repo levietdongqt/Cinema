@@ -1,6 +1,5 @@
 package POJO;
 
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -23,7 +22,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "Employee")
@@ -65,8 +63,6 @@ public class Employee {
     public Employee() {
     }
 
- 
-
     /**
      * @return the userName
      */
@@ -84,9 +80,9 @@ public class Employee {
         if (userName.length() > 20 || userName.length() < 3) {
             throw new IOException("Username cannot be longer than 20 characters and less than 3 characters ");
         }
-        
+
         this.userName = userName;
-       
+
     }
 
     /**
@@ -99,8 +95,6 @@ public class Employee {
     /**
      * @param empName the empName to set
      */
-    
-    
 //    public void setEmpName(String empName)throws IOException  {
 //        if (empName == null) {
 //            throw new IOException("Employee name cannot be null");
@@ -110,37 +104,34 @@ public class Employee {
 //        }
 //        this.empName = empName;
 //    }
-    
-public void setEmpName(String empName) throws IOException {
-    if (empName.isEmpty()) {
-        throw new IOException("Employee name cannot be empty");
+    public void setEmpName(String empName) throws IOException {
+        if (empName.isEmpty()) {
+            throw new IOException("Employee name cannot be empty");
+        }
+        if (!empName.matches("^[a-zA-Z ]+$")) {
+            throw new IOException("Employee name can only contain alphabetic characters");
+        }
+        if (empName.length() < 6 || empName.length() > 30) {
+            throw new IOException("Employee name must be between 6 and 30 char in length");
+        }
+        this.empName = empName;
     }
-    if (!empName.matches("^[a-zA-Z ]+$")) {
-        throw new IOException("Employee name can only contain alphabetic characters");
-    }
-    if (empName.length() < 6 || empName.length() > 30) {
-        throw new IOException("Employee name must be between 6 and 30 char in length");
-    }
-    this.empName = empName;
-}
-
 
     public String getEmpPhone() {
         return empPhone;
     }
-    
-    public void setEmpPhone(String empPhone) throws IOException{
-        if(empPhone.isEmpty()){
+
+    public void setEmpPhone(String empPhone) throws IOException {
+        if (empPhone.isEmpty()) {
             throw new IOException("Phone number cannot be empty");
         }
 
-         if(!Pattern.matches("\\d{10}", empPhone)){
-        throw new IOException("Phone number must be 10 digits");
+        if (!Pattern.matches("\\d{10}", empPhone)) {
+            throw new IOException("Phone number must be 10 digits");
+        }
+        this.empPhone = empPhone;
     }
-    }
-    
-    
-    
+
     /**
      * @return the password
      */
@@ -219,12 +210,9 @@ public void setEmpName(String empName) throws IOException {
      * @param startDate the startDate to set
      */
     public void setStartDate(LocalDate startDate) {
-        if (startDate == null) {
-            this.startDate = LocalDate.now();
-        } else {
-            this.startDate = startDate;
 
-        }
+        this.startDate = startDate == null ? LocalDate.now() : startDate;
+
     }
 
     /**
@@ -237,14 +225,14 @@ public void setEmpName(String empName) throws IOException {
     /**
      * @param email the email to set
      */
-    public void setEmail(String email) throws IOException{
+    public void setEmail(String email) throws IOException {
         String check = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         if (email.matches(check)) {
-            this.email= email;
-        }else{
+            this.email = email;
+        } else {
             throw new IOException("Invalid email format.");
         }
-        
+
     }
 
     /**
