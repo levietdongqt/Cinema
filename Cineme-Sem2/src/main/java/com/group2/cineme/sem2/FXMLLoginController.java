@@ -38,6 +38,9 @@ import javafx.event.ActionEvent;
  * @author BE BAU
  */
 public class FXMLLoginController implements Initializable {
+    Employee em = new Employee();
+     @FXML
+    private Label err;
 
     @FXML
     private Label cgv;
@@ -58,6 +61,9 @@ public class FXMLLoginController implements Initializable {
         System.exit(0);
     }
 
+    
+  
+    
     public void login(ActionEvent event) throws Exception {
         EmployeeDAO dao = new EmployeeDAO();
         boolean log = dao.checkaccount(user.getText(), pass.getText());
@@ -74,7 +80,8 @@ public class FXMLLoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        
         //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
         DropShadow original = new DropShadow(20, Color.valueOf("blue"));
         welcom.setEffect(original);

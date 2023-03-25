@@ -7,10 +7,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "Employee")
@@ -39,6 +42,20 @@ public class Employee {
     private String email;
     private boolean status;
 
+    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, String empPhone, Set<Bill> billList, Set<WorkSession> worksessionList) {
+        this.userName = userName;
+        this.empName = empName;
+        this.password = password;
+        this.position = position;
+        this.birthDate = birthDate;
+        this.startDate = startDate;
+        this.email = email;
+        this.status = status;
+        this.empPhone = empPhone;
+        this.billList = billList;
+        this.worksessionList = worksessionList;
+    }
+    private String empPhone;
     @OneToMany(mappedBy = "employee")
     private Set<Bill> billList;
 
@@ -48,18 +65,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, Set<Bill> billList, Set<WorkSession> worksessionList) {
-        this.userName = userName;
-        this.empName = empName;
-        this.password = password;
-        this.position = position;
-        this.birthDate = birthDate;
-        this.startDate = startDate;
-        this.email = email;
-        this.status = status;
-        this.billList = billList;
-        this.worksessionList = worksessionList;
-    }
+ 
 
     /**
      * @return the userName
@@ -72,13 +78,15 @@ public class Employee {
      * @param userName the userName to set
      */
     public void setUserName(String userName) throws IOException {
-        if (userName == null || userName.trim().isEmpty()) {
-            throw new IOException("Username cannot be null or empty");
-        }
+//        if ( userName.isEmpty()) {
+//            throw new IOException("Username cannot be null or empty");
+//        }
         if (userName.length() > 20 || userName.length() < 3) {
             throw new IOException("Username cannot be longer than 20 characters and less than 3 characters ");
         }
+        
         this.userName = userName;
+       
     }
 
     /**
@@ -91,18 +99,48 @@ public class Employee {
     /**
      * @param empName the empName to set
      */
-    public void setEmpName(String empName)throws IOException  {
-        if (empName == null) {
-            throw new IOException("Employee name cannot be null");
-        }
-        if (!empName.matches("^[a-zA-Z]+$")) {
-            throw new IOException("Employee name can only contain alphabetic characters");
-        }
-        this.empName = empName;
-//        return empName;
-//        return null;
+    
+    
+//    public void setEmpName(String empName)throws IOException  {
+//        if (empName == null) {
+//            throw new IOException("Employee name cannot be null");
+//        }
+//        if (!Pattern.matches("[a-zA-Z]+", empName)) {
+//            throw new IOException("Employee name can only contain alphabetic characters");
+//        }
+//        this.empName = empName;
+//    }
+    
+public void setEmpName(String empName) throws IOException {
+    if (empName.isEmpty()) {
+        throw new IOException("Employee name cannot be empty");
     }
+    if (!empName.matches("^[a-zA-Z ]+$")) {
+        throw new IOException("Employee name can only contain alphabetic characters");
+    }
+    if (empName.length() < 6 || empName.length() > 30) {
+        throw new IOException("Employee name must be between 6 and 30 char in length");
+    }
+    this.empName = empName;
+}
 
+
+    public String getEmpPhone() {
+        return empPhone;
+    }
+    
+    public void setEmpPhone(String empPhone) throws IOException{
+        if(empPhone.isEmpty()){
+            throw new IOException("Phone number cannot be empty");
+        }
+
+         if(!Pattern.matches("\\d{10}", empPhone)){
+        throw new IOException("Phone number must be 10 digits");
+    }
+    }
+    
+    
+    
     /**
      * @return the password
      */
@@ -119,7 +157,7 @@ public class Employee {
             throw new IOException("Password cannot be null or empty");
         }
         if (password.length() > 20 || password.length() < 6) {
-            throw new IOException("Password cannot be longer than 20 characters and less than 6 characters");
+            throw new IOException("Password cannot be longer than 20 char and less than 6 char");
         }
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -145,7 +183,7 @@ public class Employee {
      * @param position the position to set
      */
     public void setPosition(String position) throws IOException {
-        if (position != "Staff" || position != "Manager") {
+        if (position.equals("Choose a position")) {
             throw new IOException("Position must be Staff or Manager ");
         }
         this.position = position;
