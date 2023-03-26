@@ -23,19 +23,19 @@
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="57.0" prefWidth="135.0" />
     <ColumnConstraints hgrow="ALWAYS" maxWidth="338.5" minWidth="205.0" prefWidth="263.0" />
       <ColumnConstraints hgrow="ALWAYS" maxWidth="230.0" minWidth="99.0" prefWidth="213.5" />
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="250.0" />
+      <ColumnConstraints hgrow="ALWAYS" />
   </columnConstraints>
   <rowConstraints>
       <RowConstraints prefHeight="30.0" vgrow="ALWAYS" />
     <RowConstraints maxHeight="45.5" valignment="TOP" vgrow="ALWAYS" />
     <RowConstraints maxHeight="50.0" vgrow="ALWAYS" />
     <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="82.5" minHeight="41.5" prefHeight="41.5" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="84.5" minHeight="43.5" prefHeight="56.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="56.0" minHeight="41.5" prefHeight="46.5" vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints maxHeight="97.0" minHeight="35.0" prefHeight="57.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="159.0" minHeight="97.0" prefHeight="137.0" vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints vgrow="ALWAYS" />
@@ -88,7 +88,6 @@
                </viewport></ImageView>
          </children>
       </AnchorPane>
-      <TextField fx:id="txtImage" prefHeight="25.0" prefWidth="159.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <Button mnemonicParsing="false" onAction="#uploadImageHandler" prefHeight="23.0" prefWidth="211.0" text="LOAD FILE" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <Label text="GENDER | ACTOR:" GridPane.rowIndex="9" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
@@ -97,7 +96,6 @@
             <Button mnemonicParsing="false" onAction="#resetButtonHandler" prefHeight="23.0" prefWidth="75.0" text="RESET" />
          </children>
       </HBox>
-      <ChoiceBox fx:id="limitAge" prefHeight="25.0" prefWidth="51.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Text fill="#000000e8" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD NEW FILM">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -110,64 +108,42 @@
       <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <TextField fx:id="txtID" prefHeight="25.0" prefWidth="272.0" />
-            <Label text="Label" />
+            <Label fx:id="errorID" text="Label" />
          </children>
       </VBox>
       <Button fx:id="buttonInfo" mnemonicParsing="false" onAction="#showInformationButtonHandler" prefHeight="39.0" prefWidth="226.0" text="Show Information" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <HBox fx:id="hboxShowInfor" prefHeight="100.0" prefWidth="200.0" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
-         <children>
-            <Label text="Name:" />
-            <Label fx:id="labelName" text="Label" />
-         </children>
-      </HBox>
-      <VBox fx:id="vboxShowInfor" prefHeight="200.0" prefWidth="201.0" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3">
-         <children>
-            <HBox prefHeight="20.0" prefWidth="230.0">
-               <children>
-                  <Label text="Limit Age:" />
-                  <Label fx:id="labelAge" text="Label" />
-               </children>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="230.0">
-               <children>
-                  <Label text="Start Date:" />
-                  <Label fx:id="labelStartDate" text="Label" />
-               </children>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="230.0">
-               <children>
-                  <Label text="End Date" />
-                  <Label fx:id="labelEndDate" text="Label" />
-               </children>
-            </HBox>
-            <HBox prefHeight="22.0" prefWidth="230.0">
-               <children>
-                  <Label text="Duration:" />
-                  <Label fx:id="labelDuration" text="Label" />
-               </children>
-            </HBox>
-            <HBox prefHeight="21.0" prefWidth="230.0">
-               <children>
-                  <Label text="ImageURL:" />
-                  <Label fx:id="labelImageURL" text="Label" />
-               </children>
-            </HBox>
-            <HBox prefHeight="22.0" prefWidth="230.0">
-               <children>
-                  <Label text="Gender:" />
-                  <Label fx:id="labelGender" text="Label" />
-               </children>
-            </HBox>
-            <HBox prefHeight="25.0" prefWidth="230.0">
-               <children>
-                  <Label text="Actor:" />
-                  <Label fx:id="labelActor" text="Label" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
       <VBox fx:id="vBoxActors" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
       <Button mnemonicParsing="false" onAction="#addActorButtonHandler" text="ADD ACTORS" GridPane.columnIndex="3" GridPane.rowIndex="13" />
-      <Label fx:id="errorImage" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Label alignment="TOP_LEFT" contentDisplay="TOP" text="DIRECTOR:" GridPane.rowIndex="8" />
+      <VBox prefHeight="200.0" prefWidth="339.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+         <children>
+            <TextField fx:id="txtDirector" />
+            <Label fx:id="errorDirector" text="Label" />
+         </children>
+      </VBox>
+      <VBox prefHeight="36.0" prefWidth="339.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <children>
+            <ChoiceBox fx:id="limitAge" prefHeight="25.0" prefWidth="51.0" />
+            <Label fx:id="errorLimitAge" text="Label" />
+         </children>
+      </VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+         <children>
+            <ListView fx:id="listChoiceGenre" prefHeight="204.0" prefWidth="121.0" />
+            <ListView fx:id="listChoiceActors" prefHeight="204.0" prefWidth="175.0" />
+         </children>
+      </HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+         <children>
+            <TextField fx:id="txtImage" prefHeight="25.0" prefWidth="159.0" />
+            <Label fx:id="errorImage" text="Label" />
+         </children>
+      </VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+         <children>
+            <Button mnemonicParsing="false" onAction="#removeGenre" text="Remove Genre" />
+            <Button mnemonicParsing="false" onAction="#removeActor" text="Remove Actors" />
+         </children>
+      </HBox>
    </children>
 </GridPane>

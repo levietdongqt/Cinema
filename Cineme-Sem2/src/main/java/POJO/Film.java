@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.*;
 import java.util.regex.Pattern;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ public class Film {
 
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "ActorOfFilm",
             joinColumns = {
@@ -50,7 +51,7 @@ public class Film {
     )
     private Set<Actors> listActors = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "FilmGenreDetails",
             joinColumns = {
@@ -213,8 +214,12 @@ public class Film {
     /**
      * @param director the director to set
      */
-    public void setDirector(String director) {
-        this.director = director;
+    public void setDirector(String director) throws Error{
+        if (director.trim().isEmpty() || !Pattern.matches("[\\w ]+", director)) {
+            throw new Error("Director don't have[&^@#$%!^*()] or empty");
+        } else {
+            this.director= director;
+        }
     }
 
     /**
@@ -241,8 +246,11 @@ public class Film {
     /**
      * @param description the description to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String description) throws Error{
+        if(description.length()<=10){
+            throw new Error("Description must be greater than 10 letter");
+        }
+        this.description=description;
     }
 
     /**
