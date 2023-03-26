@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -133,6 +134,8 @@ public class FXMLNewFilmController implements Initializable {
     private Button buttonSave;
     private Button buttonClear;
     
+    private Film film;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Set du lieu cho Label
@@ -152,7 +155,7 @@ public class FXMLNewFilmController implements Initializable {
         validateActors();
         buttonSaveHandlerActor(validateActors());
         buttonResetHandlerActor();
-        validateFilm();
+        film = validateFilm();
         
         
         
@@ -187,7 +190,11 @@ public class FXMLNewFilmController implements Initializable {
     }
     
     public void saveButtonHandler(ActionEvent event) throws IOException{
-
+        if((errorFilmName.isVisible()==true) || (errorImage.isVisible()==true) || (errorDuration.isVisible()==true) || (errorStart.isVisible()==true) || (errorEnd.isVisible()==true)){
+            System.out.println("false");  
+        }else{
+            System.out.println(film.getFilmID());
+        }
  
     }
     
@@ -280,11 +287,12 @@ public class FXMLNewFilmController implements Initializable {
         this.txtStart.setEditable(false);
         this.txtStart.setValue(LocalDate.now());
         
+        
         this.txtEnd.setEditable(false);
         this.txtEnd.setValue(LocalDate.now().plusDays(10));
         
         this.txtImage.setEditable(false);
-        
+
         this.errorFilmName.setText("");
         this.errorDuration.setText("");
         this.errorEnd.setText("");
@@ -446,9 +454,10 @@ public class FXMLNewFilmController implements Initializable {
         });
     }
     
-     public void validateFilm(){
+     public Film validateFilm(){
          Film film = new Film();
-         
+         film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
+         film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
         this.txtName.textProperty().addListener((observable) -> {
              boolean errorName = false;     
         try {
@@ -484,10 +493,11 @@ public class FXMLNewFilmController implements Initializable {
             try {
                 film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
                 errorBD=true;
-            } catch(Exception ex){
+            } catch(Error | NullPointerException ex){
                 errorStart.setVisible(true);
                 errorStart.setText(ex.getMessage());            
-            }finally{
+            }
+            finally{
                 if(errorBD==true){
                     errorStart.setVisible(false);
                 }
@@ -498,10 +508,14 @@ public class FXMLNewFilmController implements Initializable {
             try {
                 film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
                 errorBD=true;
-            } catch(Exception ex){
+            } catch(Error ex){
                 errorEnd.setVisible(true);
                 errorEnd.setText(ex.getMessage());            
-            }finally{
+            }catch(NullPointerException ex){
+                errorEnd.setVisible(true);
+                errorEnd.setText("Must be set startDate");           
+            }
+            finally{
                 if(errorBD==true){
                     errorEnd.setVisible(false);
                 }
@@ -529,7 +543,7 @@ public class FXMLNewFilmController implements Initializable {
                     throw new Error("Duration must be 85<=duration<=210");
                 }
                 errorName = true;
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 errorDuration.setVisible(true);
                 errorDuration.setText("Duration must be Integer");
             }catch(Error ex){
@@ -541,6 +555,10 @@ public class FXMLNewFilmController implements Initializable {
             }
             }
         });
+        txtID.textProperty().addListener((observable) -> {
+            film.setFilmID(this.txtID.getText());
+        });
+        return film;
         
     }
 }

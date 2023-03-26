@@ -1,7 +1,7 @@
-
 package POJO;
 
 import java.sql.Date;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Film {
+
     @Id
     private String filmID;
     @Column(nullable = false)
@@ -31,32 +32,35 @@ public class Film {
     private int duration;
     @Column(nullable = false)
     private String imageUrl;
-    
+
     private String director;
-    
+
     private int viewFilm;
-    
+
     private String description;
-    
-    
+
     @ManyToMany
     @JoinTable(
             name = "ActorOfFilm",
-            joinColumns = {@JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
-            inverseJoinColumns = { @JoinColumn(name ="actorID") } // course_id là khoá ngoại ở bảng trung gian
-            
+            joinColumns = {
+                @JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
+            inverseJoinColumns = {
+                @JoinColumn(name = "actorID")} // course_id là khoá ngoại ở bảng trung gian
+
     )
     private Set<Actors> listActors = new HashSet<>();
-    
+
     @ManyToMany
     @JoinTable(
             name = "FilmGenreDetails",
-            joinColumns = {@JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
-            inverseJoinColumns = { @JoinColumn(name ="fGenreID") } // course_id là khoá ngoại ở bảng trung gian
-            
+            joinColumns = {
+                @JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
+            inverseJoinColumns = {
+                @JoinColumn(name = "fGenreID")} // course_id là khoá ngoại ở bảng trung gian
+
     )
     private Set<FilmGenre> listGenre = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "film")
     private Set<Schedule> listSchedule = new HashSet<>();
 
@@ -76,6 +80,7 @@ public class Film {
         this.viewFilm = viewFilm;
         this.description = description;
     }
+
     //End Contructors
     /**
      * @return the filmID
@@ -103,9 +108,9 @@ public class Film {
      * @throws java.lang.Exception
      */
     public void setFilmName(String filmName) throws Exception {
-         if(filmName.trim().isEmpty() || !Pattern.matches("[\\w ]+", filmName)){
+        if (filmName.trim().isEmpty() || !Pattern.matches("[\\w ]+", filmName)) {
             throw new Exception("Film name don't have[&^@#$%] or empty");
-        }else{
+        } else {
             this.filmName = filmName;
         }
     }
@@ -134,12 +139,12 @@ public class Film {
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(Date startDate) throws Exception {
+    public void setStartDate(Date startDate) throws Error, NullPointerException {
         Date patternNow = Date.valueOf(LocalDate.now());
-        if(startDate.before(patternNow)){
-            throw new Exception("Start Date Film must > "+LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        }else{
-            this.startDate=startDate;
+        if (startDate.before(patternNow)) {
+            throw new Error("Start Date Film must > " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        } else {
+            this.startDate = startDate;
         }
     }
 
@@ -153,14 +158,16 @@ public class Film {
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(Date endDate) throws Exception {
-        LocalDate startDatePlus = LocalDate.parse(this.startDate.toString()).plusDays(10);
+    public void setEndDate(Date endDate) throws Error, NullPointerException {
+        String startDateS = this.startDate.toString();
+        LocalDate startDatePlus = LocalDate.parse(startDateS).plusDays(10);
         Date patternEndDate = Date.valueOf(startDatePlus);
-        if(endDate.after(patternEndDate)){
-            throw new Exception("End Date must be >" + startDatePlus);
-        }else{
-            this.endDate=endDate;
+        if (endDate.before(patternEndDate)) {
+            throw new Error("End Date must be >" + startDatePlus.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        } else {
+            this.endDate = endDate;
         }
+
     }
 
     /**
@@ -175,7 +182,7 @@ public class Film {
      */
     public void setDuration(int duration) {
         this.duration = duration;
-        
+
     }
 
     /**
@@ -189,10 +196,10 @@ public class Film {
      * @param imageUrl the imageUrl to set
      */
     public void setImageUrl(String imageUrl) throws Exception {
-        if(imageUrl.trim().isEmpty()){
+        if (imageUrl.trim().isEmpty()) {
             throw new Exception("Image is not null");
-        }else{
-            this.imageUrl=imageUrl;
+        } else {
+            this.imageUrl = imageUrl;
         }
     }
 
@@ -279,8 +286,5 @@ public class Film {
     public void setListSchedule(Set<Schedule> listSchedule) {
         this.listSchedule = listSchedule;
     }
-    
-    
-    
-    
+
 }
