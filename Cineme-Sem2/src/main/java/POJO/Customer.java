@@ -1,7 +1,6 @@
 
 package POJO;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -50,13 +49,13 @@ public class Customer {
     /**
      * @param cusPhone the cusPhone to set
      */
-    public void setCusPhone(String cusPhone) throws IOException {
+    public void setCusPhone(String cusPhone) throws Exception {
         if (cusPhone.isEmpty()) {
-            throw new IOException("Phone number cannot be empty");
+            throw new Exception("Phone number cannot be empty");
         }
 
         if (!Pattern.matches("\\d{10,}", cusPhone)) {
-            throw new IOException("Phone number must be atleast 10 digits");
+            throw new Exception("Phone number must be atleast 10 digits");
         }
         this.cusPhone = cusPhone;
     }
@@ -71,15 +70,15 @@ public class Customer {
     /**
      * @param customerName the customerName to set
      */
-    public void setCustomerName(String customerName) throws IOException {
+    public void setCustomerName(String customerName) throws Exception {
         if (customerName.isEmpty()) {
-            throw new IOException("Customer name cannot be empty");
+            throw new Exception("Customer name cannot be empty");
         }
         if (!customerName.matches("^[a-zA-Z ]+$")) {
-            throw new IOException("Customer name can only contain alphabetic characters");
+            throw new Exception("Customer name can only contain alphabetic characters");
         }
         if (customerName.length() < 6 || customerName.length() > 30) {
-            throw new IOException("Customer name must be between 6 and 30 char in length");
+            throw new Exception("Customer name must be between 6 and 30 char in length");
         }
         this.customerName = customerName;
     }
@@ -94,12 +93,12 @@ public class Customer {
     /**
      * @param address the address to set
      */
-    public void setAddress(String address) throws IOException {
+    public void setAddress(String address) throws Exception {
         if (address.isEmpty()) {
-            throw new IOException("Address cant be empty");
+            throw new Exception("Address cant be empty");
         }
         if (address.length() < 6 || address.length() > 30) {
-            throw new IOException("Address must be between 6 and 30 char in length");
+            throw new Exception("Address must be between 6 and 30 char in length");
         }
         this.address = address;
     }
@@ -114,11 +113,11 @@ public class Customer {
     /**
      * @param birthDate the birthDate to set
      */
-    public void setBirthDate(LocalDate birthDate) throws IOException {
+    public void setBirthDate(LocalDate birthDate) throws Exception {
         LocalDate today = LocalDate.now();
         long years = birthDate.until(today, ChronoUnit.YEARS);
         if (years < 18) {
-            throw new IOException("Age must be at least 18.");
+            throw new Exception("Age must be at least 18.");
         }
         this.birthDate = birthDate;
     }
@@ -133,12 +132,12 @@ public class Customer {
     /**
      * @param email the email to set
      */
-    public void setEmail(String email) throws IOException {
+    public void setEmail(String email) throws Exception {
         String check = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         if (email.matches(check)) {
             this.email = email;
         } else {
-            throw new IOException("Invalid email format.");
+            throw new Exception("Invalid email format.");
         }
     }
 
@@ -152,9 +151,9 @@ public class Customer {
     /**
      * @param totalPoints the totalPoints to set
      */
-    public void setTotalPoints(int totalPoints) throws IOException {
+    public void setTotalPoints(int totalPoints) throws Exception {
         if (totalPoints < 0) {
-            throw new IOException("Total Points must be 0 or higer");
+            throw new Exception("Total Points must be 0 or higer");
         }
         this.totalPoints = totalPoints;
     }

@@ -1,131 +1,153 @@
 package com.group2.cineme.sem2;
 
+import DAO.CustomerDAO;
 import POJO.Customer;
-import java.io.IOException;
+import Utils.AlertUtils;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class FXMLCustomerController implements Initializable{
+public class FXMLCustomerController implements Initializable {
+
     Customer cus = new Customer();
+    CustomerDAO cusDAO = new CustomerDAO();
 
     @FXML
-    private AnchorPane inname;
-    
+    private AnchorPane errpane;
+
     @FXML
-    private AnchorPane inbday;
-    
-    @FXML
-    private AnchorPane inaddr;
-    
-    @FXML
-    private AnchorPane inphone;
-    
-    @FXML
-    private AnchorPane inemail;
-    
-    @FXML
-    private AnchorPane inpoints;
-    
+    private Label errlabel;
+
     @FXML
     private TextField cusname;
-    
+
     @FXML
     private DatePicker cusbday;
-    
+
     @FXML
     private TextField cusaddr;
-    
+
     @FXML
     private TextField cusphone;
-    
+
     @FXML
     private TextField cusemail;
-    
+
     @FXML
     private TextField cuspoints;
 
-    
     private void checkName() {
         cusname.setOnKeyTyped(event -> {
             String name = cusname.getText().trim();
             try {
-                inname.setVisible(false);
+                errpane.setVisible(false);
                 cus.setCustomerName(name);
-            } catch (IOException e) {
-                inname.setVisible(true);
+            } catch (Exception e) {
+                errpane.setVisible(true);
+                errlabel.setText("Invalid Name!\n" + e);
             }
         });
     }
 
     private void checkBday() {
-        cusbday.setOnKeyTyped(event -> {
-           LocalDate birth = cusbday.getValue();
+        cusbday.setOnAction(event -> {
+            LocalDate birth = cusbday.getValue();
             try {
                 cus.setBirthDate(birth);
-                inbday.setVisible(false);
-            } catch (IOException e) {
-                inbday.setVisible(true);
+                errpane.setVisible(false);
+            } catch (Exception e) {
+                errpane.setVisible(true);
+                errlabel.setText("Invalid Birth Day!\n" + e);
             }
         });
     }
 
     private void checkAddr() {
-        cusbday.setOnKeyTyped(event -> {
-           String addr = cusaddr.getText().trim();
+        cusaddr.setOnKeyTyped(event -> {
             try {
-                cus.setAddress(addr);
-                inaddr.setVisible(false);
-            } catch (IOException e) {
-                inaddr.setVisible(true);
+                cus.setAddress(cusaddr.getText().trim());
+                errpane.setVisible(false);
+            } catch (Exception e) {
+                errpane.setVisible(true);
+                errlabel.setText("Invalid Address!\n" + e);
             }
         });
     }
 
     private void checkPhone() {
         cusphone.setOnKeyTyped(event -> {
-           String addr = cusphone.getText().trim();
             try {
-                cus.setCusPhone(addr);
-                inphone.setVisible(false);
-            } catch (IOException e) {
-                inphone.setVisible(true);
+                cus.setCusPhone(cusphone.getText().trim());
+                errpane.setVisible(false);
+            } catch (Exception e) {
+                errpane.setVisible(true);
+                errlabel.setText("Invalid Phone!\n" + e);
             }
         });
     }
 
     private void checkEmail() {
         cusemail.setOnKeyTyped(event -> {
-           String email = cusemail.getText().trim();
             try {
-                cus.setEmail(email);
-                inemail.setVisible(false);
-            } catch (IOException e) {
-                inemail.setVisible(true);
+                cus.setEmail(cusemail.getText().trim());
+                errpane.setVisible(false);
+            } catch (Exception e) {
+                errpane.setVisible(true);
+                errlabel.setText("Invalid Email!\n" + e);
             }
         });
     }
 
     private void checkPoints() {
         cuspoints.setOnKeyTyped(event -> {
-           Integer points = Integer.parseInt(cuspoints.getText().trim());
-           
+
             try {
+                Integer points = Integer.parseInt(cuspoints.getText().trim());
                 cus.setTotalPoints(points);
-                inpoints.setVisible(false);
-            } catch (IOException e) {
-                inpoints.setVisible(true);
+                errpane.setVisible(false);
+            } catch (Exception e) {
+                errpane.setVisible(true);
+                errlabel.setText("Invalid Total Points!\n" + e);
             }
         });
     }
 
-    @Override
+    public void reset(ActionEvent event) {
+        cusname.clear();
+        cusaddr.clear();
+        cusbday.setValue(null);
+        cusemail.clear();
+        cusphone.clear();
+        cuspoints.clear();
+    }
+
+    public void submit(ActionEvent event) throws Exception {
+        try {
+
+            cusDAO.add(cus);
+            cusname.clear();
+            cusaddr.clear();
+            cusbday.setValue(null);
+            cusemail.clear();
+            cusphone.clear();
+            cuspoints.clear();
+        } catch (Exception ex) {
+            AlertUtils.getAlert("All of the field is required", Alert.AlertType.ERROR).show();
+        }
+    }
+
     public void initialize(URL url, ResourceBundle rb) {
+
         checkName();
         checkBday();
         checkAddr();
@@ -134,5 +156,4 @@ public class FXMLCustomerController implements Initializable{
         checkPoints();
     }
 
-    
 }
