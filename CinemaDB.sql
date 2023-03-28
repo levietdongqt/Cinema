@@ -176,7 +176,7 @@ go
 CREATE TABLE Schedule (
 	[scheduleID] varchar(20) primary key,
 	[filmID]  varchar(20),
-	[rtDetailsID] int
+	[rtDetailsID] int,
 	[startTime] datetime,
 	[endTime] datetime,
 	[note] varchar(255),
