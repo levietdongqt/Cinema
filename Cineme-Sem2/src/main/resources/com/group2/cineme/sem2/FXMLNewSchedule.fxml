@@ -56,7 +56,6 @@
             <Insets top="5.0" />
          </padding>
       </HBox>
-      <TextField fx:id="txtName" editable="false" maxWidth="200.0" prefHeight="23.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <DatePicker fx:id="date" prefHeight="23.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <VBox alignment="CENTER" prefHeight="46.0" prefWidth="665.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
          <children>
@@ -108,5 +107,6 @@
             <TableView fx:id="tableViewTime" prefWidth="665.0" />
          </children>
       </VBox>
+      <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
 </GridPane>

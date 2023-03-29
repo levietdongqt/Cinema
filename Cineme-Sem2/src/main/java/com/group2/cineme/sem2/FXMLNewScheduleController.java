@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -82,7 +83,7 @@ public class FXMLNewScheduleController implements Initializable {
     private CheckBox checkBoxYesNo;
 
     @FXML
-    private TextField txtName;
+    private ComboBox<Film> comboBoxFilm;
     @FXML
     private TextField txtID;
     @FXML
@@ -103,24 +104,30 @@ public class FXMLNewScheduleController implements Initializable {
     private boolean activeNow = true;
     int count = 3;
     List<RoomTypeDetails> rtDetailList = new ArrayList<>();
-
+    List<Film> listFilm = new ArrayList<>();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         checkValidDate();
         comboBoxRoomHanlder();
         yesNoHanlder();
         creatTableView();
-        FilmDAO filmDAO = new FilmDAO();
-        try {
-            selectedFilm = filmDAO.getById("PA729525400", Film.class);
-        } catch (Exception ex) {
-            Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        txtName.setText(selectedFilm.getFilmName());
-        txtName.disableProperty();
 
     }
 
+    void getFilm(Film film) throws Exception {
+        selectedFilm = film;       
+        FilmDAO filmDAO = new FilmDAO();
+        filmDAO.getAll("Film").forEach((t) -> {
+            listFilm.add(t);
+        });
+       comboBoxFilm.setItems(FXCollections.observableArrayList(listFilm));
+       comboBoxFilm.setValue(film);          
+    }
+    
+    @FXML
+    private void setUpComboBoxFilm () {
+        selectedFilm = comboBoxFilm.getValue();      
+    }
     private void yesNoHanlder() {
         checkBoxYesNo.setSelected(true);
         checkBoxYesNo.setOnAction((t) -> {
@@ -289,11 +296,11 @@ public class FXMLNewScheduleController implements Initializable {
                 try {
                     String info = "Are you sure? \n Delete " + schedule.getStartTime().toLocalTime() + " - " + schedule.getEndTime().toLocalTime();
                     Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
-                   Optional<ButtonType> result = alert.showAndWait();
-                   if(result.get().getText().equalsIgnoreCase("OK")){
-                       scheduleDAO.delete(schedule.getScheduleID(), Schedule.class);
-                       loadTableView();
-                   }
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get().getText().equalsIgnoreCase("OK")) {
+                        scheduleDAO.delete(schedule.getScheduleID(), Schedule.class);
+                        loadTableView();
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -214,6 +214,21 @@ public class FXMLFilmController implements Initializable {
             });
             return new SimpleObjectProperty<>(button);
         });
+        TableColumn<Film,Button> colNewSchedule = new TableColumn<>(); 
+        colNewSchedule.setCellValueFactory((o) -> {
+            Film p = o.getValue();
+            Button button =new Button("New Schedule");       
+            button.setOnAction((t) -> {
+                try {
+                   FXMLLoader fxmlLoader = App.setView("FXMLNewSchedule");
+                    FXMLNewScheduleController newScheduleControl = fxmlLoader.getController();
+                    newScheduleControl.getFilm(p);
+                } catch (Exception ex) {
+                    Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            return new SimpleObjectProperty<>(button);
+        });
         
         TableColumn<Film,Integer> indexColumn = new TableColumn<>("Index");
         indexColumn.setCellFactory((o) -> new TableCell<Film,Integer>(){
@@ -237,7 +252,7 @@ public class FXMLFilmController implements Initializable {
        
         
         this.tableViewFilm.getColumns().addAll(indexColumn,colFilmID,colImageURL,colFilmName,colGenre,colDirector,colActors,colDuration,colStartDate,colEndDate,
-                colLimitAge,colViewFilm,colDescription,colButtonEdit,colButtonDelete);
+                colLimitAge,colViewFilm,colDescription,colButtonEdit,colButtonDelete,colNewSchedule);
         
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewFilm.getColumns();
         for (TableColumn<Film, ?> column : columns) {
