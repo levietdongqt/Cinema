@@ -147,7 +147,8 @@ public class FXMLEditFilmController implements Initializable {
         validateActors();
         buttonSaveHandlerActor(validateActors());
         buttonResetHandlerActor();
-        film = validateFilm();
+        validateFilm();
+        
         
 
     }
@@ -180,24 +181,23 @@ public class FXMLEditFilmController implements Initializable {
 
     }
 
-    public void saveButtonHandler(ActionEvent event) {
+    public void updateButtonHandler(ActionEvent event){
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
                 || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true)) {      
-            AlertUtils.getAlert("Check Information you want to insert", Alert.AlertType.ERROR).show();
+            AlertUtils.getAlert("Check Information you want to update", Alert.AlertType.ERROR).show();
         } else {
-            try {
-                if (FilmDAO.getByID(film.getFilmID()) != null) {
-                    errorID.setText("ID' Film is existed");
-                } else {
-                    FilmDAO fd = new FilmDAO();
-                    fd.add(film);
-                    fd.saveActorsforFilm(film.getFilmID(), setActors);
-                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
-                    AlertUtils.getAlert(fd.getMessAdd(), Alert.AlertType.INFORMATION).show();
-                }
+            FilmDAO fd = new FilmDAO();
+            try {   
+                    film = loadDataForUpdate();
+                    System.out.println(film.getLimitAge());
+                    fd = new FilmDAO();
+                    fd.update(film);
+//                    fd.saveActorsforFilm(film.getFilmID(), setActors);
+//                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
+                    AlertUtils.getAlert(fd.getMessUpdate(), Alert.AlertType.INFORMATION).show();         
             } catch (Exception e) {
-                errorID.setText("ID is not null");
+               AlertUtils.getAlert(fd.getMessUpdate(), Alert.AlertType.ERROR).show(); 
             }
         }
 
@@ -592,9 +592,25 @@ public class FXMLEditFilmController implements Initializable {
             this.errorLimitAge.setText("");
         }   
     }
+    public Film loadDataForUpdate() throws Exception{
+        Film film = new Film();
+        film.setFilmID(txtID.getText());
+        film.setFilmName(txtName.getText());
+        film.setDescription(txtDescription.getText());
+        film.setLimitAge(limitAge.getValue());
+        film.setDuration(Integer.parseInt(txtDuration.getText()));
+        film.setDirector(txtDirector.getText());
+        film.setImageUrl(txtImage.getText());
+        film.setListGenre(setFilmGenre);
+        film.setListActors(setActors);
+        film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
+        film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
+        
+        return film;
+    }
     
     //Lay du lieu tu trang Home de Edit
-    public void setFilm(Film film){
+    public void setFilm(Film film) throws Exception{
         
         this.film = film;
         this.txtID.setText(this.film.getFilmID());
@@ -615,7 +631,6 @@ public class FXMLEditFilmController implements Initializable {
         listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
         this.setActors = this.film.getListActors();
         listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
-        
-        
+//        this.film = loadDataForUpdate();
     }
 }

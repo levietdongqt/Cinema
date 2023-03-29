@@ -93,7 +93,7 @@
       <Label text="GENDER | ACTOR:" GridPane.rowIndex="9" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
          <children>
-            <Button mnemonicParsing="false" onAction="#saveButtonHandler" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
+            <Button mnemonicParsing="false" onAction="#updateButtonHandler" prefHeight="23.0" prefWidth="73.0" text="UPDATE" />
             <Button mnemonicParsing="false" onAction="#resetButtonHandler" prefHeight="23.0" prefWidth="75.0" text="RESET" />
          </children>
       </HBox>

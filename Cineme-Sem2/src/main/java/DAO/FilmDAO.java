@@ -88,6 +88,8 @@ public class FilmDAO extends GenericDAO<Film, String> {
             listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }finally{
+            session.close();
         }
         return listFilm;
         

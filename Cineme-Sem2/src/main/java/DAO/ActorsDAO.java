@@ -33,7 +33,7 @@ public class ActorsDAO extends GenericDAO<Actors, Integer>{
             listActors = query.getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
-        }       
+        }     
         return listActors;
     }
 }
