@@ -36,7 +36,7 @@ public class HibernateUtils {
             // Cấu hình cache 
         props.put(Environment.USE_SECOND_LEVEL_CACHE, "true"); 
          props.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory"); 
-       props.put(Environment.USE_QUERY_CACHE, "false");
+       props.put(Environment.USE_QUERY_CACHE, "true");
      
         // Cài đặt cache tự động xoá các đối tượng ít sử dụng
        props.put("hibernate.cache.eviction_strategy", "LRU");    //LRU (Least Recently Used), chiến lược sử dụng giá trị thời gian để xác định đối tượng ít sử dụng nhất
@@ -65,6 +65,8 @@ public class HibernateUtils {
         conf.addAnnotatedClass(Promotion.class);
         conf.addAnnotatedClass(Employee.class);
         conf.addAnnotatedClass(RoomTypeDetails.class);
+        conf.addAnnotatedClass(ActorOfFilm.class);
+        conf.addAnnotatedClass(FilmGenreDetails.class);
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);
 //        System.out.println(props.getProperty(Environment.DRIVER));

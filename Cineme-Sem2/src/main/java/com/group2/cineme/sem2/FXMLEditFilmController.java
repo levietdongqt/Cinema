@@ -55,7 +55,7 @@ import javafx.stage.FileChooser;
  *
  * @author thuhuytran
  */
-public class FXMLNewFilmController implements Initializable {
+public class FXMLEditFilmController implements Initializable {
 
     Set<FilmGenre> setFilmGenre = new HashSet<>();
     Set<Actors> setActors = new HashSet<>();
@@ -296,6 +296,8 @@ public class FXMLNewFilmController implements Initializable {
     }
 
     public void loadDataOrSetDefault() {
+//        this.txtID.setText(this.film.getFilmID());
+//        this.txtName.setText(this.film.getFilmName());
         List<Integer> limitAgeList = List.of(13, 16, 18);
         this.limitAge.setItems(FXCollections.observableList(limitAgeList));
 
@@ -311,9 +313,9 @@ public class FXMLNewFilmController implements Initializable {
         this.errorLimitAge.setText("");
         this.errorFilmName.setText("");
         this.errorDuration.setText("");
-        this.errorEnd.setText("loi");
+        this.errorEnd.setText("");
         this.errorEnd.setVisible(false);
-        this.errorStart.setText("loi");
+        this.errorStart.setText("");
         this.errorStart.setVisible(false);
         this.errorImage.setText("");
         this.errorFilmDes.setText("");
@@ -440,13 +442,6 @@ public class FXMLNewFilmController implements Initializable {
             try {
                 film.setFilmName(txtName.getText().trim());
                 errorName = true;
-                String[] words = this.txtName.getText().split(" ");
-                String result = "P";
-                for (String word : words) {
-                    result += word.charAt(0);
-                }
-                result += (LocalTime.now().getNano());
-                this.txtID.setText(result);
             } catch (Exception ex) {
                 errorFilmName.setVisible(true);
                 errorFilmName.setText(ex.getMessage());
@@ -595,7 +590,32 @@ public class FXMLNewFilmController implements Initializable {
             this.errorLimitAge.setText(errorPopup);
         }else{
             this.errorLimitAge.setText("");
-        }
+        }   
+    }
+    
+    //Lay du lieu tu trang Home de Edit
+    public void setFilm(Film film){
+        
+        this.film = film;
+        this.txtID.setText(this.film.getFilmID());
+        this.txtName.setText(this.film.getFilmName());
+        this.txtDescription.setText(this.film.getDescription());
+        this.limitAge.setValue(this.film.getLimitAge());
+        this.txtStart.setValue(LocalDate.parse(this.film.getStartDate().toString()));
+        this.txtEnd.setValue(LocalDate.parse(this.film.getEndDate().toString()));
+        this.txtDuration.setText(String.format("%d",this.film.getDuration()));
+        this.txtDirector.setText(this.film.getDirector());
+        
+        this.txtImage.setText(this.film.getImageUrl());
+        File f = new File(this.film.getImageUrl());
+        Image imageFilm = new Image(f.toURI().toString());
+        imageViewFilm.setImage(imageFilm);
+        
+        this.setFilmGenre = this.film.getListGenre();
+        listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
+        this.setActors = this.film.getListActors();
+        listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
+        
         
     }
 }

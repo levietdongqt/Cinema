@@ -25,7 +25,7 @@ public class ActorsDAO extends GenericDAO<Actors, Integer>{
             if(!kw.isEmpty()){
                 hql += " WHERE actorName like:kw";
             }
-            Query query = session.createQuery(hql);
+            Query query = session.createQuery(hql).setCacheable(true);
             if(!kw.isEmpty()){
                 query.setParameter("kw", '%'+kw+'%');
             }     

@@ -1,17 +1,24 @@
 
 package POJO;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.*;
+import java.util.regex.Pattern;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-public class Actors {
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Actors implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int actorID;
@@ -63,9 +70,14 @@ public class Actors {
 
     /**
      * @param actorName the actorName to set
+     * @throws java.lang.Exception
      */
-    public void setActorName(String actorName) {
-        this.actorName = actorName;
+    public void setActorName(String actorName) throws Exception {
+        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w .]+", actorName)){
+            throw new Exception("Actors name don't have[&^@#$%] or empty");
+        }else{
+            this.actorName = actorName;
+        }
     }
 
     /**
@@ -77,9 +89,16 @@ public class Actors {
 
     /**
      * @param birthDate the birthDate to set
+     * @throws java.lang.Exception
      */
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthDate(Date birthDate) throws Exception {
+        Date patternBD1 = Date.valueOf("1933-01-01");
+        Date patternBD2 = Date.valueOf("2010-01-01");
+        if(birthDate.before(patternBD1) || birthDate.after(patternBD2)){
+            throw new Exception("BirthDay must 1933<yyyy<2010");
+        }else{
+            this.birthDate = birthDate;
+        }
     }
 
     /**

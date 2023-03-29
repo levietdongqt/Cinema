@@ -25,7 +25,7 @@ public class FilmGenreDAO extends GenericDAO<FilmGenre, Integer>{
             if(!kw.isEmpty()){
                 hql += " WHERE fGenreName like:kw";
             }
-            Query query = session.createQuery(hql);
+            Query query = session.createQuery(hql).setCacheable(true);
             if(!kw.isEmpty()){
                 query.setParameter("kw", '%'+kw+'%');
             }     
