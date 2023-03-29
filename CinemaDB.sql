@@ -33,6 +33,7 @@ CREATE TABLE Employee (
   [password] VARCHAR(255) not null,
   [position] VARCHAR(50) not null,
   [birthDate] DATE,
+  [gender] bit,
   [startDate] DATE default getDate(),
   [email] VARCHAR(100),
   [status] BIT default 1,

@@ -3,15 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-import java.time.LocalTime;
-import java.util.*;
-
+import POJO.RoomTypeDetails;
 /**
  *
  * @author DONG
  */
-public class ShowTimeDAO {
-    public void addList(){
-        LocalTime time  = LocalTime.of(8, 0);
-    }
+public class RoomTypeDetailsDAO extends GenericDAO<RoomTypeDetails, Integer>{
+    
 }
