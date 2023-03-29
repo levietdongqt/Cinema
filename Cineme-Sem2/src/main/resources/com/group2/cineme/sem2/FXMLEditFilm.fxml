@@ -18,18 +18,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../../../../styles/fxmlnewfilm.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLNewFilmController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="57.0" prefWidth="135.0" />
-    <ColumnConstraints hgrow="ALWAYS" maxWidth="338.5" minWidth="205.0" prefWidth="263.0" />
+<GridPane alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../../../../styles/fxmlnewfilm.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLEditFilmController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="57.0" prefWidth="135.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="338.5" minWidth="205.0" prefWidth="263.0" />
       <ColumnConstraints hgrow="ALWAYS" maxWidth="230.0" minWidth="99.0" prefWidth="213.5" />
       <ColumnConstraints hgrow="ALWAYS" />
-  </columnConstraints>
-  <rowConstraints>
+   </columnConstraints>
+   <rowConstraints>
       <RowConstraints prefHeight="30.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="45.5" valignment="TOP" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="50.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="45.5" valignment="TOP" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="50.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
       <RowConstraints maxHeight="82.5" minHeight="41.5" prefHeight="41.5" vgrow="ALWAYS" />
       <RowConstraints maxHeight="84.5" minHeight="43.5" prefHeight="56.0" vgrow="ALWAYS" />
       <RowConstraints maxHeight="56.0" minHeight="41.5" prefHeight="46.5" vgrow="ALWAYS" />
@@ -41,7 +41,7 @@
       <RowConstraints vgrow="ALWAYS" />
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
-  </rowConstraints>
+   </rowConstraints>
    <children>
       <Label alignment="CENTER" text="FILM ID:" GridPane.rowIndex="1" />
       <Label text="FILM NAME:" GridPane.rowIndex="2" />
@@ -85,7 +85,8 @@
             <ImageView fx:id="imageViewFilm" fitHeight="199.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="0.0">
                <viewport>
                   <Rectangle2D />
-               </viewport></ImageView>
+               </viewport>
+            </ImageView>
          </children>
       </AnchorPane>
       <Button mnemonicParsing="false" onAction="#uploadImageHandler" prefHeight="23.0" prefWidth="211.0" text="LOAD FILE" GridPane.columnIndex="2" GridPane.rowIndex="5" />
@@ -96,7 +97,7 @@
             <Button mnemonicParsing="false" onAction="#resetButtonHandler" prefHeight="23.0" prefWidth="75.0" text="RESET" />
          </children>
       </HBox>
-      <Text fill="#000000e8" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD NEW FILM">
+      <Text fill="#000000e8" strokeType="OUTSIDE" strokeWidth="0.0" text="EDIT FILM">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
@@ -38,6 +39,8 @@ public class FXMLHomeController implements Initializable {
     
     @FXML
     private BorderPane home;
+    
+    @FXML AnchorPane anchorPane;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,6 +49,15 @@ public class FXMLHomeController implements Initializable {
     }  
     
     //Xu ly Button handler
+   public void homeButtonHandler() throws IOException{
+       FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+       App.scene.setRoot(fxmlLoader.load());
+         
+   }
+   public void filmButtonHandler() throws IOException{
+       App.setView("FXMLFilm");
+   }
+   
    
     
     
@@ -73,8 +85,7 @@ public class FXMLHomeController implements Initializable {
             if(popup.isShowing()){
                 popup.hide();
             }else{
-                System.out.println(event.getScreenX());
-                popup.show(hamburger,event.getSceneX()-500,event.getScreenY() );
+                popup.show(hamburger,event.getScreenX()-720,event.getScreenY());            
             }
         });
           loadInHome("FXMLNewSchedule");
