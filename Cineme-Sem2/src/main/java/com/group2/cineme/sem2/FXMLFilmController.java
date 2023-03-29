@@ -1,0 +1,271 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
+package com.group2.cineme.sem2;
+
+import DAO.FilmDAO;
+import DAO.FilmGenreDAO;
+import POJO.Actors;
+import POJO.Film;
+import POJO.FilmGenre;
+import Utils.AlertUtils;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+
+/**
+ * FXML Controller class
+ *
+ * @author thuhuytran
+ */
+public class FXMLFilmController implements Initializable {
+    @FXML
+    private TableView<Film> tableViewFilm;
+    
+    @FXML
+    private DatePicker datePicker;
+    
+    @FXML
+    private ComboBox<FilmGenre> comboGenres;
+    
+    @FXML
+    private TextField txtName;
+    List<Film> listFilm;
+    List<FilmGenre> listGenre;
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        loadTableView();
+        loadDataTableView();
+        loadDataCombobox();
+    }
+
+    
+    //Khu vuc nut
+    public void buttonAddNewHandler() throws IOException{
+        App.setView("FXMLNewFilm");   
+    }
+    public void buttonSearchByDate(){
+        List<Film> listAfterStartDate =listFilm.stream().filter((t) -> t.getStartDate().after(Date.valueOf(this.datePicker.getValue()))).collect(Collectors.toList());
+        if(listAfterStartDate.isEmpty()){
+            AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
+            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));   
+        }else{
+            this.tableViewFilm.setItems(FXCollections.observableList(listAfterStartDate));  
+        }
+        
+    }
+    public void buttonSearchByName(){
+        List<Film> listByName = listFilm.stream().filter((t) -> t.getFilmName().toLowerCase().contains(this.txtName.getText().toLowerCase())).collect(Collectors.toList());
+        if(listByName.isEmpty()){
+            AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
+            this.tableViewFilm.setItems(FXCollections.observableList(listFilm)); 
+        }else{
+             this.tableViewFilm.setItems(FXCollections.observableList(listByName)); 
+        }  
+    }
+    public void buttonSearchByGenre(){
+        List<Film> listByGenre = new ArrayList<>();
+        listFilm.forEach((t) -> {
+            for (FilmGenre filmGenre : t.getListGenre()) {
+                if(filmGenre.getfGenreName().equals(this.comboGenres.getSelectionModel().getSelectedItem().getfGenreName())){
+                    listByGenre.add(t);
+                }
+            }
+        });
+        if(listByGenre.isEmpty()){
+            AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
+            this.tableViewFilm.setItems(FXCollections.observableList(listFilm)); 
+        }else{
+             this.tableViewFilm.setItems(FXCollections.observableList(listByGenre)); 
+        }  
+    }
+    
+    
+    //Load Data
+    public void loadTableView(){
+        TableColumn colFilmID = new TableColumn("ID");
+        colFilmID.setCellValueFactory(new PropertyValueFactory("filmID"));
+        colFilmID.setPrefWidth(100);
+       
+        
+        TableColumn colFilmName = new TableColumn("Name");
+        colFilmName.setCellValueFactory(new PropertyValueFactory("filmName"));
+        colFilmName.setPrefWidth(150);
+        
+        TableColumn colDirector = new TableColumn("Director");
+        colDirector.setCellValueFactory(new PropertyValueFactory("director"));
+        colDirector.setPrefWidth(100);
+        
+        TableColumn colDuration = new TableColumn("Duration");
+        colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
+        colDuration.setPrefWidth(100);
+        
+        TableColumn colStartDate = new TableColumn("Start Date");
+        colStartDate.setCellValueFactory(new PropertyValueFactory("startDate"));
+        colStartDate.setPrefWidth(100);
+        
+        TableColumn colEndDate = new TableColumn("End Date");
+        colEndDate.setCellValueFactory(new PropertyValueFactory("endDate"));
+        colEndDate.setPrefWidth(100);
+        
+        TableColumn colLimitAge = new TableColumn("Age");
+        colLimitAge.setCellValueFactory(new PropertyValueFactory("limitAge"));
+        colLimitAge.setPrefWidth(50);
+        
+        TableColumn colViewFilm = new TableColumn("View");
+        colViewFilm.setCellValueFactory(new PropertyValueFactory("viewFilm"));
+        colViewFilm.setPrefWidth(50);
+        
+        TableColumn<Film,ImageView> colImageURL = new TableColumn("Image");
+        colImageURL.setCellValueFactory((column) -> {
+            ImageView imageView = new ImageView();
+            Film p = column.getValue();           
+            File file = new File(p.getImageUrl());
+            Image image = new Image(file.toURI().toString());
+            imageView.setImage(image);
+            imageView.setFitWidth(120);
+            imageView.setFitHeight(150);
+            return new SimpleObjectProperty<>(imageView);
+        });
+        colImageURL.setPrefWidth(120);
+       
+        
+        TableColumn colDescription = new TableColumn("Description");
+        colDescription.setCellValueFactory(new PropertyValueFactory("description"));
+        colDescription.setPrefWidth(200);
+        
+        
+        
+        TableColumn<Film,String> colGenre = new TableColumn("Genre");
+        colGenre.setCellValueFactory((column) -> {
+            Film p = column.getValue();
+            Set<FilmGenre> setGenres = p.getListGenre();
+            String genres = "";
+            for (FilmGenre setGenre : setGenres) {
+                genres+=setGenre.getfGenreName()+ "\n";
+            }
+            return new SimpleObjectProperty<>(genres);   
+        });
+        colGenre.setPrefWidth(100);
+        
+        TableColumn<Film,String> colActors = new TableColumn("Actors");
+        colActors.setCellValueFactory((column) -> {
+            Film p = column.getValue();
+            Set<Actors> setActors = p.getListActors();
+            String actors = "";
+            for (Actors setActor : setActors) {
+                actors+=setActor.getActorName()+ "\n";
+            }
+            return new SimpleObjectProperty<>(actors); 
+        });
+        colActors.setPrefWidth(100);
+        
+        TableColumn<Film,Button> colButtonEdit = new TableColumn<>("Edit"); 
+        colButtonEdit.setCellValueFactory((o) -> {
+            Film p = o.getValue();
+            Button button =new Button("Edit");
+         
+            button.setOnAction((t) -> {
+                try {
+                    FXMLLoader fxmlLoader = App.setView("FXMLEditFilm");
+                    FXMLEditFilmController editFilmController = fxmlLoader.getController();
+                    editFilmController.setFilm(p);
+                } catch (Exception ex) {
+                    Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            return new SimpleObjectProperty<>(button);
+        });
+        
+        TableColumn<Film,Button> colButtonDelete = new TableColumn<>("Delete"); 
+        colButtonDelete.setCellValueFactory((o) -> {
+            Film p = o.getValue();
+            Button button =new Button("Delete");
+         
+            button.setOnAction((t) -> {
+                
+            });
+            return new SimpleObjectProperty<>(button);
+        });
+        
+        TableColumn<Film,Integer> indexColumn = new TableColumn<>("Index");
+        indexColumn.setCellFactory((o) -> new TableCell<Film,Integer>(){
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if(this.getTableRow() != null){
+                    int rowIndex = this.getTableRow().getIndex();
+                    if(rowIndex < getTableView().getItems().size()){
+                        setText(String.valueOf(rowIndex+1));
+                    }else{
+                        setText("");
+                    }
+                }else{
+                    setText("");
+                }
+            }
+            
+        });
+        
+       
+        
+        this.tableViewFilm.getColumns().addAll(indexColumn,colFilmID,colImageURL,colFilmName,colGenre,colDirector,colActors,colDuration,colStartDate,colEndDate,
+                colLimitAge,colViewFilm,colDescription,colButtonEdit,colButtonDelete);
+        
+        ObservableList<TableColumn<Film, ?>> columns = this.tableViewFilm.getColumns();
+        for (TableColumn<Film, ?> column : columns) {
+            column.setStyle("-fx-alignment: CENTER;");
+        }
+        this.tableViewFilm.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;");
+    }
+    public void loadDataTableView(){
+        FilmDAO fd = new FilmDAO();
+        try {
+            listFilm = fd.searchByDate("endDate");
+            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void loadDataCombobox(){
+        FilmGenreDAO fg = new FilmGenreDAO();
+        try {
+            listGenre = fg.getAll("FilmGenre");
+            this.comboGenres.setItems(FXCollections.observableList(listGenre));
+        } catch (Exception ex) {
+            AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR).show();
+        }
+    }
+    
+    public void setDefault(){
+        
+    }
+    
+}

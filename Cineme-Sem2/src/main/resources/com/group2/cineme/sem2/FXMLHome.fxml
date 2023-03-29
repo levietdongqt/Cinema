@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="home" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@../../../../styles/fxmlhome.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLHomeController">
+<BorderPane fx:id="home" prefHeight="800.0" prefWidth="1000.0" stylesheets="@../../../../styles/fxmlhome.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLHomeController">
    <top>
       <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER_RIGHT">
          <children>
@@ -30,7 +30,7 @@
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
-                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Film Mananing" />
+                  <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="Film Mananing" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
@@ -56,7 +56,7 @@
       </AnchorPane>
    </top>
    <center>
-      <Text fill="#d51313" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To CGV" BorderPane.alignment="CENTER">
+      <Text fill="#d51313" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To CGV">
          <font>
             <Font size="65.0" />
          </font>

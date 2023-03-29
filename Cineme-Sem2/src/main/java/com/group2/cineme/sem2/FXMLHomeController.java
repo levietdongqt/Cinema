@@ -49,10 +49,16 @@ public class FXMLHomeController implements Initializable {
     }  
     
     //Xu ly Button handler
-   public void homeButtonHandler(){
-       
+   public void homeButtonHandler() throws IOException{
+       FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+       App.scene.setRoot(fxmlLoader.load());
          
    }
+   public void filmButtonHandler() throws IOException{
+       App.setView("FXMLFilm");
+   }
+   
+   
     
     
     
@@ -79,15 +85,10 @@ public class FXMLHomeController implements Initializable {
             if(popup.isShowing()){
                 popup.hide();
             }else{
-                
-                popup.show(hamburger,event.getScreenX()-500,event.getScreenY());
-                popup.setAnchorX(500);
-                popup.setAnchorY(0);
-   
-                System.out.println(home.getWidth()/2);
+                popup.show(hamburger,event.getScreenX()-720,event.getScreenY());            
             }
         });
-          loadInHome("FXMLNewFilm");
+         
     }
     public void loadDataImageView(){
         File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");

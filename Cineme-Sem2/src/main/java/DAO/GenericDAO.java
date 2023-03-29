@@ -123,8 +123,9 @@ public abstract class GenericDAO<T,A> //T là tên class, A là kiểu dữ li�
 
             session.getTransaction().begin();
             var hql = "FROM " + className;
-            Query query = session.createQuery(hql);
+            Query query = session.createQuery(hql).setCacheable(true);
             list = query.getResultList();
+            
             if (list == null) {
                 setMessGetAll("He Thong chua co du lieu");
             }

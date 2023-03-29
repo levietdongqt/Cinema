@@ -1,23 +1,33 @@
 package POJO;
 
+import DAO.FilmDAO;
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-public class Film {
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Film implements Serializable{
 
     @Id
     private String filmID;
@@ -40,7 +50,7 @@ public class Film {
 
     private String description;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "ActorOfFilm",
             joinColumns = {
@@ -51,7 +61,7 @@ public class Film {
     )
     private Set<Actors> listActors = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "FilmGenreDetails",
             joinColumns = {
@@ -293,6 +303,16 @@ public class Film {
      */
     public void setListSchedule(Set<Schedule> listSchedule) {
         this.listSchedule = listSchedule;
+    }
+    public static void main(String[] args) {
+        FilmDAO fd = new FilmDAO();
+        try {
+            fd.getByColumn("Film","filmName","ava");
+            System.out.println("123----------------------------------");
+            fd.getByColumn("Film","filmName","ava");
+        } catch (Exception ex) {
+            Logger.getLogger(Film.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
