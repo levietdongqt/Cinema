@@ -37,8 +37,8 @@ public class SeatMapDAO extends GenericDAO<SeatMap, String> {
         }
     }
 
-    public static void main(String[] args) {
-        SeatMapDAO stDAO = new SeatMapDAO();
-        stDAO.addSeatMapList();
-    }
+//    public static void main(String[] args) {
+//        SeatMapDAO stDAO = new SeatMapDAO();
+//        stDAO.addSeatMapList();
+//    }
 }

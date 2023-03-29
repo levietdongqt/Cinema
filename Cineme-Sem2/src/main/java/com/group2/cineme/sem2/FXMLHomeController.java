@@ -77,7 +77,7 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger,event.getSceneX()-500,event.getScreenY() );
             }
         });
-          loadInHome("FXMLNewFilm");
+          loadInHome("FXMLNewSchedule");
     }
     public void loadDataImageView(){
         File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
