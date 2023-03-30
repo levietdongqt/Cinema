@@ -33,6 +33,7 @@ CREATE TABLE Employee (
   [password] VARCHAR(255) not null,
   [position] VARCHAR(50) not null,
   [birthDate] DATE,
+  [gender] bit,
   [startDate] DATE default getDate(),
   [email] VARCHAR(100),
   [status] BIT default 1,
@@ -167,30 +168,22 @@ CREATE TABLE Room (
 Create table RoomTypeDetails (
 	[rtDetailsID] int identity primary key,
 	[roomID] varchar(10),
-	[rTypeID] varchar(10),	
+	[rTypeID] varchar(10),
+	[status] bit default 1,
 	FOREIGN KEY (roomID) REFERENCES Room(roomID),
 	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID)
-)
-go
-go
-CREATE TABLE TimeDetails (
-	[timeDetailsID] int identity primary key,
-	[rtDetailsID]  int,
-	[sTimeID] varchar(10),
-	[showDate] Date default getdate(),
-	status bit default 1, 
-	FOREIGN KEY (rtDetailsID) REFERENCES RoomTypeDetails(rtDetailsID),
-	FOREIGN KEY (sTimeID) REFERENCES ShowTime(sTimeID)
 )
 go
 CREATE TABLE Schedule (
 	[scheduleID] varchar(20) primary key,
 	[filmID]  varchar(20),
-	[timeDetailsID] int,
+	[rtDetailsID] int,
+	[startTime] datetime,
+	[endTime] datetime,
 	[note] varchar(255),
 	[status] bit default 1, 
 	FOREIGN KEY (filmID) REFERENCES Film(filmID),
-	FOREIGN KEY (timeDetailsID) REFERENCES TimeDetails(timeDetailsID)
+	FOREIGN KEY (rtDetailsID) REFERENCES RoomTypeDetails(rtDetailsID)
 )
 go
 

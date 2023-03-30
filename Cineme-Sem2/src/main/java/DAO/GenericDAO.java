@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import javafx.scene.control.Alert;
 import javax.persistence.Query;
+import org.hibernate.CacheMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -146,8 +147,8 @@ public abstract class GenericDAO<T,A> //T là tên class, A là kiểu dữ li�
         Session session = HibernateUtils.getFACTORY().openSession();
         try {
             session.getTransaction().begin();
-            var hql = "FROM " + className + " WHERE " + Column + " LIKE '%" + value + "%'";
-            Query query = session.createQuery(hql);
+            var hql = "FROM " + className + " WHERE " + Column + " LIKE '" + value + "'";
+            Query query = session.createQuery(hql).setCacheable(true);
             list= query.getResultList();
             if (list == null) {
                 setMessGetAll("He Thong chua co du lieu");

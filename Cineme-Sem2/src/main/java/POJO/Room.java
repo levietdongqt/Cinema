@@ -1,16 +1,22 @@
     package POJO;
 
 import java.util.Set;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "Room")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Room {
 
     @Id
@@ -22,7 +28,7 @@ public class Room {
     private String description;
     private boolean status;
     
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room",fetch = FetchType.EAGER)
     private Set<RoomTypeDetails> roomTypeDetailList;
 
     public Room() {
@@ -35,6 +41,11 @@ public class Room {
         this.roomTypeDetailList = roomTypeDetailList;
     }
 
+    @Override
+    public String toString() {
+        return this.roomName;
+    }
+    
     /**
      * @return the roomID
      */
