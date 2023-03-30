@@ -309,15 +309,5 @@ public class Film implements Serializable{
     public void setListSchedule(Set<Schedule> listSchedule) {
         this.listSchedule = listSchedule;
     }
-    public static void main(String[] args) {
-        FilmDAO fd = new FilmDAO();
-        try {
-            fd.getByColumn("Film","filmName","ava");
-            System.out.println("123----------------------------------");
-            fd.getByColumn("Film","filmName","ava");
-        } catch (Exception ex) {
-            Logger.getLogger(Film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
 }

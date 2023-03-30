@@ -109,7 +109,7 @@ public class FXMLFilmController implements Initializable {
     
     
     //Load Data
-    public void loadTableView(){
+    public void loadTableView(){       
         TableColumn colFilmID = new TableColumn("ID");
         colFilmID.setCellValueFactory(new PropertyValueFactory("filmID"));
         colFilmID.setPrefWidth(100);
@@ -178,7 +178,7 @@ public class FXMLFilmController implements Initializable {
         TableColumn<Film,String> colActors = new TableColumn("Actors");
         colActors.setCellValueFactory((column) -> {
             Film p = column.getValue();
-            Set<Actors> setActors = p.getListActors();
+            Set<Actors> setActors = p.getListActors();               
             String actors = "";
             for (Actors setActor : setActors) {
                 actors+=setActor.getActorName()+ "\n";
@@ -258,7 +258,7 @@ public class FXMLFilmController implements Initializable {
         for (TableColumn<Film, ?> column : columns) {
             column.setStyle("-fx-alignment: CENTER;");
         }
-        this.tableViewFilm.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;");
+        this.tableViewFilm.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;");       
     }
     public void loadDataTableView(){
         FilmDAO fd = new FilmDAO();
