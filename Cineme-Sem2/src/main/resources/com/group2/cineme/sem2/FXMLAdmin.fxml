@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="700.0" prefWidth="1380.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="701.0" prefWidth="1287.0">
+         <children>
+            <BorderPane layoutX="320.0" layoutY="143.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <left>
+                  <AnchorPane prefHeight="623.0" prefWidth="200.0" stylesheets="@../../../../styles/fxmladmin.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="INSERT" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="12.0" layoutY="70.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="UPDATE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="13.0" layoutY="127.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="DELETE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <FontAwesomeIcon glyphName="WRENCH" layoutX="15.0" layoutY="101.0" size="2.5em" />
+                        <FontAwesomeIcon glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
+                        <FontAwesomeIcon glyphName="CLOSE" layoutX="20.0" layoutY="158.0" size="2.5em" />
+                        <Button layoutX="13.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <FontAwesomeIcon glyphName="FILE" layoutX="19.0" layoutY="387.0" size="2em" />
+                     </children>
+                     <styleClass>
+                        <String fx:value="nav-form" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </AnchorPane>
+               </left>
+               <top>
+                  <AnchorPane prefHeight="44.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <FontAwesomeIcon glyphName="USERS" layoutX="630.0" layoutY="32.0" size="2.5em" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="670.0" layoutY="6.0" text="EMPLOYEE MANAGER" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <center>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="5.0" layoutY="5.0" prefHeight="255.0" prefWidth="1023.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="396.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                           <styleClass>
+                              <String fx:value="shadow" />
+                              <String fx:value="ins-form" />
+                           </styleClass>
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="21.0" layoutY="61.0" size="2em" text="" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="14.0" layoutY="23.0" text="USER NAME :">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="115.0" layoutY="19.0" prefHeight="25.0" prefWidth="199.0" />
+                              <Label layoutX="16.0" layoutY="44.0" prefHeight="17.0" prefWidth="275.0" text="ERRUSER" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="413.0" layoutY="25.0" text="PASSWORD :">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="491.0" layoutY="21.0" prefHeight="25.0" prefWidth="199.0" />
+                              <Label layoutX="415.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRPASS" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="811.0" layoutY="23.0" text="RE PASSWORD :">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="903.0" layoutY="20.0" prefHeight="25.0" prefWidth="199.0" />
+                              <Label layoutX="813.0" layoutY="44.0" prefHeight="17.0" prefWidth="275.0" text="ERRREPASS" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="15.0" layoutY="85.0" text="FULL NAME :">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="116.0" layoutY="80.0" prefHeight="25.0" prefWidth="199.0" />
+                              <Label layoutX="17.0" layoutY="106.0" prefHeight="17.0" prefWidth="275.0" text="ERRNAME" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="15.0" layoutY="143.0" text="EMAIL : ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="116.0" layoutY="138.0" prefHeight="25.0" prefWidth="199.0" />
+                              <Label layoutX="17.0" layoutY="164.0" prefHeight="17.0" prefWidth="275.0" text="ERRMAIL" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="16.0" layoutY="204.0" text="POSITION : ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="18.0" layoutY="225.0" prefHeight="17.0" prefWidth="275.0" text="ERRPOS" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="414.0" layoutY="87.0" text="GENDER :">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="416.0" layoutY="108.0" prefHeight="17.0" prefWidth="275.0" text="ERRGEN" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="415.0" layoutY="145.0" text="BIRTH DAY : ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="417.0" layoutY="166.0" prefHeight="17.0" prefWidth="275.0" text="ERRBIR" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="416.0" layoutY="206.0" text="STATUS : ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="418.0" layoutY="227.0" prefHeight="17.0" prefWidth="275.0" text="ERRSTATUS" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="812.0" layoutY="85.0" text="PHONE NUM : ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="904.0" layoutY="83.0" prefHeight="25.0" prefWidth="199.0" />
+                              <Label layoutX="814.0" layoutY="106.0" prefHeight="17.0" prefWidth="275.0" text="ERRPHONE" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="812.0" layoutY="143.0" text="TIME START:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="814.0" layoutY="164.0" prefHeight="17.0" prefWidth="275.0" text="ERRSTA" textFill="RED" />
+                              <Label alignment="BOTTOM_CENTER" layoutX="812.0" layoutY="204.0" text="USER NAME :">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="904.0" layoutY="202.0" prefHeight="25.0" prefWidth="199.0" />
+                              <Label layoutX="814.0" layoutY="225.0" prefHeight="17.0" prefWidth="275.0" text="Label" textFill="RED" />
+                              <ComboBox layoutX="491.0" layoutY="86.0" prefHeight="25.0" prefWidth="201.0" />
+                              <ComboBox layoutX="117.0" layoutY="198.0" prefHeight="25.0" prefWidth="198.0" />
+                              <ComboBox layoutX="493.0" layoutY="205.0" prefHeight="25.0" prefWidth="199.0" />
+                              <DatePicker layoutX="493.0" layoutY="141.0" prefHeight="25.0" prefWidth="199.0" />
+                              <DatePicker layoutX="904.0" layoutY="140.0" prefHeight="25.0" prefWidth="198.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="6.0" layoutY="277.0" prefHeight="379.0" prefWidth="1022.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="277.0">
+                           <styleClass>
+                              <String fx:value="shadow" />
+                              <String fx:value="ins-form" />
+                           </styleClass>
+                           <children>
+                              <TableView layoutX="5.0" layoutY="42.0" prefHeight="356.0" prefWidth="1160.0">
+                                <columns>
+                                  <TableColumn prefWidth="127.0" text="USER" />
+                                  <TableColumn prefWidth="161.0" text="FULL NAME" />
+                                    <TableColumn prefWidth="127.0" text="GENDER" />
+                                    <TableColumn prefWidth="173.0" text="EMAIL" />
+                                    <TableColumn prefWidth="139.0" text="PHONE NUMBER" />
+                                    <TableColumn prefWidth="110.0" text="POSITION" />
+                                    <TableColumn prefWidth="84.0" text="STATUS" />
+                                    <TableColumn minWidth="0.0" prefWidth="141.0" text="START DATE" />
+                                    <TableColumn prefWidth="95.0" text="WORKING DAY" />
+                                </columns>
+                              </TableView>
+                              <TextField alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />
+                              <FontAwesomeIcon glyphName="SEARCH" layoutX="462.0" layoutY="34.0" size="1.5em" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
