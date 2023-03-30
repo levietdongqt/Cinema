@@ -72,7 +72,7 @@ public class Film implements Serializable{
     )
     private Set<FilmGenre> listGenre = new HashSet<>();
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film",cascade = CascadeType.ALL)
     private Set<Schedule> listSchedule = new HashSet<>();
 
     //Constructor

@@ -4,6 +4,7 @@ package POJO;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -25,7 +26,7 @@ public class FilmGenre implements Serializable{
     @Column(nullable = false)
     private String fGenreName;
     
-    @ManyToMany(mappedBy = "listGenre")
+    @ManyToMany(mappedBy = "listGenre",cascade = CascadeType.ALL)
     private Set<Film> listFilm = new HashSet<>();
 
     
@@ -84,6 +85,12 @@ public class FilmGenre implements Serializable{
     public String toString() {
         return this.fGenreName;
     }
+
+    
+    
+    
+    
+    
 
    
 

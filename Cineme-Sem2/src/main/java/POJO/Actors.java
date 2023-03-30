@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.*;
 import java.util.regex.Pattern;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class Actors implements Serializable{
     @Column(nullable = true)
     private String homeTown;
     
-    @ManyToMany(mappedBy = "listActors")
+    @ManyToMany(mappedBy = "listActors",cascade = CascadeType.ALL)
     private Set<Film> listFilm = new HashSet<>();
 
     
@@ -132,6 +133,17 @@ public class Actors implements Serializable{
     @Override
     public String toString() {
         return this.actorName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Actors a = (Actors) obj;
+        return this.actorName.equals(a.actorName);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1000;
     }
     
     

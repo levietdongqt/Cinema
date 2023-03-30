@@ -94,5 +94,54 @@ public class FilmDAO extends GenericDAO<Film, String> {
         return listFilm;
         
     }
+     public void updateActorsforFilm(String id, Set<Actors> actors) {
+        Film film = null;
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+
+            session.getTransaction().begin();
+            film = session.get(Film.class, id);
+            film.setListActors(actors);
+            session.update(film);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        } finally {
+            session.close();
+        }
+
+    }
+
+    public void updateGenresforFilm(String id, Set<FilmGenre> genres) {
+        Film film = null;
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+            session.getTransaction().begin();
+            film = session.get(Film.class, id);
+            film.setListGenre(genres);
+            session.update(film);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        } finally {
+            session.close();
+        }
+    }
+    public void deleteFilm(String id){
+        Film film = null;
+        Session session =HibernateUtils.getFACTORY().openSession();
+        try {
+            session.getTransaction().begin();
+            film = session.get(Film.class, id);
+            session.delete(film.getListGenre());
+            session.delete(film.getListActors());
+            session.delete(film);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }finally{
+            session.close();
+        }
+    }
 
 }

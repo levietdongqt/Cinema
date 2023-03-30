@@ -18,17 +18,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.DateTimeException;
+
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.*;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -126,9 +124,13 @@ public class FXMLEditFilmController implements Initializable {
     private Label errHomeTown;
     private Button buttonSave;
     private Button buttonClear;
-
+    
     private Film film;
 
+    public FXMLEditFilmController(Film film) {
+        this.film = film;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        
@@ -148,6 +150,7 @@ public class FXMLEditFilmController implements Initializable {
         buttonSaveHandlerActor(validateActors());
         buttonResetHandlerActor();
         validateFilm();
+       
         
         
 
@@ -181,21 +184,21 @@ public class FXMLEditFilmController implements Initializable {
 
     }
 
-    public void updateButtonHandler(ActionEvent event){
+    public void updateButtonHandler(ActionEvent event) throws Exception{
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
                 || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true)) {      
             AlertUtils.getAlert("Check Information you want to update", Alert.AlertType.ERROR).show();
         } else {
+            System.out.println(film.getFilmID());
+            System.out.println(film.getLimitAge());
             FilmDAO fd = new FilmDAO();
             try {   
-                    film = loadDataForUpdate();
-                    System.out.println(film.getLimitAge());
                     fd = new FilmDAO();
                     fd.update(film);
-//                    fd.saveActorsforFilm(film.getFilmID(), setActors);
-//                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
-                    AlertUtils.getAlert(fd.getMessUpdate(), Alert.AlertType.INFORMATION).show();         
+//                    fd.updateActorsforFilm(film.getFilmID(), setActors);
+                    fd.updateGenresforFilm(film.getFilmID(), setFilmGenre);
+                    App.setView("FXMLFilm");
             } catch (Exception e) {
                AlertUtils.getAlert(fd.getMessUpdate(), Alert.AlertType.ERROR).show(); 
             }
@@ -204,7 +207,6 @@ public class FXMLEditFilmController implements Initializable {
     }
 
     public void resetButtonHandler(ActionEvent event) {
-        this.txtID.clear();
         this.txtName.clear();
         this.txtDuration.clear();
         this.txtImage.clear();
@@ -296,43 +298,77 @@ public class FXMLEditFilmController implements Initializable {
     }
 
     public void loadDataOrSetDefault() {
-//        this.txtID.setText(this.film.getFilmID());
-//        this.txtName.setText(this.film.getFilmName());
+        this.txtID.setText(this.film.getFilmID());
+        this.txtName.setText(this.film.getFilmName());
+        this.txtDescription.setText(this.film.getDescription());
+        this.limitAge.setValue(this.film.getLimitAge());
+        this.txtStart.setValue(LocalDate.parse(this.film.getStartDate().toString()));
+        this.txtEnd.setValue(LocalDate.parse(this.film.getEndDate().toString()));
+        this.txtDuration.setText(String.format("%d",this.film.getDuration()));
+        this.txtDirector.setText(this.film.getDirector());
+        
+        this.txtImage.setText(this.film.getImageUrl());
+        File f = new File(this.film.getImageUrl());
+        Image imageFilm = new Image(f.toURI().toString());
+        imageViewFilm.setImage(imageFilm);
+        
+        this.setFilmGenre.addAll(this.film.getListGenre());
+        listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<>(setFilmGenre)));
+        this.setActors.addAll(this.film.getListActors());
+        listChoiceActors.setItems(FXCollections.observableList(new ArrayList<>(setActors)));
+        
         List<Integer> limitAgeList = List.of(13, 16, 18);
         this.limitAge.setItems(FXCollections.observableList(limitAgeList));
 
         this.txtStart.setEditable(false);
-        this.txtStart.setValue(LocalDate.now());
 
         this.txtEnd.setEditable(false);
         this.txtID.setEditable(false);
-        this.txtEnd.setValue(LocalDate.now().plusDays(10));
+        
 
         this.txtImage.setEditable(false);
+       
         
         this.errorLimitAge.setText("");
+        this.errorLimitAge.setVisible(false);
         this.errorFilmName.setText("");
+        this.errorFilmName.setVisible(false);
         this.errorDuration.setText("");
+        this.errorDuration.setVisible(false);
         this.errorEnd.setText("");
         this.errorEnd.setVisible(false);
         this.errorStart.setText("");
         this.errorStart.setVisible(false);
         this.errorImage.setText("");
+        this.errorImage.setVisible(false);
         this.errorFilmDes.setText("");
+        this.errorFilmDes.setVisible(false);
         this.errorDirector.setText("");
+        this.errorDirector.setVisible(false);
         this.errorID.setText("");
+        this.errorID.setVisible(false);
 
     }
     public void loadDataActorsOrGenreChoiced(){
-        this.listActors.setOnMouseClicked((event) -> {
-            setActors.addAll(this.listActors.getSelectionModel().getSelectedItems());
-            listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
-            listChoiceActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        this.listActors.setOnMouseClicked((event) -> {       
+                if(setActors.addAll(this.listActors.getSelectionModel().getSelectedItems())){
+                    AlertUtils.getAlert("true", Alert.AlertType.ERROR).show();
+                };
+                listChoiceActors.setItems(FXCollections.observableList(new ArrayList<>(setActors)));
+                listChoiceActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             
         });
         this.listViewGender.setOnMouseClicked((event) -> {
+            for (FilmGenre filmGenre : setFilmGenre) {
+                for (FilmGenre filmChoice : this.listViewGender.getSelectionModel().getSelectedItems()) {
+                    if(filmGenre.getfGenreName().equals(filmChoice.getfGenreID())){
+                        setFilmGenre.remove(filmGenre);
+                    }
+                }
+            }
             setFilmGenre.addAll(this.listViewGender.getSelectionModel().getSelectedItems());
-            listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
+            listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<>(setFilmGenre)));
             listChoiceGenre.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         });
     }
@@ -432,10 +468,8 @@ public class FXMLEditFilmController implements Initializable {
         });
     }
 
-    public Film validateFilm() {
-        Film film = new Film();
-        film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
-        film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
+    public void validateFilm() {
+//        Film film = new Film();
         this.txtName.textProperty().addListener((observable) -> {
 
             boolean errorName = false;
@@ -555,7 +589,7 @@ public class FXMLEditFilmController implements Initializable {
             errorID.setText("");
             film.setFilmID(txtID.getText());
         });
-        return film;
+//        return film;
 
     }
 
@@ -592,45 +626,5 @@ public class FXMLEditFilmController implements Initializable {
             this.errorLimitAge.setText("");
         }   
     }
-    public Film loadDataForUpdate() throws Exception{
-        Film film = new Film();
-        film.setFilmID(txtID.getText());
-        film.setFilmName(txtName.getText());
-        film.setDescription(txtDescription.getText());
-        film.setLimitAge(limitAge.getValue());
-        film.setDuration(Integer.parseInt(txtDuration.getText()));
-        film.setDirector(txtDirector.getText());
-        film.setImageUrl(txtImage.getText());
-        film.setListGenre(setFilmGenre);
-        film.setListActors(setActors);
-        film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
-        film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
-        
-        return film;
-    }
-    
-    //Lay du lieu tu trang Home de Edit
-    public void setFilm(Film film) throws Exception{
-        
-        this.film = film;
-        this.txtID.setText(this.film.getFilmID());
-        this.txtName.setText(this.film.getFilmName());
-        this.txtDescription.setText(this.film.getDescription());
-        this.limitAge.setValue(this.film.getLimitAge());
-        this.txtStart.setValue(LocalDate.parse(this.film.getStartDate().toString()));
-        this.txtEnd.setValue(LocalDate.parse(this.film.getEndDate().toString()));
-        this.txtDuration.setText(String.format("%d",this.film.getDuration()));
-        this.txtDirector.setText(this.film.getDirector());
-        
-        this.txtImage.setText(this.film.getImageUrl());
-        File f = new File(this.film.getImageUrl());
-        Image imageFilm = new Image(f.toURI().toString());
-        imageViewFilm.setImage(imageFilm);
-        
-        this.setFilmGenre = this.film.getListGenre();
-        listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
-        this.setActors = this.film.getListActors();
-        listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
-//        this.film = loadDataForUpdate();
-    }
 }
+    
