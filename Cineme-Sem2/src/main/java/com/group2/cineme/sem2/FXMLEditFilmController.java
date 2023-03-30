@@ -24,9 +24,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.ResourceBundle;
 
-
 import javafx.collections.FXCollections;
-
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -83,7 +81,7 @@ public class FXMLEditFilmController implements Initializable {
     private ListView<FilmGenre> listViewGender;
     @FXML
     private ListView<Actors> listActors;
-    
+
     @FXML
     private ListView<Actors> listChoiceActors;
     @FXML
@@ -91,9 +89,6 @@ public class FXMLEditFilmController implements Initializable {
 
     @FXML
     private ImageView imageViewFilm;
-
-    
-   
 
     @FXML
     private Label errorFilmName;
@@ -124,19 +119,20 @@ public class FXMLEditFilmController implements Initializable {
     private Label errHomeTown;
     private Button buttonSave;
     private Button buttonClear;
-    
+
     private Film film;
 
     public FXMLEditFilmController(Film film) {
         this.film = film;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-        
+
         //Set du lieu cho LimitAge
         loadDataOrSetDefault();
+        System.out.println(setFilmGenre);
+
         //Set du lieu cho ListView Gender Actor
         loadDataActors("");
         loadDataGender("");
@@ -150,9 +146,6 @@ public class FXMLEditFilmController implements Initializable {
         buttonSaveHandlerActor(validateActors());
         buttonResetHandlerActor();
         validateFilm();
-       
-        
-        
 
     }
 
@@ -184,20 +177,16 @@ public class FXMLEditFilmController implements Initializable {
 
     }
 
-    public void updateButtonHandler(ActionEvent event) throws Exception{
+    public void updateButtonHandler(ActionEvent event) throws Exception {
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
-                || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true)) {      
+                || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true)) {
             AlertUtils.getAlert("Check Information you want to update", Alert.AlertType.ERROR).show();
         } else {
-            System.out.println(film.getFilmID());
-            System.out.println(film.getLimitAge());
             FilmDAO fd = new FilmDAO();
             try {   
                     fd = new FilmDAO();
                     fd.update(film);
-//                    fd.updateActorsforFilm(film.getFilmID(), setActors);
-                    fd.updateGenresforFilm(film.getFilmID(), setFilmGenre);
                     App.setView("FXMLFilm");
             } catch (Exception e) {
                AlertUtils.getAlert(fd.getMessUpdate(), Alert.AlertType.ERROR).show(); 
@@ -233,14 +222,16 @@ public class FXMLEditFilmController implements Initializable {
     public void showInformationButtonHandler() {
         System.out.println(setActors);
     }
-    public void removeGenre(){
-            setFilmGenre.removeAll(this.listChoiceGenre.getSelectionModel().getSelectedItems());
-            this.listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
+
+    public void removeGenre() {
+        setFilmGenre.removeAll(this.listChoiceGenre.getSelectionModel().getSelectedItems());
+        this.listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
     }
-    public void removeActor(){
-        
-            setActors.removeAll(this.listChoiceActors.getSelectionModel().getSelectedItems());
-            this.listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
+
+    public void removeActor() {
+
+        setActors.removeAll(this.listChoiceActors.getSelectionModel().getSelectedItems());
+        this.listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
     }
 
     public void addActorButtonHandler() {
@@ -304,19 +295,19 @@ public class FXMLEditFilmController implements Initializable {
         this.limitAge.setValue(this.film.getLimitAge());
         this.txtStart.setValue(LocalDate.parse(this.film.getStartDate().toString()));
         this.txtEnd.setValue(LocalDate.parse(this.film.getEndDate().toString()));
-        this.txtDuration.setText(String.format("%d",this.film.getDuration()));
+        this.txtDuration.setText(String.format("%d", this.film.getDuration()));
         this.txtDirector.setText(this.film.getDirector());
-        
+
         this.txtImage.setText(this.film.getImageUrl());
         File f = new File(this.film.getImageUrl());
         Image imageFilm = new Image(f.toURI().toString());
         imageViewFilm.setImage(imageFilm);
-        
-        this.setFilmGenre.addAll(this.film.getListGenre());
+
+        this.setFilmGenre = this.film.getListGenre();
         listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<>(setFilmGenre)));
-        this.setActors.addAll(this.film.getListActors());
+        this.setActors = this.film.getListActors();
         listChoiceActors.setItems(FXCollections.observableList(new ArrayList<>(setActors)));
-        
+
         List<Integer> limitAgeList = List.of(13, 16, 18);
         this.limitAge.setItems(FXCollections.observableList(limitAgeList));
 
@@ -324,11 +315,9 @@ public class FXMLEditFilmController implements Initializable {
 
         this.txtEnd.setEditable(false);
         this.txtID.setEditable(false);
-        
 
         this.txtImage.setEditable(false);
-       
-        
+
         this.errorLimitAge.setText("");
         this.errorLimitAge.setVisible(false);
         this.errorFilmName.setText("");
@@ -349,27 +338,21 @@ public class FXMLEditFilmController implements Initializable {
         this.errorID.setVisible(false);
 
     }
-    public void loadDataActorsOrGenreChoiced(){
-        
-        this.listActors.setOnMouseClicked((event) -> {       
-                if(setActors.addAll(this.listActors.getSelectionModel().getSelectedItems())){
-                    AlertUtils.getAlert("true", Alert.AlertType.ERROR).show();
-                };
-                listChoiceActors.setItems(FXCollections.observableList(new ArrayList<>(setActors)));
-                listChoiceActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            
+
+    public void loadDataActorsOrGenreChoiced() {
+
+        this.listActors.setOnMouseClicked((event) -> {
+            setActors.addAll(this.listActors.getSelectionModel().getSelectedItems());
+            listChoiceActors.setItems(FXCollections.observableList(new ArrayList<>(this.film.getListActors())));
+            listChoiceActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         });
-        this.listViewGender.setOnMouseClicked((event) -> {
-            for (FilmGenre filmGenre : setFilmGenre) {
-                for (FilmGenre filmChoice : this.listViewGender.getSelectionModel().getSelectedItems()) {
-                    if(filmGenre.getfGenreName().equals(filmChoice.getfGenreID())){
-                        setFilmGenre.remove(filmGenre);
-                    }
-                }
-            }
-            setFilmGenre.addAll(this.listViewGender.getSelectionModel().getSelectedItems());
+        this.listViewGender.setOnMouseClicked((event) ->{   
+                        
+            setFilmGenre.add(this.listViewGender.getSelectionModel().getSelectedItem());         
             listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<>(setFilmGenre)));
             listChoiceGenre.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         });
     }
 
@@ -615,16 +598,15 @@ public class FXMLEditFilmController implements Initializable {
         } else {
             this.errorDirector.setText("");
         }
-        if (this.txtImage.getText().isEmpty()){
+        if (this.txtImage.getText().isEmpty()) {
             this.errorImage.setText(errorPopup);
         } else {
             this.errorImage.setText("");
         }
-        if(this.limitAge.getValue()==null){
+        if (this.limitAge.getValue() == null) {
             this.errorLimitAge.setText(errorPopup);
-        }else{
+        } else {
             this.errorLimitAge.setText("");
-        }   
+        }
     }
 }
-    

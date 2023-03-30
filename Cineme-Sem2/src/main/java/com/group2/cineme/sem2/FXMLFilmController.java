@@ -6,9 +6,11 @@ package com.group2.cineme.sem2;
 
 import DAO.FilmDAO;
 import DAO.FilmGenreDAO;
+import DAO.ScheduleDAO;
 import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
+import POJO.Schedule;
 import Utils.AlertUtils;
 import static com.group2.cineme.sem2.App.scene;
 import java.io.File;
@@ -113,6 +115,9 @@ public class FXMLFilmController implements Initializable {
             this.tableViewFilm.setItems(FXCollections.observableList(listByGenre));
         }
     }
+    public void buttonNewFilm() throws IOException{
+        App.setView("FXMLNewFilm");
+    }
 
     //Load Data
     public void loadTableView() {
@@ -215,19 +220,8 @@ public class FXMLFilmController implements Initializable {
             return new SimpleObjectProperty<>(button);
         });
 
-        TableColumn<Film, Button> colButtonDelete = new TableColumn<>("Add Schedule");
-        colButtonDelete.setCellValueFactory((o) -> {
-            Film p = o.getValue();
-            Button button = new Button("Delete");
 
-            button.setOnAction((t) -> {
-                
-
-            });
-            return new SimpleObjectProperty<>(button);
-        });
-
-        TableColumn<Film,Button> colNewSchedule = new TableColumn<>(); 
+        TableColumn<Film,Button> colNewSchedule = new TableColumn<>("Schedule"); 
         colNewSchedule.setCellValueFactory((o) -> {
             Film p = o.getValue();
             Button button =new Button("New Schedule");       
@@ -238,6 +232,33 @@ public class FXMLFilmController implements Initializable {
                     newScheduleControl.getFilm(p);
                 } catch (Exception ex) {
                     Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            return new SimpleObjectProperty<>(button);
+        });
+        
+        TableColumn<Film,Button> colDelete = new TableColumn<>("Delete"); 
+        colDelete.setCellValueFactory((o) -> {
+            Film p = o.getValue(); 
+            Button button =new Button("Delete");       
+            button.setOnAction((t) -> {
+                try {
+                    
+                    FilmDAO f = new FilmDAO();
+                    ScheduleDAO sd = new ScheduleDAO();
+                    List<Schedule> listSchedule = sd.checkStatus(p);
+                    String info = "Are you sure? \n Delete ";
+                    if(!listSchedule.isEmpty()){
+                        info += listSchedule + " are active in Schedule";
+                    }
+                    Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get().getText().equalsIgnoreCase("OK")) {
+                        f.delete(p.getFilmID(), Film.class);
+                        loadDataTableView();
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
             return new SimpleObjectProperty<>(button);
@@ -259,18 +280,11 @@ public class FXMLFilmController implements Initializable {
                     setText("");
                 }
             }
-
+        
         });
-
-        this.tableViewFilm.getColumns().addAll(indexColumn, colFilmID, colImageURL, colFilmName, colGenre, colDirector, colActors, colDuration, colStartDate, colEndDate,
-                colLimitAge, colViewFilm, colDescription, colButtonEdit, colButtonDelete);
-
-
-        
-       
-        
+        indexColumn.setPrefWidth(50);
         this.tableViewFilm.getColumns().addAll(indexColumn,colFilmID,colImageURL,colFilmName,colGenre,colDirector,colActors,colDuration,colStartDate,colEndDate,
-                colLimitAge,colViewFilm,colDescription,colButtonEdit,colButtonDelete,colNewSchedule);
+                colLimitAge,colViewFilm,colDescription,colButtonEdit,colDelete,colNewSchedule);
         
 
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewFilm.getColumns();
@@ -300,8 +314,5 @@ public class FXMLFilmController implements Initializable {
         }
     }
 
-    public void setDefault() {
-
-    }
 
 }

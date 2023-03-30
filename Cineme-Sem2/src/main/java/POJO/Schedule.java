@@ -150,5 +150,11 @@ public class Schedule {
         this.listTicket = listTicket;
     }
 
+    @Override
+    public String toString() {
+        return this.scheduleID;
+    }
+    
+    
     
 }

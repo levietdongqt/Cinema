@@ -9,6 +9,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class Actors implements Serializable{
     @Column(nullable = true)
     private String homeTown;
     
-    @ManyToMany(mappedBy = "listActors",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "listActors")
     private Set<Film> listFilm = new HashSet<>();
 
     
@@ -137,14 +138,27 @@ public class Actors implements Serializable{
 
     @Override
     public boolean equals(Object obj) {
-        Actors a = (Actors) obj;
-        return this.actorName.equals(a.actorName);
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        final Actors other = (Actors) obj;
+        if(!Objects.equals(this.actorName, other.actorName)) return false;
+        if(!Objects.equals(this.birthDate, other.birthDate)) return false;
+        if(!Objects.equals(this.homeTown, other.homeTown)) return false;
+        if(this.actorID != other.getActorID()) return false;
+        return true;
     }
-
+    
     @Override
     public int hashCode() {
-        return 1000;
+        int hash = 7;
+        hash = 31 * hash +Objects.hashCode(this.actorName);
+        hash = 31 * hash +Objects.hashCode(this.birthDate);
+        hash = 31 * hash +Objects.hashCode(this.homeTown);
+        hash = 31 * hash +this.actorID;
+        return hash;   
     }
+
+   
     
     
     
