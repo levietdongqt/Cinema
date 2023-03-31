@@ -115,6 +115,7 @@ public class Customer {
      */
     public void setBirthDate(LocalDate birthDate) throws Exception {
         LocalDate today = LocalDate.now();
+        
         long years = birthDate.until(today, ChronoUnit.YEARS);
         if (years < 18) {
             throw new Exception("Age must be at least 18.");
