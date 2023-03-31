@@ -32,3 +32,11 @@
     -fx-background-radius:8px ;
 
 }
+
+
+.fill-text{
+    -fx-background-color:none;
+    -fx-border-color:#D3D3D3;
+    -fx-border-width:0px 0px 2px 0px;
+    /*-fx-padding: 3px 3px 3px 25px;*/
+}
