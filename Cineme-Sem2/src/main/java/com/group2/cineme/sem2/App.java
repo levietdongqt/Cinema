@@ -26,7 +26,7 @@ public class App extends Application {
         ses.clear();
         ses.close();    
 
-        scene = new Scene(loadFXML("FXMLFilm"));
+        scene = new Scene(loadFXML("FXMLLogin"));
 
         stage.setScene(scene);
         stage.show();
@@ -57,6 +57,9 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+    static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
     }
 
 }

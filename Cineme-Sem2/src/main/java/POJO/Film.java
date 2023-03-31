@@ -50,7 +50,7 @@ public class Film implements Serializable{
 
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(
             name = "ActorOfFilm",
             joinColumns = {
@@ -61,7 +61,7 @@ public class Film implements Serializable{
     )
     private Set<Actors> listActors = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "FilmGenreDetails",
             joinColumns = {
@@ -75,10 +75,10 @@ public class Film implements Serializable{
     @OneToMany(mappedBy = "film",cascade = CascadeType.REMOVE)
     private Set<Schedule> listSchedule = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return filmName;
-    }
+//    @Override
+//    public String toString() {
+//        return filmName;
+//    }
     
     //Constructor
     public Film() {

@@ -11,6 +11,7 @@ import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
 import Utils.AlertUtils;
+import Utils.SessionUtil;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -190,10 +191,14 @@ public class FXMLNewFilmController implements Initializable {
                 if (FilmDAO.getByID(film.getFilmID()) != null) {
                     errorID.setText("ID' Film is existed");
                 } else {
+                    film.setListGenre(setFilmGenre);
+                    film.setListActors(setActors);
                     FilmDAO fd = new FilmDAO();
                     fd.add(film);
-                    fd.saveActorsforFilm(film.getFilmID(), setActors);
-                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
+//                    fd.saveActorsforFilm(film.getFilmID(), setActors);
+//                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
+                    SessionUtil.getMapFilm().add(film);
+                    
                     AlertUtils.getAlert(fd.getMessAdd(), Alert.AlertType.INFORMATION).show();
                 }
             } catch (Exception e) {

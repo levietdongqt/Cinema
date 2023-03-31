@@ -4,10 +4,16 @@
  */
 package com.group2.cineme.sem2;
 
+import DAO.FilmDAO;
+import POJO.Film;
+import Utils.SessionUtil;
 import com.jfoenix.controls.JFXHamburger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +63,9 @@ public class FXMLHomeController implements Initializable {
    public void filmButtonHandler() throws IOException{
        App.setView("FXMLFilm");
    }
+   public void logOut() throws IOException{
+       App.setRoot("FXMLLogin");
+   }
    
    
     
@@ -88,6 +97,7 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger,event.getScreenX()-720,event.getScreenY());            
             }
         });
+        loadInHome("FXMLFilm");
     }
     public void loadDataImageView(){
         File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
@@ -97,6 +107,7 @@ public class FXMLHomeController implements Initializable {
         imageViewHome.setFitHeight(16);
         this.buttonHome.setGraphic(imageViewHome);
     }
+    
     
     
 }

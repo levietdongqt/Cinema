@@ -12,6 +12,7 @@ import POJO.Film;
 import POJO.FilmGenre;
 import POJO.Schedule;
 import Utils.AlertUtils;
+import Utils.SessionUtil;
 import static com.group2.cineme.sem2.App.scene;
 import java.io.File;
 import java.io.IOException;
@@ -66,8 +67,13 @@ public class FXMLFilmController implements Initializable {
     List<Film> listFilm;
     List<FilmGenre> listGenre;
 
+    public FXMLFilmController() {
+         
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         loadTableView();
         loadDataTableView();
         loadDataCombobox();
@@ -255,6 +261,7 @@ public class FXMLFilmController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get().getText().equalsIgnoreCase("OK")) {
                         f.delete(p.getFilmID(), Film.class);
+                        SessionUtil.getMapFilm().remove(p);
                         loadDataTableView();
                     }
                 } catch (Exception ex) {
@@ -295,13 +302,15 @@ public class FXMLFilmController implements Initializable {
     }
 
     public void loadDataTableView() {
-        FilmDAO fd = new FilmDAO();
-        try {
-            listFilm = fd.searchByDate("endDate");
-            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
-        } catch (Exception ex) {
-            Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        FilmDAO fd = new FilmDAO();
+//        try {
+//            listFilm = fd.searchByDate("endDate");
+//            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
+//        } catch (Exception ex) {
+//            Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+          this.listFilm = SessionUtil.getMapFilm();
+          this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
     }
 
     public void loadDataCombobox() {
