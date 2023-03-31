@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="720.0" prefWidth="1380.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLAdminController">
    <children>
       <AnchorPane prefHeight="739.0" prefWidth="1380.0">
          <children>
@@ -40,7 +40,7 @@
                         <FontAwesomeIcon glyphName="WRENCH" layoutX="15.0" layoutY="101.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="CLOSE" layoutX="20.0" layoutY="158.0" size="2.5em" />
-                        <Button layoutX="13.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
+                        <Button layoutX="13.0" layoutY="357.0" mnemonicParsing="false" onAction="#Logout" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -68,7 +68,7 @@
                <center>
                   <AnchorPane BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="5.0" layoutY="5.0" prefHeight="265.0" prefWidth="1170.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="406.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <AnchorPane layoutX="5.0" layoutY="5.0" prefHeight="278.0" prefWidth="1170.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="412.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="ins-form" />
@@ -154,7 +154,7 @@
                               <DatePicker layoutX="904.0" layoutY="140.0" prefHeight="25.0" prefWidth="198.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="6.0" layoutY="279.0" prefHeight="398.0" prefWidth="1169.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="279.0">
+                        <AnchorPane layoutX="6.0" layoutY="293.0" prefHeight="400.0" prefWidth="1169.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="293.0">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="ins-form" />

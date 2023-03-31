@@ -1,5 +1,5 @@
 module com.group2.cineme.sem2 {
-    requires javafx.controls;
+   requires javafx.controls;
     requires javafx.fxml;
     requires hibernate.entitymanager;
     requires java.naming;
@@ -8,7 +8,7 @@ module com.group2.cineme.sem2 {
     requires java.sql;
     requires java.persistence;
     requires com.jfoenix;
-    
+    opens Utils;
     opens POJO;
     opens com.group2.cineme.sem2 to javafx.fxml;
     exports com.group2.cineme.sem2;

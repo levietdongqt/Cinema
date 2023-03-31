@@ -6,6 +6,7 @@ package com.group2.cineme.sem2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 /**
@@ -18,6 +19,12 @@ public class FXMLAdminController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    
+    public void Logout(ActionEvent event) throws Exception {
+   App.setRoot("FXMLLogin");
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
