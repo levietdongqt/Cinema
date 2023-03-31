@@ -4,8 +4,10 @@ package POJO;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -84,6 +86,32 @@ public class FilmGenre implements Serializable{
     public String toString() {
         return this.fGenreName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        final FilmGenre other = (FilmGenre) obj;
+        if(!Objects.equals(this.fGenreName, other.fGenreName)) return false;
+        if(this.fGenreID != other.fGenreID) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash +Objects.hashCode(this.fGenreName);
+        hash = 31 * hash +this.fGenreID;
+        return hash;   
+    }
+    
+    
+
+    
+    
+    
+    
+    
 
    
 

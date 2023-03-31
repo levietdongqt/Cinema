@@ -34,7 +34,7 @@
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
-                  <Button mnemonicParsing="false" text="Log Out" VBox.vgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <HBox layoutX="20.0" layoutY="3.0" styleClass="session" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">

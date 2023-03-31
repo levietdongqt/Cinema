@@ -4,12 +4,15 @@
  */
 package DAO;
 
+import POJO.Film;
 import POJO.RoomTypeDetails;
 import POJO.Schedule;
+import Utils.AlertUtils;
 import Utils.HibernateUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import javafx.scene.control.Alert;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -82,5 +85,20 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
 
+    }
+    public List<Schedule> checkStatus(Film film){
+        List<Schedule> list = null;
+        try (Session ses = HibernateUtils.getFACTORY().openSession()){
+            ses.getTransaction().begin();
+            String hql = "FROM Schedule WHERE film = :film AND status = :status";
+            Query query = ses.createQuery(hql);
+            query.setParameter("film",film);
+            query.setParameter("status", true);
+            list = query.getResultList();
+            ses.getTransaction().commit();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }
+        return list;
     }
 }
