@@ -5,10 +5,13 @@
 package POJO;
 
 import java.util.Set;
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -16,11 +19,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "SeatMap")
+//@Cacheable
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SeatMap {
     @Id
     private String sMapID;
-//    private String seatRow;
-//    private int seatNum;
+    private String seatRow;
+    private int seatNum;
     @OneToMany(mappedBy = "seatMap")
     private Set<RoomSeatDetail> roomSeatDetailList;
 
@@ -51,30 +56,30 @@ public class SeatMap {
     /**
      * @return the seatRow
      */
-//    public String getSeatRow() {
-//        return seatRow;
-//    }
-//
-//    /**
-//     * @param seatRow the seatRow to set
-//     */
-//    public void setSeatRow(String seatRow) {
-//        this.seatRow = seatRow;
-//    }
-//
-//    /**
-//     * @return the seatNum
-//     */
-//    public int getSeatNum() {
-//        return seatNum;
-//    }
-//
-//    /**
-//     * @param seatNum the seatNum to set
-//     */
-//    public void setSeatNum(int seatNum) {
-//        this.seatNum = seatNum;
-//    }
+    public String getSeatRow() {
+        return seatRow;
+    }
+
+    /**
+     * @param seatRow the seatRow to set
+     */
+    public void setSeatRow(String seatRow) {
+        this.seatRow = seatRow;
+    }
+
+    /**
+     * @return the seatNum
+     */
+    public int getSeatNum() {
+        return seatNum;
+    }
+
+    /**
+     * @param seatNum the seatNum to set
+     */
+    public void setSeatNum(int seatNum) {
+        this.seatNum = seatNum;
+    }
 
     /**
      * @return the roomSeatDetailList

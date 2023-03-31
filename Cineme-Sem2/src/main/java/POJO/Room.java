@@ -1,40 +1,49 @@
-package POJO;
+    package POJO;
 
 import java.util.Set;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "Room")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Room {
 
     @Id
     private String roomID;
     @Column(nullable = false,unique = true)
     private String roomName;
-    @Column(nullable = true)
-    private int seatQuanlity;   
-    @ManyToOne
-    @JoinColumn(name = "rTypeID")
-    private RoomType roomType;
+//    @Column(nullable = true)
+//    private int seatQuanlity;
+    private String description;
+    private boolean status;
     
-    @OneToMany(mappedBy = "room")
-    private Set<TimeDetail> timeDetailList;
+    @OneToMany(mappedBy = "room",fetch = FetchType.EAGER)
+    private Set<RoomTypeDetails> roomTypeDetailList;
 
     public Room() {
     }
 
-    public Room(String roomID, String roomName, int seatQuanlity, RoomType roomType, Set<TimeDetail> timeDetails) {
+    public Room(String roomID, String roomName, String description, Set<RoomTypeDetails> roomTypeDetailList) {
         this.roomID = roomID;
         this.roomName = roomName;
-        this.seatQuanlity = seatQuanlity;
-        this.roomType = roomType;
-        this.timeDetailList = timeDetails;
+        this.description = description;
+        this.roomTypeDetailList = roomTypeDetailList;
+    }
+
+    @Override
+    public String toString() {
+        return this.roomName;
     }
     
     /**
@@ -66,46 +75,46 @@ public class Room {
     }
 
     /**
-     * @return the seatQuanlity
+     * @return the description
      */
-    public int getSeatQuanlity() {
-        return seatQuanlity;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * @param seatQuanlity the seatQuanlity to set
+     * @param description the description to set
      */
-    public void setSeatQuanlity(int seatQuanlity) {
-        this.seatQuanlity = seatQuanlity;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
-     * @return the roomType
+     * @return the status
      */
-    public RoomType getRoomType() {
-        return roomType;
+    public boolean isStatus() {
+        return status;
     }
 
     /**
-     * @param roomType the roomType to set
+     * @param status the status to set
      */
-    public void setRoomType(RoomType roomType) {
-        this.roomType = roomType;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     /**
-     * @return the timeDetails
+     * @return the roomTypeDetailList
      */
-    public Set<TimeDetail> getTimeDetails() {
-        return timeDetailList;
+    public Set<RoomTypeDetails> getRoomTypeDetailList() {
+        return roomTypeDetailList;
     }
 
     /**
-     * @param timeDetails the timeDetails to set
+     * @param roomTypeDetailList the roomTypeDetailList to set
      */
-    public void setTimeDetails(Set<TimeDetail> timeDetails) {
-        this.timeDetailList = timeDetails;
+    public void setRoomTypeDetailList(Set<RoomTypeDetails> roomTypeDetailList) {
+        this.roomTypeDetailList = roomTypeDetailList;
     }
 
-   
+    
 }

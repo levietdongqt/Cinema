@@ -5,10 +5,13 @@
 package POJO;
 
 import java.util.Set;
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -16,28 +19,35 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "RoomType")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoomType {
     @Id
     private String rTypeID;
     private String rTypeName;
     private String Description;
-    
+    private boolean status;
     @OneToMany(mappedBy = "roomType")
-    private Set <Room> roomList;
+    private Set <RoomTypeDetails> roomTypeDetailsList;
     @OneToMany(mappedBy = "roomType")
     private Set <RoomSeatDetail> roomSeatDetailList;
 
     public RoomType() {
     }
 
-    public RoomType(String rTypeID, String rTypeName, String Description, Set<Room> roomList, Set<RoomSeatDetail> roomSeatDetailList) {
+    public RoomType(String rTypeID, String rTypeName, String Description,  Set<RoomTypeDetails> roomTypeDetailsList, Set<RoomSeatDetail> roomSeatDetailList) {
         this.rTypeID = rTypeID;
         this.rTypeName = rTypeName;
         this.Description = Description;
-        this.roomList = roomList;
+        this.roomTypeDetailsList = roomTypeDetailsList;
         this.roomSeatDetailList = roomSeatDetailList;
     }
 
+    @Override
+    public String toString() {
+        return this.rTypeName;
+    }
+    
     /**
      * @return the rTypeID
      */
@@ -81,17 +91,31 @@ public class RoomType {
     }
 
     /**
-     * @return the roomList
+     * @return the status
      */
-    public Set <Room> getRoomList() {
-        return roomList;
+    public boolean isStatus() {
+        return status;
     }
 
     /**
-     * @param roomList the roomList to set
+     * @param status the status to set
      */
-    public void setRoomList(Set <Room> roomList) {
-        this.roomList = roomList;
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the roomTypeDetailsList
+     */
+    public Set <RoomTypeDetails> getRoomTypeDetailsList() {
+        return roomTypeDetailsList;
+    }
+
+    /**
+     * @param roomTypeDetailsList the roomTypeDetailsList to set
+     */
+    public void setRoomTypeDetailsList(Set <RoomTypeDetails> roomTypeDetailsList) {
+        this.roomTypeDetailsList = roomTypeDetailsList;
     }
 
     /**

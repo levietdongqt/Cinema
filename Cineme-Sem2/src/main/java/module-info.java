@@ -1,5 +1,5 @@
 module com.group2.cineme.sem2 {
-   requires javafx.controls;
+    requires javafx.controls;
     requires javafx.fxml;
     requires hibernate.entitymanager;
     requires java.naming;

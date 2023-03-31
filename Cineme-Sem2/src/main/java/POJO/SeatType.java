@@ -18,19 +18,23 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SeatType")
 public class SeatType {
+
     @Id
     private String sTypeID;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
+    private String typeGroup;
     private String sTypeName;
     private int seatPrice;
+    private boolean status;
     @OneToMany(mappedBy = "seatType")
-    private Set <RoomSeatDetail> roomSeatDetailList;
+    private Set<RoomSeatDetail> roomSeatDetailList;
 
     public SeatType() {
     }
 
-    public SeatType(String sTypeID, String sTypeName, int seatPrice, Set<RoomSeatDetail> roomSeatDetailList) {
+    public SeatType(String sTypeID, String typeGroup, String sTypeName, int seatPrice, Set<RoomSeatDetail> roomSeatDetailList) {
         this.sTypeID = sTypeID;
+        this.typeGroup = typeGroup;
         this.sTypeName = sTypeName;
         this.seatPrice = seatPrice;
         this.roomSeatDetailList = roomSeatDetailList;
@@ -48,6 +52,20 @@ public class SeatType {
      */
     public void setsTypeID(String sTypeID) {
         this.sTypeID = sTypeID;
+    }
+
+    /**
+     * @return the typeGroup
+     */
+    public String getTypeGroup() {
+        return typeGroup;
+    }
+
+    /**
+     * @param typeGroup the typeGroup to set
+     */
+    public void setTypeGroup(String typeGroup) {
+        this.typeGroup = typeGroup;
     }
 
     /**
@@ -79,18 +97,31 @@ public class SeatType {
     }
 
     /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    /**
      * @return the roomSeatDetailList
      */
-    public Set <RoomSeatDetail> getRoomSeatDetailList() {
+    public Set<RoomSeatDetail> getRoomSeatDetailList() {
         return roomSeatDetailList;
     }
 
     /**
      * @param roomSeatDetailList the roomSeatDetailList to set
      */
-    public void setRoomSeatDetailList(Set <RoomSeatDetail> roomSeatDetailList) {
+    public void setRoomSeatDetailList(Set<RoomSeatDetail> roomSeatDetailList) {
         this.roomSeatDetailList = roomSeatDetailList;
     }
 
-    
 }
