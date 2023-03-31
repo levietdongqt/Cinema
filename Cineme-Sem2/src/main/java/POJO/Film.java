@@ -1,5 +1,6 @@
 package POJO;
 
+import DAO.ActorsDAO;
 import DAO.FilmDAO;
 import java.io.Serializable;
 import java.sql.Date;
@@ -25,8 +26,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cacheable
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Film implements Serializable{
 
     @Id

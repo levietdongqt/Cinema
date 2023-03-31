@@ -82,7 +82,7 @@
             </ComboBox>
          </children>
       </HBox>
-      <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <VBox fx:id="lod" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <children>
             <HBox prefHeight="42.0" prefWidth="604.0">
                <children>

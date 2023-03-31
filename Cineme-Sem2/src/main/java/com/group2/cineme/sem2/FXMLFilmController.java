@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
@@ -66,7 +68,7 @@ public class FXMLFilmController implements Initializable {
         loadDataCombobox();
     }
 
-    
+       
     //Khu vuc nut
     public void buttonAddNewHandler() throws IOException{
         App.setView("FXMLNewFilm");   
