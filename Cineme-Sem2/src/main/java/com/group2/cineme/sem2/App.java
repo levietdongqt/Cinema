@@ -26,7 +26,9 @@ public class App extends Application {
         ses.clear();
         ses.close();    
 
-        scene = new Scene(loadFXML("FXMLFilm"));
+
+
+        scene = new Scene(loadFXML("FXMLCustomer"));
 
         stage.setScene(scene);
         stage.show();

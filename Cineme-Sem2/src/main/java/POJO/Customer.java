@@ -1,22 +1,14 @@
 
 package POJO;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -57,7 +49,14 @@ public class Customer {
     /**
      * @param cusPhone the cusPhone to set
      */
-    public void setCusPhone(String cusPhone) {
+    public void setCusPhone(String cusPhone) throws Exception {
+        if (cusPhone.isEmpty()) {
+            throw new Exception("Phone number cannot be empty");
+        }
+
+        if (!Pattern.matches("\\d{10,}", cusPhone)) {
+            throw new Exception("Phone number must be atleast 10 digits");
+        }
         this.cusPhone = cusPhone;
     }
 
@@ -71,7 +70,16 @@ public class Customer {
     /**
      * @param customerName the customerName to set
      */
-    public void setCustomerName(String customerName) {
+    public void setCustomerName(String customerName) throws Exception {
+        if (customerName.isEmpty()) {
+            throw new Exception("Customer name cannot be empty");
+        }
+        if (!customerName.matches("^[a-zA-Z ]+$")) {
+            throw new Exception("Customer name can only contain alphabetic characters");
+        }
+        if (customerName.length() < 6 || customerName.length() > 30) {
+            throw new Exception("Customer name must be between 6 and 30 char in length");
+        }
         this.customerName = customerName;
     }
 
@@ -85,7 +93,13 @@ public class Customer {
     /**
      * @param address the address to set
      */
-    public void setAddress(String address) {
+    public void setAddress(String address) throws Exception {
+        if (address.isEmpty()) {
+            throw new Exception("Address cant be empty");
+        }
+        if (address.length() < 6 || address.length() > 30) {
+            throw new Exception("Address must be between 6 and 30 char in length");
+        }
         this.address = address;
     }
 
@@ -99,7 +113,12 @@ public class Customer {
     /**
      * @param birthDate the birthDate to set
      */
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(LocalDate birthDate) throws Exception {
+        LocalDate today = LocalDate.now();
+        long years = birthDate.until(today, ChronoUnit.YEARS);
+        if (years < 18) {
+            throw new Exception("Age must be at least 18.");
+        }
         this.birthDate = birthDate;
     }
 
@@ -113,8 +132,13 @@ public class Customer {
     /**
      * @param email the email to set
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String email) throws Exception {
+        String check = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        if (email.matches(check)) {
+            this.email = email;
+        } else {
+            throw new Exception("Invalid email format.");
+        }
     }
 
     /**
@@ -127,7 +151,10 @@ public class Customer {
     /**
      * @param totalPoints the totalPoints to set
      */
-    public void setTotalPoints(int totalPoints) {
+    public void setTotalPoints(int totalPoints) throws Exception {
+        if (totalPoints < 0) {
+            throw new Exception("Total Points must be 0 or higer");
+        }
         this.totalPoints = totalPoints;
     }
 
