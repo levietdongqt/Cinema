@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLEditScheduleController">
+   <children>
+      <VBox>
+         <children>
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Button fx:id="btX" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="X" />
+               </children>
+            </HBox>
+            <Label text="HEllo">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="35.0" prefWidth="200.0" text="HEllo">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

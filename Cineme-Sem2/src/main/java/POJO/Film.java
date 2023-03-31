@@ -1,5 +1,6 @@
 package POJO;
 
+import DAO.ActorsDAO;
 import DAO.FilmDAO;
 import java.io.Serializable;
 import java.sql.Date;
@@ -25,8 +26,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cacheable
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Film implements Serializable{
 
     @Id
@@ -310,14 +311,19 @@ public class Film implements Serializable{
         this.listSchedule = listSchedule;
     }
     public static void main(String[] args) {
-        FilmDAO fd = new FilmDAO();
-        try {
-            fd.getByColumn("Film","filmName","ava");
-            System.out.println("123----------------------------------");
-            fd.getByColumn("Film","filmName","ava");
-        } catch (Exception ex) {
-            Logger.getLogger(Film.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        FilmDAO fd = new FilmDAO();
+//        try {
+//            Film f = fd.getById("PTA2186458200", Film.class);
+//            ActorsDAO a  = new ActorsDAO();
+//            a.getAll("Actors").forEach((t) -> {
+//                System.out.printf("%s\n",t.getActorName());
+//            });
+//            f.getListActors().forEach((t) -> {
+//                System.out.printf("%s",t.getActorName());
+//            });
+//        } catch (Exception ex) {
+//            Logger.getLogger(Film.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
 }

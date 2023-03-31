@@ -18,8 +18,10 @@ import POJO.Schedule;
 import POJO.Schedule;
 import Utils.AlertUtils;
 import Utils.HibernateUtils;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -36,6 +38,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -47,7 +50,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 /**
  *
@@ -55,6 +61,8 @@ import javafx.scene.layout.GridPane;
  */
 public class FXMLNewScheduleController implements Initializable {
 
+    @FXML
+    VBox lod;
     @FXML
     private GridPane gridPane;
 
@@ -105,29 +113,32 @@ public class FXMLNewScheduleController implements Initializable {
     int count = 3;
     List<RoomTypeDetails> rtDetailList = new ArrayList<>();
     List<Film> listFilm = new ArrayList<>();
+    Popup popup = new Popup();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         checkValidDate();
         comboBoxRoomHanlder();
         yesNoHanlder();
         creatTableView();
+        
 
     }
 
     void getFilm(Film film) throws Exception {
-        selectedFilm = film;       
+        selectedFilm = film;
         FilmDAO filmDAO = new FilmDAO();
         filmDAO.getAll("Film").forEach((t) -> {
             listFilm.add(t);
         });
-       comboBoxFilm.setItems(FXCollections.observableArrayList(listFilm));
-       comboBoxFilm.setValue(film);          
+        comboBoxFilm.setItems(FXCollections.observableArrayList(listFilm));
+        comboBoxFilm.setValue(film);
     }
-    
+
     @FXML
-    private void setUpComboBoxFilm () {
-        selectedFilm = comboBoxFilm.getValue();      
+    private void setUpComboBoxFilm() {
+        selectedFilm = comboBoxFilm.getValue();
     }
+
     private void yesNoHanlder() {
         checkBoxYesNo.setSelected(true);
         checkBoxYesNo.setOnAction((t) -> {
@@ -284,6 +295,16 @@ public class FXMLNewScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             Button btn = new Button("Edit");
             btn.setOnAction((t) -> {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLEditSchedule.fxml"));
+                    AnchorPane popupContent = fxmlLoader.load();                   
+                    
+                    popup.getContent().add(popupContent);
+                    popup.show(btn.getScene().getWindow());
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             });
             return new SimpleObjectProperty<>(btn);
         });
