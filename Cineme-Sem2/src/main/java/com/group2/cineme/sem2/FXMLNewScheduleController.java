@@ -64,7 +64,7 @@ public class FXMLNewScheduleController implements Initializable {
     @FXML
     VBox lod;
     @FXML
-    private GridPane gridPane;
+    GridPane gridPane;
 
     @FXML
     private DatePicker date;
@@ -114,13 +114,16 @@ public class FXMLNewScheduleController implements Initializable {
     List<RoomTypeDetails> rtDetailList = new ArrayList<>();
     List<Film> listFilm = new ArrayList<>();
     Popup popup = new Popup();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         checkValidDate();
         comboBoxRoomHanlder();
         yesNoHanlder();
         creatTableView();
-        
+        popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
+            gridPane.getParent().setDisable(false);
+        });
 
     }
 
@@ -297,10 +300,13 @@ public class FXMLNewScheduleController implements Initializable {
             btn.setOnAction((t) -> {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLEditSchedule.fxml"));
-                    AnchorPane popupContent = fxmlLoader.load();                   
-                    
+                    AnchorPane popupContent = fxmlLoader.load();
+                    FXMLEditScheduleController editControl = fxmlLoader.getController();
+                    editControl.getData(schedule, selectedRoom);
                     popup.getContent().add(popupContent);
-                    popup.show(btn.getScene().getWindow());
+                    popupContent.setStyle("-fx-background-color:white");
+                    popup.show(gridPane.getScene().getWindow());
+                    gridPane.getParent().setDisable(true);   // KHoá trang home khi popup hiện lên, thay biến gridPane thành thằng cha của FXML
 
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);

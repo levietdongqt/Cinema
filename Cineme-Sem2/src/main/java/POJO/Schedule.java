@@ -51,7 +51,7 @@ public class Schedule {
         this.roomTypeDetail = roomTypeDetail;
         this.listTicket = listTicket;
     }
-
+    
     /**
      * @return the scheduleID
      */

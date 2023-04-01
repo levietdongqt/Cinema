@@ -76,10 +76,10 @@ public class Film implements Serializable{
     @OneToMany(mappedBy = "film",cascade = CascadeType.REMOVE)
     private Set<Schedule> listSchedule = new HashSet<>();
 
-//    @Override
-//    public String toString() {
-//        return filmName;
-//    }
+    @Override
+    public String toString() {
+        return filmName;
+    }
     
     //Constructor
     public Film() {
