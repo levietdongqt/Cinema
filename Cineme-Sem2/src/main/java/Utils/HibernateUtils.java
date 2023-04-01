@@ -33,7 +33,8 @@ public class HibernateUtils {
         props.put(Environment.USE_SECOND_LEVEL_CACHE, "true"); 
          props.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory"); 
        props.put(Environment.USE_QUERY_CACHE, "true");
-     
+      
+      props.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
         // Cài đặt cache tự động xoá các đối tượng ít sử dụng
         props.put("hibernate.cache.eviction_strategy", "LRU");    //LRU (Least Recently Used), chiến lược sử dụng giá trị thời gian để xác định đối tượng ít sử dụng nhất
         props.put("hibernate.cache.evict_by", "ACCESS_COUNT");     //xác định số lượng truy cập để xác định đối tượng ít sử dụng

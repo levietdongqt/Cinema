@@ -191,8 +191,10 @@ public class FXMLNewFilmController implements Initializable {
                 if (FilmDAO.getByID(film.getFilmID()) != null) {
                     errorID.setText("ID' Film is existed");
                 } else {
+
                     film.setListGenre(setFilmGenre);
                     film.setListActors(setActors);
+
                     FilmDAO fd = new FilmDAO();
                     fd.add(film);
 //                    fd.saveActorsforFilm(film.getFilmID(), setActors);

@@ -65,7 +65,7 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 
             Query query = session.createQuery(hql);
             query.setParameter("userName", username);
-            query.setParameter("password", password);
+            query.setParameter("password", encodePassword(password));
             System.out.println(hql);
             list = query.getResultList();
             session.getTransaction().commit();

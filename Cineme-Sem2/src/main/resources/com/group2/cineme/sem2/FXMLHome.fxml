@@ -21,7 +21,7 @@
                <children>
                   <ImageView fitHeight="114.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../images/icon/avatar.png" />
+                        <Image url="@../../../../images/icon/avatar.png" /> 
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="141.0" styleClass="labelpopup">
@@ -31,6 +31,9 @@
                   </HBox>
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
                   <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="Film Mananing" />
+                  <Button mnemonicParsing="false" onAction="#loadSigup" styleClass="buttonPopup" text="Employee Manager" />
+                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
+                  <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
