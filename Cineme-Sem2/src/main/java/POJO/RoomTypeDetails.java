@@ -5,6 +5,7 @@
 package POJO;
 
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -20,6 +23,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "RoomTypeDetails")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoomTypeDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +36,7 @@ public class RoomTypeDetails {
     @JoinColumn(name = "rTypeID")
     private RoomType roomType;
     @OneToMany(mappedBy = "roomTypeDetail")
-     private List<TimeDetail> timeDetailList;
+     private List<Schedule> scheduleList;
     private boolean status;
 
     public RoomTypeDetails() {
@@ -46,6 +51,12 @@ public class RoomTypeDetails {
     /**
      * @return the rtDetailsID
      */
+    
+    @Override
+    public String toString() {
+        return roomType.getrTypeName();
+    }
+
     public int getRtDetailsID() {
         return rtDetailsID;
     }
@@ -98,6 +109,25 @@ public class RoomTypeDetails {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    /**
+     * @return the scheduleList
+     */
+    public List<Schedule> getScheduleList() {
+        return scheduleList;
+    }
+
+    /**
+     * @param scheduleList the scheduleList to set
+     */
+    public void setScheduleList(List<Schedule> scheduleList) {
+        this.scheduleList = scheduleList;
+    }
+
+    /**
+     * @return the timeDetailList
+     */
+    
     
     
             

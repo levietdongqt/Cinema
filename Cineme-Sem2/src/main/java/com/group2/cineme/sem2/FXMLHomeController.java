@@ -4,10 +4,16 @@
  */
 package com.group2.cineme.sem2;
 
+import DAO.FilmDAO;
+import POJO.Film;
+import Utils.SessionUtil;
 import com.jfoenix.controls.JFXHamburger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
@@ -38,6 +45,8 @@ public class FXMLHomeController implements Initializable {
     
     @FXML
     private BorderPane home;
+    
+    @FXML AnchorPane anchorPane;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,6 +55,18 @@ public class FXMLHomeController implements Initializable {
     }  
     
     //Xu ly Button handler
+   public void homeButtonHandler() throws IOException{
+       FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+       App.scene.setRoot(fxmlLoader.load());
+         
+   }
+   public void filmButtonHandler() throws IOException{
+       App.setView("FXMLFilm");
+   }
+   public void logOut() throws IOException{
+       App.setRoot("FXMLLogin");
+   }
+   
    
     
     
@@ -73,11 +94,10 @@ public class FXMLHomeController implements Initializable {
             if(popup.isShowing()){
                 popup.hide();
             }else{
-                System.out.println(event.getScreenX());
-                popup.show(hamburger,event.getSceneX()-500,event.getScreenY() );
+                popup.show(hamburger,event.getScreenX()-720,event.getScreenY());            
             }
         });
-          loadInHome("FXMLNewFilm");
+        loadInHome("FXMLFilm");
     }
     public void loadDataImageView(){
         File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
@@ -87,6 +107,7 @@ public class FXMLHomeController implements Initializable {
         imageViewHome.setFitHeight(16);
         this.buttonHome.setGraphic(imageViewHome);
     }
+    
     
     
 }

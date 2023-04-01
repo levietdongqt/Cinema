@@ -12,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="home" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../../../styles/fxmlhome.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLHomeController">
+<BorderPane fx:id="home" prefHeight="800.0" prefWidth="1000.0" stylesheets="@../../../../styles/fxmlhome.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLHomeController">
    <top>
-      <AnchorPane BorderPane.alignment="CENTER_RIGHT">
+      <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER_RIGHT">
          <children>
             <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="572.0" opacity="0.8" prefHeight="349.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="859.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -30,16 +30,16 @@
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
-                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Film Mananing" />
+                  <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="Film Mananing" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
-                  <Button mnemonicParsing="false" text="Log Out" VBox.vgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <HBox layoutX="20.0" layoutY="3.0" styleClass="session" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button fx:id="buttonHome" alignment="CENTER_RIGHT" mnemonicParsing="false" textFill="#776c6c" />
+                  <Button fx:id="buttonHome" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#homeButtonHandler" textFill="#776c6c" />
                   <Label styleClass="labelSession" text="Hello:">
                      <font>
                         <Font size="18.0" />
@@ -56,7 +56,7 @@
       </AnchorPane>
    </top>
    <center>
-      <Text fill="#d51313" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To CGV" BorderPane.alignment="CENTER">
+      <Text fill="#d51313" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To CGV">
          <font>
             <Font size="65.0" />
          </font>

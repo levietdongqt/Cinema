@@ -1,47 +1,60 @@
 
 package POJO;
 
+import DAO.ScheduleDAO;
+import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Schedule {
     @Id
     private String scheduleID;
     
-    private int ticketQuality;
-    
+//    private int ticketQuality;
+    private LocalDateTime startTime;
+    private LocalDateTime  endTime;
     private boolean status;
     
     @ManyToOne
     @JoinColumn(name = "filmID")
     private Film film;
-    
-
-    @OneToOne
-    @JoinColumn(name = "timeDetailsID")
-    private TimeDetail timeDetail;
+    @ManyToOne
+    @JoinColumn(name = "rtDetailsID")
+    private RoomTypeDetails roomTypeDetail;
     
     @OneToMany(mappedBy = "schedule")
     private Set<Ticket> listTicket;
 
-    //Constructor
     public Schedule() {
     }
-
-    public Schedule(String scheduleID, int ticketQuality, boolean status) {
+    public Schedule(String scheduleID, LocalDateTime startTime, LocalDateTime endTime, boolean status, Film film, RoomTypeDetails roomTypeDetail, Set<Ticket> listTicket) {
         this.scheduleID = scheduleID;
-        this.ticketQuality = ticketQuality;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.status = status;
+        this.film = film;
+        this.roomTypeDetail = roomTypeDetail;
+        this.listTicket = listTicket;
     }
-    
-    //End constructor
-    
+
+    /**
+     * @return the scheduleID
+     */
     public String getScheduleID() {
         return scheduleID;
     }
@@ -54,17 +67,31 @@ public class Schedule {
     }
 
     /**
-     * @return the ticketQuality
+     * @return the startTime
      */
-    public int getTicketQuality() {
-        return ticketQuality;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
     /**
-     * @param ticketQuality the ticketQuality to set
+     * @param startTime the startTime to set
      */
-    public void setTicketQuality(int ticketQuality) {
-        this.ticketQuality = ticketQuality;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * @return the endTime
+     */
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * @param endTime the endTime to set
+     */
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     /**
@@ -96,17 +123,17 @@ public class Schedule {
     }
 
     /**
-     * @return the timeDetail
+     * @return the roomTypeDetail
      */
-    public TimeDetail getTimeDetail() {
-        return timeDetail;
+    public RoomTypeDetails getRoomTypeDetail() {
+        return roomTypeDetail;
     }
 
     /**
-     * @param timeDetail the timeDetail to set
+     * @param roomTypeDetail the roomTypeDetail to set
      */
-    public void setTimeDetail(TimeDetail timeDetail) {
-        this.timeDetail = timeDetail;
+    public void setRoomTypeDetail(RoomTypeDetails roomTypeDetail) {
+        this.roomTypeDetail = roomTypeDetail;
     }
 
     /**
@@ -122,6 +149,12 @@ public class Schedule {
     public void setListTicket(Set<Ticket> listTicket) {
         this.listTicket = listTicket;
     }
+
+    @Override
+    public String toString() {
+        return this.scheduleID;
+    }
+    
     
     
 }

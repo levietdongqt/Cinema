@@ -1,16 +1,25 @@
 
 package POJO;
 
+import java.io.Serializable;
 import java.util.*;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-public class FilmGenre {
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class FilmGenre implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fGenreID;
@@ -77,6 +86,38 @@ public class FilmGenre {
     public String toString() {
         return this.fGenreName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        final FilmGenre other = (FilmGenre) obj;
+        if(!Objects.equals(this.fGenreName, other.fGenreName)) return false;
+        if(this.fGenreID != other.fGenreID) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash +Objects.hashCode(this.fGenreName);
+        hash = 31 * hash +this.fGenreID;
+        return hash;   
+    }
+    
+    
+
+    
+    
+    
+    
+    
+
+   
+
+   
+    
+    
     
     
     

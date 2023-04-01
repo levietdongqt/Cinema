@@ -25,7 +25,13 @@ public class App extends Application {
         Session ses = HibernateUtils.getFACTORY().openSession();
         ses.clear();
         ses.close();    
+<<<<<<< HEAD
         scene = new Scene(loadFXML("FXMLCustomer"));
+=======
+
+        scene = new Scene(loadFXML("FXMLLogin"));
+
+>>>>>>> 4ebc9c056f90bf9ec8e1a8c0260a8dc74a1c8f76
         stage.setScene(scene);
         stage.show();
     }
@@ -43,17 +49,21 @@ public class App extends Application {
     }
 
     //Ham nay la ham de setView vao Home
-    static void setView(String fxml) throws IOException {
+    static FXMLLoader setView(String fxml) throws IOException {
         FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
         scene.setRoot(fxmlLoader.load());
         FXMLHomeController homeController = fxmlLoader.getController();
         homeController.setCenter(fxmlLoader1.load());
+        return fxmlLoader1;
 
     }
 
     public static void main(String[] args) {
         launch();
+    }
+    static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
     }
 
 }

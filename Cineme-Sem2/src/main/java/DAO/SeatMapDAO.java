@@ -20,7 +20,7 @@ public class SeatMapDAO extends GenericDAO<SeatMap, String> {
             ses.getTransaction().begin();
             String[] a = {"A","B", "C", "D", "E", "F", "G", "H", "I", "K"};
             for (String row : a) {
-                for (int i = 1; i <= 15; i++) {
+                for (int i = 1; i <= 14; i++) {
                     String map = row + i;
                     SeatMap seatMap = new SeatMap();
                     seatMap.setsMapID(map);

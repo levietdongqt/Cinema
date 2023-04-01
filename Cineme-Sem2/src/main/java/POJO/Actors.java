@@ -1,17 +1,26 @@
 
 package POJO;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.*;
+import java.util.regex.Pattern;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-public class Actors {
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Actors implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int actorID;
@@ -63,9 +72,14 @@ public class Actors {
 
     /**
      * @param actorName the actorName to set
+     * @throws java.lang.Exception
      */
-    public void setActorName(String actorName) {
-        this.actorName = actorName;
+    public void setActorName(String actorName) throws Exception {
+        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w .]+", actorName)){
+            throw new Exception("Actors name don't have[&^@#$%] or empty");
+        }else{
+            this.actorName = actorName;
+        }
     }
 
     /**
@@ -77,9 +91,16 @@ public class Actors {
 
     /**
      * @param birthDate the birthDate to set
+     * @throws java.lang.Exception
      */
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthDate(Date birthDate) throws Exception {
+        Date patternBD1 = Date.valueOf("1933-01-01");
+        Date patternBD2 = Date.valueOf("2010-01-01");
+        if(birthDate.before(patternBD1) || birthDate.after(patternBD2)){
+            throw new Exception("BirthDay must 1933<yyyy<2010");
+        }else{
+            this.birthDate = birthDate;
+        }
     }
 
     /**
@@ -114,6 +135,30 @@ public class Actors {
     public String toString() {
         return this.actorName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        final Actors other = (Actors) obj;
+        if(!Objects.equals(this.actorName, other.actorName)) return false;
+        if(!Objects.equals(this.birthDate, other.birthDate)) return false;
+        if(!Objects.equals(this.homeTown, other.homeTown)) return false;
+        if(this.actorID != other.getActorID()) return false;
+        return true;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash +Objects.hashCode(this.actorName);
+        hash = 31 * hash +Objects.hashCode(this.birthDate);
+        hash = 31 * hash +Objects.hashCode(this.homeTown);
+        hash = 31 * hash +this.actorID;
+        return hash;   
+    }
+
+   
     
     
     

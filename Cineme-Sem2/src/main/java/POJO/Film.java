@@ -1,19 +1,34 @@
-
 package POJO;
 
+import DAO.FilmDAO;
+import java.io.Serializable;
 import java.sql.Date;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-public class Film {
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Film implements Serializable{
+
     @Id
     private String filmID;
     @Column(nullable = false)
@@ -28,35 +43,43 @@ public class Film {
     private int duration;
     @Column(nullable = false)
     private String imageUrl;
-    
+
     private String director;
-    
+
     private int viewFilm;
-    
+
     private String description;
-    
-    
-    @ManyToMany
+
+    @ManyToMany()
     @JoinTable(
             name = "ActorOfFilm",
-            joinColumns = {@JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
-            inverseJoinColumns = { @JoinColumn(name ="actorID") } // course_id là khoá ngoại ở bảng trung gian
-            
+            joinColumns = {
+                @JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
+            inverseJoinColumns = {
+                @JoinColumn(name = "actorID")} // course_id là khoá ngoại ở bảng trung gian
+
     )
     private Set<Actors> listActors = new HashSet<>();
-    
+
     @ManyToMany
     @JoinTable(
             name = "FilmGenreDetails",
-            joinColumns = {@JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
-            inverseJoinColumns = { @JoinColumn(name ="fGenreID") } // course_id là khoá ngoại ở bảng trung gian
-            
+            joinColumns = {
+                @JoinColumn(name = "filmID")}, //st_id là khoá ngoại ở bảng trung gian liên kết với Student
+            inverseJoinColumns = {
+                @JoinColumn(name = "fGenreID")} // course_id là khoá ngoại ở bảng trung gian
+
     )
     private Set<FilmGenre> listGenre = new HashSet<>();
-    
-    @OneToMany(mappedBy = "film")
+
+    @OneToMany(mappedBy = "film",cascade = CascadeType.REMOVE)
     private Set<Schedule> listSchedule = new HashSet<>();
 
+//    @Override
+//    public String toString() {
+//        return filmName;
+//    }
+    
     //Constructor
     public Film() {
     }
@@ -73,6 +96,7 @@ public class Film {
         this.viewFilm = viewFilm;
         this.description = description;
     }
+
     //End Contructors
     /**
      * @return the filmID
@@ -97,9 +121,14 @@ public class Film {
 
     /**
      * @param filmName the filmName to set
+     * @throws java.lang.Exception
      */
-    public void setFilmName(String filmName) {
-        this.filmName = filmName;
+    public void setFilmName(String filmName) throws Exception {
+        if (filmName.trim().isEmpty() || !Pattern.matches("[\\w ]+", filmName)) {
+            throw new Exception("Film name don't have[&^@#$%] or empty");
+        } else {
+            this.filmName = filmName;
+        }
     }
 
     /**
@@ -126,8 +155,13 @@ public class Film {
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDate(Date startDate) throws Error, NullPointerException {
+        Date patternNow = Date.valueOf(LocalDate.now());
+        if (startDate.before(patternNow)) {
+            throw new Error("Start Date Film must > " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        } else {
+            this.startDate = startDate;
+        }
     }
 
     /**
@@ -140,8 +174,16 @@ public class Film {
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEndDate(Date endDate) throws Error, NullPointerException {
+        String startDateS = this.startDate.toString();
+        LocalDate startDatePlus = LocalDate.parse(startDateS).plusDays(10);
+        Date patternEndDate = Date.valueOf(startDatePlus);
+        if (endDate.before(patternEndDate)) {
+            throw new Error("End Date must be >" + startDatePlus.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        } else {
+            this.endDate = endDate;
+        }
+
     }
 
     /**
@@ -156,6 +198,7 @@ public class Film {
      */
     public void setDuration(int duration) {
         this.duration = duration;
+
     }
 
     /**
@@ -168,8 +211,12 @@ public class Film {
     /**
      * @param imageUrl the imageUrl to set
      */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String imageUrl) throws Exception {
+        if (imageUrl.trim().isEmpty()) {
+            throw new Exception("Image is not null");
+        } else {
+            this.imageUrl = imageUrl;
+        }
     }
 
     /**
@@ -182,8 +229,12 @@ public class Film {
     /**
      * @param director the director to set
      */
-    public void setDirector(String director) {
-        this.director = director;
+    public void setDirector(String director) throws Error{
+        if (director.trim().isEmpty() || !Pattern.matches("[\\w ]+", director)) {
+            throw new Error("Director don't have[&^@#$%!^*()] or empty");
+        } else {
+            this.director= director;
+        }
     }
 
     /**
@@ -210,8 +261,11 @@ public class Film {
     /**
      * @param description the description to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String description) throws Error{
+        if(description.length()<=10){
+            throw new Error("Description must be greater than 10 letter");
+        }
+        this.description=description;
     }
 
     /**
@@ -255,8 +309,15 @@ public class Film {
     public void setListSchedule(Set<Schedule> listSchedule) {
         this.listSchedule = listSchedule;
     }
-    
-    
-    
-    
+    public static void main(String[] args) {
+        FilmDAO fd = new FilmDAO();
+        try {
+            fd.getByColumn("Film","filmName","ava");
+            System.out.println("123----------------------------------");
+            fd.getByColumn("Film","filmName","ava");
+        } catch (Exception ex) {
+            Logger.getLogger(Film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

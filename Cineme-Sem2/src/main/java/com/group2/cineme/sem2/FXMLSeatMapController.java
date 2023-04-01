@@ -49,7 +49,7 @@ public class FXMLSeatMapController implements Initializable {
     AnchorPane anchorPane;
     @FXML
     Button btnNextStep;
-   private char  []  row = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N'};
+   private char  []  row = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'};
     List<RoomSeatDetail> infoList = new ArrayList<>();
     
 
