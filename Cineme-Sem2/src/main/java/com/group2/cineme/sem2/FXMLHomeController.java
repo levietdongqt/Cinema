@@ -4,6 +4,8 @@
  */
 package com.group2.cineme.sem2;
 
+import DAO.WorkSessionDAO;
+
 import DAO.FilmDAO;
 import POJO.Film;
 import Utils.SessionUtil;
@@ -28,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -42,30 +45,55 @@ public class FXMLHomeController implements Initializable {
     private VBox vbox;
     @FXML
     private Button buttonHome;
-    
+
     @FXML
     private BorderPane home;
+
+    @FXML
+    AnchorPane anchorPane;
+
     
-    @FXML AnchorPane anchorPane;
+    
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadDataImageView();
         loadDataPopup();
-    }  
+    }
+
+    //Xu ly Button handler
+    public void homeButtonHandler() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+        App.scene.setRoot(fxmlLoader.load());
+
+    }
+
+    public void filmButtonHandler() throws IOException {
+        App.setView("FXMLFilm");
+    }
+
+    // xử lý logout và cập nhật endTime
+    public void logOut() throws IOException, Exception {
+        WorkSessionDAO worddao = new WorkSessionDAO();
+        worddao.update();
+        App.setRoot("FXMLLogin");
+        Stage stage = (Stage) App.scene.getWindow();
+        stage.setFullScreen(false);
+    }
+
+    public void loadAdmin() throws IOException {
+        App.setView("FXMLAdmin");
+    }
+
+    public void loadSigup() throws IOException {
+        App.setView("FXMLSigup");
+    }
+
+   
+  
     
     //Xu ly Button handler
-   public void homeButtonHandler() throws IOException{
-       FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
-       App.scene.setRoot(fxmlLoader.load());
-         
-   }
-   public void filmButtonHandler() throws IOException{
-       App.setView("FXMLFilm");
-   }
-   public void logOut() throws IOException{
-       App.setRoot("FXMLLogin");
-   }
+  
    
    
     
@@ -87,6 +115,8 @@ public class FXMLHomeController implements Initializable {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    
     public void loadDataPopup(){
         Popup popup = new Popup();
         popup.getContent().add(vbox);     
@@ -99,6 +129,7 @@ public class FXMLHomeController implements Initializable {
         });
         loadInHome("FXMLFilm");
     }
+
     public void loadDataImageView(){
         File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
         Image iconHome = new Image(fileHome.toURI().toString());
@@ -107,7 +138,6 @@ public class FXMLHomeController implements Initializable {
         imageViewHome.setFitHeight(16);
         this.buttonHome.setGraphic(imageViewHome);
     }
-    
-    
-    
+
+
 }
