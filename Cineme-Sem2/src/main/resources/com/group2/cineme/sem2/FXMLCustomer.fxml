@@ -7,63 +7,74 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.CubicCurve?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLCustomerController">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLCustomerController">
    <children>
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="488.0">
+      <VBox alignment="CENTER" prefHeight="627.0" prefWidth="519.0">
          <children>
-            <AnchorPane prefHeight="299.0" prefWidth="488.0">
+            <AnchorPane prefHeight="580.0" prefWidth="520.0" style="-fx-background-color: linear-gradient(to right, rgba(163,254,252,1) 0%, rgba(234,153,255,1) 100%); -fx-background-radius: 50 0 50;">
                <children>
-                  <Label layoutX="19.0" layoutY="24.0" text="Customer Name:">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="21.0" layoutY="111.0" prefHeight="29.0" prefWidth="194.0" text="Customer Phone:">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="19.0" layoutY="82.0" text="Customer Address:">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="19.0" layoutY="53.0" text="Birthday:">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="21.0" layoutY="140.0" text="Email:">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="cusname" layoutX="280.0" layoutY="26.0" prefHeight="25.0" prefWidth="194.0" />
-                  <TextField fx:id="cusaddr" layoutX="280.0" layoutY="84.0" prefHeight="25.0" prefWidth="194.0" />
-                  <TextField fx:id="cusphone" layoutX="280.0" layoutY="113.0" prefHeight="25.0" prefWidth="194.0" />
-                  <TextField fx:id="cusemail" layoutX="280.0" layoutY="142.0" prefHeight="25.0" prefWidth="194.0" />
-                  <DatePicker fx:id="cusbday" layoutX="280.0" layoutY="55.0" prefHeight="25.0" prefWidth="194.0" />
-                  <Button layoutX="21.0" layoutY="231.0" mnemonicParsing="false" onAction="#submit" prefHeight="43.0" prefWidth="93.0" text="SAVE">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="136.0" layoutY="231.0" mnemonicParsing="false" onAction="#reset" prefHeight="43.0" prefWidth="106.0" text="RESET">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Button>
-                  <AnchorPane fx:id="errpane" layoutX="37.0" layoutY="290.0" prefHeight="66.0" prefWidth="437.0" style="-fx-background-radius: 30 0 0 30; -fx-background-color: rgb(255,85,100);" visible="false">
+                  <AnchorPane layoutX="31.0" layoutY="152.0" prefHeight="276.0" prefWidth="458.0" style="-fx-background-color: rgba(157,157,157,0.3); -fx-background-radius: 30 30 30;">
                      <children>
-                        <Label fx:id="errlabel" layoutX="14.0" layoutY="14.0" maxHeight="66.0" maxWidth="430.0" text="error">
+                        <Label layoutX="23.0" layoutY="33.0" text="Customer Name:">
                            <font>
-                              <Font name="Arial Black" size="11.0" />
+                              <Font name="Arial Black" size="20.0" />
                            </font>
                         </Label>
+                        <Label layoutX="25.0" layoutY="120.0" prefHeight="29.0" prefWidth="194.0" text="Customer Phone:">
+                           <font>
+                              <Font name="Arial Black" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="23.0" layoutY="91.0" text="Customer Address:">
+                           <font>
+                              <Font name="Arial Black" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="23.0" layoutY="62.0" text="Birthday:">
+                           <font>
+                              <Font name="Arial Black" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="25.0" layoutY="149.0" text="Email:">
+                           <font>
+                              <Font name="Arial Black" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cusname" layoutX="241.0" layoutY="35.0" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: #ffffff;" />
+                        <TextField fx:id="cusaddr" layoutX="241.0" layoutY="93.0" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: #ffffff;" />
+                        <TextField fx:id="cusphone" layoutX="241.0" layoutY="122.0" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: #ffffff;" />
+                        <TextField fx:id="cusemail" layoutX="241.0" layoutY="151.0" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: #ffffff;" />
+                        <DatePicker fx:id="cusbday" layoutX="241.0" layoutY="64.0" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: #ffffff;" />
+                        <AnchorPane fx:id="errpane" layoutX="101.0" layoutY="186.0" prefHeight="52.0" prefWidth="357.0" style="-fx-background-radius: 30 0 0 30; -fx-background-color: rgb(250,95,100);" visible="false">
+                           <children>
+                              <Label fx:id="errlabel" layoutX="14.0" layoutY="14.0" maxHeight="66.0" maxWidth="430.0" text="error">
+                                 <font>
+                                    <Font name="Arial Black" size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
+                  <CubicCurve controlX1="-100.0" controlX2="100.0" controlY1="132.0" controlY2="132.0" endX="150.0" fill="DODGERBLUE" layoutX="259.0" layoutY="1.0" startX="-150.0" stroke="#ffffff00" style="-fx-fill: linear-gradient(to right, rgba(0,239,255,1) 0%, rgba(255,0,226,1) 100%);" />
+                  <Label layoutX="133.0" layoutY="14.0" text="Customer Management" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="158.0" layoutY="481.0" mnemonicParsing="false" onAction="#submit" prefHeight="43.0" prefWidth="93.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(1,0,255,1) 100%);" text="SAVE" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="255.0" layoutY="481.0" mnemonicParsing="false" onAction="#reset" prefHeight="43.0" prefWidth="106.0" style="-fx-background-color: linear-gradient(to left, rgba(0,251,255,1) 0%, rgba(1,0,255,1) 100%);" text="RESET" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="20.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

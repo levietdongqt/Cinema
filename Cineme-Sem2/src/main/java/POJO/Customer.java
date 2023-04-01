@@ -117,8 +117,8 @@ public class Customer {
         LocalDate today = LocalDate.now();
         
         long years = birthDate.until(today, ChronoUnit.YEARS);
-        if (years < 18) {
-            throw new Exception("Age must be at least 18.");
+        if (years < 18 || years > 100) {
+            throw new Exception("Age must be from 18 to 100.");
         }
         this.birthDate = birthDate;
     }
