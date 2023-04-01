@@ -59,6 +59,7 @@ public class FXMLHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         loadDataImageView();
         loadDataPopup();
+        loadInHome("FXMLFilm");
     }
 
     //Xu ly Button handler
@@ -127,7 +128,7 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger,event.getScreenX()-720,event.getScreenY());            
             }
         });
-        loadInHome("FXMLFilm");
+        
     }
 
     public void loadDataImageView(){

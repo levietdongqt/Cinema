@@ -82,23 +82,14 @@ public class FXMLLoginController implements Initializable {
         work.setEmployee(employee);
         work.setStartTime(LocalDateTime.now());
 //        work.setEndTime(LocalDateTime.of(2010, 10, 10, 0, 0, 0));
-        if (log) {
-            App.setView("FXMLHome");
-             
-//            Parent root = FXMLLoader.load(getClass().getResource("FXMLHome.fxml"));
-//            Scene scene = new Scene(root);
-//            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//            stage.setScene(scene);
-//            stage.show();
-        }
+    
 
         if (log) {
             WorkSessionDAO workdao = new WorkSessionDAO();
             workdao.add(work);
-            App.setView("FXMLHome");
-        }
+            App.setRoot("FXMLHome");
     }
-
+    }
     
     
     
