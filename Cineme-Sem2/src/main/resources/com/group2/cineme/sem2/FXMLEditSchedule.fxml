@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="299.0" prefWidth="426.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLEditScheduleController">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Button fx:id="btnClose" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#setUpBtnColse" text="X" />
+               </children>
+            </HBox>
+            <GridPane prefHeight="275.0" prefWidth="426.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.600012207031256" minHeight="10.0" prefHeight="34.60002746582032" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.600012207031256" minHeight="10.0" prefHeight="34.60002746582032" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Film" GridPane.rowIndex="2" />
+                  <Label text="Room" />
+                  <Label text="Date" GridPane.rowIndex="3" />
+                  <Label text="Time" GridPane.rowIndex="4" />
+                  <Label text="Status" GridPane.rowIndex="5" />
+                  <Label fx:id="roomLabel" text="Label" GridPane.columnIndex="1" />
+                  <Label fx:id="dateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <TextField fx:id="hourText" prefHeight="26.0" prefWidth="35.0" />
+                        <Label text=" : " />
+                        <TextField fx:id="minuteText" prefHeight="26.0" prefWidth="35.0" />
+                        <Label text="To">
+                           <HBox.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="hourTextEnd" editable="false" prefHeight="26.0" prefWidth="35.0" />
+                        <Label text=" : " />
+                        <TextField fx:id="minuteTextEnd" editable="false" prefHeight="26.0" prefWidth="35.0" />
+                     </children>
+                  </HBox>
+                  <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="Active" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="comboBoxFilm" prefHeight="26.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Room Type" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="comboBoxRoomType" prefHeight="26.0" prefWidth="169.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#setUpBtnChange" text="Change" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
