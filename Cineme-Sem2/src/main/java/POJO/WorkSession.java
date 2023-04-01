@@ -26,79 +26,57 @@ public class WorkSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sessionID ;
     
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     
     @ManyToOne
     @JoinColumn(name = "userName")
     private Employee employee ;
 
-    public WorkSession() {
+    
+     public WorkSession() {
     }
 
-    public WorkSession(int sessionID, LocalTime startTime, LocalTime endTime, Employee employee) {
+    public WorkSession(int sessionID, LocalDateTime startTime, LocalDateTime endTime, Employee employee) {
         this.sessionID = sessionID;
         this.startTime = startTime;
         this.endTime = endTime;
         this.employee = employee;
     }
-
-    /**
-     * @return the sessionID
-     */
+    
     public int getSessionID() {
         return sessionID;
     }
 
-    /**
-     * @param sessionID the sessionID to set
-     */
     public void setSessionID(int sessionID) {
         this.sessionID = sessionID;
     }
 
-    /**
-     * @return the startTime
-     */
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    /**
-     * @param startTime the startTime to set
-     */
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    /**
-     * @return the endTime
-     */
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    /**
-     * @param endTime the endTime to set
-     */
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
-    /**
-     * @return the employee
-     */
     public Employee getEmployee() {
         return employee;
     }
 
-    /**
-     * @param employee the employee to set
-     */
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
-    
-    
-    
+
+   
+
+   
 }

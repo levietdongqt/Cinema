@@ -1,5 +1,6 @@
 package com.group2.cineme.sem2;
 
+import DAO.WorkSessionDAO;
 import Utils.HibernateUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Stop;
 import org.hibernate.Session;
 
 /**
@@ -19,7 +21,8 @@ import org.hibernate.Session;
 public class App extends Application {
 
     public static Scene scene;
-
+    
+    
     @Override
     public void start(Stage stage) throws IOException {
         Session ses = HibernateUtils.getFACTORY().openSession();
@@ -54,9 +57,17 @@ public class App extends Application {
         return fxmlLoader1;
 
     }
+    // Hàm này update endTime khi tắt ngang ứng dụng ( không bấm vào logout ) 
+      @Override
+    public void stop() throws Exception {
+        super.stop();
+        WorkSessionDAO workdao = new WorkSessionDAO();
+        workdao.update();
+    }
 
     public static void main(String[] args) {
         launch();
+        
     }
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));

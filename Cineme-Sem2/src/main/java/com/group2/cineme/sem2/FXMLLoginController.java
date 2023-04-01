@@ -8,12 +8,17 @@ import DAO.*;
 import DAO.GenericDAO;
 import POJO.Employee;
 import POJO.Film;
+import POJO.WorkSession;
 import Utils.HibernateUtils;
 import Utils.SessionUtil;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -65,22 +70,29 @@ public class FXMLLoginController implements Initializable {
     }
 
     public void login(ActionEvent event) throws Exception {
+        WorkSession work = new WorkSession();
         EmployeeDAO dao = new EmployeeDAO();
         boolean log = dao.checkaccount(user.getText(), pass.getText());
-        if (log) {
-            App.setView("FXMLHome");
-             
-//            Parent root = FXMLLoader.load(getClass().getResource("FXMLHome.fxml"));
-//            Scene scene = new Scene(root);
-//            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//            stage.setScene(scene);
-//            stage.show();
-        }
+        String username = user.getText();
+        Employee employee = new Employee();
+        employee.setUserName(username);
+        work.setEmployee(employee);
+        work.setStartTime(LocalDateTime.now());
+//        work.setEndTime(LocalDateTime.of(2010, 10, 10, 0, 0, 0));
 
+        if (log) {
+            WorkSessionDAO workdao = new WorkSessionDAO();
+            workdao.add(work);
+            App.setView("FXMLHome");
+        }
     }
+
+    
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         loadData();
         //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
         DropShadow original = new DropShadow(20, Color.valueOf("blue"));
@@ -126,22 +138,20 @@ public class FXMLLoginController implements Initializable {
             cgv.setEffect(shadow);
 
         });
-        
-       
 
     }
+
     public void loadData() {
         FilmDAO f = new FilmDAO();
         List<Film> films;
         try {
             films = f.searchByDate("endDate");
-             
-        
-        SessionUtil.setMapFilm(films);
+
+            SessionUtil.setMapFilm(films);
         } catch (Exception ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }
 
 }
