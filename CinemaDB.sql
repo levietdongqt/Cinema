@@ -14,7 +14,7 @@ CREATE TABLE Customer (
   [birthDate] DATE,
   [address] VARCHAR(255),
   [email] VARCHAR(100),
-  [totalpoints] INT default 0
+  [totalpoints] INT default 1
 );
 go
 
@@ -33,9 +33,10 @@ CREATE TABLE Employee (
   [password] VARCHAR(255) not null,
   [position] VARCHAR(50) not null,
   [birthDate] DATE,
+  [gender] bit,
   [startDate] DATE default getDate(),
   [email] VARCHAR(100),
-  [status] BIT default 0,
+  [status] BIT default 1,
   [empPhone] varchar(20)
 );
 go
@@ -64,7 +65,7 @@ CREATE TABLE Product (
   [productName] VARCHAR(100) not null,
   [type] VARCHAR(50),
   [price] DECIMAL(10,2) not null,
-  [status] BIT default 0
+  [status] BIT default 1
 );
 go
 CREATE TABLE ProductBill (
@@ -121,20 +122,23 @@ CREATE TABLE ActorOfFilm (
 )
 go
 CREATE TABLE ShowTime (
-	[sTimeID] varchar(5) primary key,
+	[sTimeID] varchar(10) primary key,
 	[startTime] Time not null
 )
 go
 CREATE TABLE RoomType (
-	[rTypeID] varchar(5) primary key,
+	[rTypeID] varchar(10) primary key,
 	[rTypeName]  varchar(100) not null,
-	[Description] varchar(255)
+	[Description] varchar(255),
+	[status] bit default 1
 )
 go
 CREATE TABLE SeatType (
 	[sTypeID] varchar(5) primary key,
 	[sTypeName]  varchar(100),
-	[seatPrice] int default 0
+	[typeGroup] varchar(20),
+	[seatPrice] int default 0,
+	[status] bit default 1
 )
 go
 CREATE TABLE SeatMap (
@@ -145,9 +149,9 @@ CREATE TABLE SeatMap (
 go
 
 CREATE TABLE RoomSeatDetails (
-	[rsDetailsID] varchar(10) primary key,
+	[rsDetailsID] varchar(20) primary key,
 	[sTypeID] varchar(5),
-	[rTypeID] varchar(5),
+	[rTypeID] varchar(10),
 	[sMapID] varchar(5),
 	FOREIGN KEY (sTypeID) REFERENCES SeatType(sTypeID),
 	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID),
@@ -155,31 +159,31 @@ CREATE TABLE RoomSeatDetails (
 )
 go
 CREATE TABLE Room (
-	[roomID] varchar(5) primary key,
+	[roomID] varchar(10) primary key,
 	[roomName]  varchar(50) not null,
-	[rTypeID] varchar(5),
 	[seatQuanlity] int, 
-	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID)
+	description varchar(255),
+	[status] bit default 1,
 )
-go
-CREATE TABLE TimeDetails (
-	[timeDetailsID] int identity primary key,
-	[roomID]  varchar(5),
-	[sTimeID] varchar(5),
-	[showDate] Date default getdate(),
-	status bit default 0, 
+Create table RoomTypeDetails (
+	[rtDetailsID] int identity primary key,
+	[roomID] varchar(10),
+	[rTypeID] varchar(10),
+	[status] bit default 1,
 	FOREIGN KEY (roomID) REFERENCES Room(roomID),
-	FOREIGN KEY (sTimeID) REFERENCES ShowTime(sTimeID)
+	FOREIGN KEY (rTypeID) REFERENCES RoomType(rTypeID)
 )
 go
 CREATE TABLE Schedule (
 	[scheduleID] varchar(20) primary key,
 	[filmID]  varchar(20),
-	[timeDetailsID] int,
-	[ticketQuanlity] int,
-	[status] bit default 0, 
+	[rtDetailsID] int,
+	[startTime] datetime,
+	[endTime] datetime,
+	[note] varchar(255),
+	[status] bit default 1, 
 	FOREIGN KEY (filmID) REFERENCES Film(filmID),
-	FOREIGN KEY (timeDetailsID) REFERENCES TimeDetails(timeDetailsID)
+	FOREIGN KEY (rtDetailsID) REFERENCES RoomTypeDetails(rtDetailsID)
 )
 go
 
@@ -188,8 +192,10 @@ Create table Ticket (
 	[billID] int,
 	[scheduleID] varchar(20),
 	[seatMap] varchar(10),
-	[status] bit default(0),	
+	[status] bit default(1),	
 	FOREIGN KEY (scheduleID) REFERENCES Schedule(scheduleID),
 	FOREIGN KEY (billID) REFERENCES Bill(billID)
 )
 go
+
+

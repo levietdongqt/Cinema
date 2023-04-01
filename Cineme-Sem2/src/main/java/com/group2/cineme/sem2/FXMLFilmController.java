@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+
 package com.group2.cineme.sem2;
 
 import DAO.FilmDAO;
@@ -261,6 +258,7 @@ public class FXMLFilmController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get().getText().equalsIgnoreCase("OK")) {
                         f.delete(p.getFilmID(), Film.class);
+                        SessionUtil.getMapFilm().remove(p);
                         loadDataTableView();
                     }
                 } catch (Exception ex) {

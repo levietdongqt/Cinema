@@ -65,6 +65,7 @@ public class App extends Application {
         workdao.update();
     }
 
+
     public static void main(String[] args) {
         launch();
         
@@ -72,5 +73,6 @@ public class App extends Application {
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
+    
 
 }

@@ -5,6 +5,7 @@
 package com.group2.cineme.sem2;
 
 import DAO.WorkSessionDAO;
+
 import DAO.FilmDAO;
 import POJO.Film;
 import Utils.SessionUtil;
@@ -51,6 +52,9 @@ public class FXMLHomeController implements Initializable {
     @FXML
     AnchorPane anchorPane;
 
+    
+    
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadDataImageView();
@@ -85,14 +89,26 @@ public class FXMLHomeController implements Initializable {
         App.setView("FXMLSigup");
     }
 
+   
+  
+    
+    //Xu ly Button handler
+  
+   
+   
+    
+    
+    
+    
+    
     //Load Trang( de truyen vao App)
-    public void setCenter(Parent fxml) throws IOException {
+    public void setCenter(Parent fxml) throws IOException{
         this.home.setCenter(fxml);
     }
-
+    
     //Su dung nay neu button nam tai trang home
-    public void loadInHome(String fxml) {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+    public void loadInHome(String fxml){
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml+".fxml"));
         try {
             setCenter(fxmlLoader.load());
         } catch (IOException ex) {
@@ -100,20 +116,21 @@ public class FXMLHomeController implements Initializable {
         }
     }
 
-    public void loadDataPopup() {
+    
+    public void loadDataPopup(){
         Popup popup = new Popup();
-        popup.getContent().add(vbox);
+        popup.getContent().add(vbox);     
         this.hamburger.setOnMouseClicked((event) -> {
-            if (popup.isShowing()) {
+            if(popup.isShowing()){
                 popup.hide();
-            } else {
-                popup.show(hamburger, event.getScreenX() - 720, event.getScreenY());
+            }else{
+                popup.show(hamburger,event.getScreenX()-720,event.getScreenY());            
             }
         });
         loadInHome("FXMLFilm");
     }
 
-    public void loadDataImageView() {
+    public void loadDataImageView(){
         File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
         Image iconHome = new Image(fileHome.toURI().toString());
         ImageView imageViewHome = new ImageView(iconHome);
@@ -121,5 +138,6 @@ public class FXMLHomeController implements Initializable {
         imageViewHome.setFitHeight(16);
         this.buttonHome.setGraphic(imageViewHome);
     }
+
 
 }
