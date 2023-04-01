@@ -121,27 +121,24 @@ public class FXMLCustomerController implements Initializable {
 //            }
 //        });
 //    }
-
     public void reset(ActionEvent event) {
         cusname.clear();
         cusaddr.clear();
-        cusbday.setValue(null);
+        cusbday.getEditor().clear();
         cusemail.clear();
         cusphone.clear();
 //        cuspoints.clear();
     }
 
     public void submit(ActionEvent event) throws Exception {
-        checkEmptyWhenClickButton();
         try {
-            if(errpane.isVisible()==true){
-                 AlertUtils.getAlert("All of the field is required", Alert.AlertType.ERROR).show();
-            }else{
+            checkEmptyWhenClickButton();
+            if (errpane.isVisible() == false) {
                 System.out.println(cus.getBirthDate());
                 cusDAO.add(cus);
                 cusname.clear();
                 cusaddr.clear();
-                cusbday.setValue(null);
+                cusbday.getEditor().clear();
                 cusemail.clear();
                 cusphone.clear();
             }
@@ -150,37 +147,42 @@ public class FXMLCustomerController implements Initializable {
             AlertUtils.getAlert(cusDAO.getMessAdd(), Alert.AlertType.ERROR).show();
         }
     }
-    
-    public void checkEmptyWhenClickButton(){
-        String error = "The field don't be empty";
-        if(cusname.getText().isEmpty()){
+
+    public void checkEmptyWhenClickButton() {
+        String error = "Fields can't be empty";
+        if (cusname.getText().isEmpty()) {
             errpane.setVisible(true);
             errlabel.setText(error);
-        }else{
+//            return;
+        } else {
             errpane.setVisible(false);
         }
-        if(cusaddr.getText().isEmpty()){
+        if (cusaddr.getText().isEmpty()) {
             errpane.setVisible(true);
             errlabel.setText(error);
-        }else{
+//            return;
+        } else {
             errpane.setVisible(false);
         }
-        if(cusbday.getValue()==null){
+        if (cusbday.getValue() == null) {
             errpane.setVisible(true);
             errlabel.setText(error);
-        }else{
+//            return;
+        } else {
             errpane.setVisible(false);
         }
-        if(cusphone.getText().isEmpty()){
+        if (cusphone.getText().isEmpty()) {
             errpane.setVisible(true);
             errlabel.setText(error);
-        }else{
+//            return;
+        } else {
             errpane.setVisible(false);
         }
-        if(cusemail.getText().isEmpty()){
+        if (cusemail.getText().isEmpty()) {
             errpane.setVisible(true);
             errlabel.setText(error);
-        }else{
+//            return;
+        } else {
             errpane.setVisible(false);
         }
     }
