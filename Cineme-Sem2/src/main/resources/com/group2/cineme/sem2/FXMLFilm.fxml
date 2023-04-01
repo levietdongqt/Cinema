@@ -17,7 +17,7 @@
             <Font size="35.0" />
          </font>
       </Text>
-      <TableView fx:id="tableViewFilm" />
+      <TableView fx:id="tableViewFilm" VBox.vgrow="ALWAYS" />
       <HBox>
          <children>
             <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="199.0" promptText="Search By StartDate" />
