@@ -36,7 +36,7 @@
                   <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
-                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
+                  <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>

@@ -75,7 +75,7 @@ public class FXMLLoginController implements Initializable {
     public void login(ActionEvent event) throws Exception {
         WorkSession work = new WorkSession();
         EmployeeDAO dao = new EmployeeDAO();
-        boolean log = dao.checkaccount(user.getText(), pass.getText());
+        boolean log = dao.checkaccount(user.getText().trim(), pass.getText().trim());
         String username = user.getText();
         Employee employee = new Employee();
         employee.setUserName(username);
