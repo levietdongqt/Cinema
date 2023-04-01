@@ -6,8 +6,10 @@ import java.sql.Date;
 import java.util.*;
 import java.util.regex.Pattern;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -133,6 +135,30 @@ public class Actors implements Serializable{
     public String toString() {
         return this.actorName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(getClass() != obj.getClass()) return false;
+        final Actors other = (Actors) obj;
+        if(!Objects.equals(this.actorName, other.actorName)) return false;
+        if(!Objects.equals(this.birthDate, other.birthDate)) return false;
+        if(!Objects.equals(this.homeTown, other.homeTown)) return false;
+        if(this.actorID != other.getActorID()) return false;
+        return true;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash +Objects.hashCode(this.actorName);
+        hash = 31 * hash +Objects.hashCode(this.birthDate);
+        hash = 31 * hash +Objects.hashCode(this.homeTown);
+        hash = 31 * hash +this.actorID;
+        return hash;   
+    }
+
+   
     
     
     

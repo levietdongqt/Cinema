@@ -25,7 +25,9 @@ public class App extends Application {
         Session ses = HibernateUtils.getFACTORY().openSession();
         ses.clear();
         ses.close();    
-        scene = new Scene(loadFXML("FXMLHome"));
+
+        scene = new Scene(loadFXML("FXMLLogin"));
+
         stage.setScene(scene);
         stage.show();
     }
@@ -55,6 +57,9 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+    static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
     }
 
 }

@@ -10,12 +10,14 @@ import Utils.HibernateUtils;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javafx.scene.control.Alert;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -88,9 +90,36 @@ public class FilmDAO extends GenericDAO<Film, String> {
             listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }finally{
+            session.close();
         }
         return listFilm;
         
     }
+    public List<FilmGenre> getFilmGenreByID(String id){
+        List<FilmGenre> list = null;
+        try (Session session = HibernateUtils.getFACTORY().openSession()){
+            String hql = "SELECT t FROM FilmGenre t JOIN t.listFilm p WHERE p.filmID =: id";
+            Query<FilmGenre> query = session.createQuery(hql,FilmGenre.class);
+            query.setParameter("id", id);
+            list = query.getResultList();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+    public List<Actors> getFilmActorsByID(String id){
+        List<Actors> list = null;
+        try (Session session = HibernateUtils.getFACTORY().openSession()){
+            String hql = "SELECT t FROM Actors t JOIN t.listFilm p WHERE p.filmID =: id";
+            Query<Actors> query = session.createQuery(hql,Actors.class);
+            query.setParameter("id", id);
+            list = query.getResultList();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+    
 
 }
