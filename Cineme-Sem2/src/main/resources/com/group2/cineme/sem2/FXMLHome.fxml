@@ -31,6 +31,9 @@
                   </HBox>
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
                   <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="Film Mananing" />
+                  <Button mnemonicParsing="false" onAction="#loadSigup" styleClass="buttonPopup" text="Employee Manager" />
+                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
+                  <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Employee Manager" />

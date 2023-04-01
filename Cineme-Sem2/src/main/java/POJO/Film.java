@@ -51,7 +51,8 @@ public class Film implements Serializable{
 
     private String description;
 
-    @ManyToMany()
+
+    @ManyToMany
     @JoinTable(
             name = "ActorOfFilm",
             joinColumns = {
@@ -62,7 +63,9 @@ public class Film implements Serializable{
     )
     private Set<Actors> listActors = new HashSet<>();
 
+
     @ManyToMany
+
     @JoinTable(
             name = "FilmGenreDetails",
             joinColumns = {

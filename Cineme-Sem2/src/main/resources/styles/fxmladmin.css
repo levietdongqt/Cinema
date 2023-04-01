@@ -1,0 +1,42 @@
+
+.mainFxmlClass {
+
+}
+
+
+.nav-form{
+    -fx-background-color:linear-gradient(to bottom right, #444750, #696d72);
+
+}
+
+.shadow{
+    -fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.5), 6,0,0,0);
+
+}
+
+.nav-btn{
+
+    -fx-background-color:transparent;
+    -fx-text-fill:#fff;
+    -fx-font-size: 18px;
+    -fx-cursor: hand;
+    -fx-alignment:CENTER-LEFT;
+
+
+
+
+}
+
+.ins-form{
+    -fx-background-color:#fff;
+    -fx-background-radius:8px ;
+
+}
+
+
+.fill-text{
+    -fx-background-color:none;
+    -fx-border-color:#D3D3D3;
+    -fx-border-width:0px 0px 2px 0px;
+    /*-fx-padding: 3px 3px 3px 25px;*/
+}

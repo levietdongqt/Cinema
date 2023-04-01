@@ -10,6 +10,7 @@ import Utils.HibernateUtils;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,7 @@ import javafx.scene.control.Alert;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -96,6 +98,7 @@ public class FilmDAO extends GenericDAO<Film, String> {
         return listFilm;
         
     }
+
     public List<FilmGenre> getFilmGenreByID(String id){
         List<FilmGenre> list = null;
         try (Session session = HibernateUtils.getFACTORY().openSession()){
@@ -120,6 +123,7 @@ public class FilmDAO extends GenericDAO<Film, String> {
         }
         return list;
     }
+
     
 
 }

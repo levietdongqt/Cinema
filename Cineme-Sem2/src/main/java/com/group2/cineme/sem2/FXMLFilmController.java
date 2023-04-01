@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.group2.cineme.sem2;
 
 import DAO.FilmDAO;
@@ -19,9 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -81,7 +75,6 @@ public class FXMLFilmController implements Initializable {
         loadDataCombobox();
     }
 
-
     //Khu vuc nut
     public void buttonAddNewHandler() throws IOException {
         App.setView("FXMLNewFilm");
@@ -129,7 +122,6 @@ public class FXMLFilmController implements Initializable {
     }
 
     //Load Data
-
     public void loadTableView() {
         TableColumn colFilmID = new TableColumn("ID");
         colFilmID.setCellValueFactory(new PropertyValueFactory("filmID"));
@@ -195,7 +187,7 @@ public class FXMLFilmController implements Initializable {
         TableColumn<Film, String> colActors = new TableColumn("Actors");
         colActors.setCellValueFactory((column) -> {
             Film p = column.getValue();
-            Set<Actors> setActors = p.getListActors();               
+            Set<Actors> setActors = p.getListActors();
             String actors = "";
             for (Actors setActor : setActors) {
                 actors += setActor.getActorName() + "\n";
@@ -302,7 +294,7 @@ public class FXMLFilmController implements Initializable {
         for (TableColumn<Film, ?> column : columns) {
             column.setStyle("-fx-alignment: CENTER;");
         }
-        this.tableViewFilm.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;");       
+        this.tableViewFilm.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;");
     }
 
     public void loadDataTableView() {

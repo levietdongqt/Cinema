@@ -281,6 +281,7 @@ public class FXMLEditFilmController implements Initializable {
     public void loadDataActors(String kw) {
         List<Actors> listActor;
         listActor = ActorsDAO.getActorsAllOrByName(kw);
+
         listActor.sort((o1, o2) -> o1.getActorName().compareTo(o2.getActorName()));
 
         this.listActors.setItems(FXCollections.observableList(listActor));
