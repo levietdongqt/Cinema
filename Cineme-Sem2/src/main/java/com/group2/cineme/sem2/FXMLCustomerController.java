@@ -54,7 +54,7 @@ public class FXMLCustomerController implements Initializable {
                 cus.setCustomerName(name);
             } catch (Exception e) {
                 errpane.setVisible(true);
-                errlabel.setText("Invalid Name!\n" + e);
+                errlabel.setText("Invalid Name!\n" + e.getMessage());
             }
         });
     }
@@ -67,7 +67,7 @@ public class FXMLCustomerController implements Initializable {
                 errpane.setVisible(false);
             } catch (Exception e) {
                 errpane.setVisible(true);
-                errlabel.setText("Invalid Birth Day!\n" + e);
+                errlabel.setText("Invalid Birth Day!\n" + e.getMessage());
             }
         });
     }
@@ -79,7 +79,7 @@ public class FXMLCustomerController implements Initializable {
                 errpane.setVisible(false);
             } catch (Exception e) {
                 errpane.setVisible(true);
-                errlabel.setText("Invalid Address!\n" + e);
+                errlabel.setText("Invalid Address!\n" + e.getMessage());
             }
         });
     }
@@ -91,7 +91,7 @@ public class FXMLCustomerController implements Initializable {
                 errpane.setVisible(false);
             } catch (Exception e) {
                 errpane.setVisible(true);
-                errlabel.setText("Invalid Phone!\n" + e);
+                errlabel.setText("Invalid Phone!\n" + e.getMessage());
             }
         });
     }
@@ -103,24 +103,24 @@ public class FXMLCustomerController implements Initializable {
                 errpane.setVisible(false);
             } catch (Exception e) {
                 errpane.setVisible(true);
-                errlabel.setText("Invalid Email!\n" + e);
+                errlabel.setText("Invalid Email!\n" + e.getMessage());
             }
         });
     }
 
-    private void checkPoints() {
-        cuspoints.setOnKeyTyped(event -> {
-
-            try {
-                Integer points = Integer.parseInt(cuspoints.getText().trim());
-                cus.setTotalPoints(points);
-                errpane.setVisible(false);
-            } catch (Exception e) {
-                errpane.setVisible(true);
-                errlabel.setText("Invalid Total Points!\n" + e);
-            }
-        });
-    }
+//    private void checkPoints() {
+//        cuspoints.setOnKeyTyped(event -> {
+//
+//            try {
+//                Integer points = Integer.parseInt(cuspoints.getText().trim());
+//                cus.setTotalPoints(points);
+//                errpane.setVisible(false);
+//            } catch (Exception e) {
+//                errpane.setVisible(true);
+//                errlabel.setText("Invalid Total Points!\n" + e);
+//            }
+//        });
+//    }
 
     public void reset(ActionEvent event) {
         cusname.clear();
@@ -128,21 +128,60 @@ public class FXMLCustomerController implements Initializable {
         cusbday.setValue(null);
         cusemail.clear();
         cusphone.clear();
-        cuspoints.clear();
+//        cuspoints.clear();
     }
 
     public void submit(ActionEvent event) throws Exception {
+        checkEmptyWhenClickButton();
         try {
-
-            cusDAO.add(cus);
-            cusname.clear();
-            cusaddr.clear();
-            cusbday.setValue(null);
-            cusemail.clear();
-            cusphone.clear();
-            cuspoints.clear();
+            if(errpane.isVisible()==true){
+                 AlertUtils.getAlert("All of the field is required", Alert.AlertType.ERROR).show();
+            }else{
+                System.out.println(cus.getBirthDate());
+                cusDAO.add(cus);
+                cusname.clear();
+                cusaddr.clear();
+                cusbday.setValue(null);
+                cusemail.clear();
+                cusphone.clear();
+            }
+//            cuspoints.clear();
         } catch (Exception ex) {
-            AlertUtils.getAlert("All of the field is required", Alert.AlertType.ERROR).show();
+            AlertUtils.getAlert(cusDAO.getMessAdd(), Alert.AlertType.ERROR).show();
+        }
+    }
+    
+    public void checkEmptyWhenClickButton(){
+        String error = "The field don't be empty";
+        if(cusname.getText().isEmpty()){
+            errpane.setVisible(true);
+            errlabel.setText(error);
+        }else{
+            errpane.setVisible(false);
+        }
+        if(cusaddr.getText().isEmpty()){
+            errpane.setVisible(true);
+            errlabel.setText(error);
+        }else{
+            errpane.setVisible(false);
+        }
+        if(cusbday.getValue()==null){
+            errpane.setVisible(true);
+            errlabel.setText(error);
+        }else{
+            errpane.setVisible(false);
+        }
+        if(cusphone.getText().isEmpty()){
+            errpane.setVisible(true);
+            errlabel.setText(error);
+        }else{
+            errpane.setVisible(false);
+        }
+        if(cusemail.getText().isEmpty()){
+            errpane.setVisible(true);
+            errlabel.setText(error);
+        }else{
+            errpane.setVisible(false);
         }
     }
 
@@ -153,7 +192,7 @@ public class FXMLCustomerController implements Initializable {
         checkAddr();
         checkPhone();
         checkEmail();
-        checkPoints();
+//        checkPoints();
     }
 
 }

@@ -40,16 +40,10 @@
                         <Font name="Arial Black" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="21.0" layoutY="169.0" text="Total Points:">
-                     <font>
-                        <Font name="Arial Black" size="20.0" />
-                     </font>
-                  </Label>
                   <TextField fx:id="cusname" layoutX="280.0" layoutY="26.0" prefHeight="25.0" prefWidth="194.0" />
                   <TextField fx:id="cusaddr" layoutX="280.0" layoutY="84.0" prefHeight="25.0" prefWidth="194.0" />
                   <TextField fx:id="cusphone" layoutX="280.0" layoutY="113.0" prefHeight="25.0" prefWidth="194.0" />
                   <TextField fx:id="cusemail" layoutX="280.0" layoutY="142.0" prefHeight="25.0" prefWidth="194.0" />
-                  <TextField fx:id="cuspoints" layoutX="280.0" layoutY="171.0" prefHeight="25.0" prefWidth="194.0" />
                   <DatePicker fx:id="cusbday" layoutX="280.0" layoutY="55.0" prefHeight="25.0" prefWidth="194.0" />
                   <Button layoutX="21.0" layoutY="231.0" mnemonicParsing="false" onAction="#submit" prefHeight="43.0" prefWidth="93.0" text="SAVE">
                      <font>
