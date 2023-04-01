@@ -13,6 +13,7 @@ import java.util.Map;
  * @author thuhuytran
  */
 public class SessionUtil {
+    
     private static List<Film> mapFilm;
 
     /**
