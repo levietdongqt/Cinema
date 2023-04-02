@@ -40,10 +40,10 @@ public class Employee {
     private LocalDate birthDate;
     private LocalDate startDate;
     private String email;
-  
+    private boolean gender;
     private boolean status;
 
-    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, String empPhone, Set<Bill> billList, Set<WorkSession> worksessionList) {
+    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, boolean gender, String empPhone, Set<Bill> billList, Set<WorkSession> worksessionList) {
         this.userName = userName;
         this.empName = empName;
         this.password = password;
@@ -55,6 +55,7 @@ public class Employee {
         this.empPhone = empPhone;
         this.billList = billList;
         this.worksessionList = worksessionList;
+        this.gender = gender;
     }
     private String empPhone;
     @OneToMany(mappedBy = "employee")
@@ -76,7 +77,6 @@ public class Employee {
     /**
      * @param userName the userName to set
      */
-
     public void setUserName(String userName) throws IOException {
 //        if ( userName.isEmpty()) {
 //            throw new IOException("Username cannot be null or empty");
@@ -87,8 +87,6 @@ public class Employee {
 
         this.userName = userName;
 
-
-    
     }
 
     /**
@@ -218,7 +216,7 @@ public class Employee {
     public void setStartDate(LocalDate startDate) throws IOException {
         if (startDate == null) {
             throw new IOException("Start date cannot null");
-        } 
+        }
         if (startDate.isAfter(LocalDate.now())) {
             throw new IOException("Start date cannot be in the future");
         }
@@ -258,6 +256,17 @@ public class Employee {
      */
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     /**

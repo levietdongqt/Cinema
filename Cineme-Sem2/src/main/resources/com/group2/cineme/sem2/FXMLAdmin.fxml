@@ -80,35 +80,35 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfUser" layoutX="115.0" layoutY="19.0" prefHeight="25.0" prefWidth="199.0" />
+                              <TextField fx:id="tfUser" layoutX="115.0" layoutY="19.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errUser" layoutX="16.0" layoutY="44.0" prefHeight="18.0" prefWidth="301.0" text="ERRUSER" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="413.0" layoutY="25.0" text="PASSWORD :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfPass" layoutX="491.0" layoutY="21.0" prefHeight="25.0" prefWidth="199.0" />
+                              <TextField fx:id="tfPass" layoutX="491.0" layoutY="21.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errPass" layoutX="415.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRPASS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="811.0" layoutY="23.0" text="RE PASSWORD :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfRPass" layoutX="903.0" layoutY="20.0" prefHeight="25.0" prefWidth="199.0" />
+                              <TextField fx:id="tfRPass" layoutX="903.0" layoutY="20.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errRPass" layoutX="814.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRREPASS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="15.0" layoutY="85.0" text="FULL NAME :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfName" layoutX="116.0" layoutY="80.0" prefHeight="25.0" prefWidth="199.0" />
+                              <TextField fx:id="tfName" layoutX="116.0" layoutY="80.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errName" layoutX="17.0" layoutY="106.0" prefHeight="18.0" prefWidth="297.0" text="ERRNAME" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="15.0" layoutY="143.0" text="EMAIL : ">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfMail" layoutX="116.0" layoutY="138.0" prefHeight="25.0" prefWidth="199.0" />
+                              <TextField fx:id="tfMail" layoutX="116.0" layoutY="138.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errMail" layoutX="17.0" layoutY="164.0" prefHeight="18.0" prefWidth="297.0" text="ERRMAIL" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="16.0" layoutY="204.0" text="POSITION : ">
                                  <font>
@@ -139,7 +139,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfPhone" layoutX="904.0" layoutY="83.0" prefHeight="25.0" prefWidth="199.0" />
+                              <TextField fx:id="tfPhone" layoutX="904.0" layoutY="83.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errPhone" layoutX="814.0" layoutY="115.0" prefHeight="17.0" prefWidth="275.0" text="ERRPHONE" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="812.0" layoutY="143.0" text="TIME START:">
                                  <font>

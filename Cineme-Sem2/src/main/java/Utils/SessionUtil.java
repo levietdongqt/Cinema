@@ -16,7 +16,7 @@ import java.util.Map;
 public class SessionUtil {
     
     private static List<Film> mapFilm;
-
+   
     /**
      * @return the mapFilm
      */

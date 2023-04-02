@@ -130,8 +130,8 @@ public class FXMLAdminController implements Initializable {
             }
         });
     }
-    
-     public void checkPhone() {
+
+    public void checkPhone() {
         tfPhone.setOnKeyTyped(even -> {
             String phone = tfPhone.getText().trim();
             try {
@@ -171,6 +171,27 @@ public class FXMLAdminController implements Initializable {
         });
     }
 
+    public void checkRePass() {
+        tfRPass.setOnKeyTyped(event -> {
+            String rpass = tfRPass.getText().trim();
+            String pass = tfPass.getText().trim();
+
+            try {
+                if (rpass.equals(pass)) {
+                    em.setPassword(rpass);
+                    errRPass.setVisible(false);
+                } else {
+                    errRPass.setVisible(true);
+                    errRPass.setText("repass#pass");
+
+                }
+            } catch (IOException e) {
+                errRPass.setVisible(true);
+                errRPass.setText(e.getMessage());
+            }
+        });
+    }
+
     public void checkBirth() {
         dpBirth.setOnAction(even -> {
             LocalDate birth = dpBirth.getValue();
@@ -206,15 +227,13 @@ public class FXMLAdminController implements Initializable {
 //        boolean status = cbStatus.isSelected();
 //        em.setStatus(status);
 //    }
-
-    public void checkStart()  {
+    public void checkStart() {
         dpTimeSta.setValue(LocalDate.now());
-        try {   
+        try {
             em.setStartDate(dpTimeSta.getValue());
         } catch (Exception e) {
             System.out.println("123");
         }
-        
 
         dpTimeSta.setOnAction(even -> {
             LocalDate start = dpTimeSta.getValue();
@@ -243,20 +262,20 @@ public class FXMLAdminController implements Initializable {
             e.getMessage();
         }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-          checkUser();
+        checkUser();
         checkName();
         checkPhone();
         checkMail();
         checkPass();
+        checkRePass();
         checkBirth();
         checkPosi();
 //        checkStaus();
         checkStart();
 
-        
     }
 
 }
