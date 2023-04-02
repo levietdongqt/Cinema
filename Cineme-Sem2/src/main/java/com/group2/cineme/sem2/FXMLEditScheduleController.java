@@ -149,8 +149,7 @@ public class FXMLEditScheduleController implements Initializable {
     void getData(Schedule schedule, Room room) {
         this.schedule = schedule;
         this.room = room;
-        setUpComboBoxRoomType();
-
+        setUpComboBoxRoomType();    
         loadDataToView();
     }
 
