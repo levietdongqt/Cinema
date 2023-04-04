@@ -10,7 +10,7 @@ import POJO.RoomType;
 import POJO.SeatMap;
 import POJO.SeatType;
 import Utils.HibernateUtils;
-import com.group2.cineme.sem2.FXMLSeatMapController;
+import com.group2.cineme.sem2.FXMLTicketController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,7 +70,7 @@ public class RoomSeatDetailDAO extends GenericDAO<RoomSeatDetailDAO, Integer> {
             ses.getTransaction().commit();
             ses.close();
         } catch (Exception ex) {
-            Logger.getLogger(FXMLSeatMapController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
