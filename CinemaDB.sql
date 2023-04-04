@@ -64,6 +64,7 @@ CREATE TABLE Product (
   [productID] VARCHAR(10) PRIMARY KEY,
   [productName] VARCHAR(100) not null,
   [type] VARCHAR(50),
+  [imgUrl] VARCHAR(255),
   [price] DECIMAL(10,2) not null,
   [status] BIT default 1
 );
@@ -119,11 +120,6 @@ CREATE TABLE ActorOfFilm (
 	[filmID] varchar(20),
 	FOREIGN KEY (actorID) REFERENCES Actors(actorID),
 	FOREIGN KEY (filmID) REFERENCES Film(filmID)
-)
-go
-CREATE TABLE ShowTime (
-	[sTimeID] varchar(10) primary key,
-	[startTime] Time not null
 )
 go
 CREATE TABLE RoomType (
