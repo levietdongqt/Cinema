@@ -4,16 +4,24 @@
  */
 package com.group2.cineme.sem2;
 
+import Utils.SessionUtil;
 import DAO.EmployeeDAO;
+import DAO.WorkSessionDAO;
 import POJO.Employee;
+import POJO.WorkSession;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,7 +36,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import static org.hibernate.criterion.Projections.id;
 
 /**
  * FXML Controller class
@@ -38,7 +51,7 @@ import javafx.scene.control.TextField;
 public class FXMLAdminController implements Initializable {
 
     @FXML
-    private ComboBox<?> cbGender;
+    private ComboBox<String> cbGender;
 
     @FXML
     private ComboBox<String> cbPosition;
@@ -86,24 +99,57 @@ public class FXMLAdminController implements Initializable {
     private Label errUser;
 
     @FXML
+    private TableColumn<Employee, String> tcEmail;
+
+    @FXML
+    private TableColumn<Employee, String> tcGender;
+
+    @FXML
+    private TableColumn<Employee, String> tcName;
+
+    @FXML
+    private TableColumn<Employee, String> tcPhone;
+
+    @FXML
+    private TableColumn<Employee, String> tcPosition;
+
+    @FXML
+    private TableColumn<Employee, String> tcStartDate;
+
+    @FXML
+    private TableColumn<Employee, String> tcStatus;
+
+    @FXML
+    private TableColumn<Employee, String> tcUser;
+
+    @FXML
+    private TableColumn<Employee, Integer> tcWorking;
+
+    @FXML
     private TextField tfMail;
 
     @FXML
     private TextField tfName;
 
     @FXML
-    private TextField tfPass;
+    private PasswordField tfPass;
 
     @FXML
     private TextField tfPhone;
 
     @FXML
-    private TextField tfRPass;
+    private PasswordField tfRPass;
 
     @FXML
     private TextField tfUser;
 
+    @FXML
+    private TableView<Employee> tvEmployee;
+
+//    List<Employee> listEm;
     Employee em = new Employee();
+    EmployeeDAO dao = new EmployeeDAO();
+    List<Employee> emList;
 
     public void checkUser() {
         tfUser.setOnKeyTyped(event -> {
@@ -222,11 +268,45 @@ public class FXMLAdminController implements Initializable {
         });
     }
 
-//    public void checkStaus() {
-//         cbStatus.setSelected(true);
-//        boolean status = cbStatus.isSelected();
-//        em.setStatus(status);
-//    }
+    public void checkGender() {
+        ObservableList<String> genders = FXCollections.observableArrayList("Choose a Gender", "Male", "Female");
+        cbGender.setItems(genders);
+        cbGender.getSelectionModel().selectFirst();
+
+        cbGender.setOnAction(event -> {
+
+            String selectedGender = cbGender.getValue();
+            boolean genderBitValue = false; // Khởi tạo giá trị mặc định là false
+
+            if (selectedGender.equals("Male")) {
+                genderBitValue = true;
+            } else {
+                genderBitValue = false;
+            }
+            em.setGender(genderBitValue);
+
+        });
+
+    }
+
+    public void checkStatus() {
+        ObservableList<String> statuss = FXCollections.observableArrayList("Choose a Status", "Avaliable", "Unavaliable");
+        cbStatus.setItems(statuss);
+        cbStatus.getSelectionModel().selectFirst();
+        cbStatus.setOnAction(event -> {
+            String selectStatus = cbStatus.getValue();
+            boolean statusBit = false;
+            if (selectStatus.equals("Avaliable")) {
+                statusBit = true;
+
+            } else {
+                statusBit = false;
+            }
+            em.setStatus(statusBit);
+        });
+
+    }
+
     public void checkStart() {
         dpTimeSta.setValue(LocalDate.now());
         try {
@@ -250,19 +330,124 @@ public class FXMLAdminController implements Initializable {
 
     public void submit(ActionEvent event) throws Exception {
         try {
-            System.out.println(em.isStatus());
-            EmployeeDAO dao = new EmployeeDAO();
             dao.add(em);
+
+            showEmployee();
             this.tfUser.clear();
+            this.tfName.clear();
             this.tfRPass.clear();
             this.tfPhone.clear();
             this.tfPass.clear();
             this.tfMail.clear();
+            cbGender.getSelectionModel().selectFirst();
+            cbPosition.getSelectionModel().selectFirst();
+            cbStatus.getSelectionModel().selectFirst();
+
         } catch (Exception e) {
             e.getMessage();
         }
     }
 
+    public void update(ActionEvent event) throws Exception {
+
+        try {
+
+            em.setUserName(tfUser.getText().trim());
+            em.setEmpName(tfName.getText().trim());
+            em.setEmail(tfMail.getText().trim());
+            em.setEmpPhone(tfPhone.getText().trim());
+            em.setPassword(tfPass.getText().trim());
+            em.setPosition(cbPosition.getValue().trim());
+
+            dao.update(em);
+//            System.out.println(em.setUserName());
+
+            showEmployee();
+            this.tfUser.clear();
+            this.tfName.clear();
+            this.tfRPass.clear();
+            this.tfPhone.clear();
+            this.tfPass.clear();
+            this.tfMail.clear();
+            cbGender.getSelectionModel().selectFirst();
+            cbPosition.getSelectionModel().selectFirst();
+            cbStatus.getSelectionModel().selectFirst();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public void delete(ActionEvent event) throws Exception {
+        try {
+            dao.delete(tfUser.getText().trim(), Employee.class);
+            System.out.println(tfUser.getText().trim());
+
+            showEmployee();
+            this.tfUser.clear();
+            this.tfName.clear();
+            this.tfRPass.clear();
+            this.tfPhone.clear();
+            this.tfPass.clear();
+            this.tfMail.clear();
+            cbGender.getSelectionModel().selectFirst();
+            cbPosition.getSelectionModel().selectFirst();
+            cbStatus.getSelectionModel().selectFirst();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public void showEmployee() {
+        
+//        WorkSessionDAO wdao = new WorkSessionDAO();
+//         Map<String, Long> totalWorkTime =wdao.getTotalWorkTimeByUserAndMonth(4);
+                
+        
+        try {
+            emList = dao.getAll("Employee");
+//            emList = dao.getA(4);
+        
+           
+          
+            tcUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
+            tcName.setCellValueFactory(new PropertyValueFactory<>("empName"));
+            tcGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+            tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+            tcPhone.setCellValueFactory(new PropertyValueFactory<>("empPhone"));
+            tcPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
+            tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+            tcStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+//            tcWorking.setCellValueFactory(new PropertyValueFactory<>("totalWorkTime"));
+            tvEmployee.setItems(FXCollections.observableList(emList));
+
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void selectEmployee() {
+        Employee employee = tvEmployee.getSelectionModel().getSelectedItem();
+        int num = tvEmployee.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        tfUser.setText(String.valueOf(employee.getUserName()));
+        tfName.setText(String.valueOf(employee.getEmpName()));
+        tfMail.setText(String.valueOf(employee.getEmail()));
+        tfPhone.setText(String.valueOf(employee.getEmpPhone()));
+        cbPosition.setValue(String.valueOf(employee.getPosition()));
+        dpTimeSta.setValue(employee.getStartDate());
+        cbGender.setValue(employee.isGender() ? "Male" : "Female");
+        cbStatus.setValue(employee.isStatus() ? "Avaliable" : "Unavaliable");
+        dpBirth.setValue(employee.getBirthDate());
+        dpTimeSta.setValue(employee.getStartDate());
+
+    }
+
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         checkUser();
@@ -273,8 +458,13 @@ public class FXMLAdminController implements Initializable {
         checkRePass();
         checkBirth();
         checkPosi();
-//        checkStaus();
+        checkStatus();
         checkStart();
+        checkGender();
+        showEmployee();
+        
+        
+
 
     }
 

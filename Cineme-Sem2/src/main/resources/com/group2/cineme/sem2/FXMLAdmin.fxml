@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -27,12 +28,12 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="12.0" layoutY="70.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="UPDATE">
+                        <Button layoutX="12.0" layoutY="70.0" mnemonicParsing="false" onAction="#update" prefHeight="42.0" prefWidth="177.0" text="UPDATE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="13.0" layoutY="127.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="DELETE">
+                        <Button layoutX="13.0" layoutY="127.0" mnemonicParsing="false" onAction="#delete" prefHeight="42.0" prefWidth="177.0" text="DELETE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -87,14 +88,12 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfPass" layoutX="491.0" layoutY="21.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errPass" layoutX="415.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRPASS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="811.0" layoutY="23.0" text="RE PASSWORD :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfRPass" layoutX="903.0" layoutY="20.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
                               <Label fx:id="errRPass" layoutX="814.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRREPASS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="15.0" layoutY="85.0" text="FULL NAME :">
                                  <font>
@@ -152,6 +151,8 @@
                               <ComboBox fx:id="cbStatus" layoutX="493.0" layoutY="198.0" prefHeight="23.0" prefWidth="199.0" styleClass="fill-text" />
                               <DatePicker fx:id="dpBirth" layoutX="493.0" layoutY="141.0" prefHeight="25.0" prefWidth="199.0" />
                               <DatePicker fx:id="dpTimeSta" layoutX="904.0" layoutY="140.0" prefHeight="25.0" prefWidth="198.0" />
+                              <PasswordField fx:id="tfPass" layoutX="490.0" layoutY="13.0" prefHeight="26.0" prefWidth="201.0" styleClass="fill-text" />
+                              <PasswordField fx:id="tfRPass" layoutX="903.0" layoutY="13.0" prefHeight="26.0" prefWidth="201.0" styleClass="fill-text" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="6.0" layoutY="293.0" prefHeight="400.0" prefWidth="1169.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="293.0">
@@ -160,17 +161,17 @@
                               <String fx:value="ins-form" />
                            </styleClass>
                            <children>
-                              <TableView layoutX="5.0" layoutY="54.0" prefHeight="344.0" prefWidth="1160.0">
+                              <TableView fx:id="tvEmployee" layoutX="5.0" layoutY="54.0" onMouseClicked="#selectEmployee" onSort="#showEmployee" prefHeight="344.0" prefWidth="1160.0">
                                 <columns>
-                                  <TableColumn prefWidth="127.0" text="USER" />
-                                  <TableColumn prefWidth="161.0" text="FULL NAME" />
-                                    <TableColumn prefWidth="127.0" text="GENDER" />
-                                    <TableColumn prefWidth="173.0" text="EMAIL" />
-                                    <TableColumn prefWidth="139.0" text="PHONE NUMBER" />
-                                    <TableColumn prefWidth="110.0" text="POSITION" />
-                                    <TableColumn prefWidth="84.0" text="STATUS" />
-                                    <TableColumn minWidth="0.0" prefWidth="127.0" text="START DATE" />
-                                    <TableColumn prefWidth="109.0" text="WORKING DAY" />
+                                  <TableColumn fx:id="tcUser" prefWidth="127.0" text="USER" />
+                                  <TableColumn fx:id="tcName" prefWidth="161.0" text="FULL NAME" />
+                                    <TableColumn fx:id="tcGender" prefWidth="127.0" text="GENDER" />
+                                    <TableColumn fx:id="tcEmail" prefWidth="173.0" text="EMAIL" />
+                                    <TableColumn fx:id="tcPhone" prefWidth="139.0" text="PHONE NUMBER" />
+                                    <TableColumn fx:id="tcPosition" prefWidth="110.0" text="POSITION" />
+                                    <TableColumn fx:id="tcStatus" prefWidth="84.0" text="STATUS" />
+                                    <TableColumn fx:id="tcStartDate" minWidth="0.0" prefWidth="127.0" text="START DATE" />
+                                    <TableColumn fx:id="tcWorking" prefWidth="109.0" text="WORKING DAY" />
                                 </columns>
                               </TableView>
                               <TextField alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />

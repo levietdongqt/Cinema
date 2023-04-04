@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "Employee")
@@ -42,7 +43,8 @@ public class Employee {
     private String email;
     private boolean gender;
     private boolean status;
-
+//    @Formula("(SELECT SUM((EXTRACT(epoch FROM (ws.endTime - ws.startTime))) FROM WorkSession ws WHERE ws.userName = userName)")
+//    private int totalWorkTime;
     public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, boolean gender, String empPhone, Set<Bill> billList, Set<WorkSession> worksessionList) {
         this.userName = userName;
         this.empName = empName;
@@ -56,6 +58,7 @@ public class Employee {
         this.billList = billList;
         this.worksessionList = worksessionList;
         this.gender = gender;
+//        this.totalWorkTime = totalWorkTime;
     }
     private String empPhone;
     @OneToMany(mappedBy = "employee")
@@ -296,5 +299,14 @@ public class Employee {
     public void setWorksessionList(Set<WorkSession> worksessionList) {
         this.worksessionList = worksessionList;
     }
+
+//    public int getTotalWorkTime() {
+//        return totalWorkTime;
+//    }
+//
+//    public void setTotalWorkTime(int totalWorkTime) {
+//        this.totalWorkTime = totalWorkTime;
+//    }
+
 
 }

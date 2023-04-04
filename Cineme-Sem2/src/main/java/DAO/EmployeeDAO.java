@@ -3,14 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-
+import Utils.SessionUtil;
 import POJO.Employee;
 import Utils.HibernateUtils;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +58,7 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
     }
     
 
-    //7. Try vấn thông tin đăng nhập (SELECT * FROM user WHERE Username= ? and Password = ?)
+    //Try vấn thông tin đăng nhập (SELECT * FROM user WHERE Username= ? and Password = ?)
     public boolean checkaccount(String username, String password) throws Exception {
         Session session = HibernateUtils.getFACTORY().openSession();
         List<Employee> list = new ArrayList<>();
@@ -70,6 +74,10 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             list = query.getResultList();
             session.getTransaction().commit();
             if (!list.isEmpty()) {
+                
+            SessionUtil.setEmployee(list.get(0));
+                
+                
 //                System.out.println("Logged in successfully");
                 // hiện thông báo đăng nhập thành công
              //   new Alert(Alert.AlertType.INFORMATION, "Logged in successfully").show();
@@ -91,4 +99,61 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
         return true;
 
     }
+
+//    
+//public Map<String, Long> getTotalWorkTimeByUserAndMonth(int month) {
+//    Session session = HibernateUtils.getFACTORY().openSession();
+//    String hql = "SELECT emp.userName, "
+//            + "(SELECT SUM(DATEDIFF(HOUR, ws.startTime, ws.endTime)) "
+//            + "FROM WorkSession ws "
+//            + "WHERE ws.employee.userName = emp.userName) AS totalWorkTime "
+//            + "FROM Employee emp";
+//    Query query = session.createQuery(hql);
+//    List<Object[]> results = query.getResultList();
+//
+//    Map<String, Long> totalWorkTimeByUser = new HashMap<>();
+//    for (Object[] result : results) {
+//        String userName = (String) result[0];
+//        String empName = (String) result[1];
+//        Long totalSeconds = (Long) result[2];
+//        totalWorkTimeByUser.put(empName, totalSeconds);
+//        System.out.println(empName + ": " + Duration.ofHours(totalSeconds));
+//    }
+//    return totalWorkTimeByUser;
+//}
+//        
+
+//        public List<Employee> getA(int month) throws Exception{
+//            List<Employee> list = new LinkedList<>();
+//            Session session = HibernateUtils.getFACTORY().openSession();
+//            
+//            try {
+//            session.getTransaction().begin();
+//            var hql = "SELECT emp.userName, "
+//            + "(SELECT SUM(DATEDIFF(HOUR, ws.startTime, ws.endTime)) "
+//            + "FROM WorkSession ws "
+//            + "WHERE ws.employee.userName = emp.userName) AS totalWorkTime "
+//            + "FROM Employee emp";
+//            Query query = session.createQuery(hql);
+//            list = query.getResultList();
+//             if (list == null) {
+//                setMessGetAll("He Thong chua co du lieu");   
+//             }   
+//                         session.getTransaction().commit();
+//
+//            } catch (Exception e) {
+//                setMessGetAll("Ten toi tuong khong hop le");
+//            System.out.println(e.getMessage());
+//            }finally {
+//            session.close();
+//        }
+//     
+//            System.out.println(list);   
+//        return list;
+//            
+//        }
+
+
+   
 }
+
