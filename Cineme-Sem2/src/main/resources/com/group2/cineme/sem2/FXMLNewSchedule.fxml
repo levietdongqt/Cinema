@@ -64,7 +64,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </CheckBox>
-            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
+            <Button fx:id="btnSave1" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
          </children>
       </VBox>
       <Label text="ROOM" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
