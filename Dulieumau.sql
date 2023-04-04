@@ -34,6 +34,16 @@ values	('ST1','normal 2D','NORMAL',70000,1),
 		('ST11','same price 3D','VIP',90000,1),
 		('ST12','same price 3D','COUPLE',90000,1)
 go
+insert into Product
+values ('P01','Pepsi','Drinks','src\main\resources\images\products\pepsi',20000,1),
+ ('P02','Coca','Drinks','src\main\resources\images\products\coca',20000,1),
+ ('P03','7Up','Drinks','src\main\resources\images\products\7up',20000,1),
+ ('P04','Aquafina','Drinks','src\main\resources\images\products\aquafina',15000,1),
+ ('P05','Popcorn','Snacks','src\main\resources\images\products\popcorn',60000,1),
+ ('P06','Snack','Snacks','src\main\resources\images\products\snack',30000,1),
+ ('P07','Combo 1','Combo','src\main\resources\images\products\combo1',70000,1),
+ ('P08','Combo 2','Combo','src\main\resources\images\products\combo2',80000,1)
+
 		
 		
 		
