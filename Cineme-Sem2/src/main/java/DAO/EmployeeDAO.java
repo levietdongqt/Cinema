@@ -123,35 +123,35 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 //}
 //        
 
-//        public List<Employee> getA(int month) throws Exception{
-//            List<Employee> list = new LinkedList<>();
-//            Session session = HibernateUtils.getFACTORY().openSession();
-//            
-//            try {
-//            session.getTransaction().begin();
-//            var hql = "SELECT emp.userName, "
-//            + "(SELECT SUM(DATEDIFF(HOUR, ws.startTime, ws.endTime)) "
-//            + "FROM WorkSession ws "
-//            + "WHERE ws.employee.userName = emp.userName) AS totalWorkTime "
-//            + "FROM Employee emp";
-//            Query query = session.createQuery(hql);
-//            list = query.getResultList();
-//             if (list == null) {
-//                setMessGetAll("He Thong chua co du lieu");   
-//             }   
-//                         session.getTransaction().commit();
-//
-//            } catch (Exception e) {
-//                setMessGetAll("Ten toi tuong khong hop le");
-//            System.out.println(e.getMessage());
-//            }finally {
-//            session.close();
-//        }
-//     
-//            System.out.println(list);   
-//        return list;
-//            
-//        }
+        public List<Employee> getA(int month) throws Exception{
+            List<Employee> list = new LinkedList<>();
+            Session session = HibernateUtils.getFACTORY().openSession();
+            
+            try {
+            session.getTransaction().begin();
+            var hql = "SELECT emp.userName, "
+            + "(SELECT SUM(DATEDIFF(HOUR, ws.startTime, ws.endTime)) "
+            + "FROM WorkSession ws "
+            + "WHERE ws.employee.userName = emp.userName) AS totalWorkTime "
+            + "FROM Employee emp";
+            Query query = session.createQuery(hql);
+            list = query.getResultList();
+             if (list == null) {
+                setMessGetAll("He Thong chua co du lieu");   
+             }   
+                         session.getTransaction().commit();
+
+            } catch (Exception e) {
+                setMessGetAll("Ten toi tuong khong hop le");
+            System.out.println(e.getMessage());
+            }finally {
+            session.close();
+        }
+     
+            System.out.println(list);   
+        return list;
+            
+        }
 
 
    

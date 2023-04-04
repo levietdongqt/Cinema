@@ -52,38 +52,38 @@ public class WorkSessionDAO extends GenericDAO<WorkSession, Float> {
     }
 
   
-//    
-//    public Map<String, Long> getTotalWorkTimeByUserAndMonth(int month) {
-//    Session session = HibernateUtils.getFACTORY().openSession();
-//    String hql = "SELECT ws.employee.userName, sum(hour(ws.endTime) - hour(ws.startTime)) "
-//                + "FROM WorkSession ws "
-//                + "WHERE MONTH(ws.startTime) = :month "
-//                + "GROUP BY ws.employee.userName";
-//    Query query = session.createQuery(hql);
-//    query.setParameter("month", month);
-//    List<Object[]> results = query.getResultList();
-//
-//    Map<String, Long> totalWorkTimeByUser = new HashMap<>();
-//    for (Object[] result : results) {
-//        String userName = (String) result[0];
-//        long totalSeconds = (long) result[1];
-//        Employee employee = getEmployeeByUsername(userName);
-//        String name = employee.getEmpName();
-//        totalWorkTimeByUser.put(name, totalSeconds);
-//        System.out.println(name + ": " + Duration.ofHours(totalSeconds));
-//    }
-//    return totalWorkTimeByUser;
-//}
-//
-//private Employee getEmployeeByUsername(String username) {
-//    Session session = HibernateUtils.getFACTORY().openSession();
-//    String hql = "FROM Employee e WHERE e.userName = :username";
-//    Query query = session.createQuery(hql);
-//    query.setParameter("username", username);
-//    return (Employee) query.getSingleResult();
-//}
-//
-//    
+    
+    public Map<String, Long> getTotalWorkTimeByUserAndMonth(int month) {
+    Session session = HibernateUtils.getFACTORY().openSession();
+    String hql = "SELECT ws.employee.userName, sum(hour(ws.endTime) - hour(ws.startTime)) "
+                + "FROM WorkSession ws "
+                + "WHERE MONTH(ws.startTime) = :month "
+                + "GROUP BY ws.employee.userName";
+    Query query = session.createQuery(hql);
+    query.setParameter("month", month);
+    List<Object[]> results = query.getResultList();
+
+    Map<String, Long> totalWorkTimeByUser = new HashMap<>();
+    for (Object[] result : results) {
+        String userName = (String) result[0];
+        long totalSeconds = (long) result[1];
+        Employee employee = getEmployeeByUsername(userName);
+        String name = employee.getEmpName();
+        totalWorkTimeByUser.put(name, totalSeconds);
+        System.out.println(name + ": " + Duration.ofHours(totalSeconds));
+    }
+    return totalWorkTimeByUser;
+}
+
+private Employee getEmployeeByUsername(String username) {
+    Session session = HibernateUtils.getFACTORY().openSession();
+    String hql = "FROM Employee e WHERE e.userName = :username";
+    Query query = session.createQuery(hql);
+    query.setParameter("username", username);
+    return (Employee) query.getSingleResult();
+}
+
+    
     
     
     

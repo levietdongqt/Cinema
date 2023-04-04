@@ -5,13 +5,18 @@
 package DAO;
 
 import POJO.Film;
+import POJO.RoomSeatDetail;
 import POJO.RoomTypeDetails;
 import POJO.Schedule;
 import Utils.AlertUtils;
 import Utils.HibernateUtils;
+import com.group2.cineme.sem2.FXMLTicketController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,21 +29,22 @@ import org.hibernate.query.Query;
  * @author DONG
  */
 public class ScheduleDAO extends GenericDAO<Schedule, String> {
-//    public List<Schedule> getByDate(LocalDate date) throws Exception{
-//        List<Schedule> list;
-//        try (Session ses = HibernateUtils.getFACTORY().openSession()) {
-//            ses.getTransaction().begin();
-//            String hql = "FROM Schedule where startTime > '" + date + "' and startTime < '" + date.plusDays(1) + "'";
-//            Query query = ses.createQuery(hql);
-//            list = query.getResultList();
-//            ses.getTransaction().commit();
-//            if(list.isEmpty()){
-//                throw new Exception("Not found!");
-//            }
-//        }
-//        return list;
-//    }
+    public List<RoomSeatDetail> getRoomSeatDetails(Schedule schedule){
+        List<RoomSeatDetail> list = new ArrayList<>();
+        try(Session ses = HibernateUtils.getFACTORY().openSession()) {
+            ses.getTransaction().begin();
+            ses.load(schedule, schedule.getScheduleID());
+            //Schedule schedule1 = ses.get(Schedule.class, schedule.getScheduleID());
+            schedule.getRoomTypeDetail().getRoomType().getRoomSeatDetailList()
+                .forEach(p -> list.add(p));
+            ses.getTransaction().commit();
+            ses.close();
 
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public List<Schedule> getToView(LocalDateTime startDate, LocalDateTime endDate, List<RoomTypeDetails> rtDetailsList) throws Exception {
         List<Schedule> list;
         try ( Session ses = HibernateUtils.getFACTORY().openSession()) {

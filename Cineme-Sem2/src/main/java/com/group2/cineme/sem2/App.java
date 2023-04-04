@@ -27,10 +27,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Session ses = HibernateUtils.getFACTORY().openSession();
         ses.clear();
-        ses.close();    
-
-        scene = new Scene(loadFXML("FXMLLogin"));
-
+        ses.close();
+        scene = new Scene(loadFXML("FXMLAdmin"));
         stage.setScene(scene);
         stage.show();
     }
