@@ -156,7 +156,10 @@ public class Employee {
     /**
      * @param password the password to set
      */
-   public void setPassword(String password) throws IOException, NoSuchAlgorithmException {
+    
+    
+   public void setPassword(String password) throws IOException  {
+       EmployeeDAO dao = new EmployeeDAO();
     if (password == null || password.trim().isEmpty()) {
         throw new IOException("Password cannot be null or empty");
     }
@@ -164,14 +167,9 @@ public class Employee {
         throw new IOException("Password cannot be longer than 20 char and less than 6 char");
     }
     
-  // Generate a hash value of the password string using SHA-256
-    MessageDigest digest = MessageDigest.getInstance("SHA-256");
-    byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+
     
-    // Encode the hashed password bytes using Base64
-    String hashedPassword = Base64.getEncoder().encodeToString(hashBytes);
-    
-    this.password = hashedPassword;
+    this.password = dao.encodePassword(password);
 }
 
 

@@ -41,13 +41,13 @@
                         <FontAwesomeIcon glyphName="WRENCH" layoutX="15.0" layoutY="101.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="CLOSE" layoutX="17.0" layoutY="216.0" size="2.5em" />
-                        <Button layoutX="13.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
                         <FontAwesomeIcon glyphName="FILE" layoutX="19.0" layoutY="387.0" size="2em" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="126.0" mnemonicParsing="false" onAction="#updatePass" prefHeight="42.0" prefWidth="177.0" text="CHANGE PASSWORK" textAlignment="RIGHT">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="126.0" mnemonicParsing="false" onAction="#updatePass" prefHeight="42.0" prefWidth="177.0" text="CHANGE PASS" textAlignment="RIGHT">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>

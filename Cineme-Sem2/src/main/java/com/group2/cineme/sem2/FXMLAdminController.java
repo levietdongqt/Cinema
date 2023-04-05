@@ -241,8 +241,6 @@ public class FXMLAdminController implements Initializable {
             } catch (IOException ex) {
                 errPass.setVisible(true);
                 errPass.setText(ex.getMessage());
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -264,8 +262,6 @@ public class FXMLAdminController implements Initializable {
             } catch (IOException e) {
                 errRPass.setVisible(true);
                 errRPass.setText(e.getMessage());
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -420,7 +416,6 @@ public class FXMLAdminController implements Initializable {
         try {
             Employee emp = new Employee();
             emp.setUserName(tfUser.getText().trim());
-//            emp.setPassword((tfRPass.getText().trim()));
             dao.updatePassword(emp,tfRPass.getText().trim());
             String pass = tfPass.getText().trim();
             System.out.println(pass);
