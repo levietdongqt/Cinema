@@ -9,6 +9,7 @@ import DAO.ScheduleDAO;
 import POJO.Film;
 import POJO.Schedule;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,11 +23,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -42,8 +46,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.util.Callback;
 
 /**
@@ -61,6 +67,10 @@ public class FXMLShowScheduleController implements Initializable {
     @FXML
     private ComboBox<Film> comboBoxFilm;
     
+    @FXML
+    private VBox vboxShowSchedule;
+    
+    private Popup popup = new Popup();
     
     private List<Film> films; 
     
@@ -74,6 +84,10 @@ public class FXMLShowScheduleController implements Initializable {
         
         loadViewComboBoxFilm();
         setActionForComboBoxFilm();
+        setActionForTableView();
+        popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
+            vboxShowSchedule.setDisable(false);
+        });
     } 
     
     //ButtonHandler
@@ -213,6 +227,34 @@ public class FXMLShowScheduleController implements Initializable {
             this.tableViewSchedule.setItems(FXCollections.observableList(searchFilm));
         });
         
+    }
+    public void setActionForTableView(){
+        this.tableViewSchedule.setOnMouseReleased((t) -> {
+            Film p = this.tableViewSchedule.getSelectionModel().getSelectedItem();
+            System.out.println(p.getFilmName());
+            try {
+                System.out.println(p.getFilmName());
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLViewFilmDetails.fxml"));
+                 fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
+                        @Override
+                        public Object call(Class<?> param) {
+                            return new FXMLViewFilmDetailsController(p);
+                        }
+
+                    });
+                System.out.println(p.getFilmName());
+                AnchorPane popupContent = fxmlLoader.load();
+               
+                popup.getContent().add(popupContent);
+                System.out.println(p.getFilmName());
+                popupContent.setStyle("-fx-background-color:white");
+                popup.show(vboxShowSchedule.getScene().getWindow());
+                System.out.println(p.getFilmName());
+                vboxShowSchedule.setDisable(true);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
     
