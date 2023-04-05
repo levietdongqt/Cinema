@@ -77,14 +77,21 @@ public class FXMLTicketController implements Initializable {
     ScheduleDAO scheDAO = new ScheduleDAO();
     Schedule scheule;
     private char[] row = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'};
-    List<RoomSeatDetail> seatList = new ArrayList<>();
+    List<RoomSeatDetail> selectedSeatList = new ArrayList<>();
     String seatNameList;
     int ticketTotal=0;
     int foodTotal=0;
 
+    public FXMLTicketController() {
+    }
+    
+    public FXMLTicketController(Schedule schedule) {
+        this.scheule = schedule;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        getSchedule();
+        //getSchedule();
         loadDataFilm();
         setSeatGird();
     }
@@ -108,8 +115,8 @@ public class FXMLTicketController implements Initializable {
     private void getSelectedSeats() {
         seatNameList = "";
         ticketTotal=0;
-        sortRSDList(seatList);
-        seatList.forEach((t) -> {
+        sortRSDList( selectedSeatList);
+        selectedSeatList.forEach((t) -> {
             ticketTotal += t.getSeatType().getSeatPrice();
             seatNameList += t.getSeatMap().getsMapID().toString() + " ";
         });
@@ -150,7 +157,7 @@ public class FXMLTicketController implements Initializable {
     @FXML
     private void btnNextStepHandler() {
         List<Ticket> ticketList = new ArrayList<>();
-        seatList.forEach((t) -> {
+        selectedSeatList.forEach((t) -> {
             Ticket ticket = new Ticket();
             ticket.setSchedule(this.scheule);
             ticket.setStatus(Boolean.TRUE);
@@ -269,12 +276,12 @@ public class FXMLTicketController implements Initializable {
         String color = bt.getStyle().toLowerCase();
         if (color.contains(currentColor)) {    //Khi người dùng chọn ghế
             bt.setStyle("-fx-background-color: #00CC00; -fx-text-fill: white;");
-            seatList.add(item);
+            selectedSeatList.add(item);
             return;
         }
         ////Khi người dùng bỏ chọn ghế
         bt.setStyle("-fx-background-color:" + currentColor + "; -fx-text-fill: white;");
-        seatList.remove(item);
+        selectedSeatList.remove(item);
 
     }
 
@@ -282,14 +289,14 @@ public class FXMLTicketController implements Initializable {
         String color = bt.getStyle().toLowerCase();
         if (color.contains(currentColor)) {    //Khi người dùng chọn ghế
             bt.setStyle("-fx-background-color: #00CC00; -fx-text-fill: white;");
-            seatList.add(item);
-            seatList.add(lastItem);
+            selectedSeatList.add(item);
+            selectedSeatList.add(lastItem);
             return;
         }
         ////Khi người dùng bỏ chọn ghế
         bt.setStyle("-fx-background-color:" + currentColor + "; -fx-text-fill: white;");
-        seatList.remove(item);
-        seatList.remove(lastItem);
+        selectedSeatList.remove(item);
+        selectedSeatList.remove(lastItem);
 
     }
 

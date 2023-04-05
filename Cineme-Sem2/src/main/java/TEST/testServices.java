@@ -7,9 +7,11 @@ package TEST;
 import DAO.ActorsDAO;
 import DAO.FilmDAO;
 import DAO.FilmGenreDAO;
+import DAO.ScheduleDAO;
 import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
+import POJO.Schedule;
 import Utils.HibernateUtils;
 import java.util.HashSet;
 import java.util.List;
@@ -25,8 +27,16 @@ import org.hibernate.Session;
  */
 public class testServices {
     public static void main(String[] args) throws Exception {
-
-
+//       FilmDAO fd = new FilmDAO();
+//       ScheduleDAO sd = new ScheduleDAO();
+//       List<Film> l = fd.getScheduleByDateTime();
+//        System.out.println(l);
+//        for (Film film : l) {
+//            List<Schedule> s = sd.getScheduleByDateTime(film.getFilmID());
+//            System.out.println(s);
+//        }
+       
+        
         
         
         

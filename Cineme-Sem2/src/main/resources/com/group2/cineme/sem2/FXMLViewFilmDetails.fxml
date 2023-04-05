@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLViewFilmDetailsController">
+    <stylesheets>
+        <URL value="@/styles/fxmlviewfilmdetails.css" />
+    </stylesheets>
+   <children>
+      <Text layoutX="47.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FILM DETAILS" wrappingWidth="81.4921875" />
+      <HBox layoutX="23.0" layoutY="45.0" prefHeight="25.0" prefWidth="300.0">
+         <children>
+            <Label text="ID FILM:" />
+            <Label text="Label" />
+         </children>
+      </HBox>
+      <HBox layoutX="23.0" layoutY="83.0" prefHeight="25.0" prefWidth="300.0">
+         <children>
+            <Label text="NAME" />
+            <Label text="Label" />
+         </children>
+      </HBox>
+      <HBox layoutX="23.0" layoutY="132.0" prefHeight="25.0" prefWidth="300.0">
+         <children>
+            <Label text="DIRECTOR:" />
+            <Label text="Label" />
+         </children>
+      </HBox>
+      <HBox layoutX="23.0" layoutY="157.0" prefHeight="25.0" prefWidth="300.0">
+         <children>
+            <Label text="ACTORS" />
+         </children>
+      </HBox>
+      <HBox layoutX="23.0" layoutY="188.0" prefHeight="25.0" prefWidth="300.0">
+         <children>
+            <Label text="START DATE:" />
+            <Label text="Label" />
+         </children>
+      </HBox>
+      <HBox layoutX="23.0" layoutY="213.0" prefHeight="25.0" prefWidth="300.0">
+         <children>
+            <Label text="END DATE:" />
+            <Label text="Label" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

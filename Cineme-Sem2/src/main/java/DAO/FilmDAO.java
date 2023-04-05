@@ -9,6 +9,8 @@ import Utils.AlertUtils;
 import Utils.HibernateUtils;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import java.util.HashSet;
@@ -17,6 +19,9 @@ import java.util.Set;
 import javafx.scene.control.Alert;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Criteria;
@@ -122,6 +127,30 @@ public class FilmDAO extends GenericDAO<Film, String> {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+    
+    public List<Film> getScheduleByDateTime(LocalDateTime sTime){
+        List<Film> listFilm= new ArrayList<>();
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+            CriteriaBuilder builder =session.getCriteriaBuilder();
+            CriteriaQuery<Film> criteriaQuery = builder.createQuery(Film.class);
+            Root<Film> filmRoot = criteriaQuery.from(Film.class);
+            Join<Film,Schedule> scheduleJoin = filmRoot.join("listSchedule",JoinType.INNER);
+            
+            LocalDateTime endDate = LocalDateTime.of(sTime.toLocalDate(),LocalTime.MAX);
+            Predicate greaterThan = builder.greaterThanOrEqualTo(scheduleJoin.get("startTime"),sTime);
+            Predicate lessThan = builder.lessThanOrEqualTo(scheduleJoin.get("startTime"),endDate);
+            criteriaQuery.select(filmRoot)
+            .distinct(true)
+            .where(builder.and(greaterThan,lessThan));
+            listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }finally{
+            session.close();
+        }
+        return listFilm;
     }
 
     

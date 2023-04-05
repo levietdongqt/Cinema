@@ -5,6 +5,7 @@
  */
 package Utils;
 
+import POJO.Employee;
 import POJO.Film;
 import POJO.Product;
 import POJO.Ticket;
@@ -19,9 +20,10 @@ import java.util.Map;
  */
 public class SessionUtil {
     private static List<Ticket> ticketList;
-    private static List<Film> mapFilm;
     private static Map<Product,Integer> productList = new HashMap<>();
     
+    private static Employee employee = new Employee();
+    private static List<Film> mapFilm;
     /**
      * @return the mapFilm
      */
@@ -37,6 +39,7 @@ public class SessionUtil {
     }
 
     /**
+<<<<<<< HEAD
      * @return the ticketList
      */
     public static List<Ticket> getTicketList() {
@@ -62,6 +65,19 @@ public class SessionUtil {
      */
     public static void setProductList(Map<Product,Integer> aProductList) {
         productList = aProductList;
+    }
+    /**
+     * @return the employee
+     */
+    public static Employee getEmployee() {
+        return employee;
+    }
+
+    /**
+     * @param aEmployee the employee to set
+     */
+    public static void setEmployee(Employee aEmployee) {
+        employee = aEmployee;
     }
 
     
