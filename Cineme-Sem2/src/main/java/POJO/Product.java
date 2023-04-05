@@ -3,11 +3,14 @@ package POJO;
 import java.math.BigDecimal;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "Product")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Product {
-
     @Id
     @Column(name = "productId")
     private String productId;
@@ -23,7 +26,9 @@ public class Product {
 
     @Column(name = "status")
     private Boolean status;
-
+    
+    private String imgUrl;
+    
     @OneToMany(mappedBy = "product")
     private Set<ProductBill> productBills;
 
@@ -37,7 +42,7 @@ public class Product {
         this.status = status;
         this.productBills = productBills;
     }
-
+    
     /**
      * @return the productId
      */
@@ -121,6 +126,34 @@ public class Product {
     public void setProductBills(Set<ProductBill> productBills) {
         this.productBills = productBills;
     }
+
+    /**
+     * @return the imgUrl
+     */
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    /**
+     * @param imgUrl the imgUrl to set
+     */
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public int hashCode() {
+        return 100;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Product product = (Product) obj;
+        
+        return this.productName.equalsIgnoreCase(product.getProductName()); 
+    }
+    
+    
 
     
     

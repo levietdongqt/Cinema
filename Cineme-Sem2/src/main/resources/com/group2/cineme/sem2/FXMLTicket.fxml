@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="423.0" prefWidth="790.0" styleClass="mainFxmlClass" stylesheets="@../../../../styles/fxmladmin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLTicketController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="423.0" prefWidth="349.0" style="-fx-background-color: #B5B5B5;">
+               <styleClass>
+                  <String fx:value="nav-form" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <children>
+                  <GridPane alignment="CENTER" prefWidth="349.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="60.000006103515624" minWidth="10.0" prefWidth="56.000006103515624" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="164.80001220703124" minWidth="10.0" prefWidth="134.39999389648438" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="filmLabel" text="Film" textFill="WHITE" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="roomLabel" text="Room" textFill="WHITE" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="Seat" textFill="WHITE" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="Total" textFill="WHITE" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
+                        <Label fx:id="totalLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label fx:id="seatLabel" text="Seat" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label fx:id="scheduleLabel" text="Details" textFill="WHITE" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <FontAwesomeIcon glyphName="FILM" size="1.5em">
+                           <GridPane.margin>
+                              <Insets left="6.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </FontAwesomeIcon>
+                        <Button fx:id="btnFood" mnemonicParsing="false" onAction="#setUpBtnFood" text="FOOD" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                        <Label text="Food" textFill="WHITE" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="foodLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Ticket" textFill="WHITE" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ticketLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children></VBox>
+            <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="423.0" prefWidth="760.0">
+               <children>
+                  <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="512.0" text="SCREEN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="80.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="790.0">
+                     <children>
+                        <GridPane id="seatGrid" fx:id="seatGrid" alignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </GridPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="33.0" prefWidth="790.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9900cc" height="25.0" stroke="#9900cc" strokeType="INSIDE" width="40.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Rectangle>
+                        <Label text="NORMAL">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff3333" height="25.0" stroke="#ff3333" strokeType="INSIDE" width="40.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Rectangle>
+                        <Label text="VIP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="MAGENTA" height="25.0" stroke="MAGENTA" strokeType="INSIDE" width="40.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Rectangle>
+                        <Label text="Couple">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="46.0" prefWidth="200.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#555555" height="25.0" stroke="#555555" strokeType="INSIDE" width="40.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Rectangle>
+                        <Label text="Booked">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00cc00" height="25.0" stroke="#00cc00" strokeType="INSIDE" width="40.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Rectangle>
+                        <Label text="Selected">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="600.0">
+                     <children>
+                        <Button fx:id="btnNextStep" mnemonicParsing="false" onAction="#btnNextStepHandler" text="Next Step">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <styleClass>
+                  <String fx:value="ins-form" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

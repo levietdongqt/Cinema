@@ -63,6 +63,8 @@ public class HibernateUtils {
         conf.addAnnotatedClass(RoomTypeDetails.class);
         conf.addAnnotatedClass(ActorOfFilm.class);
         conf.addAnnotatedClass(FilmGenreDetails.class);
+        conf.addAnnotatedClass(ProductBill.class);
+        conf.addAnnotatedClass(Product.class);
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);
 //        System.out.println(props.getProperty(Environment.DRIVER));

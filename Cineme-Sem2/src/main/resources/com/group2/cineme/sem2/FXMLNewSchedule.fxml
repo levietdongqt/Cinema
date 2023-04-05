@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" prefHeight="449.0" prefWidth="725.0" stylesheets="@../../../../styles/fxmlnewfilm.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLNewScheduleController">
+<GridPane fx:id="gridPane" alignment="CENTER" prefHeight="449.0" prefWidth="725.0" stylesheets="@../../../../styles/fxmladmin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLNewScheduleController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="0.0" prefWidth="60.0" />
     <ColumnConstraints hgrow="ALWAYS" maxWidth="800.6000150680542" minWidth="205.0" prefWidth="665.2000167846679" />
@@ -45,12 +45,7 @@
          </GridPane.margin></Label>
       <HBox prefWidth="651.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <TextField fx:id="txtID" editable="false" maxWidth="128.0" prefHeight="23.0" prefWidth="128.0" />
-            <Label text="Auto ">
-               <HBox.margin>
-                  <Insets left="10.0" top="3.0" />
-               </HBox.margin>
-            </Label>
+            <TextField fx:id="txtID" editable="false" maxWidth="128.0" prefHeight="23.0" prefWidth="128.0" styleClass="fill-text" />
          </children>
          <padding>
             <Insets top="5.0" />
@@ -64,18 +59,18 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </CheckBox>
-            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
+            <Button fx:id="btnSave1" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
          </children>
       </VBox>
       <Label text="ROOM" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
-            <ComboBox fx:id="comboBoxRoom" prefWidth="150.0" promptText="Choose Room">
+            <ComboBox fx:id="comboBoxRoom" prefWidth="150.0" promptText="Choose Room" styleClass="fill-text">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
             </ComboBox>
-            <ComboBox fx:id="comboBoxRoomType" prefHeight="23.0" prefWidth="181.0" promptText="Room Type">
+            <ComboBox fx:id="comboBoxRoomType" prefHeight="23.0" prefWidth="181.0" promptText="Room Type" styleClass="fill-text">
                <HBox.margin>
                   <Insets left="30.0" top="10.0" />
                </HBox.margin>
@@ -86,9 +81,9 @@
          <children>
             <HBox prefHeight="42.0" prefWidth="604.0">
                <children>
-                  <TextField fx:id="hourText" prefHeight="23.0" prefWidth="60.0" />
+                  <TextField fx:id="hourText" prefHeight="23.0" prefWidth="60.0" styleClass="fill-text" />
                   <Label prefHeight="25.0" text=":" />
-                  <TextField fx:id="minuteText" prefHeight="23.0" prefWidth="58.0" />
+                  <TextField fx:id="minuteText" prefHeight="23.0" prefWidth="58.0" styleClass="fill-text" />
                   <Button fx:id="btnCheck" mnemonicParsing="false" onAction="#btnCheckHanlder" text="Check">
                      <HBox.margin>
                         <Insets bottom="5.0" left="10.0" />
@@ -104,9 +99,9 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TableView fx:id="tableViewTime" prefWidth="665.0" />
+            <TableView fx:id="tableViewTime" prefWidth="665.0" styleClass="shadow" />
          </children>
       </VBox>
-      <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" styleClass="fill-text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
 </GridPane>

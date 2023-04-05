@@ -97,6 +97,8 @@ public class FXMLNewScheduleController implements Initializable {
     @FXML
     private Button btnCheck;
     @FXML
+    private Button btnFood;
+    @FXML
     private Label infoTableLabel;
     private Schedule newSchedule = new Schedule();
     private ScheduleDAO scheduleDAO = new ScheduleDAO();
@@ -113,7 +115,8 @@ public class FXMLNewScheduleController implements Initializable {
     int count = 3;
     List<RoomTypeDetails> rtDetailList = new ArrayList<>();
     List<Film> listFilm = new ArrayList<>();
-    Popup popup = new Popup();
+    Popup popupEdit = new Popup();
+   
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -121,7 +124,10 @@ public class FXMLNewScheduleController implements Initializable {
         comboBoxRoomHanlder();
         yesNoHanlder();
         creatTableView();
-        popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
+        popupEdit.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
+            gridPane.getParent().setDisable(false);
+        });
+        popupEdit.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
             gridPane.getParent().setDisable(false);
         });
 
@@ -303,9 +309,9 @@ public class FXMLNewScheduleController implements Initializable {
                     AnchorPane popupContent = fxmlLoader.load();
                     FXMLEditScheduleController editControl = fxmlLoader.getController();
                     editControl.getData(schedule, selectedRoom);
-                    popup.getContent().add(popupContent);
+                    popupEdit.getContent().add(popupContent);
                     popupContent.setStyle("-fx-background-color:white");
-                    popup.show(gridPane.getScene().getWindow());
+                    popupEdit.show(gridPane.getScene().getWindow());
                     gridPane.getParent().setDisable(true);   // KHoá trang home khi popup hiện lên, thay biến gridPane thành thằng cha của FXML
 
                 } catch (IOException ex) {
@@ -340,6 +346,7 @@ public class FXMLNewScheduleController implements Initializable {
 
     private void loadTableView() {
         infoTableLabel.setText("Infomation for " + selectedDate.toString());
+        infoTableLabel.setStyle("-fx-font-size: 22 ; -fx-font-style: bold");
         List<Schedule> scheduleList = new ArrayList<>();
         try {
             //Lấy dữ liệu trong 1 ngày selectedDate

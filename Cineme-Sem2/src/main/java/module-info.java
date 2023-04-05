@@ -8,10 +8,13 @@ module com.group2.cineme.sem2 {
     requires java.sql;
     requires java.persistence;
     requires com.jfoenix;
+
     requires tornadofx;
+    requires javassist;
+
     opens Utils;
     opens POJO;
     opens com.group2.cineme.sem2 to javafx.fxml;
     exports com.group2.cineme.sem2;
-    requires javassist;
+    
 }
