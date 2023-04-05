@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class SessionUtil {
     private static List<Ticket> ticketList;
-    private static List<Film> mapFilm = new ArrayList<>();
+    private static List<Film> mapFilm;
     private static Map<Product,Integer> productList = new HashMap<>();
     
     /**
