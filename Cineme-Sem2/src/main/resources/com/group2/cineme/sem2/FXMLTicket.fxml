@@ -37,6 +37,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label fx:id="filmLabel" text="Film" textFill="WHITE" GridPane.columnIndex="1">
@@ -51,11 +52,11 @@
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <Label text="Total" textFill="WHITE" GridPane.rowIndex="5">
+                        <Label text="Total" textFill="WHITE" GridPane.rowIndex="6">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
-                        <Label fx:id="totalLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="totalLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
@@ -75,7 +76,7 @@
                               <Font size="14.0" />
                            </font>
                         </FontAwesomeIcon>
-                        <Button fx:id="btnFood" mnemonicParsing="false" onAction="#setUpBtnFood" text="FOOD" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                        <Button fx:id="btnFood" mnemonicParsing="false" onAction="#setUpBtnFood" text="FOOD" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                         <Label text="Food" textFill="WHITE" GridPane.rowIndex="4">
                            <font>
                               <Font size="16.0" />
@@ -86,15 +87,28 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <Label text="Ticket" textFill="WHITE" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ticketLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
                </children></VBox>
-            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="423.0" prefWidth="760.0">
+            <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="423.0" prefWidth="760.0">
                <children>
                   <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="512.0" text="SCREEN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="22.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="80.0" />
+                     </VBox.margin>
                   </Label>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="790.0">
                      <children>

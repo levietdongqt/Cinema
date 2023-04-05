@@ -46,11 +46,6 @@
       <HBox prefWidth="651.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <TextField fx:id="txtID" editable="false" maxWidth="128.0" prefHeight="23.0" prefWidth="128.0" styleClass="fill-text" />
-            <Label text="Auto ">
-               <HBox.margin>
-                  <Insets left="10.0" top="3.0" />
-               </HBox.margin>
-            </Label>
          </children>
          <padding>
             <Insets top="5.0" />

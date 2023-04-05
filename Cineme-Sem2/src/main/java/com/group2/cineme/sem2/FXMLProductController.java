@@ -67,10 +67,6 @@ public class FXMLProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapProducts.putAll(SessionUtil.getProductList());
-        System.out.println("Du lieu: ");
-        mapProducts.forEach((t, u) -> {
-            System.out.println(t.getProductName() + ": " + u);
-        });
         try {
 
             proDAO.getAll("Product").forEach((t) -> {
@@ -89,8 +85,6 @@ public class FXMLProductController implements Initializable {
         alert.setContentText("Confirm now!!!");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get().getText().equalsIgnoreCase("OK")) {
-            Stage stage = (Stage) anchorPane.getScene().getWindow();
-            stage.close();
             Iterator<Map.Entry<Product, Integer>> iterator = mapProducts.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<Product, Integer> entry = iterator.next();
@@ -99,6 +93,8 @@ public class FXMLProductController implements Initializable {
                 }
             }
             SessionUtil.setProductList(mapProducts);
+            Stage stage = (Stage) anchorPane.getScene().getWindow();
+            stage.close();
         } else {
             alert.close();
         }
@@ -162,7 +158,7 @@ public class FXMLProductController implements Initializable {
             SessionUtil.getProductList().forEach((t, u) -> {
                 if (t.getProductName().equalsIgnoreCase(item.getProductName())) {
                     quatity = u;
-                    total += u*t.getPrice().intValue();
+                    total += u * t.getPrice().intValue();
                     totalLabel.setText(String.valueOf(total));
                 }
             });
@@ -174,8 +170,8 @@ public class FXMLProductController implements Initializable {
                 totalLabel.setText(String.valueOf(total));
                 mapProducts.put(item, ov.getValue());
                 SessionUtil.getProductList().forEach((t, u) -> {
-            System.out.println(t.getProductName() + ": " + u);
-        });
+                    System.out.println(t.getProductName() + ": " + u);
+                });
             });
             //product price
             grid.add(new Label(String.valueOf(item.getPrice().intValue()) + " VND"), 3, j + 1);
