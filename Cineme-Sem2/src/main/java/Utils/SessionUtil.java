@@ -22,7 +22,7 @@ public class SessionUtil {
     private static List<Ticket> ticketList;
     private static Map<Product,Integer> productList = new HashMap<>();
     
-    private static Employee employee;
+    private static Employee employee = new Employee();
     private static List<Film> mapFilm;
     /**
      * @return the mapFilm

@@ -8,7 +8,9 @@ import DAO.FilmDAO;
 import DAO.ScheduleDAO;
 import POJO.Film;
 import POJO.Schedule;
+import static com.group2.cineme.sem2.App.scene;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,11 +24,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -52,54 +57,51 @@ import javafx.util.Callback;
  * @author thuhuytran
  */
 public class FXMLShowScheduleController implements Initializable {
-    
+
     @FXML
     private TableView<Film> tableViewSchedule;
-    
+
     @FXML
     private ComboBox<LocalDateTime> comboBoxDay;
     @FXML
     private ComboBox<Film> comboBoxFilm;
-    
-    
-    private List<Film> films; 
-    
-    
+
+    private List<Film> films;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadViewComboBox();
         loadTableView();
         loadDataView(LocalDateTime.now());
         setActionForComboBox();
-        
+
         loadViewComboBoxFilm();
         setActionForComboBoxFilm();
-    } 
-    
+    }
+
     //ButtonHandler
-    public void bookTicketHandler(){
+    public void bookTicketHandler() {
         loadDataView(LocalDateTime.now());
     }
-    
-    
-    public void loadTableView(){
-        
-        TableColumn<Film,String> colDay = new TableColumn("Day");
+
+    public void loadTableView() {
+
+        TableColumn<Film, String> colDay = new TableColumn("Day");
         colDay.setCellValueFactory((p) -> {
             Film sc = p.getValue();
             LocalDate a = LocalDate.now();
             for (Schedule schedule : sc.getListSchedule()) {
                 a = schedule.getStartTime().toLocalDate();
             }
-            return new SimpleObjectProperty<>(a.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))); 
+            return new SimpleObjectProperty<>(a.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         });
         colDay.setPrefWidth(200);
 
-        TableColumn<Film,ImageView> colFilmView = new TableColumn("Image Film");
+        TableColumn<Film, ImageView> colFilmView = new TableColumn("Image Film");
         colFilmView.setCellValueFactory((p) -> {
             Film sc = p.getValue();
             String filmImage = sc.getImageUrl();
-            
+
             ImageView imageView = new ImageView();
             File file = new File(filmImage);
             Image image = new Image(file.toURI().toString());
@@ -110,20 +112,19 @@ public class FXMLShowScheduleController implements Initializable {
         });
         colFilmView.setPrefWidth(220);
 
-        TableColumn<Film,String> colNameFilm = new TableColumn("Film Name");
+        TableColumn<Film, String> colNameFilm = new TableColumn("Film Name");
         colNameFilm.setCellValueFactory((o) -> {
             Film sc = o.getValue();
             String filmName = sc.getFilmName();
             return new SimpleObjectProperty<>(filmName);
         });
         colNameFilm.setPrefWidth(200);
-        
+
         TableColumn colDuration = new TableColumn("Duration");
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
         colDuration.setPrefWidth(200);
-        
 
-        TableColumn<Film,HBox> colTime = new TableColumn("Time");
+        TableColumn<Film, HBox> colTime = new TableColumn("Time");
         colTime.setCellValueFactory((p) -> {
             HBox hbox = new HBox();
             ComboBox<Schedule> cb = new ComboBox<>();
@@ -132,14 +133,30 @@ public class FXMLShowScheduleController implements Initializable {
             Set<Schedule> lists = film.getListSchedule();
             List<Schedule> result = lists.stream().sorted((o1, o2) -> o1.getStartTime().compareTo(o2.getStartTime())).collect(Collectors.toList());
             cb.setItems(FXCollections.observableList(new ArrayList<>(result)));
-            Button button =new Button("Buy ticket");       
+            Button button = new Button("Buy ticket");
             button.setOnAction((t) -> {
-                Schedule sc = cb.getValue();
-                HBox hboxWithComboBox = (HBox) button.getUserData();
+                try {
+                    Schedule sc = cb.getValue();
+                    HBox hboxWithComboBox = (HBox) button.getUserData();
+                    FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("FXMLTicket.fxml"));
+                    fxmlLoader1.setControllerFactory(new Callback<Class<?>, Object>() {
+                        @Override
+                        public Object call(Class<?> param) {
+                            return new FXMLTicketController(sc);
+                        }
+
+                    });
+                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+                    scene.setRoot(fxmlLoader.load());
+                    FXMLHomeController homeController = fxmlLoader.getController();
+                    homeController.setCenter(fxmlLoader1.load());
 //                ComboBox<Schedule> cbInHbox = (ComboBox<Schedule>) hboxWithComboBox.getChildren().get(0);
-               /*lay gia tri cua sc tai day*/    
+                    /*lay gia tri cua sc tai day*/
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             });
-            hbox.getChildren().addAll(cb,button);
+            hbox.getChildren().addAll(cb, button);
             button.setUserData(hbox);
             hbox.setStyle("-fx-alignment: CENTER;");
             for (Node node : hbox.getChildren()) {
@@ -147,76 +164,76 @@ public class FXMLShowScheduleController implements Initializable {
             }
             return new SimpleObjectProperty<>(hbox);
         });
-        this.tableViewSchedule.getColumns().addAll(colDay,colFilmView,colNameFilm,colDuration,colTime);
+        colTime.setPrefWidth(100);
+        this.tableViewSchedule.getColumns().addAll(colDay, colFilmView, colNameFilm, colDuration, colTime);
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewSchedule.getColumns();
         for (TableColumn<Film, ?> column : columns) {
             column.setStyle("-fx-alignment: CENTER;");
         }
         this.tableViewSchedule.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;");
     }
-    public void loadDataView(LocalDateTime dateTime){
+
+    public void loadDataView(LocalDateTime dateTime) {
         ScheduleDAO sd = new ScheduleDAO();
 //        LocalDateTime currentDate = LocalDateTime.now();
         FilmDAO fd = new FilmDAO();
-        films= fd.getScheduleByDateTime(dateTime);
+        films = fd.getScheduleByDateTime(dateTime);
         System.out.println(films);
         for (Film film : films) {
-            film.setListSchedule(new HashSet<>(sd.getScheduleByDateTime(film.getFilmID(),dateTime)));
+            film.setListSchedule(new HashSet<>(sd.getScheduleByDateTime(film.getFilmID(), dateTime)));
         }
-        
+
         this.tableViewSchedule.setItems(FXCollections.observableList(films));
-        
+
     }
-    public void loadViewComboBox(){
+
+    public void loadViewComboBox() {
         LocalDateTime currentDate = LocalDateTime.now();
         LocalDateTime startDate = currentDate.of(currentDate.toLocalDate(), LocalTime.MIN);
 //        System.out.println(startDate.plusDays(1));
-        
+
         List<LocalDateTime> listDateTime = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
-            listDateTime.add(startDate.plusDays(i));    
+            listDateTime.add(startDate.plusDays(i));
         }
         this.comboBoxDay.setItems(FXCollections.observableList(listDateTime));
-        comboBoxDay.setCellFactory(new Callback<ListView<LocalDateTime>, ListCell<LocalDateTime>>(){
+        comboBoxDay.setCellFactory(new Callback<ListView<LocalDateTime>, ListCell<LocalDateTime>>() {
             @Override
             public ListCell<LocalDateTime> call(ListView<LocalDateTime> p) {
-                return new ListCell<>(){
+                return new ListCell<>() {
                     @Override
                     protected void updateItem(LocalDateTime t, boolean bln) {
                         super.updateItem(t, bln);
-                        if(t != null){
+                        if (t != null) {
                             String formatter = t.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                             setText(formatter);
-                        }else{
+                        } else {
                             setText("");
                         }
-                    }                  
+                    }
                 };
-            }        
-        });   
+            }
+        });
     }
-    
-    public void setActionForComboBox(){
+
+    public void setActionForComboBox() {
         this.comboBoxDay.setOnAction((t) -> {
             LocalDateTime choice = this.comboBoxDay.getSelectionModel().getSelectedItem();
             loadDataView(choice);
             loadViewComboBoxFilm();
         });
     }
-    
-    public void loadViewComboBoxFilm(){
+
+    public void loadViewComboBoxFilm() {
         this.comboBoxFilm.setItems(FXCollections.observableList(films));
     }
-    public void setActionForComboBoxFilm(){
+
+    public void setActionForComboBoxFilm() {
         this.comboBoxFilm.setOnAction((o) -> {
             List<Film> searchFilm = films.stream().filter((t) -> t.getFilmName().equals(this.comboBoxFilm.getSelectionModel().getSelectedItem().getFilmName())).collect(Collectors.toList());
             this.tableViewSchedule.setItems(FXCollections.observableList(searchFilm));
         });
-        
+
     }
-    
-    
-    
-    
-    
+
 }
