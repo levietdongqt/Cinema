@@ -5,6 +5,7 @@
  */
 package Utils;
 
+import POJO.Employee;
 import POJO.Film;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
  * @author thuhuytran
  */
 public class SessionUtil {
-    
+    private static Employee employee;
     private static List<Film> mapFilm;
 
     /**
@@ -29,6 +30,20 @@ public class SessionUtil {
      */
     public static void setMapFilm(List<Film> aMapFilm) {
         mapFilm = aMapFilm;
+    }
+
+    /**
+     * @return the employee
+     */
+    public static Employee getEmployee() {
+        return employee;
+    }
+
+    /**
+     * @param aEmployee the employee to set
+     */
+    public static void setEmployee(Employee aEmployee) {
+        employee = aEmployee;
     }
 
     

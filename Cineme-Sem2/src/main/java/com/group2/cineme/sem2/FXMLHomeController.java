@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -51,14 +52,26 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     AnchorPane anchorPane;
-
+    
+    
+    Popup popup = new Popup();
+    
+    @FXML
+    private Label labelAdmin1;
+    
+    @FXML
+    private Label labelAdmin2;
+   
     
     
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         loadDataImageView();
         loadDataPopup();
+        this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
+         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
         loadInHome("FXMLFilm");
     }
 
@@ -119,15 +132,16 @@ public class FXMLHomeController implements Initializable {
 
     
     public void loadDataPopup(){
-        Popup popup = new Popup();
+        
         popup.getContent().add(vbox);     
         this.hamburger.setOnMouseClicked((event) -> {
             if(popup.isShowing()){
-                popup.hide();
+                popup.hide();              
             }else{
-                popup.show(hamburger,event.getScreenX()-720,event.getScreenY());            
+                popup.show(hamburger,event.getScreenX()-720,event.getScreenY());
             }
         });
+        
         
     }
 

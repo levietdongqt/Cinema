@@ -57,6 +57,13 @@
             <version>9.0.10</version>
             <type>jar</type>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/no.tornado/tornadofx -->
+<dependency>
+    <groupId>no.tornado</groupId>
+    <artifactId>tornadofx</artifactId>
+    <version>1.7.19</version>
+</dependency>
+
         <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
 <dependency>
     <groupId>org.controlsfx</groupId>

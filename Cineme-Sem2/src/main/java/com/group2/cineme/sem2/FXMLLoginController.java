@@ -67,7 +67,12 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private Label welcom;
-
+    
+    static {
+        loadData();
+    }
+    
+    
     public void close() {
         System.exit(0);
     }
@@ -76,18 +81,15 @@ public class FXMLLoginController implements Initializable {
         WorkSession work = new WorkSession();
         EmployeeDAO dao = new EmployeeDAO();
         boolean log = dao.checkaccount(user.getText(), pass.getText());
-        String username = user.getText();
-        Employee employee = new Employee();
-        employee.setUserName(username);
+        Employee employee = SessionUtil.getEmployee();
         work.setEmployee(employee);
         work.setStartTime(LocalDateTime.now());
 //        work.setEndTime(LocalDateTime.of(2010, 10, 10, 0, 0, 0));
-    
-
         if (log) {
             WorkSessionDAO workdao = new WorkSessionDAO();
             workdao.add(work);
             App.setRoot("FXMLHome");
+            
     }
     }
     
@@ -98,7 +100,7 @@ public class FXMLLoginController implements Initializable {
 
     
   
-        loadData();
+        
         //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
         DropShadow original = new DropShadow(20, Color.valueOf("blue"));
         welcom.setEffect(original);
@@ -143,12 +145,12 @@ public class FXMLLoginController implements Initializable {
             cgv.setEffect(shadow);
 
         });
-        loadData();
+        
         
        
 
     }
-    public void loadData() {
+    public static void loadData() {
         FilmDAO f = new FilmDAO();
         List<Film> films;
         try {

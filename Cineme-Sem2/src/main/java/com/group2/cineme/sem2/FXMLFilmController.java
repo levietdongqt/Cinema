@@ -125,7 +125,7 @@ public class FXMLFilmController implements Initializable {
     public void loadTableView() {
         TableColumn colFilmID = new TableColumn("ID");
         colFilmID.setCellValueFactory(new PropertyValueFactory("filmID"));
-        colFilmID.setPrefWidth(100);
+        colFilmID.setPrefWidth(50);
 
         TableColumn colFilmName = new TableColumn("Name");
         colFilmName.setCellValueFactory(new PropertyValueFactory("filmName"));
@@ -137,7 +137,7 @@ public class FXMLFilmController implements Initializable {
 
         TableColumn colDuration = new TableColumn("Duration");
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
-        colDuration.setPrefWidth(100);
+        colDuration.setPrefWidth(80);
 
         TableColumn colStartDate = new TableColumn("Start Date");
         colStartDate.setCellValueFactory(new PropertyValueFactory("startDate"));
