@@ -23,30 +23,36 @@
                <left>
                   <AnchorPane prefHeight="623.0" prefWidth="200.0" stylesheets="@../../../../styles/fxmladmin.css" BorderPane.alignment="CENTER">
                      <children>
-                        <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#submit" prefHeight="42.0" prefWidth="177.0" text="INSERT" textAlignment="CENTER">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#submit" prefHeight="42.0" prefWidth="177.0" text="INSERT" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="12.0" layoutY="70.0" mnemonicParsing="false" onAction="#update" prefHeight="42.0" prefWidth="177.0" text="UPDATE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="70.0" mnemonicParsing="false" onAction="#update" prefHeight="42.0" prefWidth="177.0" text="UPDATE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="13.0" layoutY="127.0" mnemonicParsing="false" onAction="#delete" prefHeight="42.0" prefWidth="177.0" text="DELETE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="183.0" mnemonicParsing="false" onAction="#delete" prefHeight="42.0" prefWidth="177.0" text="DELETE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
                         <FontAwesomeIcon glyphName="WRENCH" layoutX="15.0" layoutY="101.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
-                        <FontAwesomeIcon glyphName="CLOSE" layoutX="20.0" layoutY="158.0" size="2.5em" />
+                        <FontAwesomeIcon glyphName="CLOSE" layoutX="17.0" layoutY="216.0" size="2.5em" />
                         <Button layoutX="13.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
                         <FontAwesomeIcon glyphName="FILE" layoutX="19.0" layoutY="387.0" size="2em" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="126.0" mnemonicParsing="false" onAction="#updatePass" prefHeight="42.0" prefWidth="177.0" text="CHANGE PASSWORK" textAlignment="RIGHT">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <FontAwesomeIcon glyphName="LOCK" layoutX="19.0" layoutY="159.0" size="2.5em" />
                      </children>
                      <styleClass>
                         <String fx:value="nav-form" />
@@ -161,7 +167,7 @@
                               <String fx:value="ins-form" />
                            </styleClass>
                            <children>
-                              <TableView fx:id="tvEmployee" layoutX="5.0" layoutY="54.0" onMouseClicked="#selectEmployee" onSort="#showEmployee" prefHeight="344.0" prefWidth="1160.0">
+                              <TableView fx:id="tvEmployee" layoutX="5.0" layoutY="54.0" onMouseClicked="#selectEmployee" prefHeight="344.0" prefWidth="1160.0">
                                 <columns>
                                   <TableColumn fx:id="tcUser" prefWidth="127.0" text="USER" />
                                   <TableColumn fx:id="tcName" prefWidth="161.0" text="FULL NAME" />
@@ -174,7 +180,7 @@
                                     <TableColumn fx:id="tcWorking" prefWidth="109.0" text="WORKING DAY" />
                                 </columns>
                               </TableView>
-                              <TextField alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />
+                              <TextField fx:id="tfSearch" alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />
                               <FontAwesomeIcon glyphName="SEARCH" layoutX="462.0" layoutY="34.0" size="1.5em" />
                            </children>
                         </AnchorPane>

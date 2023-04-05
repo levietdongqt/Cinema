@@ -8,22 +8,28 @@ import Utils.SessionUtil;
 import DAO.EmployeeDAO;
 import DAO.WorkSessionDAO;
 import POJO.Employee;
+import POJO.Product;
 import POJO.WorkSession;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import static java.util.Locale.filter;
 import java.util.Map;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -41,6 +47,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import javassist.compiler.TokenId;
 import static org.hibernate.criterion.Projections.id;
 
 /**
@@ -49,6 +56,10 @@ import static org.hibernate.criterion.Projections.id;
  * @author BE BAU
  */
 public class FXMLAdminController implements Initializable {
+    Employee em = new Employee();
+    
+    EmployeeDAO dao = new EmployeeDAO();
+    List<Employee> emList; 
 
     @FXML
     private ComboBox<String> cbGender;
@@ -123,7 +134,7 @@ public class FXMLAdminController implements Initializable {
     private TableColumn<Employee, String> tcUser;
 
     @FXML
-    private TableColumn<Employee, Integer> tcWorking;
+    private TableColumn<Employee, Double> tcWorking;
 
     @FXML
     private TextField tfMail;
@@ -146,10 +157,12 @@ public class FXMLAdminController implements Initializable {
     @FXML
     private TableView<Employee> tvEmployee;
 
+    @FXML
+    private TextField tfSearch;
+
 //    List<Employee> listEm;
-    Employee em = new Employee();
-    EmployeeDAO dao = new EmployeeDAO();
-    List<Employee> emList;
+   
+//    Employee empl = new Employee();
 
     public void checkUser() {
         tfUser.setOnKeyTyped(event -> {
@@ -175,6 +188,19 @@ public class FXMLAdminController implements Initializable {
                 errName.setText(e.getMessage());
             }
         });
+        
+        tfPhone.setOnKeyTyped(even -> {
+            String phone = tfPhone.getText().trim();
+            try {
+                em.setEmpPhone(phone);
+//                empl.setEmpPhone(phone);
+                errPhone.setVisible(false);
+            } catch (IOException e) {
+                errPhone.setVisible(true);
+                errPhone.setText(e.getMessage());
+            }
+        });
+        
     }
 
     public void checkPhone() {
@@ -182,8 +208,8 @@ public class FXMLAdminController implements Initializable {
             String phone = tfPhone.getText().trim();
             try {
                 em.setEmpPhone(phone);
+//                empl.setEmpPhone(phone);
                 errPhone.setVisible(false);
-
             } catch (IOException e) {
                 errPhone.setVisible(true);
                 errPhone.setText(e.getMessage());
@@ -196,6 +222,8 @@ public class FXMLAdminController implements Initializable {
             String mail = tfMail.getText().trim();
             try {
                 em.setEmail(mail);
+//                empl.setEmail(mail);
+
                 errMail.setVisible(false);
             } catch (Exception e) {
                 errMail.setVisible(true);
@@ -213,6 +241,8 @@ public class FXMLAdminController implements Initializable {
             } catch (IOException ex) {
                 errPass.setVisible(true);
                 errPass.setText(ex.getMessage());
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -234,6 +264,8 @@ public class FXMLAdminController implements Initializable {
             } catch (IOException e) {
                 errRPass.setVisible(true);
                 errRPass.setText(e.getMessage());
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -243,6 +275,8 @@ public class FXMLAdminController implements Initializable {
             LocalDate birth = dpBirth.getValue();
             try {
                 em.setBirthDate(birth);
+//                empl.setBirthDate(birth);
+
                 errBirth.setVisible(false);
             } catch (IOException ex) {
                 errBirth.setVisible(true);
@@ -260,6 +294,8 @@ public class FXMLAdminController implements Initializable {
             String posi = cbPosition.getValue();
             try {
                 em.setPosition(posi);
+//                empl.setPosition(posi);
+
                 errPos.setVisible(false);
             } catch (IOException ex) {
                 errPos.setVisible(true);
@@ -284,6 +320,8 @@ public class FXMLAdminController implements Initializable {
                 genderBitValue = false;
             }
             em.setGender(genderBitValue);
+//            empl.setGender(genderBitValue);
+//            boolean gender = genderBitValue;
 
         });
 
@@ -303,6 +341,8 @@ public class FXMLAdminController implements Initializable {
                 statusBit = false;
             }
             em.setStatus(statusBit);
+//            empl.setStatus(statusBit);
+
         });
 
     }
@@ -319,6 +359,8 @@ public class FXMLAdminController implements Initializable {
             LocalDate start = dpTimeSta.getValue();
             try {
                 em.setStartDate(start);
+//                empl.setStartDate(start);
+
                 errTimeSta.setVisible(false);
             } catch (IOException e) {
                 errTimeSta.setVisible(true);
@@ -349,19 +391,39 @@ public class FXMLAdminController implements Initializable {
     }
 
     public void update(ActionEvent event) throws Exception {
-
         try {
 
             em.setUserName(tfUser.getText().trim());
             em.setEmpName(tfName.getText().trim());
             em.setEmail(tfMail.getText().trim());
-            em.setEmpPhone(tfPhone.getText().trim());
-            em.setPassword(tfPass.getText().trim());
             em.setPosition(cbPosition.getValue().trim());
+            em.setEmpPhone(tfPhone.getText().trim());
 
-            dao.update(em);
-//            System.out.println(em.setUserName());
+            dao.updateEmployee(em);
 
+            showEmployee();
+            this.tfUser.clear();
+            this.tfName.clear();
+            this.tfRPass.clear();
+            this.tfPhone.clear();
+            this.tfPass.clear();
+            this.tfMail.clear();
+            cbGender.getSelectionModel().selectFirst();
+            cbPosition.getSelectionModel().selectFirst();
+            cbStatus.getSelectionModel().selectFirst();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public void updatePass(ActionEvent event) throws Exception {
+        try {
+            Employee emp = new Employee();
+            emp.setUserName(tfUser.getText().trim());
+//            emp.setPassword((tfRPass.getText().trim()));
+            dao.updatePassword(emp,tfRPass.getText().trim());
+            String pass = tfPass.getText().trim();
+            System.out.println(pass);
             showEmployee();
             this.tfUser.clear();
             this.tfName.clear();
@@ -382,6 +444,7 @@ public class FXMLAdminController implements Initializable {
             dao.delete(tfUser.getText().trim(), Employee.class);
             System.out.println(tfUser.getText().trim());
 
+            
             showEmployee();
             this.tfUser.clear();
             this.tfName.clear();
@@ -398,17 +461,22 @@ public class FXMLAdminController implements Initializable {
     }
 
     public void showEmployee() {
-        
-//        WorkSessionDAO wdao = new WorkSessionDAO();
-//         Map<String, Long> totalWorkTime =wdao.getTotalWorkTimeByUserAndMonth(4);
-                
-        
+
+        WorkSessionDAO wdao = new WorkSessionDAO();
+        Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(4);
+
         try {
             emList = dao.getAll("Employee");
-//            emList = dao.getA(4);
-        
-           
-          
+
+            for (Employee employee : emList) {
+                for (String employee1 : totalWorkTime.keySet()) {
+                    if (employee1.equals(employee.getUserName())) {
+                        employee.setTotalWorkTime(totalWorkTime.get(employee1));
+                    }
+                }
+
+            }
+
             tcUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
             tcName.setCellValueFactory(new PropertyValueFactory<>("empName"));
             tcGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -417,11 +485,44 @@ public class FXMLAdminController implements Initializable {
             tcPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
             tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
             tcStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-//            tcWorking.setCellValueFactory(new PropertyValueFactory<>("totalWorkTime"));
+            tcWorking.setCellValueFactory(new PropertyValueFactory<>("totalWorkTime"));
             tvEmployee.setItems(FXCollections.observableList(emList));
+
+// search 
+            ObservableList<Employee> obsEmList = FXCollections.observableList(emList);
+            FilteredList<Employee> filter = new FilteredList<>(obsEmList, event -> true);
+            tfSearch.textProperty().addListener((Observable, oldValue, newValue) -> {
+                filter.setPredicate(Employee -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String searchKey = newValue.toLowerCase();
+                    String userName = Employee.getUserName();
+                    String empPhone = Employee.getEmpPhone();
+                    String position = Employee.getPosition();
+                    if (userName != null && userName.toLowerCase().contains(searchKey)) {
+                        return true;
+                    } else if (empPhone != null && empPhone.toLowerCase().contains(searchKey)) {
+                        return true;
+                    } else if (position != null && position.toLowerCase().contains(searchKey)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            });
+
+            SortedList<Employee> sortedList = new SortedList<>(filter);
+            sortedList.comparatorProperty().bind(tvEmployee.comparatorProperty());
+
+            Platform.runLater(() -> {
+                tvEmployee.setItems(sortedList);
+            });
+//end search 
 
         } catch (Exception ex) {
             Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
     }
@@ -438,6 +539,9 @@ public class FXMLAdminController implements Initializable {
         tfName.setText(String.valueOf(employee.getEmpName()));
         tfMail.setText(String.valueOf(employee.getEmail()));
         tfPhone.setText(String.valueOf(employee.getEmpPhone()));
+        tfPass.setText(String.valueOf(employee.getPassword()));
+        tfRPass.setText(String.valueOf(employee.getPassword()));
+        tfPhone.setText(String.valueOf(employee.getEmpPhone()));
         cbPosition.setValue(String.valueOf(employee.getPosition()));
         dpTimeSta.setValue(employee.getStartDate());
         cbGender.setValue(employee.isGender() ? "Male" : "Female");
@@ -447,7 +551,6 @@ public class FXMLAdminController implements Initializable {
 
     }
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         checkUser();
@@ -462,9 +565,6 @@ public class FXMLAdminController implements Initializable {
         checkStart();
         checkGender();
         showEmployee();
-        
-        
-
 
     }
 

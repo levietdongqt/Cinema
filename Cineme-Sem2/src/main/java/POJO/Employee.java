@@ -1,5 +1,5 @@
 package POJO;
-
+import DAO.EmployeeDAO;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javassist.compiler.TokenId;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Formula;
 
@@ -44,8 +46,9 @@ public class Employee {
     private boolean gender;
     private boolean status;
 //    @Formula("(SELECT SUM((EXTRACT(epoch FROM (ws.endTime - ws.startTime))) FROM WorkSession ws WHERE ws.userName = userName)")
-//    private int totalWorkTime;
-    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, boolean gender, String empPhone, Set<Bill> billList, Set<WorkSession> worksessionList) {
+   @Transient
+     private double totalWorkTime;
+    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, boolean gender, String empPhone,double totalWorkTime,  Set<Bill> billList, Set<WorkSession> worksessionList) {
         this.userName = userName;
         this.empName = empName;
         this.password = password;
@@ -58,13 +61,13 @@ public class Employee {
         this.billList = billList;
         this.worksessionList = worksessionList;
         this.gender = gender;
-//        this.totalWorkTime = totalWorkTime;
+        this.totalWorkTime = totalWorkTime;
     }
     private String empPhone;
     @OneToMany(mappedBy = "employee")
     private Set<Bill> billList;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee",cascade = CascadeType.REMOVE)
     private Set<WorkSession> worksessionList;
 
     public Employee() {
@@ -143,32 +146,34 @@ public class Employee {
      * @return the password
      */
     public String getPassword() {
-
+        
+//        EmployeeDAO dao = new EmployeeDAO();
+//        dao.encodePassword(password);
+        
         return password;
     }
 
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) throws IOException {
-        if (password == null || password.trim().isEmpty()) {
-            throw new IOException("Password cannot be null or empty");
-        }
-        if (password.length() > 20 || password.length() < 6) {
-            throw new IOException("Password cannot be longer than 20 char and less than 6 char");
-        }
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hash) {
-                sb.append(String.format("%02x", b));
-            }
-            this.password = sb.toString();
-        } catch (NoSuchAlgorithmException ex) {
-            throw new IOException("Error while hashing the password");
-        }
+   public void setPassword(String password) throws IOException, NoSuchAlgorithmException {
+    if (password == null || password.trim().isEmpty()) {
+        throw new IOException("Password cannot be null or empty");
     }
+    if (password.length() > 20 || password.length() < 6) {
+        throw new IOException("Password cannot be longer than 20 char and less than 6 char");
+    }
+    
+  // Generate a hash value of the password string using SHA-256
+    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+    byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+    
+    // Encode the hashed password bytes using Base64
+    String hashedPassword = Base64.getEncoder().encodeToString(hashBytes);
+    
+    this.password = hashedPassword;
+}
+
 
     /**
      * @return the position
@@ -300,13 +305,13 @@ public class Employee {
         this.worksessionList = worksessionList;
     }
 
-//    public int getTotalWorkTime() {
-//        return totalWorkTime;
-//    }
-//
-//    public void setTotalWorkTime(int totalWorkTime) {
-//        this.totalWorkTime = totalWorkTime;
-//    }
+    public double getTotalWorkTime() {
+        return totalWorkTime;
+    }
+
+    public void setTotalWorkTime(double totalWorkTime) {
+        this.totalWorkTime = totalWorkTime;
+    }
 
 
 }

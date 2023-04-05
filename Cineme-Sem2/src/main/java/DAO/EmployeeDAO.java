@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import Utils.SessionUtil;
 import POJO.Employee;
 import Utils.HibernateUtils;
@@ -10,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -21,7 +23,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -29,7 +34,7 @@ import org.hibernate.Session;
  */
 public class EmployeeDAO extends GenericDAO<Employee, String> {
 
-        //mã hoá password sql 
+    //mã hoá password sql 
     public String encodePassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -44,7 +49,7 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             return null;
         }
     }
-    
+
     //mã hoá password sql 
     public String encode(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -56,7 +61,6 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
         }
         return sb.toString();
     }
-    
 
     //Try vấn thông tin đăng nhập (SELECT * FROM user WHERE Username= ? and Password = ?)
     public boolean checkaccount(String username, String password) throws Exception {
@@ -74,13 +78,12 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             list = query.getResultList();
             session.getTransaction().commit();
             if (!list.isEmpty()) {
-                
-            SessionUtil.setEmployee(list.get(0));
-                
-                
+
+                SessionUtil.setEmployee(list.get(0));
+
 //                System.out.println("Logged in successfully");
                 // hiện thông báo đăng nhập thành công
-             //   new Alert(Alert.AlertType.INFORMATION, "Logged in successfully").show();
+                //   new Alert(Alert.AlertType.INFORMATION, "Logged in successfully").show();
                 return true;
             } else {
                 new Alert(Alert.AlertType.ERROR, "Username or password is incorrect").show();
@@ -100,60 +103,82 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 
     }
 
-//    
-//public Map<String, Long> getTotalWorkTimeByUserAndMonth(int month) {
+//public void updatee(Employee object) throws Exception {
 //    Session session = HibernateUtils.getFACTORY().openSession();
-//    String hql = "SELECT emp.userName, "
-//            + "(SELECT SUM(DATEDIFF(HOUR, ws.startTime, ws.endTime)) "
-//            + "FROM WorkSession ws "
-//            + "WHERE ws.employee.userName = emp.userName) AS totalWorkTime "
-//            + "FROM Employee emp";
-//    Query query = session.createQuery(hql);
-//    List<Object[]> results = query.getResultList();
-//
-//    Map<String, Long> totalWorkTimeByUser = new HashMap<>();
-//    for (Object[] result : results) {
-//        String userName = (String) result[0];
-//        String empName = (String) result[1];
-//        Long totalSeconds = (Long) result[2];
-//        totalWorkTimeByUser.put(empName, totalSeconds);
-//        System.out.println(empName + ": " + Duration.ofHours(totalSeconds));
+//    try {
+//        session.getTransaction().begin();
+//        Employee existingObject = session.get(Employee.class, object.getUserName());
+//        if (existingObject != null) {
+//            if (StringUtils.isNotBlank(object.getPassword())) {
+//                existingObject.setPassword(object.getPassword());
+//            }
+//            session.merge(object);
+//            session.getTransaction().commit();
+//            setMessUpdate("Chỉnh sửa dữ liệu thành công");
+//        } else {
+//            setMessUpdate("Không tìm thấy dữ liệu để cập nhật");
+//        }
+//    } catch (Exception e) {
+//        System.out.println(e.getMessage());
+//        session.getTransaction().rollback();
+//        setMessUpdate("Chỉnh sửa dữ liệu không thành công");
+//    } finally {
+//        session.close();
 //    }
-//    return totalWorkTimeByUser;
 //}
-//        
 
-        public List<Employee> getA(int month) throws Exception{
-            List<Employee> list = new LinkedList<>();
-            Session session = HibernateUtils.getFACTORY().openSession();
-            
-            try {
-            session.getTransaction().begin();
-            var hql = "SELECT emp.userName, "
-            + "(SELECT SUM(DATEDIFF(HOUR, ws.startTime, ws.endTime)) "
-            + "FROM WorkSession ws "
-            + "WHERE ws.employee.userName = emp.userName) AS totalWorkTime "
-            + "FROM Employee emp";
-            Query query = session.createQuery(hql);
-            list = query.getResultList();
-             if (list == null) {
-                setMessGetAll("He Thong chua co du lieu");   
-             }   
-                         session.getTransaction().commit();
 
-            } catch (Exception e) {
-                setMessGetAll("Ten toi tuong khong hop le");
-            System.out.println(e.getMessage());
-            }finally {
-            session.close();
+    public void updateEmployee(Employee employee) {
+    try (Session session = HibernateUtils.getFACTORY().openSession()) {
+        session.beginTransaction();
+        Employee existingEmployee = session.get(Employee.class, employee.getUserName());
+        if (existingEmployee != null) {
+            // Update all fields except password
+            existingEmployee.setEmpName(employee.getEmpName());
+            existingEmployee.setPosition(employee.getPosition());
+            existingEmployee.setBirthDate(employee.getBirthDate());
+            existingEmployee.setStartDate(employee.getStartDate());
+            existingEmployee.setEmail(employee.getEmail());
+            existingEmployee.setStatus(employee.isStatus());
+            existingEmployee.setGender(employee.isGender());
+            existingEmployee.setEmpPhone(employee.getEmpPhone());
+            existingEmployee.setTotalWorkTime(employee.getTotalWorkTime());
+            session.update(existingEmployee);
+            session.getTransaction().commit();
+            setMessUpdate("Cập nhật dữ liệu thành công");
+        } else {
+            setMessUpdate("Không tìm thấy dữ liệu để cập nhật");
         }
-     
-            System.out.println(list);   
-        return list;
-            
-        }
-
-
-   
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+        setMessUpdate("Cập nhật dữ liệu không thành công");
+    }
 }
 
+    
+    public void updatePassword( Employee employee, String pass) throws Exception {
+    Session session = HibernateUtils.getFACTORY().openSession();
+    try {
+       
+        session.getTransaction().begin();
+        Employee existingEmployee = session.get(Employee.class, employee.getUserName());
+        if (existingEmployee != null) {
+            existingEmployee.setPassword(pass);
+            session.update(existingEmployee);
+            session.getTransaction().commit();
+            setMessUpdate("Chỉnh sửa mật khẩu thành công");
+        } else {
+            setMessUpdate("Không tìm thấy thông tin employee để cập nhật mật khẩu");
+        }
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+        session.getTransaction().rollback();
+        setMessUpdate("Chỉnh sửa mật khẩu không thành công");
+    } finally {
+        session.close();
+    }
+}
+
+    
+    
+}
