@@ -19,7 +19,9 @@ import POJO.Ticket;
 import Utils.AlertUtils;
 import Utils.HibernateUtils;
 import Utils.SessionUtil;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,8 +32,11 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,6 +45,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import org.hibernate.Session;
 
 public class FXMLTicketController implements Initializable {
@@ -58,16 +65,22 @@ public class FXMLTicketController implements Initializable {
     private Label roomLabel;
     @FXML
     private Label seatLabel;
-    @FXML
-    private Label totalLabel;
+    
     @FXML
     private Label scheduleLabel;
+    @FXML
+    private Label foodLabel;
+    @FXML
+    private Label ticketLabel;
+    @FXML
+    private Label totalLabel;
     ScheduleDAO scheDAO = new ScheduleDAO();
     Schedule scheule;
     private char[] row = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'};
     List<RoomSeatDetail> seatList = new ArrayList<>();
     String seatNameList;
-    int total;
+    int ticketTotal=0;
+    int foodTotal=0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,14 +107,44 @@ public class FXMLTicketController implements Initializable {
 
     private void getSelectedSeats() {
         seatNameList = "";
-        total = 0;
+        ticketTotal=0;
         sortRSDList(seatList);
         seatList.forEach((t) -> {
-            total += t.getSeatType().getSeatPrice();
+            ticketTotal += t.getSeatType().getSeatPrice();
             seatNameList += t.getSeatMap().getsMapID().toString() + " ";
         });
         seatLabel.setText(seatNameList);
-        totalLabel.setText(String.valueOf(total));
+        ticketLabel.setText(String.valueOf(ticketTotal) + " VND");
+        totalLabel.setText(String.valueOf(ticketTotal+foodTotal) + " VND");
+    }
+
+    @FXML
+    private void setUpBtnFood() throws IOException {
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLProduct.fxml"));
+//        AnchorPane popupContent = fxmlLoader.load();
+//        // FXMLEditScheduleController editControl = fxmlLoader.getController();
+//        popupFood.getContent().add(popupContent);
+//        popupContent.setStyle("-fx-background-color:white");
+//        popupFood.show(anchorPane.getScene().getWindow());
+//        anchorPane.getParent().setDisable(true);
+//       // gridPane.getParent().setDisable(true);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLProduct.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("Food");
+        stage.setScene(new Scene(root));
+        stage.show();
+        anchorPane.getParent().setDisable(true);
+        stage.setOnHidden((t) -> {
+            anchorPane.getParent().setDisable(false);
+            foodTotal = 0;
+            SessionUtil.getProductList().forEach((p, u) -> {
+                System.out.println(p.getProductName() + ": " + u);
+                foodTotal += p.getPrice().intValue() * u;
+            });
+            foodLabel.setText(String.valueOf(foodTotal) + " VND");
+            totalLabel.setText(String.valueOf(ticketTotal+foodTotal) + " VND");
+        });
     }
 
     @FXML
@@ -112,7 +155,7 @@ public class FXMLTicketController implements Initializable {
             ticket.setSchedule(this.scheule);
             ticket.setStatus(Boolean.TRUE);
             ticket.setSeatMap(t.getSeatMap().getsMapID());
-            
+
             ticketList.add(ticket);
         });
         SessionUtil.setTicketList(ticketList);

@@ -8,6 +8,8 @@ package Utils;
 import POJO.Film;
 import POJO.Product;
 import POJO.Ticket;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +19,8 @@ import java.util.Map;
  */
 public class SessionUtil {
     private static List<Ticket> ticketList;
-    private static List<Film> mapFilm;
-    private static Map<Product,Integer> productList;
+    private static List<Film> mapFilm = new ArrayList<>();
+    private static Map<Product,Integer> productList = new HashMap<>();
     
     /**
      * @return the mapFilm
