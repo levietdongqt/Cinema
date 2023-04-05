@@ -6,6 +6,7 @@ package DAO;
 
 import POJO.Employee;
 import Utils.HibernateUtils;
+import Utils.SessionUtil;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -70,6 +71,7 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             list = query.getResultList();
             session.getTransaction().commit();
             if (!list.isEmpty()) {
+                SessionUtil.setEmployee(list.get(0));
 //                System.out.println("Logged in successfully");
                 // hiện thông báo đăng nhập thành công
              //   new Alert(Alert.AlertType.INFORMATION, "Logged in successfully").show();
@@ -80,7 +82,6 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             }
 
         } catch (Exception e) {
-
             session.getTransaction().rollback();
             new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
 

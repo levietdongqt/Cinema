@@ -13,6 +13,7 @@ import Utils.HibernateUtils;
 import com.group2.cineme.sem2.FXMLTicketController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +21,8 @@ import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -107,4 +110,32 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
+    public List<Schedule> getScheduleByDateTime(String id,LocalDateTime sTime){
+        List<Schedule> listFilm= new ArrayList<>();
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+            CriteriaBuilder builder =session.getCriteriaBuilder();
+            CriteriaQuery<Schedule> criteriaQuery = builder.createQuery(Schedule.class);
+            Root<Schedule> root = criteriaQuery.from(Schedule.class);
+            Join<Schedule,Film> filmJoin = root.join("film");
+            
+            LocalDateTime endDate = LocalDateTime.of(sTime.toLocalDate(),LocalTime.MAX);
+            Predicate greaterThan = builder.greaterThanOrEqualTo(root.get("startTime"),sTime);
+            Predicate lessThan = builder.lessThanOrEqualTo(root.get("startTime"),endDate);
+            Predicate filmIdEqual = builder.equal(filmJoin.get("filmID"), id);
+            
+            criteriaQuery.where(builder.and(greaterThan,lessThan,filmIdEqual));
+            listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }finally{
+            session.close();
+        }
+        return listFilm;
+    }
+    
+    
+    
+    
+    
 }

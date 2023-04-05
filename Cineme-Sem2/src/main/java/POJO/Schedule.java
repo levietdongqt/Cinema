@@ -152,7 +152,7 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return this.scheduleID;
+        return this.getStartTime().toLocalTime().toString()+", "+this.getRoomTypeDetail().getRoomType();
     }
     
     

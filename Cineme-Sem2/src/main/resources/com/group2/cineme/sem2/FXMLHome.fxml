@@ -26,7 +26,7 @@
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="141.0" styleClass="labelpopup">
                      <children>
-                        <Label styleClass="labelpopup" text="admin" />
+                        <Label fx:id="labelAdmin2" styleClass="labelpopup" />
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
@@ -48,7 +48,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label styleClass="labelSession" text="admin">
+                  <Label fx:id="labelAdmin1" styleClass="labelSession">
                      <font>
                         <Font size="18.0" />
                      </font>

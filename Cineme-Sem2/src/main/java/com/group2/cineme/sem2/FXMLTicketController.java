@@ -177,7 +177,7 @@ public class FXMLTicketController implements Initializable {
         screenLabel.setStyle("-fx-background-color: #99CCFF;");
         seatGrid.setPadding(new Insets(20));
 
-        List<RoomSeatDetail> seatList = new ArrayList<>();
+       // List<RoomSeatDetail> seatList = new ArrayList<>();
 
         seatList = scheDAO.getRoomSeatDetails(scheule);
 
