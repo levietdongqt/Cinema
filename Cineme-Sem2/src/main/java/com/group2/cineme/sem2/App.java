@@ -30,7 +30,6 @@ public class App extends Application {
         ses.close();    
 
         scene = new Scene(loadFXML("FXMLHome"));
-
         stage.setScene(scene);
         stage.show();
     }
