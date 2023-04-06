@@ -10,11 +10,13 @@ import DAO.WorkSessionDAO;
 import POJO.Employee;
 import POJO.Product;
 import POJO.WorkSession;
+import java.io.FileOutputStream;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +49,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 import javassist.compiler.TokenId;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.sl.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import static org.hibernate.criterion.Projections.id;
 
 /**
@@ -56,10 +66,11 @@ import static org.hibernate.criterion.Projections.id;
  * @author BE BAU
  */
 public class FXMLAdminController implements Initializable {
+
     Employee em = new Employee();
-    
+
     EmployeeDAO dao = new EmployeeDAO();
-    List<Employee> emList; 
+    List<Employee> emList;
 
     @FXML
     private ComboBox<String> cbGender;
@@ -160,9 +171,8 @@ public class FXMLAdminController implements Initializable {
     @FXML
     private TextField tfSearch;
 
-//    List<Employee> listEm;
-   
-//    Employee empl = new Employee();
+    @FXML
+    private DatePicker pdMonth;
 
     public void checkUser() {
         tfUser.setOnKeyTyped(event -> {
@@ -188,7 +198,7 @@ public class FXMLAdminController implements Initializable {
                 errName.setText(e.getMessage());
             }
         });
-        
+
         tfPhone.setOnKeyTyped(even -> {
             String phone = tfPhone.getText().trim();
             try {
@@ -200,7 +210,7 @@ public class FXMLAdminController implements Initializable {
                 errPhone.setText(e.getMessage());
             }
         });
-        
+
     }
 
     public void checkPhone() {
@@ -416,7 +426,7 @@ public class FXMLAdminController implements Initializable {
         try {
             Employee emp = new Employee();
             emp.setUserName(tfUser.getText().trim());
-            dao.updatePassword(emp,tfRPass.getText().trim());
+            dao.updatePassword(emp, tfRPass.getText().trim());
             String pass = tfPass.getText().trim();
             System.out.println(pass);
             showEmployee();
@@ -439,7 +449,6 @@ public class FXMLAdminController implements Initializable {
             dao.delete(tfUser.getText().trim(), Employee.class);
             System.out.println(tfUser.getText().trim());
 
-            
             showEmployee();
             this.tfUser.clear();
             this.tfName.clear();
@@ -455,11 +464,49 @@ public class FXMLAdminController implements Initializable {
         }
     }
 
+    public void month() {
+        pdMonth.setConverter(new StringConverter<LocalDate>() {
+            String pattern = "MM/yyyy";
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+            {
+                pdMonth.setPromptText(pattern.toLowerCase());
+            }
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+
+    }
+
     public void showEmployee() {
 
         WorkSessionDAO wdao = new WorkSessionDAO();
-        Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(4);
+        month();
+        LocalDate selectedDate = pdMonth.getValue();
+        int selectedMonth;
+        if (selectedDate == null) {
+            selectedMonth = LocalDate.now().getMonthValue();
+        } else {
+            selectedMonth = selectedDate.getMonthValue();
+        }
 
+        Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(selectedMonth);
         try {
             emList = dao.getAll("Employee");
 
@@ -469,7 +516,6 @@ public class FXMLAdminController implements Initializable {
                         employee.setTotalWorkTime(totalWorkTime.get(employee1));
                     }
                 }
-
             }
 
             tcUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
@@ -493,11 +539,14 @@ public class FXMLAdminController implements Initializable {
                     }
                     String searchKey = newValue.toLowerCase();
                     String userName = Employee.getUserName();
+                    String empName = Employee.getEmpName();
                     String empPhone = Employee.getEmpPhone();
                     String position = Employee.getPosition();
                     if (userName != null && userName.toLowerCase().contains(searchKey)) {
                         return true;
                     } else if (empPhone != null && empPhone.toLowerCase().contains(searchKey)) {
+                        return true;
+                    } else if (empName != null && empName.toLowerCase().contains(searchKey)) {
                         return true;
                     } else if (position != null && position.toLowerCase().contains(searchKey)) {
                         return true;
@@ -514,7 +563,9 @@ public class FXMLAdminController implements Initializable {
                 tvEmployee.setItems(sortedList);
             });
 //end search 
-
+            pdMonth.setOnAction(even -> {
+                showEmployee();
+            });
         } catch (Exception ex) {
             Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -546,8 +597,74 @@ public class FXMLAdminController implements Initializable {
 
     }
 
+    public void exportToExcel() throws Exception {
+        WorkSessionDAO wdao = new WorkSessionDAO();
+        month();
+        LocalDate selectedDate = pdMonth.getValue();
+        int selectedMonth;
+        if (selectedDate == null) {
+            selectedMonth = LocalDate.now().getMonthValue();
+        } else {
+            selectedMonth = selectedDate.getMonthValue();
+        }
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Employee Data");
+
+        Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(selectedMonth);
+        try {
+            emList = dao.getAll("Employee");
+
+            for (Employee employee : emList) {
+                for (String employee1 : totalWorkTime.keySet()) {
+                    if (employee1.equals(employee.getUserName())) {
+                        employee.setTotalWorkTime(totalWorkTime.get(employee1));
+                    }
+                }
+            }
+
+            // create header row
+            XSSFRow headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("User Name");
+            headerRow.createCell(1).setCellValue("Employee Name");
+            headerRow.createCell(2).setCellValue("Gender");
+            headerRow.createCell(3).setCellValue("Email");
+            headerRow.createCell(4).setCellValue("Phone");
+            headerRow.createCell(5).setCellValue("Position");
+            headerRow.createCell(6).setCellValue("Status");
+            headerRow.createCell(7).setCellValue("Start Date");
+            headerRow.createCell(8).setCellValue("Total Work Time");
+
+            // create data rows
+            int rowNum = 1;
+            for (Employee employee : emList) {
+                XSSFRow row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(employee.getUserName());
+                row.createCell(1).setCellValue(employee.getEmpName());
+                row.createCell(2).setCellValue(employee.isGender());
+                row.createCell(3).setCellValue(employee.getEmail());
+                row.createCell(4).setCellValue(employee.getEmpPhone());
+                row.createCell(5).setCellValue(employee.getPosition());
+                row.createCell(6).setCellValue(employee.isStatus());
+                row.createCell(7).setCellValue(employee.getStartDate());
+                row.createCell(8).setCellValue(employee.getTotalWorkTime());
+            }
+
+            // save workbook to file
+            String fileName = "employee_data.xls"; // Tên file Excel
+            String filePath = "D:/Data/"; // Đường dẫn tới thư mục lưu file
+            FileOutputStream fileOut = new FileOutputStream(filePath + fileName);
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+            System.out.println("Data tiếp tục được in ra file Excel.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         checkUser();
         checkName();
         checkPhone();

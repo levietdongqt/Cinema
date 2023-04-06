@@ -41,7 +41,7 @@
                         <FontAwesomeIcon glyphName="WRENCH" layoutX="15.0" layoutY="101.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="CLOSE" layoutX="17.0" layoutY="216.0" size="2.5em" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="357.0" mnemonicParsing="false" onAction="#exportToExcel" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -182,6 +182,7 @@
                               </TableView>
                               <TextField fx:id="tfSearch" alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />
                               <FontAwesomeIcon glyphName="SEARCH" layoutX="462.0" layoutY="34.0" size="1.5em" />
+                              <DatePicker fx:id="pdMonth" layoutX="968.0" layoutY="14.0" />
                            </children>
                         </AnchorPane>
                      </children>
