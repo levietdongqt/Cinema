@@ -134,10 +134,5 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
             session.close();
         }
         return listFilm;
-    }
-    
-    
-    
-    
-    
+    }   
 }

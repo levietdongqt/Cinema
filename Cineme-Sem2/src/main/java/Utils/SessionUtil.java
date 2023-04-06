@@ -20,11 +20,14 @@ import java.util.Map;
  */
 public class SessionUtil {
 
-    private static Employee employee;
 
     private static List<Ticket> ticketList;
     private static List<Film> mapFilm;
+    
+
     private static Map<Product,Integer> productList = new HashMap<>();
+    
+    private static Employee employee = new Employee();
     
     /**
      * @return the mapFilm
@@ -41,18 +44,10 @@ public class SessionUtil {
     }
 
     /**
+
      * @return the employee
      */
-    public static Employee getEmployee() {
-        return employee;
-    }
 
-    /**
-     * @param aEmployee the employee to set
-     */
-    public static void setEmployee(Employee aEmployee) {
-        employee = aEmployee;
-    }
     public static List<Ticket> getTicketList() {
         return ticketList;
     }
@@ -76,6 +71,20 @@ public class SessionUtil {
      */
     public static void setProductList(Map<Product,Integer> aProductList) {
         productList = aProductList;
+
+    }
+    /**
+     * @return the employee
+     */
+    public static Employee getEmployee() {
+        return employee;
+    }
+
+    /**
+     * @param aEmployee the employee to set
+     */
+    public static void setEmployee(Employee aEmployee) {
+        employee = aEmployee;
 
     }
 
