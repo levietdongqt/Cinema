@@ -10,6 +10,7 @@ import DAO.WorkSessionDAO;
 import POJO.Employee;
 import POJO.Product;
 import POJO.WorkSession;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOError;
 import java.io.IOException;
@@ -48,6 +49,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javassist.compiler.TokenId;
@@ -597,6 +599,7 @@ public class FXMLAdminController implements Initializable {
 
     }
 
+    // hàm xuất file excel -- thả hàm vào button
     public void exportToExcel() throws Exception {
         WorkSessionDAO wdao = new WorkSessionDAO();
         month();
@@ -622,7 +625,7 @@ public class FXMLAdminController implements Initializable {
                 }
             }
 
-            // create header row
+            // tạo tên cột excel
             XSSFRow headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("User Name");
             headerRow.createCell(1).setCellValue("Employee Name");
@@ -634,7 +637,7 @@ public class FXMLAdminController implements Initializable {
             headerRow.createCell(7).setCellValue("Start Date");
             headerRow.createCell(8).setCellValue("Total Work Time");
 
-            // create data rows
+            // get dữ liệu vào cột 
             int rowNum = 1;
             for (Employee employee : emList) {
                 XSSFRow row = sheet.createRow(rowNum++);
@@ -649,14 +652,18 @@ public class FXMLAdminController implements Initializable {
                 row.createCell(8).setCellValue(employee.getTotalWorkTime());
             }
 
-            // save workbook to file
-            String fileName = "employee_data.xls"; // Tên file Excel
-            String filePath = "D:/Data/"; // Đường dẫn tới thư mục lưu file
-            FileOutputStream fileOut = new FileOutputStream(filePath + fileName);
-            workbook.write(fileOut);
-            fileOut.close();
-            workbook.close();
-            System.out.println("Data tiếp tục được in ra file Excel.");
+            // save file 
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Excel File");
+            fileChooser.setInitialFileName("employee_data.xls");
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null) {
+                FileOutputStream fileOut = new FileOutputStream(file);
+                workbook.write(fileOut);
+                fileOut.close();
+                workbook.close();
+                System.out.println("Export file Excel.");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
