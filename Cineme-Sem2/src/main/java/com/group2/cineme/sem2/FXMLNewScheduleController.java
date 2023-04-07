@@ -23,6 +23,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.DateTimeException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleObjectProperty;
@@ -141,9 +143,7 @@ public class FXMLNewScheduleController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        LocalDateTime time = LocalDateTime.now();
-        IdSchedule = "SC" + time.getYear() + time.getMonthValue() + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
-        txtID.setText(IdSchedule);
+        setID();
         checkValidDate();
         comboBoxRoomHanlder();
         yesNoHanlder();
@@ -154,6 +154,12 @@ public class FXMLNewScheduleController implements Initializable {
             Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void setID() {
+        LocalDateTime time = LocalDateTime.now();
+        IdSchedule = "SC" + time.getYear() + time.getMonthValue() + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
+        txtID.setText(IdSchedule);
     }
 
     void getFilm(Film film) throws Exception {
@@ -187,6 +193,7 @@ public class FXMLNewScheduleController implements Initializable {
         }
         newSchedule.setNote(noteText.getText());
     }
+
     @FXML
     private void setUpTextFeildTime() {
         try {
@@ -194,17 +201,24 @@ public class FXMLNewScheduleController implements Initializable {
             int minute = Integer.parseInt(minuteText.getText());
             selectedTime = LocalTime.of(hour, minute);
             errTime.setVisible(false);
+            validIcon.setVisible(false);
+            invalidIcon.setVisible(false);
             endHourText.setText(String.valueOf(selectedTime.plusMinutes(selectedFilm.getDuration()).getHour()));
             endMinuteText.setText(String.valueOf(selectedTime.plusMinutes(selectedFilm.getDuration()).getMinute()));
             chechValidTime();
             validIcon.setVisible(true);
-            invalidIcon.setVisible(false);
-        } catch (MyException ex) {
+        } catch (NumberFormatException ex) {   //Lỗi parser
+            errTime.setVisible(true);
+        } catch (DateTimeException ex) {   //Lỗi convert to LocalTime
+            errTime.setVisible(true);
+        } catch (MyException ex) {   //Lỗi Không chọn room
             Alert alert = AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR);
             alert.show();
-        } catch (Exception e) {
-            errTime.setVisible(true);
-            validIcon.setVisible(false);
+
+        } catch (NullPointerException ee) {  // Lỗi không chọn Film
+            Alert alert = AlertUtils.getAlert("Choose Film, Please!!", Alert.AlertType.ERROR);
+            alert.show();
+        } catch (TimeoutException e) {
             invalidIcon.setVisible(true);
         }
 
@@ -271,7 +285,7 @@ public class FXMLNewScheduleController implements Initializable {
 
     }
 
-    private void chechValidTime() throws Exception {
+    private void chechValidTime() throws MyException, TimeoutException {
 //        List<Schedule> list = new ArrayList<>();
 //        list = scheduleDAO.checkTime(selectedDate.atTime(selectedTime),
 //                selectedDate.atTime(selectedTime.plusMinutes(selectedFilm.getDuration())), rtDetailList);
@@ -284,13 +298,17 @@ public class FXMLNewScheduleController implements Initializable {
         }
         LocalDateTime selectedStartTime = selectedTime.atDate(LocalDate.now());
         LocalDateTime selectedEndTime = selectedTime.atDate(LocalDate.now()).plusMinutes(selectedFilm.getDuration());
+        System.out.println("Time: ");
+        System.out.println("selecStart: " + selectedStartTime);
+        System.out.println("selecEnd: " + selectedEndTime);
         for (Schedule schedule : scheduleList) {
             LocalDateTime startTime = schedule.getStartTime();
             LocalDateTime endTime = schedule.getEndTime();
-
+            System.out.println("Start: " + startTime);
+            System.out.println("End: " + endTime);
             if (!((selectedStartTime.isAfter(endTime) && selectedEndTime.isAfter(endTime))
                     || (selectedStartTime.isBefore(startTime) && selectedEndTime.isBefore(startTime)))) {
-                throw new Exception("Time is conflict !! \n Please choose a nother time.");
+                throw new TimeoutException("Time is conflict !! \n Please choose a nother time.");
             }
         };
 
@@ -411,17 +429,24 @@ public class FXMLNewScheduleController implements Initializable {
             newSchedule.setStatus(true);
             newSchedule.setRoomTypeDetail(selectedRtDetail);
             newSchedule.setStartTime(selectedDate.atTime(selectedTime));
-            newSchedule.setEndTime(selectedDate.atTime(selectedTime.plusMinutes(selectedFilm.getDuration())));
+            newSchedule.setEndTime(selectedDate.atTime(selectedTime).plusMinutes(selectedFilm.getDuration()));
             newSchedule.setScheduleID(IdSchedule);
             newSchedule.setStatus(activeNow);
             newSchedule.setFilm(selectedFilm);
             scheduleDAO.add(newSchedule);
             Alert alert = AlertUtils.getAlert("Process successfully!", Alert.AlertType.INFORMATION);
             alert.show();
+            setID();
+            loadTableView();
+
+        } catch (NullPointerException ee) {  // Lỗi không chọn Film
+            Alert alert = AlertUtils.getAlert("Choose Film, Please!!", Alert.AlertType.ERROR);
+            alert.show();
         } catch (Exception e) {
             Alert alert = AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR);
             alert.show();
         }
+
     }
 
 }
