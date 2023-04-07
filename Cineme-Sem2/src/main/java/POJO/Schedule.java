@@ -152,7 +152,7 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return this.getStartTime().toLocalTime().toString()+", "+this.getRoomTypeDetail().getRoomType();
+        return this.getStartTime().toLocalTime().toString()+", "+((this.getRoomTypeDetail().getRoomType().getrTypeName().contains("2D"))?"2D VietSub":"3D VietSub");
     }
 
     /**

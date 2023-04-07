@@ -56,6 +56,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 
@@ -189,7 +190,11 @@ public class FXMLShowScheduleController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Error e){
-                    AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+                    Alert alert = AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR);
+                    alert.setTitle("Error!!!!!!");
+                    
+                    alert.show();
+                    
                 }
             });
             
