@@ -57,6 +57,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -123,6 +124,8 @@ public class FXMLNewScheduleController implements Initializable {
     private FontAwesomeIcon validIcon;
     @FXML
     private TextField noteText;
+    @FXML
+    private Button btnViewSchedule;
     private Schedule newSchedule = new Schedule();
     private ScheduleDAO scheduleDAO = new ScheduleDAO();
     private RoomTypeDetailsDAO rtDetailDAO = new RoomTypeDetailsDAO();
@@ -175,8 +178,26 @@ public class FXMLNewScheduleController implements Initializable {
     @FXML
     private void setUpComboBoxFilm() {
         selectedFilm = comboBoxFilm.getValue();
+        btnViewSchedule.setDisable(false);      
     }
-
+    @FXML
+    private void setUpViewSchedule()
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLViewAllSchedule.fxml"));
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> p) {
+                    return new FXMLViewAllScheduleController(selectedDate.atStartOfDay(),selectedFilm);
+                }
+            });
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void yesNoHanlder() {
         checkBoxYesNo.setSelected(true);
         checkBoxYesNo.setOnAction((t) -> {
@@ -296,8 +317,8 @@ public class FXMLNewScheduleController implements Initializable {
         if (selectedRoom == null) {
             throw new MyException("Choose Room, Please!!");
         }
-        LocalDateTime selectedStartTime = selectedTime.atDate(LocalDate.now());
-        LocalDateTime selectedEndTime = selectedTime.atDate(LocalDate.now()).plusMinutes(selectedFilm.getDuration());
+        LocalDateTime selectedStartTime = selectedTime.atDate(selectedDate);
+        LocalDateTime selectedEndTime = selectedTime.atDate(selectedDate).plusMinutes(selectedFilm.getDuration());
         System.out.println("Time: ");
         System.out.println("selecStart: " + selectedStartTime);
         System.out.println("selecEnd: " + selectedEndTime);
@@ -332,7 +353,7 @@ public class FXMLNewScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.getRoomTypeDetail().getRoomType().getrTypeName());
         });
-        colRoomType.setPrefWidth(200);
+        colRoomType.setPrefWidth(180);
 
         TableColumn<Schedule, String> colTime = new TableColumn("Time");
         colTime.setCellValueFactory((p) -> {
@@ -342,14 +363,17 @@ public class FXMLNewScheduleController implements Initializable {
                     + schedule.getEndTime().toLocalTime();
             return new SimpleObjectProperty<>(time);
         });
-        colTime.setPrefWidth(130);
+        colTime.setPrefWidth(100);
         colTime.setStyle("-fx-text-alignment: center;");
+        TableColumn<Schedule, Boolean> colNote = new TableColumn("Note");
+        colNote.setCellValueFactory(new PropertyValueFactory("note"));
+        colNote.setPrefWidth(100);
         TableColumn<Schedule, Boolean> colStatus = new TableColumn("Status");
         colStatus.setCellValueFactory((p) -> {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.isStatus());
         });
-        colStatus.setPrefWidth(100);
+        colStatus.setPrefWidth(70);
         TableColumn<Schedule, Button> colBtnEdit = new TableColumn();
         colBtnEdit.setCellValueFactory((p) -> {
             Schedule schedule = p.getValue();
@@ -360,7 +384,7 @@ public class FXMLNewScheduleController implements Initializable {
                     fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
                         @Override
                         public Object call(Class<?> p) {
-                            return new FXMLEditScheduleController(schedule, scheduleList, selectedRoom, selectedRtDetail, rtDetailList);
+                            return new FXMLEditScheduleController(selectedDate,schedule, scheduleList, selectedRoom, selectedRtDetail, rtDetailList);
                         }
                     });
                     Stage stage = new Stage();
@@ -398,7 +422,7 @@ public class FXMLNewScheduleController implements Initializable {
             return new SimpleObjectProperty<>(btn);
         });
         colBtnDelete.setPrefWidth(70);
-        this.tableViewTime.getColumns().addAll(colRoom, colRoomType, colFilm, colTime, colStatus, colBtnEdit, colBtnDelete);
+        this.tableViewTime.getColumns().addAll(colRoom, colRoomType, colFilm, colTime,colNote, colStatus, colBtnEdit, colBtnDelete);
     }
 
     private void loadTableView() {
@@ -408,7 +432,7 @@ public class FXMLNewScheduleController implements Initializable {
         try {
             //Lấy dữ liệu trong 1 ngày selectedDate
             scheduleList = scheduleDAO.
-                    getToView(selectedDate.atStartOfDay(), selectedDate.plusDays(1).atStartOfDay(), rtDetailList);
+                    getToView(selectedDate.atStartOfDay(), rtDetailList);
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
