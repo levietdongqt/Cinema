@@ -68,11 +68,11 @@ public class FXMLHomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        loadDataImageView();
+//        loadDataImageView();
         loadDataPopup();
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
          this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
-        //loadInHome("FXMLFilm");
+        loadInHome("FXMLFilm");
         
     }
 
@@ -144,18 +144,18 @@ public class FXMLHomeController implements Initializable {
         });
 
 
-        loadInHome("FXMLShowSchedule");
+        
 
     }
 
-    public void loadDataImageView(){
-        File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
-        Image iconHome = new Image(fileHome.toURI().toString());
-        ImageView imageViewHome = new ImageView(iconHome);
-        imageViewHome.setFitWidth(16);
-        imageViewHome.setFitHeight(16);
-        this.buttonHome.setGraphic(imageViewHome);
-    }
+//    public void loadDataImageView(){
+//        File fileHome = new File("src\\main\\resources\\images\\icon\\home.png");
+//        Image iconHome = new Image(fileHome.toURI().toString());
+//        ImageView imageViewHome = new ImageView(iconHome);
+//        imageViewHome.setFitWidth(16);
+//        imageViewHome.setFitHeight(16);
+//        this.buttonHome.setGraphic(imageViewHome);
+//    }
 
 
 }

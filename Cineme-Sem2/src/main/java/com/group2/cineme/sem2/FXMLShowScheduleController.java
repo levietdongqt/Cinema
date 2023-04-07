@@ -8,7 +8,11 @@ import DAO.FilmDAO;
 import DAO.ScheduleDAO;
 import POJO.Film;
 import POJO.Schedule;
+import Utils.AlertUtils;
 import static com.group2.cineme.sem2.App.scene;
+
+
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +38,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -52,6 +57,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.util.Callback;
+
+
 
 /**
  * FXML Controller class
@@ -100,6 +107,10 @@ public class FXMLShowScheduleController implements Initializable {
     //ButtonHandler
     public void bookTicketHandler() {
         loadDataView(LocalDateTime.now());
+        loadViewComboBoxFilm();
+    }
+    public void buttonUndoHandler(){
+        this.tableViewSchedule.setItems(FXCollections.observableList(films));
     }
 
     public void loadTableView() {
@@ -113,7 +124,7 @@ public class FXMLShowScheduleController implements Initializable {
             }
             return new SimpleObjectProperty<>(a.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         });
-        colDay.setPrefWidth(200);
+        colDay.setPrefWidth(250);
 
         TableColumn<Film, ImageView> colFilmView = new TableColumn("Image Film");
         colFilmView.setCellValueFactory((p) -> {
@@ -136,7 +147,7 @@ public class FXMLShowScheduleController implements Initializable {
             String filmName = sc.getFilmName();
             return new SimpleObjectProperty<>(filmName);
         });
-        colNameFilm.setPrefWidth(200);
+        colNameFilm.setPrefWidth(250);
 
         TableColumn colDuration = new TableColumn("Duration");
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
@@ -155,7 +166,10 @@ public class FXMLShowScheduleController implements Initializable {
             button.setOnAction((t) -> {
                 try {
                     Schedule sc = cb.getValue();
-                    HBox hboxWithComboBox = (HBox) button.getUserData();
+                    if(sc==null){
+                        throw new Error("You need choose Schedule");
+                    }else{
+                        HBox hboxWithComboBox = (HBox) button.getUserData();
                     FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("FXMLTicket.fxml"));
                     fxmlLoader1.setControllerFactory(new Callback<Class<?>, Object>() {
                         @Override
@@ -168,21 +182,27 @@ public class FXMLShowScheduleController implements Initializable {
                     scene.setRoot(fxmlLoader.load());
                     FXMLHomeController homeController = fxmlLoader.getController();
                     homeController.setCenter(fxmlLoader1.load());
+                    }
+                    
 //                ComboBox<Schedule> cbInHbox = (ComboBox<Schedule>) hboxWithComboBox.getChildren().get(0);
                     /*lay gia tri cua sc tai day*/
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Error e){
+                    AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
                 }
             });
+            
             hbox.getChildren().addAll(cb, button);
             button.setUserData(hbox);
             hbox.setStyle("-fx-alignment: CENTER;");
+            hbox.setSpacing(100);
             for (Node node : hbox.getChildren()) {
                 node.setStyle("-fx-alignment: CENTER;");
             }
             return new SimpleObjectProperty<>(hbox);
         });
-        colTime.setPrefWidth(100);
+        colTime.setPrefWidth(550);
         this.tableViewSchedule.getColumns().addAll(colDay, colFilmView, colNameFilm, colDuration, colTime);
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewSchedule.getColumns();
         for (TableColumn<Film, ?> column : columns) {
@@ -273,7 +293,7 @@ public class FXMLShowScheduleController implements Initializable {
                
                 popup.getContent().add(popupContent);
                 System.out.println(p.getFilmName());
-                popupContent.setStyle("-fx-background-color:white");
+                popupContent.setStyle("-fx-background-color:grey;-fx-text-fill: white;");
                 popup.show(vboxShowSchedule.getScene().getWindow());
                 System.out.println(p.getFilmName());
                 vboxShowSchedule.setDisable(true);

@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 
@@ -43,14 +44,16 @@ public class FXMLViewFilmDetailsController implements Initializable {
     
     @FXML
     private Label txtDescription;
-    @FXML
-    private Label txtGender;
-    @FXML
-    private Label txtActor;
+    
     @FXML
     private ImageView imageFilm;
     @FXML
     private Button btnClose;
+    @FXML
+    private VBox VBoxGenres;
+    
+    @FXML
+    private VBox VBoxActors;
     
     private Film film;
 
@@ -78,16 +81,19 @@ public class FXMLViewFilmDetailsController implements Initializable {
         File file = new File(film.getImageUrl());
         Image image = new Image(file.toURI().toString());
         this.imageFilm.setImage(image);
-        String labelGender = "";
+        imageFilm.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
         for (FilmGenre genre : fd.getFilmGenreByID(film.getFilmID())) {
-            labelGender+=genre + " ";
+            Label label = new Label(genre.getfGenreName());
+            VBoxGenres.getChildren().add(label);
+            
         }
-        this.txtGender.setText(labelGender);
-        String labelActors ="";
+        
+        
         for (Actors actor : fd.getFilmActorsByID(film.getFilmID())) {
-            labelActors+=actor + " ";
+           Label label = new Label(actor.getActorName());
+            VBoxActors.getChildren().add(label);
         }
-        this.txtActor.setText(labelActors);
+        
         
     }
     public void setUpBtnColse() {
