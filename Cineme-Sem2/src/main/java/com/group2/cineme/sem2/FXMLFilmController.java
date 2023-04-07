@@ -125,7 +125,7 @@ public class FXMLFilmController implements Initializable {
     public void loadTableView() {
         TableColumn colFilmID = new TableColumn("ID");
         colFilmID.setCellValueFactory(new PropertyValueFactory("filmID"));
-        colFilmID.setPrefWidth(50);
+        colFilmID.setPrefWidth(100);
 
         TableColumn colFilmName = new TableColumn("Name");
         colFilmName.setCellValueFactory(new PropertyValueFactory("filmName"));
@@ -151,9 +151,9 @@ public class FXMLFilmController implements Initializable {
         colLimitAge.setCellValueFactory(new PropertyValueFactory("limitAge"));
         colLimitAge.setPrefWidth(50);
 
-        TableColumn colViewFilm = new TableColumn("View");
-        colViewFilm.setCellValueFactory(new PropertyValueFactory("viewFilm"));
-        colViewFilm.setPrefWidth(50);
+//        TableColumn colViewFilm = new TableColumn("View");
+//        colViewFilm.setCellValueFactory(new PropertyValueFactory("viewFilm"));
+//        colViewFilm.setPrefWidth(50);
 
         TableColumn<Film, ImageView> colImageURL = new TableColumn("Image");
         colImageURL.setCellValueFactory((column) -> {
@@ -168,9 +168,9 @@ public class FXMLFilmController implements Initializable {
         });
         colImageURL.setPrefWidth(120);
 
-        TableColumn colDescription = new TableColumn("Description");
-        colDescription.setCellValueFactory(new PropertyValueFactory("description"));
-        colDescription.setPrefWidth(200);
+//        TableColumn colDescription = new TableColumn("Description");
+//        colDescription.setCellValueFactory(new PropertyValueFactory("description"));
+//        colDescription.setPrefWidth(200);
 
         TableColumn<Film, String> colGenre = new TableColumn("Genre");
         colGenre.setCellValueFactory((column) -> {
@@ -286,8 +286,9 @@ public class FXMLFilmController implements Initializable {
         
         });
         indexColumn.setPrefWidth(50);
+        indexColumn.setStyle("-fx-font-weight: bold;");
         this.tableViewFilm.getColumns().addAll(indexColumn,colFilmID,colImageURL,colFilmName,colGenre,colDirector,colActors,colDuration,colStartDate,colEndDate,
-                colLimitAge,colViewFilm,colDescription,colButtonEdit,colDelete,colNewSchedule);
+                colLimitAge,colButtonEdit,colDelete,colNewSchedule);
         
 
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewFilm.getColumns();

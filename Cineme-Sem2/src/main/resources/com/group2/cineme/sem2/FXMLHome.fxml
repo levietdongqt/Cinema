@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -40,30 +45,72 @@
                   <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <HBox layoutX="20.0" layoutY="3.0" styleClass="session" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="3.0" styleClass="session" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button fx:id="buttonHome" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#homeButtonHandler" textFill="#776c6c" />
+                  <Button fx:id="buttonHome" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#homeButtonHandler" styleClass="buttonHome" textFill="#776c6c">
+                     <graphic>
+                        <FontAwesomeIcon fill="#f7f5f5" glyphName="UNIVERSITY" />
+                     </graphic></Button>
                   <Label styleClass="labelSession" text="Hello:">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
+                     <effect>
+                        <Lighting specularConstant="0.72">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant>
+                                 <color>
+                                    <Color red="0.9934210777282715" green="0.9888218641281128" blue="0.9888218641281128" />
+                                 </color>
+                              </Light.Distant>
+                           </light>
+                        </Lighting>
+                     </effect>
                   </Label>
                   <Label fx:id="labelAdmin1" styleClass="labelSession">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
+                     <effect>
+                        <Lighting specularConstant="0.72">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant>
+                                 <color>
+                                    <Color red="0.9934210777282715" green="0.9888218641281128" blue="0.9888218641281128" />
+                                 </color>
+                              </Light.Distant>
+                           </light>
+                        </Lighting>
+                     </effect>
                   </Label>
                </children>
             </HBox>
+            <Text fill="#fffdfd" layoutX="122.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO CGV" textAlignment="CENTER" wrappingWidth="267.337890625">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.6583364009857178" green="0.9144737124443054" blue="0.7437154650688171" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Text>
          </children>
       </AnchorPane>
    </top>
-   <center>
-      <Text fill="#d51313" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To CGV">
-         <font>
-            <Font size="65.0" />
-         </font>
-
-      </Text>
-   </center>
 </BorderPane>

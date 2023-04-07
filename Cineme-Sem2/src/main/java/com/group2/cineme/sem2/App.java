@@ -29,7 +29,11 @@ public class App extends Application {
         ses.clear();
         ses.close();    
 
-        scene = new Scene(loadFXML("FXMLLogin"));
+
+
+        scene = new Scene(loadFXML("FXMLShowSchedule"));
+
+
         stage.setScene(scene);
         stage.show();
     }
