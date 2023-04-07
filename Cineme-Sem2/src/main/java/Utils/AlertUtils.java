@@ -5,11 +5,15 @@ package Utils;
 import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.hibernate.Hibernate;
 
 public class AlertUtils {
     public static Alert getAlert(String content,Alert.AlertType typeAlert){
         Alert alert = new Alert(typeAlert);
         alert.setContentText(content);
+        String cssPath = "/styles/alertCSS.css";
+        alert.getDialogPane().getStylesheets().add(AlertUtils.class.getResource(cssPath).toExternalForm());
+        alert.getDialogPane().getStyleClass().add("alert");
         return alert;
     }
     
