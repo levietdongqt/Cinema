@@ -64,6 +64,10 @@ insert into Actors
 values('Chris Evans','1981-03-06','Boston, Massachussets, U.S'),
 ('Christoper Hemsworth','1983-08-11','Boston, Melbourne, Victoria, Australia')
 go
+
+insert into Film
+('PAE300000','Avenger EndGame',13,'2023-04-07','2023-04-30',150,'src\main\resources\images\endgame.png','Joss Whedon',0,'After the devastating events of Avengers: the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos actions and restore balance to the universe.')
+go
 		
 		
 		
