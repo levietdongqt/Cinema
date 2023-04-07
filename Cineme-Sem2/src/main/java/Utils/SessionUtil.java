@@ -19,7 +19,7 @@ import java.util.Map;
  * @author thuhuytran
  */
 public class SessionUtil {
-    private static List<Ticket> ticketList;
+    private static List<Ticket> ticketList = new ArrayList<>();
     private static Map<Product,Integer> productList = new HashMap<>();
     
     private static Employee employee = new Employee();

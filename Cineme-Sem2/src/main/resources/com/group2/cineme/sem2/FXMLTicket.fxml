@@ -193,7 +193,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="45.0" prefWidth="600.0">
                      <children>
-                        <Button fx:id="btnNextStep" mnemonicParsing="false" onAction="#btnNextStepHandler" text="Next Step">
+                        <Button fx:id="btnNextStep" mnemonicParsing="false" onAction="#saveToDB" text="Next Step">
                            <font>
                               <Font size="16.0" />
                            </font>

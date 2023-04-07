@@ -29,7 +29,7 @@ public class Schedule {
     private LocalDateTime startTime;
     private LocalDateTime  endTime;
     private boolean status;
-    
+    private String note= "";
     @ManyToOne
     @JoinColumn(name = "filmID")
     private Film film;
@@ -153,6 +153,20 @@ public class Schedule {
     @Override
     public String toString() {
         return this.getStartTime().toLocalTime().toString()+", "+this.getRoomTypeDetail().getRoomType();
+    }
+
+    /**
+     * @return the note
+     */
+    public String getNote() {
+        return note;
+    }
+
+    /**
+     * @param note the note to set
+     */
+    public void setNote(String note) {
+        this.note = note;
     }
     
     
