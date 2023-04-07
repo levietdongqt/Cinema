@@ -18,6 +18,8 @@ import POJO.Schedule;
 import POJO.Schedule;
 import Utils.AlertUtils;
 import Utils.HibernateUtils;
+import Utils.MyException;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -27,6 +29,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -40,6 +43,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -54,6 +59,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  *
@@ -99,7 +106,21 @@ public class FXMLNewScheduleController implements Initializable {
     @FXML
     private Button btnFood;
     @FXML
+    private TextField endHourText;
+    @FXML
+    private TextField endMinuteText;
+    @FXML
     private Label infoTableLabel;
+    @FXML
+    private Label errTime;
+    @FXML
+    private Label errNote;
+    @FXML
+    private FontAwesomeIcon invalidIcon;
+    @FXML
+    private FontAwesomeIcon validIcon;
+    @FXML
+    private TextField noteText;
     private Schedule newSchedule = new Schedule();
     private ScheduleDAO scheduleDAO = new ScheduleDAO();
     private RoomTypeDetailsDAO rtDetailDAO = new RoomTypeDetailsDAO();
@@ -115,26 +136,28 @@ public class FXMLNewScheduleController implements Initializable {
     int count = 3;
     List<RoomTypeDetails> rtDetailList = new ArrayList<>();
     List<Film> listFilm = new ArrayList<>();
+    List<Schedule> scheduleList = new ArrayList<>();
     Popup popupEdit = new Popup();
-   
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        LocalDateTime time = LocalDateTime.now();
+        IdSchedule = "SC" + time.getYear() + time.getMonthValue() + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
+        txtID.setText(IdSchedule);
         checkValidDate();
         comboBoxRoomHanlder();
         yesNoHanlder();
         creatTableView();
-        popupEdit.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
-            gridPane.getParent().setDisable(false);
-        });
-        popupEdit.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
-            gridPane.getParent().setDisable(false);
-        });
+        try {
+            getFilm(selectedFilm);
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
     void getFilm(Film film) throws Exception {
-        selectedFilm = film;
+        // selectedFilm = film;
         FilmDAO filmDAO = new FilmDAO();
         filmDAO.getAll("Film").forEach((t) -> {
             listFilm.add(t);
@@ -156,23 +179,33 @@ public class FXMLNewScheduleController implements Initializable {
     }
 
     @FXML
-    private void btnCheckHanlder() {
+    private void setUpNote() {
+        errNote.setVisible(false);
+        if (noteText.getText().length() > 30) {
+            errNote.setVisible(true);
+            noteText.setText(noteText.getText().substring(0, 30));
+        }
+        newSchedule.setNote(noteText.getText());
+    }
+    @FXML
+    private void setUpTextFeildTime() {
         try {
+            int hour = Integer.parseInt(hourText.getText());
+            int minute = Integer.parseInt(minuteText.getText());
+            selectedTime = LocalTime.of(hour, minute);
+            errTime.setVisible(false);
+            endHourText.setText(String.valueOf(selectedTime.plusMinutes(selectedFilm.getDuration()).getHour()));
+            endMinuteText.setText(String.valueOf(selectedTime.plusMinutes(selectedFilm.getDuration()).getMinute()));
             chechValidTime();
-            Alert alert = AlertUtils.getAlert("No conflict, Time is valid", Alert.AlertType.INFORMATION);
-            alert.show();
-        } catch (Exception ex) {
+            validIcon.setVisible(true);
+            invalidIcon.setVisible(false);
+        } catch (MyException ex) {
             Alert alert = AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR);
             alert.show();
-        }
-    }
-
-    private void fixID() throws Exception {
-        try {
-            IdSchedule = "SC" + selectedRoom.getRoomID().substring(1) + selectedDate.getYear() + selectedDate.getDayOfYear() + selectedTime.getHour();
-            txtID.setText(IdSchedule);
         } catch (Exception e) {
-            throw new Exception("Choose Room, Please!!");
+            errTime.setVisible(true);
+            validIcon.setVisible(false);
+            invalidIcon.setVisible(true);
         }
 
     }
@@ -189,13 +222,12 @@ public class FXMLNewScheduleController implements Initializable {
                     selectedRoom = (Room) comboBoxRoom.getValue();
                     rtDetailList.clear();
 
-                    selectedRoom.getRoomTypeDetailList().forEach((p) -> {
+                    roomDAO.getRoomTypeDetailsList(selectedRoom).forEach((p) -> {
                         rtDetailList.add(p);
                     });
 
                     loadTableView();
                     comboBoxRoomTypeHanlder();
-                    fixID();
                 } catch (Exception ex) {
                     Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -235,31 +267,32 @@ public class FXMLNewScheduleController implements Initializable {
         date.setOnAction((t) -> {
             selectedDate = date.getValue();
             loadTableView();
-            try {
-                fixID();
-            } catch (Exception ex) {
-                Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-            }
         });
 
     }
 
     private void chechValidTime() throws Exception {
-        try {
-            int hour = Integer.parseInt(hourText.getText());
-            int minute = Integer.parseInt(minuteText.getText());
-            selectedTime = LocalTime.of(hour, minute);
-        } catch (Exception e) {
-            throw new Exception("Format of time is error !");
+//        List<Schedule> list = new ArrayList<>();
+//        list = scheduleDAO.checkTime(selectedDate.atTime(selectedTime),
+//                selectedDate.atTime(selectedTime.plusMinutes(selectedFilm.getDuration())), rtDetailList);
+//        if (!list.isEmpty()) {
+//            System.out.println("Time đã có");
+//            throw new Exception("Time is conflict !! \n Please choose a nother time.");
+//        }
+        if (selectedRoom == null) {
+            throw new MyException("Choose Room, Please!!");
         }
-        List<Schedule> list = new ArrayList<>();
-        fixID();
-        list = scheduleDAO.checkTime(selectedDate.atTime(selectedTime),
-                selectedDate.atTime(selectedTime.plusMinutes(selectedFilm.getDuration())), rtDetailList);
-        if (!list.isEmpty()) {
-            System.out.println("Time đã có");
-            throw new Exception("Time is conflict !! \n Please choose a nother time.");
-        }
+        LocalDateTime selectedStartTime = selectedTime.atDate(LocalDate.now());
+        LocalDateTime selectedEndTime = selectedTime.atDate(LocalDate.now()).plusMinutes(selectedFilm.getDuration());
+        for (Schedule schedule : scheduleList) {
+            LocalDateTime startTime = schedule.getStartTime();
+            LocalDateTime endTime = schedule.getEndTime();
+
+            if (!((selectedStartTime.isAfter(endTime) && selectedEndTime.isAfter(endTime))
+                    || (selectedStartTime.isBefore(startTime) && selectedEndTime.isBefore(startTime)))) {
+                throw new Exception("Time is conflict !! \n Please choose a nother time.");
+            }
+        };
 
     }
 
@@ -281,7 +314,7 @@ public class FXMLNewScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.getRoomTypeDetail().getRoomType().getrTypeName());
         });
-        colRoomType.setPrefWidth(190);
+        colRoomType.setPrefWidth(200);
 
         TableColumn<Schedule, String> colTime = new TableColumn("Time");
         colTime.setCellValueFactory((p) -> {
@@ -306,14 +339,20 @@ public class FXMLNewScheduleController implements Initializable {
             btn.setOnAction((t) -> {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLEditSchedule.fxml"));
-                    AnchorPane popupContent = fxmlLoader.load();
-                    FXMLEditScheduleController editControl = fxmlLoader.getController();
-                    editControl.getData(schedule, selectedRoom);
-                    popupEdit.getContent().add(popupContent);
-                    popupContent.setStyle("-fx-background-color:white");
-                    popupEdit.show(gridPane.getScene().getWindow());
-                    gridPane.getParent().setDisable(true);   // KHoá trang home khi popup hiện lên, thay biến gridPane thành thằng cha của FXML
-
+                    fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
+                        @Override
+                        public Object call(Class<?> p) {
+                            return new FXMLEditScheduleController(schedule, scheduleList, selectedRoom, selectedRtDetail, rtDetailList);
+                        }
+                    });
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(fxmlLoader.load()));
+                    stage.show();
+                    gridPane.getParent().setDisable(true);
+                    stage.setOnHiding((a) -> {
+                        gridPane.getParent().setDisable(false);
+                        loadTableView();
+                    });
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -346,8 +385,8 @@ public class FXMLNewScheduleController implements Initializable {
 
     private void loadTableView() {
         infoTableLabel.setText("Infomation for " + selectedDate.toString());
-        infoTableLabel.setStyle("-fx-font-size: 22 ; -fx-font-style: bold");
-        List<Schedule> scheduleList = new ArrayList<>();
+        infoTableLabel.setStyle("-fx-font-size: 22 ;");
+        scheduleList.clear();
         try {
             //Lấy dữ liệu trong 1 ngày selectedDate
             scheduleList = scheduleDAO.
@@ -362,6 +401,12 @@ public class FXMLNewScheduleController implements Initializable {
     @FXML
     private void buttonSaveHanlder() {
         try {
+            if (errTime.isVisible()) {
+                throw new Exception("Time is invalid!!");
+            }
+            if (errNote.isVisible()) {
+                throw new Exception("Note must be less than 30  character!!");
+            }
             chechValidTime();
             newSchedule.setStatus(true);
             newSchedule.setRoomTypeDetail(selectedRtDetail);

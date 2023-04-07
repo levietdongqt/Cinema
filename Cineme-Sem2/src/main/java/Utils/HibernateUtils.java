@@ -17,24 +17,30 @@ import org.hibernate.service.ServiceRegistry;
  * @author DONG
  */
 public class HibernateUtils {
+
     private static final SessionFactory FACTORY;
+
     static {
         Configuration conf = new Configuration();
-        // conf.configure("hihi.cfg.xml");
         Properties props = new Properties();
         props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
         props.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        props.put(Environment.URL, "jdbc:sqlserver://cinema-sem2.database.windows.net;database=CinemaDB");    
+//Kết nối DB trên Azure
+        props.put(Environment.URL, "jdbc:sqlserver://cinema-sem2.database.windows.net;database=CinemaDB");
         props.put(Environment.USER, "admin123");
         props.put(Environment.PASS, "Vietdong123");
-        props.put(Environment.SHOW_SQL, "true"); 
-        props.put(Environment.FORMAT_SQL, "false"); 
-            // Cấu hình cache 
-        props.put(Environment.USE_SECOND_LEVEL_CACHE, "true"); 
-         props.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory"); 
-       props.put(Environment.USE_QUERY_CACHE, "true");
-      
-      props.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
+//Kết nối DB Local
+//      props.put(Environment.URL, "jdbc:sqlserver://127.0.0.1:1433;database=databaseName");
+//      props.put(Environment.USER, "");    
+//      props.put(Environment.PASS, "");
+        props.put(Environment.SHOW_SQL, "true");
+        props.put(Environment.FORMAT_SQL, "false");
+        // Cấu hình cache 
+        props.put(Environment.USE_SECOND_LEVEL_CACHE, "true");
+        props.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+        props.put(Environment.USE_QUERY_CACHE, "true");
+
+        props.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
         // Cài đặt cache tự động xoá các đối tượng ít sử dụng
         props.put("hibernate.cache.eviction_strategy", "LRU");    //LRU (Least Recently Used), chiến lược sử dụng giá trị thời gian để xác định đối tượng ít sử dụng nhất
         props.put("hibernate.cache.evict_by", "ACCESS_COUNT");     //xác định số lượng truy cập để xác định đối tượng ít sử dụng
@@ -70,6 +76,7 @@ public class HibernateUtils {
 //        System.out.println(props.getProperty(Environment.DRIVER));
 
     }
+
     /**
      * @return the FACTORY
      */

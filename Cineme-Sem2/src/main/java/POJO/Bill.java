@@ -30,7 +30,6 @@ public class Bill {
     private LocalDateTime printDate;
     
     private float exchangePoints;
-    private BigDecimal finalTotal;
     
     @ManyToOne
     @JoinColumn(name="promoID")  //promoID là tên khoá ngoại của bảng Bill trong database
@@ -51,7 +50,6 @@ public class Bill {
         this.billID = billID;
         this.printDate = printDate;
         this.exchangePoints = exchangePoints;
-        this.finalTotal = finalTotal;
         this.promotion = promotion;
         this.customer = customer;
         this.employee = employee;
@@ -102,17 +100,6 @@ public class Bill {
     /**
      * @return the finalTotal
      */
-    public BigDecimal getFinalTotal() {
-        return finalTotal;
-    }
-
-    /**
-     * @param finalTotal the finalTotal to set
-     */
-    public void setFinalTotal(BigDecimal finalTotal) {
-        this.finalTotal = finalTotal;
-    }
-
     /**
      * @return the promotion
      */
