@@ -52,28 +52,24 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     AnchorPane anchorPane;
-    
-    
+
     Popup popup = new Popup();
-    
+
     @FXML
     private Label labelAdmin1;
-    
+
     @FXML
     private Label labelAdmin2;
-   
-    
-    
-   
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
 //        loadDataImageView();
         loadDataPopup();
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
-         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
+        this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
 //        loadInHome("FXMLFilm");
-        
+
     }
 
     //Xu ly Button handler
@@ -104,26 +100,23 @@ public class FXMLHomeController implements Initializable {
         App.setView("FXMLSigup");
     }
 
-   
-  
-    
+    public void loadNewSchedule() throws IOException {
+        App.setView("FXMLNewSchedule");
+    }
+
+    public void loadShowSchedule() throws IOException {
+        App.setView("FXMLShowSchedule");
+    }
+
     //Xu ly Button handler
-  
-   
-   
-    
-    
-    
-    
-    
     //Load Trang( de truyen vao App)
-    public void setCenter(Parent fxml) throws IOException{
+    public void setCenter(Parent fxml) throws IOException {
         this.home.setCenter(fxml);
     }
-    
+
     //Su dung nay neu button nam tai trang home
-    public void loadInHome(String fxml){
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml+".fxml"));
+    public void loadInHome(String fxml) {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         try {
             setCenter(fxmlLoader.load());
         } catch (IOException ex) {
@@ -131,18 +124,17 @@ public class FXMLHomeController implements Initializable {
         }
     }
 
-    
-    public void loadDataPopup(){
-        
-        popup.getContent().add(vbox);     
+    public void loadDataPopup() {
+
+        popup.getContent().add(vbox);
         this.hamburger.setOnMouseClicked((event) -> {
-            if(popup.isShowing()){
-                popup.hide();              
-            }else{
-                popup.show(hamburger,event.getScreenX()-720,event.getScreenY());
+            if (popup.isShowing()) {
+                popup.hide();
+            } else {
+                popup.show(hamburger, event.getScreenX() - 720, event.getScreenY());
             }
         });
-
+        loadInHome("FXMLShowSchedule");
     }
 
 //    public void loadDataImageView(){
@@ -153,6 +145,4 @@ public class FXMLHomeController implements Initializable {
 //        imageViewHome.setFitHeight(16);
 //        this.buttonHome.setGraphic(imageViewHome);
 //    }
-
-
 }

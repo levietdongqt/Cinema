@@ -4,6 +4,8 @@
  */
 package Utils;
 
+import DAO.RoomSeatDetailDAO;
+import DAO.SeatMapDAO;
 import POJO.*;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
@@ -30,9 +32,9 @@ public class HibernateUtils {
         props.put(Environment.USER, "admin123");
         props.put(Environment.PASS, "Vietdong123");
 //Kết nối DB Local
-//      props.put(Environment.URL, "jdbc:sqlserver://127.0.0.1:1433;database=databaseName");
-//      props.put(Environment.USER, "");    
-//      props.put(Environment.PASS, "");
+//      props.put(Environment.URL, "jdbc:sqlserver://127.0.0.1:1433;database=CinemaDB");
+//      props.put(Environment.USER, "sa");    
+//      props.put(Environment.PASS, "a11321998");
         props.put(Environment.SHOW_SQL, "true");
         props.put(Environment.FORMAT_SQL, "false");
         // Cấu hình cache 
@@ -83,13 +85,11 @@ public class HibernateUtils {
     public static SessionFactory getFACTORY() {
         return FACTORY;
     }
-//    public static void main(String[] args) {
-//        if(HibernateUtils.getFACTORY() == null)
-//        {
-//            System.out.println("No");
-//        }
-//        else
-//            System.out.println("YEs");
-//    }
+    public static void main(String[] args) {
+        SeatMapDAO seatDAO = new SeatMapDAO();
+        seatDAO.addSeatMapList();
+        RoomSeatDetailDAO rsdDAO  = new RoomSeatDetailDAO();
+       rsdDAO.addList();
+    }
 
 }
