@@ -72,6 +72,10 @@ public class FXMLEditScheduleController implements Initializable {
     private FontAwesomeIcon invalidIcon;
     @FXML
     private FontAwesomeIcon validIcon;
+    @FXML
+    private TextField noteFeild;
+    @FXML
+    private Label errNote;
     private Schedule schedule;
     private Room room;
     private LocalTime selectedTime;
@@ -79,16 +83,17 @@ public class FXMLEditScheduleController implements Initializable {
     List<RoomTypeDetails> rtDetailsList;
     List<Schedule> scheduleList;
     RoomTypeDetails selectedRtDetail;
-
+    LocalDate selectedDate;
     public FXMLEditScheduleController() {
     }
 
-    public FXMLEditScheduleController(Schedule schdule, List<Schedule> scheduleList, Room room, RoomTypeDetails selectedRtDetail, List<RoomTypeDetails> rtDetailList) {
+    public FXMLEditScheduleController(LocalDate selectedDate,Schedule schdule, List<Schedule> scheduleList, Room room, RoomTypeDetails selectedRtDetail, List<RoomTypeDetails> rtDetailList) {
         this.schedule = schdule;
         this.room = room;
         this.scheduleList = scheduleList;
         this.rtDetailsList = rtDetailList;
         this.selectedRtDetail = selectedRtDetail;
+        this.selectedDate= selectedDate;
     }
 
     @Override
@@ -98,7 +103,8 @@ public class FXMLEditScheduleController implements Initializable {
     }
 
     private void loadDataToView() {
-        filmLabel.setText(schedule.getFilm().toString());      
+        noteFeild.setText(schedule.getNote());
+        filmLabel.setText(schedule.getFilm().toString());
         roomLabel.setText(room.getRoomName());
         dateLabel.setText(schedule.getStartTime().toLocalDate().toString());
         activeCheckBox.setSelected(schedule.isStatus());
@@ -108,17 +114,33 @@ public class FXMLEditScheduleController implements Initializable {
         minuteTextEnd.setText(String.valueOf(schedule.getEndTime().toLocalTime().getMinute()));
         comboBoxRoomType.setValue(selectedRtDetail);
         selectedTime = schedule.getStartTime().toLocalTime();
-        
+
     }
+
     @FXML
-    private void setUpActiveCheckBox(){
-       
+    private void setUpNote() {
+        errNote.setVisible(false);
+        if (noteFeild.getText().length() > 30) {
+            errNote.setVisible(true);
+            noteFeild.setText(noteFeild.getText().substring(0, 30));
+        }
+        schedule.setNote(noteFeild.getText());
+        System.out.println(schedule.getNote());
     }
+
+    @FXML
+    private void setUpActiveCheckBox() {
+
+    }
+
     @FXML
     private void setUpBtnChange() {
 
         try {
             if (errHour.isVisible()) {
+                return;
+            };
+            if (errNote.isVisible()) {
                 return;
             }
             chechValidTime();
@@ -166,8 +188,8 @@ public class FXMLEditScheduleController implements Initializable {
 
     private void chechValidTime() throws Exception {
         List<Schedule> list = new ArrayList<>();
-        LocalDateTime selectedStartTime = selectedTime.atDate(LocalDate.now());
-        LocalDateTime selectedEndTime = selectedTime.atDate(LocalDate.now()).plusMinutes(schedule.getFilm().getDuration());
+        LocalDateTime selectedStartTime = selectedTime.atDate(selectedDate);
+        LocalDateTime selectedEndTime = selectedTime.atDate(selectedDate).plusMinutes(schedule.getFilm().getDuration());
         for (Schedule schedule : scheduleList) {
             if (schedule.getStartTime().isEqual(this.schedule.getStartTime())) {
                 continue;

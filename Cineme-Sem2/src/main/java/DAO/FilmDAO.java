@@ -82,33 +82,34 @@ public class FilmDAO extends GenericDAO<Film, String> {
             session.close();
         }
     }
-    public List<Film> searchByDate(String attributeName){
-        List<Film> listFilm= new ArrayList<>();
+
+    public List<Film> searchByDate(String attributeName) {
+        List<Film> listFilm = new ArrayList<>();
         Session session = HibernateUtils.getFACTORY().openSession();
         try {
-            CriteriaBuilder builder =session.getCriteriaBuilder();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Film> criteriaQuery = builder.createQuery(Film.class);
             Root<Film> root = criteriaQuery.from(Film.class);
-            
+
             Date currentDate = Date.valueOf(LocalDate.now());
-            
-            criteriaQuery.where(builder.greaterThanOrEqualTo(root.get(attributeName),currentDate));
-            
+
+            criteriaQuery.where(builder.greaterThanOrEqualTo(root.get(attributeName), currentDate));
+
             listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
-        }finally{
+        } finally {
             session.close();
         }
         return listFilm;
-        
+
     }
 
-    public List<FilmGenre> getFilmGenreByID(String id){
+    public List<FilmGenre> getFilmGenreByID(String id) {
         List<FilmGenre> list = null;
-        try (Session session = HibernateUtils.getFACTORY().openSession()){
+        try ( Session session = HibernateUtils.getFACTORY().openSession()) {
             String hql = "SELECT t FROM FilmGenre t JOIN t.listFilm p WHERE p.filmID =: id";
-            Query<FilmGenre> query = session.createQuery(hql,FilmGenre.class);
+            Query<FilmGenre> query = session.createQuery(hql, FilmGenre.class);
             query.setParameter("id", id);
             list = query.getResultList();
         } catch (Exception e) {
@@ -116,11 +117,12 @@ public class FilmDAO extends GenericDAO<Film, String> {
         }
         return list;
     }
-    public List<Actors> getFilmActorsByID(String id){
+
+    public List<Actors> getFilmActorsByID(String id) {
         List<Actors> list = null;
-        try (Session session = HibernateUtils.getFACTORY().openSession()){
+        try ( Session session = HibernateUtils.getFACTORY().openSession()) {
             String hql = "SELECT t FROM Actors t JOIN t.listFilm p WHERE p.filmID =: id";
-            Query<Actors> query = session.createQuery(hql,Actors.class);
+            Query<Actors> query = session.createQuery(hql, Actors.class);
             query.setParameter("id", id);
             list = query.getResultList();
         } catch (Exception e) {
@@ -128,31 +130,45 @@ public class FilmDAO extends GenericDAO<Film, String> {
         }
         return list;
     }
-    
-    public List<Film> getScheduleByDateTime(LocalDateTime sTime){
-        List<Film> listFilm= new ArrayList<>();
+
+    public List<Film> getScheduleByDateTime(LocalDateTime sTime) {
+        List<Film> listFilm = new ArrayList<>();
         Session session = HibernateUtils.getFACTORY().openSession();
         try {
-            CriteriaBuilder builder =session.getCriteriaBuilder();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Film> criteriaQuery = builder.createQuery(Film.class);
             Root<Film> filmRoot = criteriaQuery.from(Film.class);
-            Join<Film,Schedule> scheduleJoin = filmRoot.join("listSchedule",JoinType.INNER);
-            
-            LocalDateTime endDate = LocalDateTime.of(sTime.toLocalDate(),LocalTime.MAX);
-            Predicate greaterThan = builder.greaterThanOrEqualTo(scheduleJoin.get("startTime"),sTime);
-            Predicate lessThan = builder.lessThanOrEqualTo(scheduleJoin.get("startTime"),endDate);
+            Join<Film, Schedule> scheduleJoin = filmRoot.join("listSchedule", JoinType.INNER);
+
+            LocalDateTime endDate = LocalDateTime.of(sTime.toLocalDate(), LocalTime.MAX);
+            Predicate greaterThan = builder.greaterThanOrEqualTo(scheduleJoin.get("startTime"), sTime);
+            Predicate lessThan = builder.lessThanOrEqualTo(scheduleJoin.get("startTime"), endDate);
             criteriaQuery.select(filmRoot)
-            .distinct(true)
-            .where(builder.and(greaterThan,lessThan));
+                    .distinct(true)
+                    .where(builder.and(greaterThan, lessThan));
             listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
-        }finally{
+        } finally {
             session.close();
         }
         return listFilm;
     }
 
-    
+    public List<Schedule> getScheduleByFilmDate(Film film, LocalDateTime date) {
+        List<Schedule> list = new ArrayList<>();
+        LocalDateTime endDate = date.plusDays(1);
+        Session session = HibernateUtils.getFACTORY().openSession();
+        session.getTransaction().begin();
+        String hql = "FROM Schedule WHERE film like :film AND (startTime > :currDate AND startTime < :nextDate)";
+        Query query = session.createQuery(hql).setCacheable(true);
+        query.setParameter("film", film);
+        query.setParameter("currDate", date);
+        query.setParameter("nextDate", endDate);
+        list = query.getResultList();
+        session.getTransaction().commit();
+        session.close();
+        return list;
+    }
 
 }

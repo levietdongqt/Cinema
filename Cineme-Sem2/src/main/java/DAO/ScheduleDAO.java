@@ -50,8 +50,9 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
-    public List<Schedule> getToView(LocalDateTime startDate, LocalDateTime endDate, List<RoomTypeDetails> rtDetailsList) throws Exception {
+    public List<Schedule> getToView(LocalDateTime startDate, List<RoomTypeDetails> rtDetailsList) throws Exception {
         List<Schedule> list;
+        LocalDateTime endDate = startDate.plusDays(1);
         try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
            String hql = "FROM Schedule WHERE roomTypeDetail IN (:list) AND (startTime > :currDate AND startTime < :nextDate)";
