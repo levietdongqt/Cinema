@@ -1,8 +1,9 @@
 use CinemaDB
-select * from Room
-select * from RoomType
-select * from SeatType
-select * from RoomTypeDetails
+insert into Employee 
+values ('admin','Master','123','Manager',GETDATE(),1,GETDATE(),'admin@gmail.com',1,'123456789'),
+('employee','Employee','123','Employee',GETDATE(),1,GETDATE(),'admin@gmail.com',1,'123456789')
+go
+
 insert into Room (roomID,roomName,description)
 values ('R1','Room 1','This is small 2D room'),
 		('R2','Room 2','This is large 2D room'),

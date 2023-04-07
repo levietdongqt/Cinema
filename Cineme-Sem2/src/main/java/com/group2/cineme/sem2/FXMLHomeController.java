@@ -142,7 +142,7 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger,event.getScreenX()-720,event.getScreenY());
             }
         });
-        loadInHome("FXMLFilm");
+        loadInHome("FXMLNewSchedule");
     }
 
     public void loadDataImageView(){
