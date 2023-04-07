@@ -33,6 +33,7 @@ public class App extends Application {
 
         scene = new Scene(loadFXML("FXMLShowSchedule"));
 
+
         stage.setScene(scene);
         stage.show();
     }

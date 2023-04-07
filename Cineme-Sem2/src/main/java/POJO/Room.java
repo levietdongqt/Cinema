@@ -28,7 +28,7 @@ public class Room {
     private String description;
     private boolean status;
     
-    @OneToMany(mappedBy = "room",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room")
     private Set<RoomTypeDetails> roomTypeDetailList;
 
     public Room() {

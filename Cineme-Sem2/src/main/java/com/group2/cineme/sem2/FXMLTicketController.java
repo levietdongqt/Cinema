@@ -4,31 +4,21 @@
  */
 package com.group2.cineme.sem2;
 
-import DAO.RoomDAO;
-import DAO.RoomSeatDetailDAO;
+import DAO.BillDAO;
 import DAO.ScheduleDAO;
-import DAO.SeatMapDAO;
-import POJO.Room;
+import DAO.TicketDAO;
+import POJO.Bill;
+import POJO.ProductBill;
 import POJO.RoomSeatDetail;
-import POJO.RoomType;
-import POJO.RoomTypeDetails;
 import POJO.Schedule;
-import POJO.SeatMap;
-import POJO.SeatType;
 import POJO.Ticket;
-import Utils.AlertUtils;
-import Utils.HibernateUtils;
 import Utils.SessionUtil;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLOutput;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -37,17 +27,13 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import org.hibernate.Session;
 
 public class FXMLTicketController implements Initializable {
 
@@ -65,7 +51,7 @@ public class FXMLTicketController implements Initializable {
     private Label roomLabel;
     @FXML
     private Label seatLabel;
-    
+
     @FXML
     private Label scheduleLabel;
     @FXML
@@ -79,21 +65,53 @@ public class FXMLTicketController implements Initializable {
     private char[] row = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'};
     List<RoomSeatDetail> selectedSeatList = new ArrayList<>();
     String seatNameList;
-    int ticketTotal=0;
-    int foodTotal=0;
+    int ticketTotal = 0;
+    int foodTotal = 0;
+    int i = 0;
 
     public FXMLTicketController() {
     }
-    
+
     public FXMLTicketController(Schedule schedule) {
         this.scheule = schedule;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //getSchedule();
         loadDataFilm();
         setSeatGird();
+    }
+
+    @FXML
+    private void saveToDB() throws Exception {
+        BillDAO billDAO = new BillDAO();
+        TicketDAO ticDAO = new TicketDAO();
+        Bill bill = billDAO.getById(3, Bill.class);
+        List<ProductBill> proBillList = new ArrayList<>();
+        selectedSeatList.forEach((t) -> {
+            try {
+                Ticket ticket = new Ticket();
+                ticket.setBill(bill);
+                ticket.setSchedule(scheule);
+                ticket.setSeatMap(t.getSeatMap().getsMapID());
+                ticket.setStatus(Boolean.TRUE);
+                SessionUtil.getTicketList().add(ticket);
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+        SessionUtil.getProductList().forEach((key, vaule) -> {
+            ProductBill proBill = new ProductBill();
+            String proBillID = String.valueOf(LocalDate.now().getDayOfMonth()) + i++;
+            proBill.setBill(bill);
+            proBill.setProBillID(proBillID);
+            proBill.setProduct(key);
+            proBill.setQuantity(vaule);
+            proBillList.add(proBill);
+        });
+        ticDAO.addListTicketAndProduct(SessionUtil.getTicketList(), proBillList);
     }
 
     public void getSchedule() {
@@ -109,20 +127,20 @@ public class FXMLTicketController implements Initializable {
         roomLabel.setText(scheule.getRoomTypeDetail().getRoom().getRoomName());
         String duration = scheule.getStartTime().toLocalTime() + " - " + scheule.getEndTime().toLocalTime();
         String date = scheule.getStartTime().toLocalDate().getMonth() + "-" + scheule.getStartTime().toLocalDate().getDayOfMonth();
-        scheduleLabel.setText(duration + ". " + date);
+        scheduleLabel.setText(duration + ". " + date + " . " + scheule.getNote());
     }
 
     private void getSelectedSeats() {
         seatNameList = "";
-        ticketTotal=0;
-        sortRSDList( selectedSeatList);
+        ticketTotal = 0;
+        sortRSDList(selectedSeatList);
         selectedSeatList.forEach((t) -> {
             ticketTotal += t.getSeatType().getSeatPrice();
             seatNameList += t.getSeatMap().getsMapID().toString() + " ";
         });
         seatLabel.setText(seatNameList);
         ticketLabel.setText(String.valueOf(ticketTotal) + " VND");
-        totalLabel.setText(String.valueOf(ticketTotal+foodTotal) + " VND");
+        totalLabel.setText(String.valueOf(ticketTotal + foodTotal) + " VND");
     }
 
     @FXML
@@ -150,7 +168,7 @@ public class FXMLTicketController implements Initializable {
                 foodTotal += p.getPrice().intValue() * u;
             });
             foodLabel.setText(String.valueOf(foodTotal) + " VND");
-            totalLabel.setText(String.valueOf(ticketTotal+foodTotal) + " VND");
+            totalLabel.setText(String.valueOf(ticketTotal + foodTotal) + " VND");
         });
     }
 
@@ -174,13 +192,13 @@ public class FXMLTicketController implements Initializable {
 
     private void setSeatGird() {
 
-        //Giả lập vé đã chọn
+        //Lấy list vé đã chọn
         List<String> ticketBlockedList = new ArrayList<>();
-//        seatList.add("G5");
-//        seatList.add("G7");
-//        seatList.add("H3");
-//        seatList.add("E7");
-//        seatList.add("K2");
+        TicketDAO ticketDAO = new TicketDAO();
+        ticketDAO.getTicketBySchedule(scheule).forEach((t) -> {
+            ticketBlockedList.add(t.getSeatMap());
+        });
+
         screenLabel.setStyle("-fx-background-color: #99CCFF;");
         seatGrid.setPadding(new Insets(20));
 
@@ -203,20 +221,21 @@ public class FXMLTicketController implements Initializable {
             if (seatName.charAt(0) != row[rowIndex]) {
                 rowIndex++;
             }
+            //Xử lý riêng cho nút couple
             if (seatType.equalsIgnoreCase("Couple")) {
 
-                coupleName = coupleName + seatName + "   ";
-                countCouple++;
+                coupleName = coupleName + seatName + "   ";    //Ghép tên ghế đôi
+                countCouple++;                    //đếm thứ tự ghế trong trong 2 ghế
                 if (countCouple == 2) {
 
-                    RoomSeatDetail lastItem = seatList.get(i - 1);
+                    RoomSeatDetail lastItem = seatList.get(i - 1);   //Lấy ghế đầu tiên trong 2 ghế
 
-                    seatGrid.add(bt, columIndex - 1, rowIndex, 2, 1);
+                    seatGrid.add(bt, columIndex - 1, rowIndex, 2, 1); 
                     bt.setText(coupleName);
                     bt.setPrefSize(125, 40);
                     countCouple = 0;
                     coupleName = "";
-                    if (seatList.contains(seatName)) {
+                    if (ticketBlockedList.contains(seatName)) {
                         //  bt.setDisable(true);
                         bt.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
                         continue;
@@ -234,9 +253,9 @@ public class FXMLTicketController implements Initializable {
             }
             seatGrid.add(bt, columIndex, rowIndex);
             if (ticketBlockedList.contains(seatName)) {
-                // bt.setDisable(true);
                 bt.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
                 continue;
+                // bt.setDisable(true);              
             }
             if (seatType.equalsIgnoreCase("Normal")) {
                 bt.setStyle("-fx-background-color: #9900cc; -fx-text-fill: white;");

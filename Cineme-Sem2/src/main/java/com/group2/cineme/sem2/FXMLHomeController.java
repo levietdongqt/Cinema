@@ -143,9 +143,6 @@ public class FXMLHomeController implements Initializable {
             }
         });
 
-
-        
-
     }
 
 //    public void loadDataImageView(){

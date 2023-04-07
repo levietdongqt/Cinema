@@ -20,11 +20,9 @@ import java.util.Map;
  */
 public class SessionUtil {
 
-
-    private static List<Ticket> ticketList;
     private static List<Film> mapFilm;
     
-
+    private static List<Ticket> ticketList = new ArrayList<>();
     private static Map<Product,Integer> productList = new HashMap<>();
     
     private static Employee employee = new Employee();

@@ -57,7 +57,6 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
            String hql = "FROM Schedule WHERE roomTypeDetail IN (:list) AND (startTime > :currDate AND startTime < :nextDate)";
             Query query = ses.createQuery(hql).setCacheable(true);
             query.setParameter("list", rtDetailsList);
-            System.out.println("selectDay: "  + startDate);
             query.setParameter("currDate", startDate);
             query.setParameter("nextDate", endDate);
             list = query.getResultList();
