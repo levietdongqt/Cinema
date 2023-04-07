@@ -13,7 +13,9 @@ import Utils.HibernateUtils;
 import com.group2.cineme.sem2.FXMLTicketController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -131,10 +133,5 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
             session.close();
         }
         return listFilm;
-    }
-    
-    
-    
-    
-    
+    }   
 }

@@ -28,7 +28,7 @@ public class App extends Application {
         Session ses = HibernateUtils.getFACTORY().openSession();
         ses.clear();
         ses.close();    
-        scene = new Scene(loadFXML("FXMLHome"));
+        scene = new Scene(loadFXML("FXMLShowSchedule"));
         stage.setScene(scene);
         stage.show();
     }

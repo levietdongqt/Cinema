@@ -44,7 +44,27 @@ values ('P01','Pepsi','Drinks','src\main\resources\images\products\pepsi',20000,
  ('P06','Snack','Snacks','src\main\resources\images\products\snack',30000,1),
  ('P07','Combo 1','Combo','src\main\resources\images\products\combo1',70000,1),
  ('P08','Combo 2','Combo','src\main\resources\images\products\combo2',80000,1)
+go
 
+insert into FilmGenre
+values('Action'),
+	('Adventure'),
+	('Sci-fi'),
+	('Fantasy'),
+	('Drama'),
+	('Comedy'),
+	('Horror'),
+	('Musical'),
+	('Romance'),
+	('Thriller'),
+	('Historial'),
+	('Animated')
+go
+
+insert into Actors
+values('Chris Evans','1981-03-06','Boston, Massachussets, U.S'),
+('Christoper Hemsworth','1983-08-11','Boston, Melbourne, Victoria, Australia')
+go
 		
 		
 		

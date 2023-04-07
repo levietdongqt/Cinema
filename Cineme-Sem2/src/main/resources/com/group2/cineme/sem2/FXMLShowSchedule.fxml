@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLShowScheduleController">
+<VBox fx:id="vboxShowSchedule" stylesheets="@../../../../styles/fxmlshowschedule.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLShowScheduleController">
    <children>
       <HBox alignment="BOTTOM_LEFT" prefHeight="46.0" prefWidth="400.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#bookTicketHandler" prefWidth="100.0" text="Book Ticket" />
-            <ComboBox fx:id="comboBoxDay" prefWidth="150.0" promptText="By Day" />
-            <ComboBox fx:id="comboBoxFilm" prefWidth="150.0" promptText="By Film" />
+            <Button mnemonicParsing="false" onAction="#bookTicketHandler" prefWidth="100.0" text="Book Ticket">
+               <graphic>
+                  <FontAwesomeIcon fill="#fdfdfd" glyphName="HOME" />
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <ComboBox fx:id="comboBoxDay" prefWidth="150.0" promptText="By Day" styleClass="comboBox" />
+            <ComboBox fx:id="comboBoxFilm" prefWidth="150.0" promptText="By Film" styleClass="comboBox" />
+            <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonUndoHandler" prefHeight="25.0" prefWidth="27.0" textAlignment="CENTER">
+                     <graphic>
+                        <FontAwesomeIcon fill="#f3f0f0" glyphName="UNDO" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </HBox>
-      <TableView fx:id="tableViewSchedule" prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS" />
+      <TableView fx:id="tableViewSchedule" styleClass="tableView" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></TableView>
    </children>
 </VBox>

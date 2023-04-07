@@ -19,11 +19,14 @@ import java.util.Map;
  * @author thuhuytran
  */
 public class SessionUtil {
+
+    private static List<Film> mapFilm;
+    
     private static List<Ticket> ticketList = new ArrayList<>();
     private static Map<Product,Integer> productList = new HashMap<>();
     
     private static Employee employee = new Employee();
-    private static List<Film> mapFilm;
+    
     /**
      * @return the mapFilm
      */
@@ -39,9 +42,10 @@ public class SessionUtil {
     }
 
     /**
-<<<<<<< HEAD
-     * @return the ticketList
+
+     * @return the employee
      */
+
     public static List<Ticket> getTicketList() {
         return ticketList;
     }
@@ -65,6 +69,7 @@ public class SessionUtil {
      */
     public static void setProductList(Map<Product,Integer> aProductList) {
         productList = aProductList;
+
     }
     /**
      * @return the employee
@@ -78,6 +83,7 @@ public class SessionUtil {
      */
     public static void setEmployee(Employee aEmployee) {
         employee = aEmployee;
+
     }
 
     
