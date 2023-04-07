@@ -40,6 +40,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 /**
@@ -57,6 +58,8 @@ public class FXMLFilmController implements Initializable {
 
     @FXML
     private ComboBox<FilmGenre> comboGenres;
+    @FXML
+    private Text textTableFilm;
 
     @FXML
     private TextField txtName;
@@ -73,6 +76,8 @@ public class FXMLFilmController implements Initializable {
         loadTableView();
         loadDataTableView();
         loadDataCombobox();
+        searchByName();
+        textTableFilm();
     }
 
     //Khu vuc nut
@@ -91,14 +96,23 @@ public class FXMLFilmController implements Initializable {
 
     }
 
-    public void buttonSearchByName() {
-        List<Film> listByName = listFilm.stream().filter((t) -> t.getFilmName().toLowerCase().contains(this.txtName.getText().toLowerCase())).collect(Collectors.toList());
-        if (listByName.isEmpty()) {
-            AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
-            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
-        } else {
+    public void searchByName() {
+        this.txtName.textProperty().addListener((o) -> {
+            List<Film> listByName = listFilm.stream().filter((t) -> t.getFilmName().toLowerCase().contains(this.txtName.getText().toLowerCase())).collect(Collectors.toList());
+//        if (listByName.isEmpty()) {
+//            AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
+//            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
+//        } else {
             this.tableViewFilm.setItems(FXCollections.observableList(listByName));
-        }
+//        }
+        }); 
+    }
+    public void textTableFilm(){
+        this.textTableFilm.setOnMouseReleased((t) -> {
+             this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
+        });
+           
+        
     }
 
     public void buttonSearchByGenre() {
@@ -125,7 +139,7 @@ public class FXMLFilmController implements Initializable {
     public void loadTableView() {
         TableColumn colFilmID = new TableColumn("ID");
         colFilmID.setCellValueFactory(new PropertyValueFactory("filmID"));
-        colFilmID.setPrefWidth(100);
+        colFilmID.setPrefWidth(150);
 
         TableColumn colFilmName = new TableColumn("Name");
         colFilmName.setCellValueFactory(new PropertyValueFactory("filmName"));
@@ -194,9 +208,9 @@ public class FXMLFilmController implements Initializable {
             }
             return new SimpleObjectProperty<>(actors);
         });
-        colActors.setPrefWidth(100);
+        colActors.setPrefWidth(200);
 
-        TableColumn<Film, Button> colButtonEdit = new TableColumn<>("Edit");
+        TableColumn<Film, Button> colButtonEdit = new TableColumn<>();
         colButtonEdit.setCellValueFactory((o) -> {
             Film p = o.getValue();
             Button button = new Button("Edit");
@@ -223,7 +237,7 @@ public class FXMLFilmController implements Initializable {
         });
 
 
-        TableColumn<Film,Button> colNewSchedule = new TableColumn<>("Schedule"); 
+        TableColumn<Film,Button> colNewSchedule = new TableColumn<>(); 
         colNewSchedule.setCellValueFactory((o) -> {
             Film p = o.getValue();
             Button button =new Button("New Schedule");       
@@ -239,7 +253,7 @@ public class FXMLFilmController implements Initializable {
             return new SimpleObjectProperty<>(button);
         });
         
-        TableColumn<Film,Button> colDelete = new TableColumn<>("Delete"); 
+        TableColumn<Film,Button> colDelete = new TableColumn<>(); 
         colDelete.setCellValueFactory((o) -> {
             Film p = o.getValue(); 
             Button button =new Button("Delete");       

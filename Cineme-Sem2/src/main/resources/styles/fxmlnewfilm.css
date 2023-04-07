@@ -2,17 +2,33 @@
  * Empty Stylesheet file.
  */
 
-.mainFxmlClass {
+.hboxImage{
+    -fx-background-color:#cccccc;
+    
+     
+}
 
+.gridpane{
+    -fx-background-color:#e7e7e7;
 }
-*{
-    -fx-font-family:verdana;
+
+.list{
+    -fx-background-color:#666666;
 }
-GridPane{
-    -fx-padding:5;
-    -fx-spacing:50;
+.button{
+    -fx-background-color:#333333;
+    -fx-text-fill:white;
 }
-Label{
-    -fx-font-size:13;
-    -fx-font-weight:bold
+.fill-text{
+    -fx-background-color:none;
+    -fx-border-color:#D3D3D3;
+    -fx-border-width:0px 0px 2px 0px;
+    /*-fx-padding: 3px 3px 3px 25px;*/
 }
+
+.hboxActors{
+    -fx-background-color:#cccccc;
+}
+
+
+

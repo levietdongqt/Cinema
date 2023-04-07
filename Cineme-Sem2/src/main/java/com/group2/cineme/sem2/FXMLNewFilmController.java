@@ -175,6 +175,8 @@ public class FXMLNewFilmController implements Initializable {
             this.txtImage.setText(f.getPath());
             Image imageFilm = new Image(f.toURI().toString());
             imageViewFilm.setImage(imageFilm);
+            imageViewFilm.setFitWidth(230);
+            imageViewFilm.setFitHeight(203);
         } else {
             this.txtImage.setText("");
         }
