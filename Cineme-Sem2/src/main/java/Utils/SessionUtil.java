@@ -26,7 +26,6 @@ public class SessionUtil {
     private static Map<Product,Integer> productList = new HashMap<>();
     
     private static Employee employee = new Employee();
-    
     /**
      * @return the mapFilm
      */
@@ -69,7 +68,6 @@ public class SessionUtil {
      */
     public static void setProductList(Map<Product,Integer> aProductList) {
         productList = aProductList;
-
     }
     /**
      * @return the employee
@@ -83,7 +81,6 @@ public class SessionUtil {
      */
     public static void setEmployee(Employee aEmployee) {
         employee = aEmployee;
-
     }
 
     

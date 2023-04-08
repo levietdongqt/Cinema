@@ -4,6 +4,7 @@
  */
 package com.group2.cineme.sem2;
 
+
 import DAO.BillDAO;
 import DAO.ScheduleDAO;
 import DAO.TicketDAO;
@@ -79,6 +80,7 @@ public class FXMLTicketController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //getSchedule();
+
         loadDataFilm();
         setSeatGird();
     }
@@ -172,10 +174,13 @@ public class FXMLTicketController implements Initializable {
         });
     }
 
+
     @FXML
     private void btnNextStepHandler() {
         List<Ticket> ticketList = new ArrayList<>();
+
         selectedSeatList.forEach((t) -> {
+
             Ticket ticket = new Ticket();
             ticket.setSchedule(this.scheule);
             ticket.setStatus(Boolean.TRUE);
@@ -198,7 +203,6 @@ public class FXMLTicketController implements Initializable {
         ticketDAO.getTicketBySchedule(scheule).forEach((t) -> {
             ticketBlockedList.add(t.getSeatMap());
         });
-
         screenLabel.setStyle("-fx-background-color: #99CCFF;");
         seatGrid.setPadding(new Insets(20));
 

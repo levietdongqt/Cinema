@@ -44,6 +44,7 @@ values ('P01','Pepsi','Drinks','src\main\resources\images\products\pepsi',20000,
  ('P06','Snack','Snacks','src\main\resources\images\products\snack',30000,1),
  ('P07','Combo 1','Combo','src\main\resources\images\products\combo1',70000,1),
  ('P08','Combo 2','Combo','src\main\resources\images\products\combo2',80000,1)
+<<<<<<< HEAD
 go
 
 insert into FilmGenre
@@ -69,6 +70,9 @@ go
 insert into Film
 ('PAE300000','Avenger EndGame',13,'2023-04-07','2023-04-30',150,'src\main\resources\images\endgame.png','Joss Whedon',0,'After the devastating events of Avengers: the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos actions and restore balance to the universe.')
 go
+=======
+
+>>>>>>> c9482a1762b1352b88df4eda4d89a7ed479c8c4f
 		
 		
 		

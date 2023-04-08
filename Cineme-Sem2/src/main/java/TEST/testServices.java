@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,7 +35,15 @@ import org.hibernate.Session;
  */
 public class testServices {
     public static void main(String[] args) throws Exception {
+
             Thread thread = new Thread(new updateStatusSchedule(0, 01));
             thread.start();
+
+
+
+        
+        
+        
+
     }
 }
