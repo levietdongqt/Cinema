@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="348.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="com.group2.cineme.sem2.FXMLViewAllScheduleController">
+<AnchorPane id="AnchorPane" prefHeight="348.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLViewAllScheduleController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="390.0" prefWidth="600.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -17,11 +17,7 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="dateLabel" prefHeight="18.0" prefWidth="58.0" text="Date" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Label>
+            <DatePicker fx:id="datePicker" onAction="#setUpDatePicker" />
             <TableView fx:id="tableView" prefHeight="319.0" prefWidth="600.0">
                <VBox.margin>
                   <Insets top="15.0" />

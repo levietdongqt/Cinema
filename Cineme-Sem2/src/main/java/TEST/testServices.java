@@ -13,9 +13,16 @@ import POJO.Film;
 import POJO.FilmGenre;
 import POJO.Schedule;
 import Utils.HibernateUtils;
+import Utils.updateStatusSchedule;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Hibernate;
@@ -27,20 +34,7 @@ import org.hibernate.Session;
  */
 public class testServices {
     public static void main(String[] args) throws Exception {
-//       FilmDAO fd = new FilmDAO();
-//       ScheduleDAO sd = new ScheduleDAO();
-//       List<Film> l = fd.getScheduleByDateTime();
-//        System.out.println(l);
-//        for (Film film : l) {
-//            List<Schedule> s = sd.getScheduleByDateTime(film.getFilmID());
-//            System.out.println(s);
-//        }
-       
-        
-        
-        
-        
-        
-        
+            Thread thread = new Thread(new updateStatusSchedule(0, 01));
+            thread.start();
     }
 }

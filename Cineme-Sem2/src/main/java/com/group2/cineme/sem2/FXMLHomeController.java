@@ -9,6 +9,7 @@ import DAO.WorkSessionDAO;
 import DAO.FilmDAO;
 import POJO.Film;
 import Utils.SessionUtil;
+import Utils.updateStatusSchedule;
 import com.jfoenix.controls.JFXHamburger;
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +70,6 @@ public class FXMLHomeController implements Initializable {
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
 //        loadInHome("FXMLFilm");
-
     }
 
     //Xu ly Button handler
