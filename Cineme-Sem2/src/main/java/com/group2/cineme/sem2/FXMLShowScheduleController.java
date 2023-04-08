@@ -9,6 +9,7 @@ import DAO.ScheduleDAO;
 import POJO.Film;
 import POJO.Schedule;
 import Utils.AlertUtils;
+import Utils.MyException;
 import static com.group2.cineme.sem2.App.scene;
 
 
@@ -281,9 +282,10 @@ public class FXMLShowScheduleController implements Initializable {
 
     public void setActionForTableView(){
         this.tableViewSchedule.setOnMouseReleased((t) -> {
+            try {
             Film p = this.tableViewSchedule.getSelectionModel().getSelectedItem();
             System.out.println(p.getFilmName());
-            try {
+            
                 System.out.println(p.getFilmName());
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLViewFilmDetails.fxml"));
                  fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -304,6 +306,8 @@ public class FXMLShowScheduleController implements Initializable {
                 vboxShowSchedule.setDisable(true);
             } catch (IOException ex) {
                 Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException e){
+                System.out.println(e.getMessage());
             }
         });
     }
