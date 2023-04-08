@@ -18,7 +18,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Pagination fx:id="pagination" maxHeight="450.0" maxWidth="800.0" pageCount="2" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: white;" stylesheets="@../../../../styles/fxmladmin.css">
+            <Pagination fx:id="pagination" maxHeight="450.0" maxWidth="800.0" pageCount="2" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: grey;" stylesheets="@../../../../styles/fxmladmin.css">
                <styleClass>
                   <String fx:value="ins-form" />
                   <String fx:value="shadow" />

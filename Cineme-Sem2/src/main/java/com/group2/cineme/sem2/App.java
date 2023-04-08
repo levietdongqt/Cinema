@@ -31,6 +31,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Session ses = HibernateUtils.getFACTORY().openSession();
         ses.clear();
+
         ses.close();
         scene = new Scene(loadFXML("FXMLHome"));
         stage.setScene(scene);

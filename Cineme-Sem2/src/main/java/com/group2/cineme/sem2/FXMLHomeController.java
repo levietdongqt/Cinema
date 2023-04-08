@@ -69,7 +69,9 @@ public class FXMLHomeController implements Initializable {
         loadDataPopup();
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
-//        loadInHome("FXMLFilm");
+        loadInHome("FXMLShowSchedule");
+        
+
     }
 
     //Xu ly Button handler
@@ -134,7 +136,6 @@ public class FXMLHomeController implements Initializable {
                 popup.show(hamburger, event.getScreenX() - 720, event.getScreenY());
             }
         });
-        loadInHome("FXMLShowSchedule");
     }
 
 //    public void loadDataImageView(){
