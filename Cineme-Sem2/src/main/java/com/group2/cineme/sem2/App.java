@@ -31,7 +31,7 @@ public class App extends Application {
 
 
 
-        scene = new Scene(loadFXML("FXMLLogin"));
+        scene = new Scene(loadFXML("FXMLHome"));
 
 
         stage.setScene(scene);
