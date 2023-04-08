@@ -512,7 +512,7 @@ public class FXMLAdminController implements Initializable {
         try {
             emList = dao.getAll("Employee");
 
-            for (Employee employee : emList) {
+                for (Employee employee : emList) {
                 for (String employee1 : totalWorkTime.keySet()) {
                     if (employee1.equals(employee.getUserName())) {
                         employee.setTotalWorkTime(totalWorkTime.get(employee1));
@@ -616,7 +616,6 @@ public class FXMLAdminController implements Initializable {
         Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(selectedMonth);
         try {
             emList = dao.getAll("Employee");
-
             for (Employee employee : emList) {
                 for (String employee1 : totalWorkTime.keySet()) {
                     if (employee1.equals(employee.getUserName())) {
@@ -624,7 +623,6 @@ public class FXMLAdminController implements Initializable {
                     }
                 }
             }
-
             // tạo tên cột excel
             XSSFRow headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("User Name");
