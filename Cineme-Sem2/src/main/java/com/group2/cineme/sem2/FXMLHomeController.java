@@ -69,9 +69,8 @@ public class FXMLHomeController implements Initializable {
         loadDataPopup();
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
-        loadInHome("FXMLShowSchedule");
+        loadInHome("FXMLFilm");
         
-
     }
 
     //Xu ly Button handler

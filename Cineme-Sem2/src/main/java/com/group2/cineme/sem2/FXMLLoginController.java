@@ -45,6 +45,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.input.KeyCode;
 
 /**
  * FXML Controller class
@@ -67,7 +68,7 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private Label welcom;
-    
+  
     static {
         loadData();
     }
@@ -76,31 +77,34 @@ public class FXMLLoginController implements Initializable {
     public void close() {
         System.exit(0);
     }
-
+     
     public void login(ActionEvent event) throws Exception {
         WorkSession work = new WorkSession();
         EmployeeDAO dao = new EmployeeDAO();
-        boolean log = dao.checkaccount(user.getText(), pass.getText());
-        Employee employee = SessionUtil.getEmployee();
-        work.setEmployee(employee);
-        work.setStartTime(LocalDateTime.now());
+        pass.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                try {
+                    login(null);
+                    boolean log = dao.checkaccount(user.getText().trim(), pass.getText().trim());
+                    Employee employee = SessionUtil.getEmployee();
+                    work.setEmployee(employee);
+                    work.setStartTime(LocalDateTime.now());
 //        work.setEndTime(LocalDateTime.of(2010, 10, 10, 0, 0, 0));
-        if (log) {
-            WorkSessionDAO workdao = new WorkSessionDAO();
-            workdao.add(work);
-            App.setRoot("FXMLHome");
-            
+                    if (log) {
+                        WorkSessionDAO workdao = new WorkSessionDAO();
+                        workdao.add(work);
+                        App.setRoot("FXMLHome");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
     }
-    }
-    
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-    
-  
-        
         //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
         DropShadow original = new DropShadow(20, Color.valueOf("blue"));
         welcom.setEffect(original);
@@ -145,9 +149,7 @@ public class FXMLLoginController implements Initializable {
             cgv.setEffect(shadow);
 
         });
-        
-        
-       
+
 
     }
     public static void loadData() {
@@ -159,13 +161,11 @@ public class FXMLLoginController implements Initializable {
                 film.setListGenre(new HashSet<>(f.getFilmGenreByID(film.getFilmID())));
                 film.setListActors(new HashSet<>(f.getFilmActorsByID(film.getFilmID())));
             }
-        SessionUtil.setMapFilm(films);
+            SessionUtil.setMapFilm(films);
         } catch (Exception ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-    }
 
-   
+    }
 
 }

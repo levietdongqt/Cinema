@@ -1,5 +1,5 @@
 package POJO;
-
+import DAO.EmployeeDAO;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javassist.compiler.TokenId;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "Employee")
@@ -40,10 +43,12 @@ public class Employee {
     private LocalDate birthDate;
     private LocalDate startDate;
     private String email;
-  
+    private boolean gender;
     private boolean status;
-
-    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, String empPhone, Set<Bill> billList, Set<WorkSession> worksessionList) {
+//    @Formula("(SELECT SUM((EXTRACT(epoch FROM (ws.endTime - ws.startTime))) FROM WorkSession ws WHERE ws.userName = userName)")
+   @Transient
+     private double totalWorkTime;
+    public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, boolean gender, String empPhone,double totalWorkTime,  Set<Bill> billList, Set<WorkSession> worksessionList) {
         this.userName = userName;
         this.empName = empName;
         this.password = password;
@@ -55,12 +60,14 @@ public class Employee {
         this.empPhone = empPhone;
         this.billList = billList;
         this.worksessionList = worksessionList;
+        this.gender = gender;
+        this.totalWorkTime = totalWorkTime;
     }
     private String empPhone;
     @OneToMany(mappedBy = "employee")
     private Set<Bill> billList;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee",cascade = CascadeType.REMOVE)
     private Set<WorkSession> worksessionList;
 
     public Employee() {
@@ -76,7 +83,6 @@ public class Employee {
     /**
      * @param userName the userName to set
      */
-
     public void setUserName(String userName) throws IOException {
 //        if ( userName.isEmpty()) {
 //            throw new IOException("Username cannot be null or empty");
@@ -87,8 +93,6 @@ public class Employee {
 
         this.userName = userName;
 
-
-    
     }
 
     /**
@@ -142,32 +146,32 @@ public class Employee {
      * @return the password
      */
     public String getPassword() {
-
+        
+//        EmployeeDAO dao = new EmployeeDAO();
+//        dao.encodePassword(password);
+        
         return password;
     }
 
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) throws IOException {
-        if (password == null || password.trim().isEmpty()) {
-            throw new IOException("Password cannot be null or empty");
-        }
-        if (password.length() > 20 || password.length() < 6) {
-            throw new IOException("Password cannot be longer than 20 char and less than 6 char");
-        }
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hash) {
-                sb.append(String.format("%02x", b));
-            }
-            this.password = sb.toString();
-        } catch (NoSuchAlgorithmException ex) {
-            throw new IOException("Error while hashing the password");
-        }
+    
+    
+   public void setPassword(String password) throws IOException  {
+       EmployeeDAO dao = new EmployeeDAO();
+    if (password == null || password.trim().isEmpty()) {
+        throw new IOException("Password cannot be null or empty");
     }
+    if (password.length() > 20 || password.length() < 6) {
+        throw new IOException("Password cannot be longer than 20 char and less than 6 char");
+    }
+    
+
+    
+    this.password = dao.encodePassword(password);
+}
+
 
     /**
      * @return the position
@@ -218,7 +222,7 @@ public class Employee {
     public void setStartDate(LocalDate startDate) throws IOException {
         if (startDate == null) {
             throw new IOException("Start date cannot null");
-        } 
+        }
         if (startDate.isAfter(LocalDate.now())) {
             throw new IOException("Start date cannot be in the future");
         }
@@ -260,6 +264,17 @@ public class Employee {
         this.status = status;
     }
 
+    public boolean isGender() {
+        return gender;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
     /**
      * @return the billList
      */
@@ -287,5 +302,14 @@ public class Employee {
     public void setWorksessionList(Set<WorkSession> worksessionList) {
         this.worksessionList = worksessionList;
     }
+
+    public double getTotalWorkTime() {
+        return totalWorkTime;
+    }
+
+    public void setTotalWorkTime(double totalWorkTime) {
+        this.totalWorkTime = totalWorkTime;
+    }
+
 
 }

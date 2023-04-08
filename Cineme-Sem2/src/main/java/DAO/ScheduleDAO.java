@@ -35,14 +35,14 @@ import org.hibernate.query.Query;
  */
 public class ScheduleDAO extends GenericDAO<Schedule, String> {
 
-    public List<RoomSeatDetail> getRoomSeatDetails(Schedule schedule) {
+    public List<RoomSeatDetail> getRoomSeatDetails(Schedule schedule){
         List<RoomSeatDetail> list = new ArrayList<>();
-        try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
+        try(Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
             ses.load(schedule, schedule.getScheduleID());
             //Schedule schedule1 = ses.get(Schedule.class, schedule.getScheduleID());
             schedule.getRoomTypeDetail().getRoomType().getRoomSeatDetailList()
-                    .forEach(p -> list.add(p));
+                .forEach(p -> list.add(p));
             ses.getTransaction().commit();
             ses.close();
 
@@ -51,6 +51,7 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
+    
 
     public List<Schedule> getToView(LocalDateTime startDate, List<RoomTypeDetails> rtDetailsList) throws Exception {
         List<Schedule> list;

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -22,30 +23,36 @@
                <left>
                   <AnchorPane prefHeight="623.0" prefWidth="200.0" stylesheets="@../../../../styles/fxmladmin.css" BorderPane.alignment="CENTER">
                      <children>
-                        <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="INSERT" textAlignment="CENTER">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#submit" prefHeight="42.0" prefWidth="177.0" text="INSERT" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="12.0" layoutY="70.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="UPDATE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="70.0" mnemonicParsing="false" onAction="#update" prefHeight="42.0" prefWidth="177.0" text="UPDATE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="13.0" layoutY="127.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="177.0" text="DELETE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="183.0" mnemonicParsing="false" onAction="#delete" prefHeight="42.0" prefWidth="177.0" text="DELETE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
                         <FontAwesomeIcon glyphName="WRENCH" layoutX="15.0" layoutY="101.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
-                        <FontAwesomeIcon glyphName="CLOSE" layoutX="20.0" layoutY="158.0" size="2.5em" />
-                        <Button layoutX="13.0" layoutY="357.0" mnemonicParsing="false"  prefHeight="42.0" prefWidth="177.0" text="EXPORT">
+                        <FontAwesomeIcon glyphName="CLOSE" layoutX="17.0" layoutY="216.0" size="2.5em" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="357.0" mnemonicParsing="false" onAction="#exportToExcel" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
                         <FontAwesomeIcon glyphName="FILE" layoutX="19.0" layoutY="387.0" size="2em" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="126.0" mnemonicParsing="false" onAction="#updatePass" prefHeight="42.0" prefWidth="177.0" text="CHANGE PASS" textAlignment="RIGHT">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <FontAwesomeIcon glyphName="LOCK" layoutX="19.0" layoutY="159.0" size="2.5em" />
                      </children>
                      <styleClass>
                         <String fx:value="nav-form" />
@@ -80,78 +87,78 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="115.0" layoutY="19.0" prefHeight="25.0" prefWidth="199.0" />
-                              <Label layoutX="16.0" layoutY="44.0" prefHeight="17.0" prefWidth="275.0" text="ERRUSER" textFill="RED" />
+                              <TextField fx:id="tfUser" layoutX="115.0" layoutY="19.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
+                              <Label fx:id="errUser" layoutX="16.0" layoutY="44.0" prefHeight="18.0" prefWidth="301.0" text="ERRUSER" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="413.0" layoutY="25.0" text="PASSWORD :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="491.0" layoutY="21.0" prefHeight="25.0" prefWidth="199.0" />
-                              <Label layoutX="415.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRPASS" textFill="RED" />
+                              <Label fx:id="errPass" layoutX="415.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRPASS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="811.0" layoutY="23.0" text="RE PASSWORD :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="903.0" layoutY="20.0" prefHeight="25.0" prefWidth="199.0" />
-                              <Label layoutX="813.0" layoutY="44.0" prefHeight="17.0" prefWidth="275.0" text="ERRREPASS" textFill="RED" />
+                              <Label fx:id="errRPass" layoutX="814.0" layoutY="46.0" prefHeight="17.0" prefWidth="275.0" text="ERRREPASS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="15.0" layoutY="85.0" text="FULL NAME :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="116.0" layoutY="80.0" prefHeight="25.0" prefWidth="199.0" />
-                              <Label layoutX="17.0" layoutY="106.0" prefHeight="17.0" prefWidth="275.0" text="ERRNAME" textFill="RED" />
+                              <TextField fx:id="tfName" layoutX="116.0" layoutY="80.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
+                              <Label fx:id="errName" layoutX="17.0" layoutY="106.0" prefHeight="18.0" prefWidth="297.0" text="ERRNAME" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="15.0" layoutY="143.0" text="EMAIL : ">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="116.0" layoutY="138.0" prefHeight="25.0" prefWidth="199.0" />
-                              <Label layoutX="17.0" layoutY="164.0" prefHeight="17.0" prefWidth="275.0" text="ERRMAIL" textFill="RED" />
+                              <TextField fx:id="tfMail" layoutX="116.0" layoutY="138.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
+                              <Label fx:id="errMail" layoutX="17.0" layoutY="164.0" prefHeight="18.0" prefWidth="297.0" text="ERRMAIL" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="16.0" layoutY="204.0" text="POSITION : ">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="18.0" layoutY="225.0" prefHeight="17.0" prefWidth="275.0" text="ERRPOS" textFill="RED" />
+                              <Label fx:id="errPos" layoutX="18.0" layoutY="225.0" prefHeight="18.0" prefWidth="297.0" text="ERRPOS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="414.0" layoutY="87.0" text="GENDER :">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="416.0" layoutY="108.0" prefHeight="17.0" prefWidth="275.0" text="ERRGEN" textFill="RED" />
+                              <Label fx:id="errGender" layoutX="417.0" layoutY="115.0" prefHeight="17.0" prefWidth="275.0" text="ERRGEN" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="415.0" layoutY="145.0" text="BIRTH DAY : ">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="417.0" layoutY="166.0" prefHeight="17.0" prefWidth="275.0" text="ERRBIR" textFill="RED" />
+                              <Label fx:id="errBirth" layoutX="417.0" layoutY="166.0" prefHeight="17.0" prefWidth="275.0" text="ERRBIR" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="416.0" layoutY="206.0" text="STATUS : ">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="418.0" layoutY="227.0" prefHeight="17.0" prefWidth="275.0" text="ERRSTATUS" textFill="RED" />
+                              <Label fx:id="errStatus" layoutX="418.0" layoutY="227.0" prefHeight="17.0" prefWidth="275.0" text="ERRSTATUS" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="812.0" layoutY="85.0" text="PHONE NUM : ">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="904.0" layoutY="83.0" prefHeight="25.0" prefWidth="199.0" />
-                              <Label layoutX="814.0" layoutY="106.0" prefHeight="17.0" prefWidth="275.0" text="ERRPHONE" textFill="RED" />
+                              <TextField fx:id="tfPhone" layoutX="904.0" layoutY="83.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
+                              <Label fx:id="errPhone" layoutX="814.0" layoutY="115.0" prefHeight="17.0" prefWidth="275.0" text="ERRPHONE" textFill="RED" visible="false" />
                               <Label alignment="BOTTOM_CENTER" layoutX="812.0" layoutY="143.0" text="TIME START:">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="814.0" layoutY="164.0" prefHeight="17.0" prefWidth="275.0" text="ERRSTA" textFill="RED" />
-                              <ComboBox layoutX="491.0" layoutY="86.0" prefHeight="25.0" prefWidth="201.0" styleClass="fill-text" />
-                              <ComboBox layoutX="117.0" layoutY="198.0" prefHeight="25.0" prefWidth="198.0" styleClass="fill-text" />
-                              <ComboBox layoutX="493.0" layoutY="198.0" prefHeight="23.0" prefWidth="199.0" styleClass="fill-text" />
-                              <DatePicker layoutX="493.0" layoutY="141.0" prefHeight="25.0" prefWidth="199.0" />
-                              <DatePicker layoutX="904.0" layoutY="140.0" prefHeight="25.0" prefWidth="198.0" />
+                              <Label fx:id="errTimeSta" layoutX="814.0" layoutY="166.0" prefHeight="17.0" prefWidth="275.0" text="ERRSTA" textFill="RED" visible="false" />
+                              <ComboBox fx:id="cbGender" layoutX="491.0" layoutY="86.0" prefHeight="25.0" prefWidth="201.0" styleClass="fill-text" />
+                              <ComboBox fx:id="cbPosition" layoutX="117.0" layoutY="198.0" prefHeight="25.0" prefWidth="198.0" styleClass="fill-text" />
+                              <ComboBox fx:id="cbStatus" layoutX="493.0" layoutY="198.0" prefHeight="23.0" prefWidth="199.0" styleClass="fill-text" />
+                              <DatePicker fx:id="dpBirth" layoutX="493.0" layoutY="141.0" prefHeight="25.0" prefWidth="199.0" />
+                              <DatePicker fx:id="dpTimeSta" layoutX="904.0" layoutY="140.0" prefHeight="25.0" prefWidth="198.0" />
+                              <PasswordField fx:id="tfPass" layoutX="490.0" layoutY="13.0" prefHeight="26.0" prefWidth="201.0" styleClass="fill-text" />
+                              <PasswordField fx:id="tfRPass" layoutX="903.0" layoutY="13.0" prefHeight="26.0" prefWidth="201.0" styleClass="fill-text" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="6.0" layoutY="293.0" prefHeight="400.0" prefWidth="1169.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="293.0">
@@ -160,21 +167,22 @@
                               <String fx:value="ins-form" />
                            </styleClass>
                            <children>
-                              <TableView layoutX="5.0" layoutY="54.0" prefHeight="344.0" prefWidth="1160.0">
+                              <TableView fx:id="tvEmployee" layoutX="5.0" layoutY="54.0" onMouseClicked="#selectEmployee" prefHeight="344.0" prefWidth="1160.0">
                                 <columns>
-                                  <TableColumn prefWidth="127.0" text="USER" />
-                                  <TableColumn prefWidth="161.0" text="FULL NAME" />
-                                    <TableColumn prefWidth="127.0" text="GENDER" />
-                                    <TableColumn prefWidth="173.0" text="EMAIL" />
-                                    <TableColumn prefWidth="139.0" text="PHONE NUMBER" />
-                                    <TableColumn prefWidth="110.0" text="POSITION" />
-                                    <TableColumn prefWidth="84.0" text="STATUS" />
-                                    <TableColumn minWidth="0.0" prefWidth="141.0" text="START DATE" />
-                                    <TableColumn prefWidth="95.0" text="WORKING DAY" />
+                                  <TableColumn fx:id="tcUser" prefWidth="127.0" text="USER" />
+                                  <TableColumn fx:id="tcName" prefWidth="161.0" text="FULL NAME" />
+                                    <TableColumn fx:id="tcGender" prefWidth="127.0" text="GENDER" />
+                                    <TableColumn fx:id="tcEmail" prefWidth="173.0" text="EMAIL" />
+                                    <TableColumn fx:id="tcPhone" prefWidth="139.0" text="PHONE NUMBER" />
+                                    <TableColumn fx:id="tcPosition" prefWidth="110.0" text="POSITION" />
+                                    <TableColumn fx:id="tcStatus" prefWidth="84.0" text="STATUS" />
+                                    <TableColumn fx:id="tcStartDate" minWidth="0.0" prefWidth="127.0" text="START DATE" />
+                                    <TableColumn fx:id="tcWorking" prefWidth="109.0" text="WORKING DAY" />
                                 </columns>
                               </TableView>
-                              <TextField alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />
+                              <TextField fx:id="tfSearch" alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />
                               <FontAwesomeIcon glyphName="SEARCH" layoutX="462.0" layoutY="34.0" size="1.5em" />
+                              <DatePicker fx:id="pdMonth" layoutX="968.0" layoutY="14.0" />
                            </children>
                         </AnchorPane>
                      </children>

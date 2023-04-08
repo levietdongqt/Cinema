@@ -11,6 +11,9 @@ module com.group2.cineme.sem2 {
     requires fontawesomefx;
     requires tornadofx;
     requires javassist;
+    requires poi.ooxml;
+
+
     opens Utils;
     opens POJO;
     opens com.group2.cineme.sem2 to javafx.fxml;
