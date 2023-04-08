@@ -50,7 +50,7 @@ import org.hibernate.engine.jdbc.internal.BinaryStreamImpl;
  * @author DONG
  */
 public class FXMLProductController implements Initializable {
-
+    
     @FXML
     Pagination pagination;
     @FXML
@@ -63,12 +63,12 @@ public class FXMLProductController implements Initializable {
     int total = 0;
     int quatity = 0;
     Map<Product, Integer> mapProducts = new HashMap<>();
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapProducts.putAll(SessionUtil.getProductList());
         try {
-
+            
             proDAO.getAll("Product").forEach((t) -> {
                 productArray[i++] = t;
             });
@@ -76,9 +76,9 @@ public class FXMLProductController implements Initializable {
             Logger.getLogger(FXMLProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
         data();
-
+        
     }
-
+    
     @FXML
     private void setUpBtnConfirm() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -98,9 +98,9 @@ public class FXMLProductController implements Initializable {
         } else {
             alert.close();
         }
-
+        
     }
-
+    
     public void data() {
         pagination.setPageCount(2);
         pagination.setCurrentPageIndex(0);
@@ -115,7 +115,7 @@ public class FXMLProductController implements Initializable {
             }
         });
     }
-
+    
     private GridPane page1(int startIndex, int endIndex) {
         GridPane grid = new GridPane();
         ColumnConstraints colContrain = new ColumnConstraints();
@@ -123,10 +123,10 @@ public class FXMLProductController implements Initializable {
         colContrain.setMinWidth(300);
         ColumnConstraints colContrain1 = new ColumnConstraints();
         colContrain1.setMinWidth(150);
-
+        
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setMinHeight(50);
-
+        
         grid.getRowConstraints().add(0, rowConstraints);
 
         //grid.setGridLinesVisible(true);
@@ -140,7 +140,7 @@ public class FXMLProductController implements Initializable {
         grid.add(l1, 1, 0);
         grid.add(l2, 2, 0);
         grid.add(l3, 3, 0);
-
+        
         for (int j = startIndex; j < endIndex; j++) {
             Product item = productArray[j];
             //Product Image
@@ -163,6 +163,7 @@ public class FXMLProductController implements Initializable {
                 }
             });
             Spinner<Integer> spinner = new Spinner<>(0, 100, quatity);
+            spinner.setStyle("-fx-background-color: #C0C0C0; -fx-border-radius: 5; -fx-border-width:0px 0px 0px 0px;");
             spinner.setMaxWidth(60);
             grid.add(spinner, 2, j + 1);
             spinner.valueProperty().addListener((ov, oldValue, newValue) -> {
@@ -179,5 +180,5 @@ public class FXMLProductController implements Initializable {
         grid.getColumnConstraints().addAll(colContrain, colContrain1, colContrain1, colContrain1);
         return grid;
     }
-
+    
 }
