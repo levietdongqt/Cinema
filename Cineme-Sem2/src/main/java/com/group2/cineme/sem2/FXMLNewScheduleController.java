@@ -23,6 +23,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.DateTimeException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleObjectProperty;
@@ -55,6 +57,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -121,6 +124,8 @@ public class FXMLNewScheduleController implements Initializable {
     private FontAwesomeIcon validIcon;
     @FXML
     private TextField noteText;
+    @FXML
+    private Button btnViewSchedule;
     private Schedule newSchedule = new Schedule();
     private ScheduleDAO scheduleDAO = new ScheduleDAO();
     private RoomTypeDetailsDAO rtDetailDAO = new RoomTypeDetailsDAO();
@@ -141,9 +146,7 @@ public class FXMLNewScheduleController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        LocalDateTime time = LocalDateTime.now();
-        IdSchedule = "SC" + time.getYear() + time.getMonthValue() + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
-        txtID.setText(IdSchedule);
+        setID();
         checkValidDate();
         comboBoxRoomHanlder();
         yesNoHanlder();
@@ -154,6 +157,12 @@ public class FXMLNewScheduleController implements Initializable {
             Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void setID() {
+        LocalDateTime time = LocalDateTime.now();
+        IdSchedule = "SC" + time.getYear() + time.getMonthValue() + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
+        txtID.setText(IdSchedule);
     }
 
     void getFilm(Film film) throws Exception {
@@ -169,8 +178,26 @@ public class FXMLNewScheduleController implements Initializable {
     @FXML
     private void setUpComboBoxFilm() {
         selectedFilm = comboBoxFilm.getValue();
+        btnViewSchedule.setDisable(false);      
     }
-
+    @FXML
+    private void setUpViewSchedule()
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLViewAllSchedule.fxml"));
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> p) {
+                    return new FXMLViewAllScheduleController(selectedDate.atStartOfDay(),selectedFilm);
+                }
+            });
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void yesNoHanlder() {
         checkBoxYesNo.setSelected(true);
         checkBoxYesNo.setOnAction((t) -> {
@@ -187,6 +214,7 @@ public class FXMLNewScheduleController implements Initializable {
         }
         newSchedule.setNote(noteText.getText());
     }
+
     @FXML
     private void setUpTextFeildTime() {
         try {
@@ -194,17 +222,24 @@ public class FXMLNewScheduleController implements Initializable {
             int minute = Integer.parseInt(minuteText.getText());
             selectedTime = LocalTime.of(hour, minute);
             errTime.setVisible(false);
+            validIcon.setVisible(false);
+            invalidIcon.setVisible(false);
             endHourText.setText(String.valueOf(selectedTime.plusMinutes(selectedFilm.getDuration()).getHour()));
             endMinuteText.setText(String.valueOf(selectedTime.plusMinutes(selectedFilm.getDuration()).getMinute()));
             chechValidTime();
             validIcon.setVisible(true);
-            invalidIcon.setVisible(false);
-        } catch (MyException ex) {
+        } catch (NumberFormatException ex) {   //Lỗi parser
+            errTime.setVisible(true);
+        } catch (DateTimeException ex) {   //Lỗi convert to LocalTime
+            errTime.setVisible(true);
+        } catch (MyException ex) {   //Lỗi Không chọn room
             Alert alert = AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR);
             alert.show();
-        } catch (Exception e) {
-            errTime.setVisible(true);
-            validIcon.setVisible(false);
+
+        } catch (NullPointerException ee) {  // Lỗi không chọn Film
+            Alert alert = AlertUtils.getAlert("Choose Film, Please!!", Alert.AlertType.ERROR);
+            alert.show();
+        } catch (TimeoutException e) {
             invalidIcon.setVisible(true);
         }
 
@@ -271,7 +306,7 @@ public class FXMLNewScheduleController implements Initializable {
 
     }
 
-    private void chechValidTime() throws Exception {
+    private void chechValidTime() throws MyException, TimeoutException {
 //        List<Schedule> list = new ArrayList<>();
 //        list = scheduleDAO.checkTime(selectedDate.atTime(selectedTime),
 //                selectedDate.atTime(selectedTime.plusMinutes(selectedFilm.getDuration())), rtDetailList);
@@ -282,15 +317,19 @@ public class FXMLNewScheduleController implements Initializable {
         if (selectedRoom == null) {
             throw new MyException("Choose Room, Please!!");
         }
-        LocalDateTime selectedStartTime = selectedTime.atDate(LocalDate.now());
-        LocalDateTime selectedEndTime = selectedTime.atDate(LocalDate.now()).plusMinutes(selectedFilm.getDuration());
+        LocalDateTime selectedStartTime = selectedTime.atDate(selectedDate);
+        LocalDateTime selectedEndTime = selectedTime.atDate(selectedDate).plusMinutes(selectedFilm.getDuration());
+        System.out.println("Time: ");
+        System.out.println("selecStart: " + selectedStartTime);
+        System.out.println("selecEnd: " + selectedEndTime);
         for (Schedule schedule : scheduleList) {
             LocalDateTime startTime = schedule.getStartTime();
             LocalDateTime endTime = schedule.getEndTime();
-
+            System.out.println("Start: " + startTime);
+            System.out.println("End: " + endTime);
             if (!((selectedStartTime.isAfter(endTime) && selectedEndTime.isAfter(endTime))
                     || (selectedStartTime.isBefore(startTime) && selectedEndTime.isBefore(startTime)))) {
-                throw new Exception("Time is conflict !! \n Please choose a nother time.");
+                throw new TimeoutException("Time is conflict !! \n Please choose a nother time.");
             }
         };
 
@@ -314,7 +353,7 @@ public class FXMLNewScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.getRoomTypeDetail().getRoomType().getrTypeName());
         });
-        colRoomType.setPrefWidth(200);
+        colRoomType.setPrefWidth(180);
 
         TableColumn<Schedule, String> colTime = new TableColumn("Time");
         colTime.setCellValueFactory((p) -> {
@@ -324,14 +363,17 @@ public class FXMLNewScheduleController implements Initializable {
                     + schedule.getEndTime().toLocalTime();
             return new SimpleObjectProperty<>(time);
         });
-        colTime.setPrefWidth(130);
+        colTime.setPrefWidth(100);
         colTime.setStyle("-fx-text-alignment: center;");
+        TableColumn<Schedule, Boolean> colNote = new TableColumn("Note");
+        colNote.setCellValueFactory(new PropertyValueFactory("note"));
+        colNote.setPrefWidth(100);
         TableColumn<Schedule, Boolean> colStatus = new TableColumn("Status");
         colStatus.setCellValueFactory((p) -> {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.isStatus());
         });
-        colStatus.setPrefWidth(100);
+        colStatus.setPrefWidth(70);
         TableColumn<Schedule, Button> colBtnEdit = new TableColumn();
         colBtnEdit.setCellValueFactory((p) -> {
             Schedule schedule = p.getValue();
@@ -342,7 +384,7 @@ public class FXMLNewScheduleController implements Initializable {
                     fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
                         @Override
                         public Object call(Class<?> p) {
-                            return new FXMLEditScheduleController(schedule, scheduleList, selectedRoom, selectedRtDetail, rtDetailList);
+                            return new FXMLEditScheduleController(selectedDate,schedule, scheduleList, selectedRoom, selectedRtDetail, rtDetailList);
                         }
                     });
                     Stage stage = new Stage();
@@ -375,12 +417,12 @@ public class FXMLNewScheduleController implements Initializable {
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }                    
             });
             return new SimpleObjectProperty<>(btn);
         });
         colBtnDelete.setPrefWidth(70);
-        this.tableViewTime.getColumns().addAll(colRoom, colRoomType, colFilm, colTime, colStatus, colBtnEdit, colBtnDelete);
+        this.tableViewTime.getColumns().addAll(colRoom, colRoomType, colFilm, colTime,colNote, colStatus, colBtnEdit, colBtnDelete);
     }
 
     private void loadTableView() {
@@ -390,7 +432,7 @@ public class FXMLNewScheduleController implements Initializable {
         try {
             //Lấy dữ liệu trong 1 ngày selectedDate
             scheduleList = scheduleDAO.
-                    getToView(selectedDate.atStartOfDay(), selectedDate.plusDays(1).atStartOfDay(), rtDetailList);
+                    getToView(selectedDate.atStartOfDay(), rtDetailList);
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
@@ -411,17 +453,24 @@ public class FXMLNewScheduleController implements Initializable {
             newSchedule.setStatus(true);
             newSchedule.setRoomTypeDetail(selectedRtDetail);
             newSchedule.setStartTime(selectedDate.atTime(selectedTime));
-            newSchedule.setEndTime(selectedDate.atTime(selectedTime.plusMinutes(selectedFilm.getDuration())));
+            newSchedule.setEndTime(selectedDate.atTime(selectedTime).plusMinutes(selectedFilm.getDuration()));
             newSchedule.setScheduleID(IdSchedule);
             newSchedule.setStatus(activeNow);
             newSchedule.setFilm(selectedFilm);
             scheduleDAO.add(newSchedule);
             Alert alert = AlertUtils.getAlert("Process successfully!", Alert.AlertType.INFORMATION);
             alert.show();
+            setID();
+            loadTableView();
+
+        } catch (NullPointerException ee) {  // Lỗi không chọn Film
+            Alert alert = AlertUtils.getAlert("Choose Film, Please!!", Alert.AlertType.ERROR);
+            alert.show();
         } catch (Exception e) {
             Alert alert = AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR);
             alert.show();
         }
+
     }
 
 }

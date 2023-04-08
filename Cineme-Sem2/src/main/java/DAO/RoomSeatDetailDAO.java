@@ -31,42 +31,61 @@ public class RoomSeatDetailDAO extends GenericDAO<RoomSeatDetailDAO, Integer> {
         try {
             ses.getTransaction().begin();
             smapDAO.getAll("SeatMap").forEach(p -> seatList.add(p));
-            Collections.sort(seatList, (o1, o2) -> o1.getsMapID().compareTo(o2.getsMapID()));
-            String[] rtype = {"RT4"};
+            Collections.sort(seatList, (o1, o2) -> {
+                int seatNum1 = o1.getSeatNum();
+                int seatNum2 = o2.getSeatNum();
+                int result = o1.getSeatRow().compareTo(o2.getSeatRow());
+                if (result != 0) {
+                    return result;
+                }
+                return seatNum1 - seatNum2;
+            });
+            String[] rtype = {"RT1", "RT2"};
             for (String roomtype : rtype) {
                 RoomType rt = ses.get(RoomType.class, roomtype);
-
                 for (SeatMap item : seatList) {
                     RoomSeatDetail rtdetail = new RoomSeatDetail();
                     rtdetail.setRoomType(rt);
                     rtdetail.setSeatMap(item);
                     SeatType st;
-//                if("I,K".contains(item.getSeatRow())){
-//                    break;
-//                }
-                    if ("A1,A2,A14,A13,B1,B14,K1,K14".contains(item.getsMapID())) {
+                    if ("I,K".contains(item.getSeatRow())) {  //Bỏ 2 dãy kế I,K
+                        break;
+                    }
+                    if ("A1,A14".contains(item.getsMapID())) {  //Bỏ 2 ghế A1,A14
                         continue;
                     }
-                    if ("A,B".contains(item.getSeatRow())) {
-                        st = ses.get(SeatType.class, "ST4");
-                        rtdetail.setSeatType(st);
-                    } else if ("K".contains(item.getSeatRow())) {
-                        st = ses.get(SeatType.class, "ST6");
-                        rtdetail.setSeatType(st);
-                    } else {
-                        st = ses.get(SeatType.class, "ST5");
-                        rtdetail.setSeatType(st);
+                    if (roomtype.equalsIgnoreCase("RT1")) {
+                        if ("A,B".contains(item.getSeatRow())) {    //Set A,B là loại ghế ST1
+                            st = ses.get(SeatType.class, "ST1");
+                            rtdetail.setSeatType(st);
+                        } else if ("K".contains(item.getSeatRow())) {
+                            st = ses.get(SeatType.class, "ST3");
+                            rtdetail.setSeatType(st);
+                        } else {
+                            st = ses.get(SeatType.class, "ST2");
+                            rtdetail.setSeatType(st);
+                        }
+                        String a = item.getsMapID() + "." + rt.getrTypeID() + "." + st.getsTypeID();
+                        rtdetail.setRsDetailsID(a);
+                        ses.save(rtdetail);
                     }
-                    String a = item.getsMapID() + "." + rt.getrTypeID() + "." + st.getsTypeID();
-                    rtdetail.setRsDetailsID(a);
-                    ses.save(rtdetail);
+                    if (roomtype.equalsIgnoreCase("RT2")) {
+                        if ("A,B".contains(item.getSeatRow())) {    //Set A,B là loại ghế ST4
+                            st = ses.get(SeatType.class, "ST4");
+                            rtdetail.setSeatType(st);
+                        } else if ("K".contains(item.getSeatRow())) {
+                            st = ses.get(SeatType.class, "ST6");
+                            rtdetail.setSeatType(st);
+                        } else {
+                            st = ses.get(SeatType.class, "ST5");
+                            rtdetail.setSeatType(st);
+                        }
+                        String a = item.getsMapID() + "." + rt.getrTypeID() + "." + st.getsTypeID();
+                        rtdetail.setRsDetailsID(a);
+                        ses.save(rtdetail);
+                    }
                 }
             }
-//            Room room = ses.get(Room.class, "P01");
-//            System.out.println("Name: " + room.getRoomName());
-//            room.getRoomType().getRoomSeatDetailList().forEach(p->seatList.add(p.getSeatMap().getsMapID()));
-//            seatList.stream().forEach(p ->System.out.println(p + "\n"));
-//            System.out.println(seatList.size());
             ses.getTransaction().commit();
             ses.close();
         } catch (Exception ex) {

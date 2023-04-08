@@ -34,14 +34,15 @@ import org.hibernate.query.Query;
  * @author DONG
  */
 public class ScheduleDAO extends GenericDAO<Schedule, String> {
-    public List<RoomSeatDetail> getRoomSeatDetails(Schedule schedule){
+
+    public List<RoomSeatDetail> getRoomSeatDetails(Schedule schedule) {
         List<RoomSeatDetail> list = new ArrayList<>();
-        try(Session ses = HibernateUtils.getFACTORY().openSession()) {
+        try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
             ses.load(schedule, schedule.getScheduleID());
             //Schedule schedule1 = ses.get(Schedule.class, schedule.getScheduleID());
             schedule.getRoomTypeDetail().getRoomType().getRoomSeatDetailList()
-                .forEach(p -> list.add(p));
+                    .forEach(p -> list.add(p));
             ses.getTransaction().commit();
             ses.close();
 
@@ -50,11 +51,13 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
-    public List<Schedule> getToView(LocalDateTime startDate, LocalDateTime endDate, List<RoomTypeDetails> rtDetailsList) throws Exception {
+
+    public List<Schedule> getToView(LocalDateTime startDate, List<RoomTypeDetails> rtDetailsList) throws Exception {
         List<Schedule> list;
+        LocalDateTime endDate = startDate.plusDays(1);
         try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
-           String hql = "FROM Schedule WHERE roomTypeDetail IN (:list) AND (startTime > :currDate AND startTime < :nextDate)";
+            String hql = "FROM Schedule WHERE roomTypeDetail IN (:list) AND (startTime > :currDate AND startTime < :nextDate)";
             Query query = ses.createQuery(hql).setCacheable(true);
             query.setParameter("list", rtDetailsList);
             query.setParameter("currDate", startDate);
@@ -96,13 +99,14 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         return list;
 
     }
-    public List<Schedule> checkStatus(Film film){
+
+    public List<Schedule> checkStatus(Film film) {
         List<Schedule> list = null;
-        try (Session ses = HibernateUtils.getFACTORY().openSession()){
+        try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
             String hql = "FROM Schedule WHERE film = :film AND status = :status";
             Query query = ses.createQuery(hql);
-            query.setParameter("film",film);
+            query.setParameter("film", film);
             query.setParameter("status", true);
             list = query.getResultList();
             ses.getTransaction().commit();
@@ -111,27 +115,43 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
-    public List<Schedule> getScheduleByDateTime(String id,LocalDateTime sTime){
-        List<Schedule> listFilm= new ArrayList<>();
+
+    public List<Schedule> getScheduleByDateTime(String id, LocalDateTime sTime) {
+        List<Schedule> listFilm = new ArrayList<>();
         Session session = HibernateUtils.getFACTORY().openSession();
         try {
-            CriteriaBuilder builder =session.getCriteriaBuilder();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Schedule> criteriaQuery = builder.createQuery(Schedule.class);
             Root<Schedule> root = criteriaQuery.from(Schedule.class);
-            Join<Schedule,Film> filmJoin = root.join("film");
-            
-            LocalDateTime endDate = LocalDateTime.of(sTime.toLocalDate(),LocalTime.MAX);
-            Predicate greaterThan = builder.greaterThanOrEqualTo(root.get("startTime"),sTime);
-            Predicate lessThan = builder.lessThanOrEqualTo(root.get("startTime"),endDate);
+            Join<Schedule, Film> filmJoin = root.join("film");
+
+            LocalDateTime endDate = LocalDateTime.of(sTime.toLocalDate(), LocalTime.MAX);
+            Predicate greaterThan = builder.greaterThanOrEqualTo(root.get("startTime"), sTime);
+            Predicate lessThan = builder.lessThanOrEqualTo(root.get("startTime"), endDate);
             Predicate filmIdEqual = builder.equal(filmJoin.get("filmID"), id);
-            
-            criteriaQuery.where(builder.and(greaterThan,lessThan,filmIdEqual));
+
+            criteriaQuery.where(builder.and(greaterThan, lessThan, filmIdEqual));
             listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
-        }finally{
+        } finally {
             session.close();
         }
         return listFilm;
-    }   
+    }
+
+    public void updateStatusSchedule(LocalDateTime date) {
+        try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
+            ses.getTransaction().begin();
+            String hql = "Update Schedule set status = :status where startTime < :date and startTime > :beforDate";
+            Query query = ses.createQuery(hql);
+            query.setParameter("date", date);
+            query.setParameter("beforDate", date.minusDays(1));
+            query.setParameter("status", true);
+            int i = query.executeUpdate();
+            System.out.println("i: "+ i + ". Update Status of Schedule for 5th day after today");
+            ses.getTransaction().commit();
+        }
+    }
+
 }

@@ -19,7 +19,7 @@
    <children>
       <VBox prefHeight="299.0" prefWidth="368.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane prefHeight="275.0" prefWidth="426.0">
+            <GridPane prefHeight="283.0" prefWidth="383.0">
               <columnConstraints>
                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="204.20001220703125" minWidth="10.0" prefWidth="112.4" />
                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="344.7999755859375" minWidth="10.0" prefWidth="270.80000000000007" />
@@ -30,8 +30,9 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="50.600012207031256" minHeight="10.0" prefHeight="34.60002746582032" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="50.600012207031256" minHeight="10.0" prefHeight="34.60002746582032" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="43.00000610351563" minHeight="10.0" prefHeight="43.00000610351563" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.600012207031256" minHeight="10.0" prefHeight="35.59998779296876" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.600012207031256" minHeight="10.0" prefHeight="32.40001220703124" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Film">
@@ -50,7 +51,7 @@
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font></Label>
-                  <Label text="Status" GridPane.rowIndex="5">
+                  <Label text="Status" GridPane.rowIndex="6">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font></Label>
@@ -86,14 +87,25 @@
                         <Label fx:id="errHour" text="Time is invalid" textFill="#e1200e" visible="false" />
                      </children>
                   </VBox>
-                  <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" onAction="#setUpActiveCheckBox" text="Active" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" onAction="#setUpActiveCheckBox" text="Active" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <ComboBox fx:id="comboBoxRoomType" prefHeight="26.0" prefWidth="170.0" styleClass="fill-text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Room Type" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font></Label>
-                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#setUpBtnChange" text="Change" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#setUpBtnChange" text="Change" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                   <Label fx:id="filmLabel" text="Label" GridPane.columnIndex="1" />
+                  <Label text="Note" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <VBox GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <TextField fx:id="noteFeild" onKeyReleased="#setUpNote" prefHeight="26.0" prefWidth="210.0" styleClass="fill-text" />
+                        <Label fx:id="errNote" text="Note is invalid" textFill="#e41010" visible="false" />
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
          </children>

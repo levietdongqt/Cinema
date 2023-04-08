@@ -137,7 +137,16 @@
             <Label fx:id="errTime" text="Time is invalid" textFill="#df0c0c" visible="false" />
          </children>
       </VBox>
-      <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" styleClass="fill-text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" styleClass="fill-text" />
+            <Button fx:id="btnViewSchedule" disable="true" mnemonicParsing="false" onAction="#setUpViewSchedule" text="View Schdule">
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
       <VBox alignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="7">
          <children>
             <Label fx:id="infoTableLabel" alignment="CENTER" text="Infomation">
