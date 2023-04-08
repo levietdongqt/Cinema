@@ -9,6 +9,7 @@ import POJO.Film;
 import POJO.Room;
 import POJO.Schedule;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -16,6 +17,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,7 +44,7 @@ public class FXMLViewAllScheduleController implements Initializable {
     @FXML
     private Label filmLabel;
     @FXML
-    private Label dateLabel;
+    private DatePicker datePicker;
     LocalDateTime selectedDate;
     Film film;
 
@@ -50,6 +53,35 @@ public class FXMLViewAllScheduleController implements Initializable {
         // TODO
         creatTableView();
         loadDataTableView();
+        setUpStartPage();
+
+    }
+
+    private void setUpStartPage() {
+        filmLabel.setText(film.getFilmName());
+        datePicker.setValue(selectedDate.toLocalDate());
+        LocalDate now = LocalDate.now();
+        selectedDate = datePicker.getValue().atStartOfDay();
+        LocalDate maxDate = now.plusDays(30);
+
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                // Nếu ngày nằm ngoài khoảng thời gian cụ thể thì vô hiệu hóa
+                if (date.isBefore(now) || date.isAfter(maxDate)) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #C0C0C0;"); // Thiết lập màu nền khác cho ngày bị vô hiệu hóa
+                }
+            }
+        });
+    }
+
+    @FXML
+    private void setUpDatePicker() {
+                selectedDate = datePicker.getValue().atStartOfDay();
+
+                loadDataTableView();
     }
 
     private void creatTableView() {
@@ -84,12 +116,10 @@ public class FXMLViewAllScheduleController implements Initializable {
             return new SimpleObjectProperty<>(schedule.isStatus());
         });
         colStatus.setPrefWidth(100);
-        tableView.getColumns().addAll(colRoom, colRoomType, colTime,colNote, colStatus);
+        tableView.getColumns().addAll(colRoom, colRoomType, colTime, colNote, colStatus);
     }
 
     private void loadDataTableView() {
-        filmLabel.setText(film.getFilmName());
-        dateLabel.setText(selectedDate.toLocalDate().toString());
         FilmDAO filmDAO = new FilmDAO();
         tableView.setItems(FXCollections.observableArrayList(filmDAO.getScheduleByFilmDate(film, selectedDate)));
     }

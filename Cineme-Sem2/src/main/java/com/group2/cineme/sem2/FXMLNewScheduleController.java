@@ -417,7 +417,7 @@ public class FXMLNewScheduleController implements Initializable {
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }                    
             });
             return new SimpleObjectProperty<>(btn);
         });
