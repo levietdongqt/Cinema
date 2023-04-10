@@ -12,8 +12,6 @@ import Utils.AlertUtils;
 import Utils.MyException;
 import static com.group2.cineme.sem2.App.scene;
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -32,12 +30,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -56,11 +58,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
-
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -77,16 +84,12 @@ public class FXMLShowScheduleController implements Initializable {
     @FXML
     private ComboBox<Film> comboBoxFilm;
 
-    
     @FXML
     private VBox vboxShowSchedule;
-    
-    private Popup popup = new Popup();
-    
-    private List<Film> films; 
-    
-    
 
+    private Popup popup = new Popup();
+
+    private List<Film> films;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -102,16 +105,15 @@ public class FXMLShowScheduleController implements Initializable {
         popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
             vboxShowSchedule.setDisable(false);
         });
-    } 
-    
-
+    }
 
     //ButtonHandler
     public void bookTicketHandler() {
         loadDataView(LocalDateTime.now());
         loadViewComboBoxFilm();
     }
-    public void buttonUndoHandler(){
+
+    public void buttonUndoHandler() {
         this.tableViewSchedule.setItems(FXCollections.observableList(films));
     }
 
@@ -153,63 +155,97 @@ public class FXMLShowScheduleController implements Initializable {
 
         TableColumn colDuration = new TableColumn("Duration");
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
-        colDuration.setPrefWidth(200);
+        colDuration.setPrefWidth(100);
 
         TableColumn<Film, HBox> colTime = new TableColumn("Time");
         colTime.setCellValueFactory((p) -> {
             HBox hbox = new HBox();
+            VBox vbox = new VBox();
             ComboBox<Schedule> cb = new ComboBox<>();
+            Text text = new Text();
             cb.setUserData(hbox);
             Film film = p.getValue();
             Set<Schedule> lists = film.getListSchedule();
             List<Schedule> result = lists.stream().sorted((o1, o2) -> o1.getStartTime().compareTo(o2.getStartTime())).collect(Collectors.toList());
+            for (Schedule schedule : result) {
+                if(schedule.getStartTime().toLocalDate().equals(LocalDate.now())&&(schedule.getStartTime().toLocalTime().toSecondOfDay()-(LocalTime.now().toSecondOfDay())<=300)){
+                    System.out.println(LocalTime.now().toSecondOfDay());
+                    System.out.println(schedule.getStartTime().toLocalTime().toSecondOfDay());
+                  text = changeColorTextFlow("SHOW TIME IS COMING", Color.WHITE, Color.RED);
+                }
+            }
             cb.setItems(FXCollections.observableList(new ArrayList<>(result)));
             Button button = new Button("Buy ticket");
+            button.setPrefHeight(50);
             button.setOnAction((t) -> {
                 try {
                     Schedule sc = cb.getValue();
-                    if(sc==null){
+                    if (sc == null) {
                         throw new Error("You need choose Schedule");
-                    }else{
+                    } else {
                         HBox hboxWithComboBox = (HBox) button.getUserData();
-                    FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("FXMLTicket.fxml"));
-                    fxmlLoader1.setControllerFactory(new Callback<Class<?>, Object>() {
-                        @Override
-                        public Object call(Class<?> param) {
-                            return new FXMLTicketController(sc);
-                        }
+                        FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("FXMLTicket.fxml"));
+                        fxmlLoader1.setControllerFactory(new Callback<Class<?>, Object>() {
+                            @Override
+                            public Object call(Class<?> param) {
+                                return new FXMLTicketController(sc);
+                            }
 
-                    });
-                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
-                    scene.setRoot(fxmlLoader.load());
-                    FXMLHomeController homeController = fxmlLoader.getController();
-                    homeController.setCenter(fxmlLoader1.load());
+                        });
+                        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+                        scene.setRoot(fxmlLoader.load());
+                        FXMLHomeController homeController = fxmlLoader.getController();
+                        homeController.setCenter(fxmlLoader1.load());
                     }
-                    
+
 //                ComboBox<Schedule> cbInHbox = (ComboBox<Schedule>) hboxWithComboBox.getChildren().get(0);
                     /*lay gia tri cua sc tai day*/
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Error e){
+                } catch (Error e) {
                     Alert alert = AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR);
                     alert.setTitle("Error!!!!!!");
-                    
+
                     alert.show();
-                    
+
                 }
             });
-            
-            hbox.getChildren().addAll(cb, button);
+            vbox.getChildren().addAll(cb, text);
+            hbox.getChildren().addAll(vbox,button);
             button.setUserData(hbox);
             hbox.setStyle("-fx-alignment: CENTER;");
-            hbox.setSpacing(100);
+            hbox.setSpacing(50);
             for (Node node : hbox.getChildren()) {
                 node.setStyle("-fx-alignment: CENTER;");
             }
             return new SimpleObjectProperty<>(hbox);
         });
         colTime.setPrefWidth(550);
-        this.tableViewSchedule.getColumns().addAll(colDay, colFilmView, colNameFilm, colDuration, colTime);
+        TableColumn<Film, Integer> colView = new TableColumn<>();
+        colView.setCellValueFactory(new PropertyValueFactory<>("viewFilm"));
+        colView.setCellFactory((p) -> {
+            return new TableCell<>() {
+                @Override
+                protected void updateItem(Integer t, boolean bln) {
+                    super.updateItem(t, bln);
+                    setAlignment(Pos.CENTER);
+                    Text tf = new Text();
+                    if (bln) {
+                        setText(null);
+                    } else if (t == 0) {
+                        tf = changeColorTextFlow("NEWWW", Color.WHITE, Color.AQUA);                                 
+                    } else if (t == films.get(0).getViewFilm()) {
+                        tf = changeColorTextFlow("TOP 1!!!", Color.WHITE, Color.RED);
+                    } else if (t!=0 && t == films.get(1).getViewFilm()) {
+                        tf = changeColorTextFlow("TOP 2!!!", Color.WHITE, Color.ORANGE);
+                    } else {
+                        tf = changeColorTextFlow("HOT!!!", Color.WHITE, Color.CHARTREUSE);  
+                    }
+                    setGraphic(tf);
+                }
+            };
+        });
+        this.tableViewSchedule.getColumns().addAll(colView,colDay,colFilmView, colNameFilm, colDuration, colTime);
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewSchedule.getColumns();
         for (TableColumn<Film, ?> column : columns) {
             column.setStyle("-fx-alignment: CENTER;");
@@ -222,11 +258,12 @@ public class FXMLShowScheduleController implements Initializable {
 //        LocalDateTime currentDate = LocalDateTime.now();
         FilmDAO fd = new FilmDAO();
         films = fd.getScheduleByDateTime(dateTime);
+        
         System.out.println(films);
         for (Film film : films) {
             film.setListSchedule(new HashSet<>(sd.getScheduleByDateTime(film.getFilmID(), dateTime)));
         }
-
+        films.sort((o1, o2) -> o2.getViewFilm() - o1.getViewFilm());
         this.tableViewSchedule.setItems(FXCollections.observableList(films));
 
     }
@@ -274,30 +311,35 @@ public class FXMLShowScheduleController implements Initializable {
 
     public void setActionForComboBoxFilm() {
         this.comboBoxFilm.setOnAction((o) -> {
+            try {
             List<Film> searchFilm = films.stream().filter((t) -> t.getFilmName().equals(this.comboBoxFilm.getSelectionModel().getSelectedItem().getFilmName())).collect(Collectors.toList());
             this.tableViewSchedule.setItems(FXCollections.observableList(searchFilm));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+           
         });
 
     }
 
-    public void setActionForTableView(){
+    public void setActionForTableView() {
         this.tableViewSchedule.setOnMouseReleased((t) -> {
             try {
-            Film p = this.tableViewSchedule.getSelectionModel().getSelectedItem();
-            System.out.println(p.getFilmName());
-            
+                Film p = this.tableViewSchedule.getSelectionModel().getSelectedItem();
+                System.out.println(p.getFilmName());
+
                 System.out.println(p.getFilmName());
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLViewFilmDetails.fxml"));
-                 fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
-                        @Override
-                        public Object call(Class<?> param) {
-                            return new FXMLViewFilmDetailsController(p);
-                        }
+                fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
+                    @Override
+                    public Object call(Class<?> param) {
+                        return new FXMLViewFilmDetailsController(p);
+                    }
 
-                    });
+                });
                 System.out.println(p.getFilmName());
                 AnchorPane popupContent = fxmlLoader.load();
-               
+
                 popup.getContent().add(popupContent);
                 System.out.println(p.getFilmName());
                 popupContent.setStyle("-fx-background-color:grey;-fx-text-fill: white;");
@@ -306,10 +348,24 @@ public class FXMLShowScheduleController implements Initializable {
                 vboxShowSchedule.setDisable(true);
             } catch (IOException ex) {
                 Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 System.out.println(e.getMessage());
             }
         });
     }
-   
+
+    public Text changeColorTextFlow(String content, Color beginColor, Color endColor) {
+        Text text = new Text(content);
+        text.setFill(Color.WHITE);
+        text.setStyle("-fx-font-weight: bold;");
+        
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.5), new KeyValue(text.fillProperty(), beginColor)),
+                new KeyFrame(Duration.seconds(1.0), new KeyValue(text.fillProperty(), endColor))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+        return text;
+    }
+
 }
