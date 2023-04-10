@@ -33,7 +33,7 @@ public class App extends Application {
         ses.clear();
 
         ses.close();
-        scene = new Scene(loadFXML("FXMLLogin"));
+        scene = new Scene(loadFXML("FXMLBill"));
         stage.setScene(scene);
         stage.show();
     }

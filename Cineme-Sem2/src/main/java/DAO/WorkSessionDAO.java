@@ -7,26 +7,11 @@ package DAO;
 import POJO.Employee;
 import POJO.WorkSession;
 import Utils.HibernateUtils;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import net.sf.ehcache.hibernate.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 public class WorkSessionDAO extends GenericDAO<WorkSession, Float> {
