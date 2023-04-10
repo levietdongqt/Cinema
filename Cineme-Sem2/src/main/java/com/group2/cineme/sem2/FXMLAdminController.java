@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +25,7 @@ import java.util.List;
 import static java.util.Locale.filter;
 import java.util.Map;
 import java.util.Observer;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +41,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -68,9 +71,9 @@ import static org.hibernate.criterion.Projections.id;
  * @author BE BAU
  */
 public class FXMLAdminController implements Initializable {
-
+    WorkSession ws = new WorkSession();
     Employee em = new Employee();
-
+    WorkSessionDAO workdao = new WorkSessionDAO();
     EmployeeDAO dao = new EmployeeDAO();
     List<Employee> emList;
 
@@ -176,6 +179,15 @@ public class FXMLAdminController implements Initializable {
     @FXML
     private DatePicker pdMonth;
 
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnInsert;
+
+    @FXML
+    private Button btnUpdate;
+
     public void checkUser() {
         tfUser.setOnKeyTyped(event -> {
             String user = tfUser.getText().trim();
@@ -183,8 +195,10 @@ public class FXMLAdminController implements Initializable {
                 errUser.setVisible(false);
                 em.setUserName(user);
             } catch (IOException e) {
+
                 errUser.setVisible(true);
                 errUser.setText(e.getMessage());
+
             }
         });
     }
@@ -378,92 +392,122 @@ public class FXMLAdminController implements Initializable {
 
     }
 
+    // tạo mới nhân viên 
     public void submit(ActionEvent event) throws Exception {
-        try {
-            dao.add(em);
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm New Employee");
+        alert.setHeaderText("Are you sure you want to add new employee ?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            try {
+                   String user = tfUser.getText();
+                  em.setUserName(user);
+                    ws.setEmployee(em);
+                    ws.setStartTime(LocalDateTime.now());
+                    ws.setEndTime(LocalDateTime.now());
+                dao.add(em);
+                workdao.add(ws);
+                showEmployee();
+                clear(event);
 
-            showEmployee();
-            this.tfUser.clear();
-            this.tfName.clear();
-            this.tfRPass.clear();
-            this.tfPhone.clear();
-            this.tfPass.clear();
-            this.tfMail.clear();
-            cbGender.getSelectionModel().selectFirst();
-            cbPosition.getSelectionModel().selectFirst();
-            cbStatus.getSelectionModel().selectFirst();
-
-        } catch (Exception e) {
-            e.getMessage();
+            } catch (Exception e) {
+                e.getMessage();
+            }
         }
     }
 
+    // update thông tin nhân viên
     public void update(ActionEvent event) throws Exception {
-        try {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Employee Information Update");
+        alert.setHeaderText("Are you sure you want to update the employee information?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            try {
+                em.setUserName(tfUser.getText().trim());
+                em.setEmpName(tfName.getText().trim());
+                em.setEmail(tfMail.getText().trim());
+                em.setPosition(cbPosition.getValue().trim());
+                em.setEmpPhone(tfPhone.getText().trim());
 
-            em.setUserName(tfUser.getText().trim());
-            em.setEmpName(tfName.getText().trim());
-            em.setEmail(tfMail.getText().trim());
-            em.setPosition(cbPosition.getValue().trim());
-            em.setEmpPhone(tfPhone.getText().trim());
+                dao.updateEmployee(em);
 
-            dao.updateEmployee(em);
+                showEmployee();
+                clear(event);
 
-            showEmployee();
-            this.tfUser.clear();
-            this.tfName.clear();
-            this.tfRPass.clear();
-            this.tfPhone.clear();
-            this.tfPass.clear();
-            this.tfMail.clear();
-            cbGender.getSelectionModel().selectFirst();
-            cbPosition.getSelectionModel().selectFirst();
-            cbStatus.getSelectionModel().selectFirst();
-        } catch (Exception e) {
-            e.getMessage();
+            } catch (Exception e) {
+                e.getMessage();
+            }
         }
     }
 
+    // đổi pass đăng nhập
     public void updatePass(ActionEvent event) throws Exception {
-        try {
-            Employee emp = new Employee();
-            emp.setUserName(tfUser.getText().trim());
-            dao.updatePassword(emp, tfRPass.getText().trim());
-            String pass = tfPass.getText().trim();
-            System.out.println(pass);
-            showEmployee();
-            this.tfUser.clear();
-            this.tfName.clear();
-            this.tfRPass.clear();
-            this.tfPhone.clear();
-            this.tfPass.clear();
-            this.tfMail.clear();
-            cbGender.getSelectionModel().selectFirst();
-            cbPosition.getSelectionModel().selectFirst();
-            cbStatus.getSelectionModel().selectFirst();
-        } catch (Exception e) {
-            e.getMessage();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Update Password");
+        alert.setHeaderText("Are you sure you want to update the password?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            try {
+                Employee emp = new Employee();
+                emp.setUserName(tfUser.getText().trim());
+                dao.updatePassword(emp, tfRPass.getText().trim());
+                String pass = tfPass.getText().trim();
+                System.out.println(pass);
+                showEmployee();
+                clear(event);
+
+            } catch (Exception e) {
+                e.getMessage();
+            }
         }
+
     }
 
+    // Xoá nhân viên khỏi database
     public void delete(ActionEvent event) throws Exception {
-        try {
-            dao.delete(tfUser.getText().trim(), Employee.class);
-            System.out.println(tfUser.getText().trim());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Are you sure you want to delete the data?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            try {
+                dao.delete(tfUser.getText().trim(), Employee.class);
+                System.out.println(tfUser.getText().trim());
 
-            showEmployee();
-            this.tfUser.clear();
-            this.tfName.clear();
-            this.tfRPass.clear();
-            this.tfPhone.clear();
-            this.tfPass.clear();
-            this.tfMail.clear();
-            cbGender.getSelectionModel().selectFirst();
-            cbPosition.getSelectionModel().selectFirst();
-            cbStatus.getSelectionModel().selectFirst();
-        } catch (Exception e) {
-            e.getMessage();
+                showEmployee();
+                clear(event);
+            } catch (Exception e) {
+                e.getMessage();
+            }
         }
+
+    }
+
+    // xoá value trên form 
+    public void clear(ActionEvent event) throws Exception {
+
+        this.tfUser.clear();
+        this.errUser.setVisible(false);
+        this.tfName.clear();
+        this.errName.setVisible(false);
+        this.tfRPass.clear();
+        this.errRPass.setVisible(false);
+        this.tfPhone.clear();
+        this.errPhone.setVisible(false);
+        this.tfPass.clear();
+        this.errPass.setVisible(false);
+        this.tfMail.clear();
+        this.errMail.setVisible(false);
+        cbGender.getSelectionModel().selectFirst();
+        this.errGender.setVisible(false);
+        cbPosition.getSelectionModel().selectFirst();
+        this.errPos.setVisible(false);
+        cbStatus.getSelectionModel().selectFirst();
+        this.errStatus.setVisible(false);
+        this.errBirth.setVisible(false);
+
     }
 
     public void month() {
@@ -497,7 +541,9 @@ public class FXMLAdminController implements Initializable {
     }
 
     public void showEmployee() {
-
+        String power = "Manager";
+        String user = SessionUtil.getEmployee().getUserName();
+        
         WorkSessionDAO wdao = new WorkSessionDAO();
         month();
         LocalDate selectedDate = pdMonth.getValue();
@@ -510,16 +556,23 @@ public class FXMLAdminController implements Initializable {
 
         Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(selectedMonth);
         try {
-            emList = dao.getAll("Employee");
+            
 
+            if (power.equals(SessionUtil.getEmployee().getPosition())) {
+               emList = dao.getAll("Employee"); 
+                
+            }else{
+                emList = dao.getById(user);
+            }
+               
                 for (Employee employee : emList) {
-                for (String employee1 : totalWorkTime.keySet()) {
-                    if (employee1.equals(employee.getUserName())) {
-                        employee.setTotalWorkTime(totalWorkTime.get(employee1));
+                    for (String employee1 : totalWorkTime.keySet()) {
+                        if (employee1.equals(employee.getUserName())) {
+                            employee.setTotalWorkTime(totalWorkTime.get(employee1));
+                        }
                     }
                 }
-            }
-
+           
             tcUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
             tcName.setCellValueFactory(new PropertyValueFactory<>("empName"));
             tcGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -667,6 +720,19 @@ public class FXMLAdminController implements Initializable {
         }
     }
 
+    public void power() {
+        String pow = "Manager";
+        if (pow.equals(SessionUtil.getEmployee().getPosition())) {
+            btnDelete.setDisable(false);
+            btnInsert.setDisable(false);
+            btnUpdate.setDisable(false);
+        } else {
+            btnDelete.setDisable(true);
+            btnInsert.setDisable(true);
+            btnUpdate.setDisable(true);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -682,7 +748,7 @@ public class FXMLAdminController implements Initializable {
         checkStart();
         checkGender();
         showEmployee();
-
+        power();
     }
 
 }

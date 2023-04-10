@@ -20,10 +20,12 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -70,7 +72,7 @@ public class FXMLHomeController implements Initializable {
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
         loadInHome("FXMLFilm");
-        
+
     }
 
     //Xu ly Button handler
@@ -86,11 +88,15 @@ public class FXMLHomeController implements Initializable {
 
     // xử lý logout và cập nhật endTime
     public void logOut() throws IOException, Exception {
+
         WorkSessionDAO worddao = new WorkSessionDAO();
         worddao.update();
+
         App.setRoot("FXMLLogin");
         Stage stage = (Stage) App.scene.getWindow();
         stage.setFullScreen(false);
+        stage.setMaximized(false);
+
     }
 
     public void loadAdmin() throws IOException {
