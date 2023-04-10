@@ -178,17 +178,17 @@ public class FXMLNewScheduleController implements Initializable {
     @FXML
     private void setUpComboBoxFilm() {
         selectedFilm = comboBoxFilm.getValue();
-        btnViewSchedule.setDisable(false);      
+        btnViewSchedule.setDisable(false);
     }
+
     @FXML
-    private void setUpViewSchedule()
-    {
+    private void setUpViewSchedule() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLViewAllSchedule.fxml"));
             loader.setControllerFactory(new Callback<Class<?>, Object>() {
                 @Override
                 public Object call(Class<?> p) {
-                    return new FXMLViewAllScheduleController(selectedDate.atStartOfDay(),selectedFilm);
+                    return new FXMLViewAllScheduleController(selectedDate.atStartOfDay(), selectedFilm);
                 }
             });
             Stage stage = new Stage();
@@ -198,6 +198,7 @@ public class FXMLNewScheduleController implements Initializable {
             Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void yesNoHanlder() {
         checkBoxYesNo.setSelected(true);
         checkBoxYesNo.setOnAction((t) -> {
@@ -384,7 +385,7 @@ public class FXMLNewScheduleController implements Initializable {
                     fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
                         @Override
                         public Object call(Class<?> p) {
-                            return new FXMLEditScheduleController(selectedDate,schedule, scheduleList, selectedRoom, selectedRtDetail, rtDetailList);
+                            return new FXMLEditScheduleController(selectedDate, schedule, scheduleList, selectedRoom, selectedRtDetail, rtDetailList);
                         }
                     });
                     Stage stage = new Stage();
@@ -407,22 +408,33 @@ public class FXMLNewScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             Button btn = new Button("Delete");
             btn.setOnAction((t) -> {
-                try {
-                    String info = "Are you sure? \n Delete " + schedule.getStartTime().toLocalTime() + " - " + schedule.getEndTime().toLocalTime();
-                    Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get().getText().equalsIgnoreCase("OK")) {
-                        scheduleDAO.delete(schedule.getScheduleID(), Schedule.class);
-                        loadTableView();
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-                }                    
+                deleteSchedule(schedule);
             });
             return new SimpleObjectProperty<>(btn);
         });
         colBtnDelete.setPrefWidth(70);
-        this.tableViewTime.getColumns().addAll(colRoom, colRoomType, colFilm, colTime,colNote, colStatus, colBtnEdit, colBtnDelete);
+        this.tableViewTime.getColumns().addAll(colRoom, colRoomType, colFilm, colTime, colNote, colStatus, colBtnEdit, colBtnDelete);
+    }
+
+    private void deleteSchedule(Schedule schedule) {
+        try {
+            if (scheduleDAO.getTicketList(schedule).isEmpty()) {
+                String info = "Are you sure? \n Delete " + schedule.getStartTime().toLocalTime() + " - " + schedule.getEndTime().toLocalTime();
+                Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get().getText().equalsIgnoreCase("OK")) {
+                    scheduleDAO.delete(schedule.getScheduleID(), Schedule.class);
+                    loadTableView();
+                }
+            } else {
+                String info = "You can't delete this schedule because it has some Ticket\n"
+                        + "You can update Status to off this schedule";
+                Alert alert =  AlertUtils.getAlert(info, Alert.AlertType.ERROR);
+                alert.show();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void loadTableView() {
