@@ -13,7 +13,7 @@ import POJO.Film;
 import POJO.FilmGenre;
 import POJO.Schedule;
 import Utils.HibernateUtils;
-import Utils.updateStatusSchedule;
+import Utils.updateStatusScheduleForFuture;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,7 +36,7 @@ import org.hibernate.Session;
 public class testServices {
     public static void main(String[] args) throws Exception {
 
-            Thread thread = new Thread(new updateStatusSchedule(0, 01));
+            Thread thread = new Thread(new updateStatusScheduleForFuture(0, 01));
             thread.start();
 
 
