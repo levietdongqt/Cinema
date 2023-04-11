@@ -197,13 +197,13 @@ public class FXMLTicketController implements Initializable {
             ticket.setSchedule(this.scheule);
             ticket.setStatus(Boolean.TRUE);
             ticket.setSeatMap(t.getSeatMap().getsMapID());
-
+            ticket.setPrice(t.getSeatType().getSeatPrice());
             ticketList.add(ticket);
         });
         SessionUtil.setTicketList(ticketList);
-        SessionUtil.getTicketList().forEach((t) -> {
-            System.out.println(t.getSeatMap());
-        });
+//        SessionUtil.getTicketList().forEach((t) -> {
+//            System.out.println(t.getSeatMap());
+//        });
 
     }
 
