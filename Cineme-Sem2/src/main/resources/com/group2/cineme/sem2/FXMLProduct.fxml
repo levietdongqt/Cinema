@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="578.0" prefWidth="841.0" style="-fx-background-color: white;" stylesheets="@../../../../styles/fxmladmin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLProductController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="578.0" prefWidth="841.0" style="-fx-background-color: FFD4D4;" stylesheets="@../../../../styles/fxmladmin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLProductController">
    <children>
       <VBox alignment="CENTER" prefHeight="519.0" prefWidth="697.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="ORDER FOOD" textFill="#d1390a">
+            <Label text="ORDER FOOD" textFill="#b2a4ff">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Pagination fx:id="pagination" maxHeight="450.0" maxWidth="800.0" pageCount="2" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: grey;" stylesheets="@../../../../styles/fxmladmin.css">
+            <Pagination fx:id="pagination" maxHeight="450.0" maxWidth="800.0" pageCount="2" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: FFFFE8;" stylesheets="@../../../../styles/fxmladmin.css">
                <styleClass>
                   <String fx:value="ins-form" />
                   <String fx:value="shadow" />
@@ -38,11 +38,15 @@
                   </Label>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#setUpBtnConfirm" text="CONFIRM">
+            <Button mnemonicParsing="false" onAction="#setUpBtnConfirm" text="CONFIRM" textFill="#400707">
                <font>
                   <Font size="13.0" />
                </font></Button>
          </children>
       </VBox>
    </children>
+   <styleClass>
+      <String fx:value="ins-form" />
+      <String fx:value="shadow" />
+   </styleClass>
 </AnchorPane>

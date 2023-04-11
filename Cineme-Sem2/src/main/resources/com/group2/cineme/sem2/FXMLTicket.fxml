@@ -18,9 +18,9 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="423.0" prefWidth="349.0" style="-fx-background-color: #B5B5B5;">
+            <VBox alignment="CENTER" prefHeight="423.0" prefWidth="349.0" style="-fx-background-color: ECE8DD;">
                <styleClass>
-                  <String fx:value="nav-form" />
+                  <String fx:value="ins-form" />
                   <String fx:value="shadow" />
                </styleClass>
                <children>
@@ -40,31 +40,31 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="filmLabel" text="Film" textFill="WHITE" GridPane.columnIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label fx:id="roomLabel" text="Room" textFill="WHITE" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="16.0" />
-                           </font></Label>
-                        <Label text="Seat" textFill="WHITE" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="16.0" />
-                           </font></Label>
-                        <Label text="Total" textFill="WHITE" GridPane.rowIndex="6">
+                        <Label fx:id="filmLabel" text="Film" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
-                        <Label fx:id="totalLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Label fx:id="roomLabel" text="Room" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="Seat" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="Total" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
+                        <Label fx:id="totalLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="seatLabel" text="Seat" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="seatLabel" text="Seat" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="scheduleLabel" text="Details" textFill="WHITE" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                        <Label fx:id="scheduleLabel" text="Details" GridPane.columnSpan="2" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
@@ -77,22 +77,22 @@
                            </font>
                         </FontAwesomeIcon>
                         <Button fx:id="btnFood" mnemonicParsing="false" onAction="#setUpBtnFood" text="FOOD" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-                        <Label text="Food" textFill="WHITE" GridPane.rowIndex="4">
+                        <Label text="Food" GridPane.rowIndex="4">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="foodLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label fx:id="foodLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Ticket" textFill="WHITE" GridPane.rowIndex="5">
+                        <Label text="Ticket" GridPane.rowIndex="5">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="ticketLabel" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="ticketLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -100,9 +100,9 @@
                      </children>
                   </GridPane>
                </children></VBox>
-            <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="423.0" prefWidth="760.0">
+            <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="423.0" prefWidth="760.0" style="-fx-background-color: F5F5F5;">
                <children>
-                  <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="512.0" text="SCREEN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                  <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="512.0" style="-fx-background-color: #AAE3E2;" text="SCREEN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="22.0" />
                      </font>

@@ -2,7 +2,8 @@ package com.group2.cineme.sem2;
 
 import DAO.WorkSessionDAO;
 import Utils.HibernateUtils;
-import Utils.updateStatusSchedule;
+import Utils.updateStatusScheduleForFuture;
+import Utils.updateStatusScheduleForPass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +11,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Stop;
 import org.hibernate.Session;
 
 /**
@@ -22,8 +19,11 @@ import org.hibernate.Session;
 public class App extends Application {
 
     static {
-        Thread thread = new Thread(new updateStatusSchedule(0, 1));
-        thread.start();
+        Thread thread1 = new Thread(new updateStatusScheduleForFuture(0, 1));
+        thread1.start();
+        Thread thread2 = new Thread(new updateStatusScheduleForPass());
+        thread2.start();
+
     }
     public static Scene scene;
 
