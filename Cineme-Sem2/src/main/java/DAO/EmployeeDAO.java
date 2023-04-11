@@ -7,6 +7,7 @@ import Utils.SessionUtil;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
@@ -23,23 +25,21 @@ import org.hibernate.Session;
  */
 public class EmployeeDAO extends GenericDAO<Employee, String> {
 
-    public List<Employee> getById(String user) throws Exception{
+    public List<Employee> getById(String user) throws Exception {
         List<Employee> list = new LinkedList<>();
         Session session = HibernateUtils.getFACTORY().openSession();
         try {
-        Query query = session.createQuery("FROM Employee WHERE userName = :user", Employee.class).setCacheable(true);
-        query.setParameter("user", user);
-        list = query.getResultList();
+            Query query = session.createQuery("FROM Employee WHERE userName = :user", Employee.class).setCacheable(true);
+            query.setParameter("user", user);
+            list = query.getResultList();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
         return list;
-        
+
     }
-    
-    
-    
+
     //mã hoá password sql 
     public String encodePassword(String password) {
         try {
@@ -106,60 +106,82 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 
     }
 
-
-
     public void updateEmployee(Employee employee) {
-    try (Session session = HibernateUtils.getFACTORY().openSession()) {
-        session.beginTransaction();
-        Employee existingEmployee = session.get(Employee.class, employee.getUserName());
-        if (existingEmployee != null) {
-            // Update all fields except password
-            existingEmployee.setEmpName(employee.getEmpName());
-            existingEmployee.setPosition(employee.getPosition());
-            existingEmployee.setBirthDate(employee.getBirthDate());
-            existingEmployee.setStartDate(employee.getStartDate());
-            existingEmployee.setEmail(employee.getEmail());
-            existingEmployee.setStatus(employee.isStatus());
-            existingEmployee.setGender(employee.isGender());
-            existingEmployee.setEmpPhone(employee.getEmpPhone());
-            existingEmployee.setTotalWorkTime(employee.getTotalWorkTime());
-            session.update(existingEmployee);
-            session.getTransaction().commit();
-            setMessUpdate("Cập nhật dữ liệu thành công");
-        } else {
-            setMessUpdate("Không tìm thấy dữ liệu để cập nhật");
+        try ( Session session = HibernateUtils.getFACTORY().openSession()) {
+            session.beginTransaction();
+            Employee existingEmployee = session.get(Employee.class, employee.getUserName());
+            if (existingEmployee != null) {
+                // Update all fields except password
+                existingEmployee.setEmpName(employee.getEmpName());
+                existingEmployee.setPosition(employee.getPosition());
+                existingEmployee.setBirthDate(employee.getBirthDate());
+                existingEmployee.setStartDate(employee.getStartDate());
+                existingEmployee.setEmail(employee.getEmail());
+                existingEmployee.setStatus(employee.isStatus());
+                existingEmployee.setGender(employee.isGender());
+                existingEmployee.setEmpPhone(employee.getEmpPhone());
+                existingEmployee.setTotalWorkTime(employee.getTotalWorkTime());
+                session.update(existingEmployee);
+                session.getTransaction().commit();
+                setMessUpdate("Cập nhật dữ liệu thành công");
+            } else {
+                setMessUpdate("Không tìm thấy dữ liệu để cập nhật");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            setMessUpdate("Cập nhật dữ liệu không thành công");
         }
-    } catch (Exception e) {
-        System.out.println(e.getMessage());
-        setMessUpdate("Cập nhật dữ liệu không thành công");
     }
-}
 
-    
-    public void updatePassword( Employee employee, String pass) throws Exception {
-    Session session = HibernateUtils.getFACTORY().openSession();
-    try {
-       
-        session.getTransaction().begin();
-        Employee existingEmployee = session.get(Employee.class, employee.getUserName());
-        if (existingEmployee != null) {
-            existingEmployee.setPassword(pass);
-            session.update(existingEmployee);
-            session.getTransaction().commit();
-            setMessUpdate("Chỉnh sửa mật khẩu thành công");
-        } else {
-            setMessUpdate("Không tìm thấy thông tin employee để cập nhật mật khẩu");
+    public void updatePassword(Employee employee, String pass) throws Exception {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+
+            session.getTransaction().begin();
+            Employee existingEmployee = session.get(Employee.class, employee.getUserName());
+            if (existingEmployee != null) {
+                existingEmployee.setPassword(pass);
+                session.update(existingEmployee);
+                session.getTransaction().commit();
+                setMessUpdate("Chỉnh sửa mật khẩu thành công");
+            } else {
+                setMessUpdate("Không tìm thấy thông tin employee để cập nhật mật khẩu");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+            setMessUpdate("Chỉnh sửa mật khẩu không thành công");
+        } finally {
+            session.close();
         }
-    } catch (Exception e) {
-        System.out.println(e.getMessage());
-        session.getTransaction().rollback();
-        setMessUpdate("Chỉnh sửa mật khẩu không thành công");
-    } finally {
-        session.close();
     }
-}
 
-   
-  
-    
+    public void insert() throws Exception {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        Employee e = new Employee();
+        e.setUserName("admin5");
+        e.setEmpName("BOSSSSSS");
+        e.setEmail("admin@gmail.com");
+        e.setEmpPhone("0123456789");
+        e.setPassword("123456");
+        e.setGender(true);
+        e.setStatus(true);
+        e.setPosition("Manager");
+        e.setStartDate(LocalDate.now());
+        
+        try {
+            session.getTransaction().begin();
+            session.save(e);
+            session.getTransaction().commit();
+            setMessAdd("Thêm dữ liệu thành công");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            session.getTransaction().rollback();
+            setMessAdd("Thêm dữ liệu không thành công");
+
+        } finally {
+            session.close();
+        }
+    }
+
 }
