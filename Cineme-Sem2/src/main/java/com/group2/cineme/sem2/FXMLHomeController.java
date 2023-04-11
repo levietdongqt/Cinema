@@ -9,7 +9,6 @@ import DAO.WorkSessionDAO;
 import DAO.FilmDAO;
 import POJO.Film;
 import Utils.SessionUtil;
-import Utils.updateStatusSchedule;
 import com.jfoenix.controls.JFXHamburger;
 import java.io.File;
 import java.io.IOException;

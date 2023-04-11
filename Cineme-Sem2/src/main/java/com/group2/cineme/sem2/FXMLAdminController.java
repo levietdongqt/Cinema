@@ -34,13 +34,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -50,17 +45,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
-import javassist.compiler.TokenId;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.sl.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import static org.hibernate.criterion.Projections.id;
 
 /**
  * FXML Controller class
@@ -512,7 +500,7 @@ public class FXMLAdminController implements Initializable {
         try {
             emList = dao.getAll("Employee");
 
-            for (Employee employee : emList) {
+                for (Employee employee : emList) {
                 for (String employee1 : totalWorkTime.keySet()) {
                     if (employee1.equals(employee.getUserName())) {
                         employee.setTotalWorkTime(totalWorkTime.get(employee1));
@@ -616,7 +604,6 @@ public class FXMLAdminController implements Initializable {
         Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(selectedMonth);
         try {
             emList = dao.getAll("Employee");
-
             for (Employee employee : emList) {
                 for (String employee1 : totalWorkTime.keySet()) {
                     if (employee1.equals(employee.getUserName())) {
@@ -624,7 +611,6 @@ public class FXMLAdminController implements Initializable {
                     }
                 }
             }
-
             // tạo tên cột excel
             XSSFRow headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("User Name");

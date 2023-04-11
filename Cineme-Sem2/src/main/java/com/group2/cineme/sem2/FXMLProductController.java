@@ -67,8 +67,11 @@ public class FXMLProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapProducts.putAll(SessionUtil.getProductList());
-        try {
-            
+        mapProducts.forEach((t, u) -> {
+            total += u * t.getPrice().intValue();
+            totalLabel.setText(String.valueOf(total));
+        });
+        try {            
             proDAO.getAll("Product").forEach((t) -> {
                 productArray[i++] = t;
             });
@@ -155,11 +158,9 @@ public class FXMLProductController implements Initializable {
             grid.add(new Label(item.getProductName()), 1, j + 1);
             //Lấy lại dữ liệu sản phẩm đã orders khi muốn thay đổi ý định mua sắm
             quatity = 0;
-            SessionUtil.getProductList().forEach((t, u) -> {
+            mapProducts.forEach((t, u) -> {
                 if (t.getProductName().equalsIgnoreCase(item.getProductName())) {
-                    quatity = u;
-                    total += u * t.getPrice().intValue();
-                    totalLabel.setText(String.valueOf(total));
+                    quatity = u;                    
                 }
             });
             Spinner<Integer> spinner = new Spinner<>(0, 100, quatity);

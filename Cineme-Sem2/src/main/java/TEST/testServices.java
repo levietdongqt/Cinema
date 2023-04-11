@@ -17,7 +17,7 @@ import POJO.RoomTypeDetails;
 import POJO.Schedule;
 import POJO.Ticket;
 import Utils.HibernateUtils;
-import Utils.updateStatusSchedule;
+import Utils.updateStatusScheduleForFuture;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,13 +40,7 @@ import org.hibernate.Session;
 public class testServices {
     public static void main(String[] args) throws Exception {
 
-            ScheduleDAO sd = new ScheduleDAO();
-            Schedule sc = sd.getById("SC202347173253",Schedule.class);
-            RoomType rt = sc.getRoomTypeDetail().getRoomType();
-            System.out.println(rt);
-            
-            
-            
+
 
 
 

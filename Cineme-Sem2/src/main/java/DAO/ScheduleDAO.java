@@ -8,6 +8,7 @@ import POJO.Film;
 import POJO.RoomSeatDetail;
 import POJO.RoomTypeDetails;
 import POJO.Schedule;
+import POJO.Ticket;
 import Utils.AlertUtils;
 import Utils.HibernateUtils;
 import com.group2.cineme.sem2.FXMLTicketController;
@@ -51,7 +52,22 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
-    
+        public List<Ticket> getTicketList(Schedule schedule){
+        List<Ticket> list = new ArrayList<>();
+        try(Session ses = HibernateUtils.getFACTORY().openSession()) {
+            ses.getTransaction().begin();
+            ses.load(schedule, schedule.getScheduleID());
+            //Schedule schedule1 = ses.get(Schedule.class, schedule.getScheduleID());
+            schedule.getListTicket()
+                .forEach(p -> list.add(p));
+            ses.getTransaction().commit();
+            ses.close();
+
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 
     public List<Schedule> getToView(LocalDateTime startDate, List<RoomTypeDetails> rtDetailsList) throws Exception {
         List<Schedule> list;
@@ -142,18 +158,42 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         return listFilm;
     }
 
-    public void updateStatusSchedule(LocalDateTime date) {
+    public void updateStatusScheduleForfuture(LocalDateTime date) {
         try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
-            String hql = "Update Schedule set status = :status where startTime < :date and startTime > :beforDate";
-            Query query = ses.createQuery(hql);
-            query.setParameter("date", date);
-            query.setParameter("beforDate", date.minusDays(1));
-            query.setParameter("status", true);
-            int i = query.executeUpdate();
-            System.out.println("i: "+ i + ". Update Status of Schedule for 5th day after today");
+            String hql1 = "Update Schedule set status = true where startTime < :date and startTime > :beforDate";
+            Query query1 = ses.createQuery(hql1);
+            query1.setParameter("date", date);
+            query1.setParameter("beforDate", date.minusDays(1));
+            int i = query1.executeUpdate();
+            System.out.println( "Update Status of " + i +" Schedule for 5th day after today");
             ses.getTransaction().commit();
         }
+    }
+    public void updateStatusScheduleForPass(LocalDateTime date) {
+        try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
+            ses.getTransaction().begin();
+            String hql2 = "Update Schedule set status = false where startTime < :now and status = true";
+            Query query2 = ses.createQuery(hql2);
+            query2.setParameter("now", LocalDateTime.now());
+            int j = query2.executeUpdate();
+            System.out.println( "Update Status of " + j + " schedule befor now");
+            ses.getTransaction().commit();
+        }
+    }
+    public List<Schedule> getScheuleListByToday(){
+        
+        List<Schedule> list = new ArrayList<>();
+                try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
+            ses.getTransaction().begin();
+                String hql2 = "FROM Schedule where startTime > :startToday and startTime < :endToday and status = true ORDER BY startTime ASC";
+            Query query2 = ses.createQuery(hql2);
+            query2.setParameter("startToday", LocalDate.now().atStartOfDay());
+            query2.setParameter("endToday", LocalDate.now().atStartOfDay().plusDays(1));
+            list = query2.getResultList();
+            ses.getTransaction().commit();
+        }
+        return list;
     }
 
 }
