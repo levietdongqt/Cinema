@@ -11,7 +11,11 @@ import DAO.ScheduleDAO;
 import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
+import POJO.RoomSeatDetail;
+import POJO.RoomType;
+import POJO.RoomTypeDetails;
 import POJO.Schedule;
+import POJO.Ticket;
 import Utils.HibernateUtils;
 import Utils.updateStatusScheduleForFuture;
 import java.time.Instant;
@@ -35,15 +39,6 @@ import org.hibernate.Session;
  */
 public class testServices {
     public static void main(String[] args) throws Exception {
-
-            Thread thread = new Thread(new updateStatusScheduleForFuture(0, 01));
-            thread.start();
-
-
-
-        
-        
-        
 
     }
 }

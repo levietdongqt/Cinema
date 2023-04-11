@@ -6,9 +6,11 @@ package com.group2.cineme.sem2;
 
 
 import DAO.BillDAO;
+import DAO.FilmDAO;
 import DAO.ScheduleDAO;
 import DAO.TicketDAO;
 import POJO.Bill;
+import POJO.Film;
 import POJO.ProductBill;
 import POJO.RoomSeatDetail;
 import POJO.Schedule;
@@ -88,10 +90,14 @@ public class FXMLTicketController implements Initializable {
 
     @FXML
     private void saveToDB() throws Exception {
+        FilmDAO fd = new FilmDAO();
         BillDAO billDAO = new BillDAO();
         TicketDAO ticDAO = new TicketDAO();
         Bill bill = billDAO.getById(3, Bill.class);
         List<ProductBill> proBillList = new ArrayList<>();
+        Film film = scheule.getFilm();
+        int currentView = film.getViewFilm();
+        int selectView = currentView + selectedSeatList.size();
         selectedSeatList.forEach((t) -> {
             try {
                 Ticket ticket = new Ticket();
@@ -115,6 +121,8 @@ public class FXMLTicketController implements Initializable {
             proBillList.add(proBill);
         });
         ticDAO.addListTicketAndProduct(SessionUtil.getTicketList(), proBillList);
+        film.setViewFilm(selectView);
+        fd.update(film);
     }
 
     public void getSchedule() {
@@ -189,13 +197,13 @@ public class FXMLTicketController implements Initializable {
             ticket.setSchedule(this.scheule);
             ticket.setStatus(Boolean.TRUE);
             ticket.setSeatMap(t.getSeatMap().getsMapID());
-
+            ticket.setPrice(t.getSeatType().getSeatPrice());
             ticketList.add(ticket);
         });
         SessionUtil.setTicketList(ticketList);
-        SessionUtil.getTicketList().forEach((t) -> {
-            System.out.println(t.getSeatMap());
-        });
+//        SessionUtil.getTicketList().forEach((t) -> {
+//            System.out.println(t.getSeatMap());
+//        });
 
     }
 

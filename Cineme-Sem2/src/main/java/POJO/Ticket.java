@@ -10,7 +10,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticketID")
     private int id;
-
+    private int price;
     @ManyToOne
     @JoinColumn(name = "billID", referencedColumnName = "billID")
     private Bill bill;
@@ -104,6 +104,20 @@ public class Ticket {
      */
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    /**
+     * @return the price
+     */
+    public int getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(int price) {
+        this.price = price;
     }
     
    

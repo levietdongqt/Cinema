@@ -109,6 +109,44 @@
                   </Lighting>
                </effect>
             </Text>
+            <Label fx:id="timeLabel" alignment="TOP_CENTER" layoutX="837.0" layoutY="3.0" prefHeight="19.0" prefWidth="57.0" textFill="#f0ebeb" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <effect>
+                  <Lighting specularConstant="0.55">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.25600025057792664" green="0.6578947305679321" blue="0.24214181303977966" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
+            <Label alignment="CENTER" layoutX="836.0" layoutY="-1.0" prefHeight="23.0" prefWidth="49.0" text="Clock:" textFill="#fffdfd" AnchorPane.rightAnchor="100.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <effect>
+                  <Lighting diffuseConstant="1.24" specularConstant="0.69">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.3989682197570801" green="0.7828947305679321" blue="0.37876155972480774" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
          </children>
       </AnchorPane>
    </top>

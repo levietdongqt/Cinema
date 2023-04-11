@@ -13,13 +13,17 @@ import com.jfoenix.controls.JFXHamburger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,6 +38,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -62,6 +67,9 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private Label labelAdmin2;
+    
+    @FXML
+    private Label timeLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,7 +78,8 @@ public class FXMLHomeController implements Initializable {
         loadDataPopup();
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
-        loadInHome("FXMLFilm");
+        loadInHome("FXMLShowSchedule");
+        loadTimeClock();
 
     }
 
@@ -150,4 +159,14 @@ public class FXMLHomeController implements Initializable {
 //        imageViewHome.setFitHeight(16);
 //        this.buttonHome.setGraphic(imageViewHome);
 //    }
+    public void loadTimeClock(){
+        Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1),event ->{
+            LocalTime localTime = LocalTime.now();
+            this.timeLabel.setText(localTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        })
+        );
+        timeLine.setCycleCount(Animation.INDEFINITE);
+        timeLine.play();
+                
+    }
 }
