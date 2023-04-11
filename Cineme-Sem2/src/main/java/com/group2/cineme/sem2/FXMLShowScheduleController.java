@@ -107,7 +107,7 @@ public class FXMLShowScheduleController implements Initializable {
         popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
             vboxShowSchedule.setDisable(false);
         });
-        loadAgain();
+//        loadAgain();
     }
 
     //ButtonHandler
@@ -174,7 +174,7 @@ public class FXMLShowScheduleController implements Initializable {
                 if (schedule.getStartTime().toLocalDate().equals(LocalDate.now()) && (schedule.getStartTime().toLocalTime().toSecondOfDay() - (LocalTime.now().toSecondOfDay()) <= 300)) {
                     System.out.println(LocalTime.now().toSecondOfDay());
                     System.out.println(schedule.getStartTime().toLocalTime().toSecondOfDay());
-                    text = changeColorTextFlow("SHOW TIME IS COMING", Color.WHITE, Color.RED);
+                    text = changeColorTextFlow(schedule.getStartTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))+" IS COMING", Color.WHITE, Color.RED);
                 }
             }
             cb.setItems(FXCollections.observableList(new ArrayList<>(result)));
@@ -207,7 +207,7 @@ public class FXMLShowScheduleController implements Initializable {
                     Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Error e) {
                     Alert alert = AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR);
-                    alert.setTitle("Error!!!!!!");
+                   
 
                     alert.show();
 
@@ -236,7 +236,7 @@ public class FXMLShowScheduleController implements Initializable {
                     if (bln) {
                         setText(null);
                     } else if (t == 0) {
-                        tf = changeColorTextFlow("NEWWW", Color.WHITE, Color.AQUA);
+                        tf = changeColorTextFlow("NEW!!!", Color.WHITE, Color.BLUE);
                     } else if (t == films.get(0).getViewFilm()) {
                         tf = changeColorTextFlow("TOP 1!!!", Color.WHITE, Color.RED);
                     } else if (t != 0 && t == films.get(1).getViewFilm()) {
@@ -311,7 +311,6 @@ public class FXMLShowScheduleController implements Initializable {
                     return "";
                 }
             }
-
             @Override
             public LocalDateTime fromString(String string) {
                 if (string != null && !string.isEmpty()) {
@@ -394,12 +393,12 @@ public class FXMLShowScheduleController implements Initializable {
         timeline.play();
         return text;
     }
-    public void loadAgain(){
-        Timeline loadAgain = new Timeline(new KeyFrame(Duration.minutes(15),event ->{
-            loadDataView(LocalDateTime.now());
-        }));
-        loadAgain.setCycleCount(Animation.INDEFINITE);
-        loadAgain.play();
-    }
+//    public void loadAgain(){
+//        Timeline loadAgain = new Timeline(new KeyFrame(Duration.minutes(15),event ->{
+//            loadDataView(LocalDateTime.now());
+//        }));
+//        loadAgain.setCycleCount(Animation.INDEFINITE);
+//        loadAgain.play();
+//    }
 
 }
