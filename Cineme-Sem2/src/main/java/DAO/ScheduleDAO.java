@@ -146,8 +146,9 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
             Predicate greaterThan = builder.greaterThanOrEqualTo(root.get("startTime"), sTime);
             Predicate lessThan = builder.lessThanOrEqualTo(root.get("startTime"), endDate);
             Predicate filmIdEqual = builder.equal(filmJoin.get("filmID"), id);
+            Predicate statusEqual = builder.equal(root.get("status"), true);
 
-            criteriaQuery.where(builder.and(greaterThan, lessThan, filmIdEqual));
+            criteriaQuery.where(builder.and(greaterThan, lessThan, filmIdEqual,statusEqual));
             listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
