@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Utils.SessionUtil;
@@ -12,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -26,6 +23,23 @@ import org.hibernate.Session;
  */
 public class EmployeeDAO extends GenericDAO<Employee, String> {
 
+    public List<Employee> getById(String user) throws Exception{
+        List<Employee> list = new LinkedList<>();
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+        Query query = session.createQuery("FROM Employee WHERE userName = :user", Employee.class).setCacheable(true);
+        query.setParameter("user", user);
+        list = query.getResultList();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return list;
+        
+    }
+    
+    
+    
     //mã hoá password sql 
     public String encodePassword(String password) {
         try {
@@ -92,29 +106,6 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 
     }
 
-//public void updatee(Employee object) throws Exception {
-//    Session session = HibernateUtils.getFACTORY().openSession();
-//    try {
-//        session.getTransaction().begin();
-//        Employee existingObject = session.get(Employee.class, object.getUserName());
-//        if (existingObject != null) {
-//            if (StringUtils.isNotBlank(object.getPassword())) {
-//                existingObject.setPassword(object.getPassword());
-//            }
-//            session.merge(object);
-//            session.getTransaction().commit();
-//            setMessUpdate("Chỉnh sửa dữ liệu thành công");
-//        } else {
-//            setMessUpdate("Không tìm thấy dữ liệu để cập nhật");
-//        }
-//    } catch (Exception e) {
-//        System.out.println(e.getMessage());
-//        session.getTransaction().rollback();
-//        setMessUpdate("Chỉnh sửa dữ liệu không thành công");
-//    } finally {
-//        session.close();
-//    }
-//}
 
 
     public void updateEmployee(Employee employee) {
@@ -168,6 +159,7 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
     }
 }
 
-    
+   
+  
     
 }
