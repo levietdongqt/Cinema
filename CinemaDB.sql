@@ -65,7 +65,7 @@ CREATE TABLE Product (
   [productName] VARCHAR(100) not null,
   [type] VARCHAR(50),
   [imgUrl] VARCHAR(255),
-  [price] DECIMAL(10,2) not null,
+  [price] int not null,
   [status] BIT default 1
 );
 go
