@@ -186,6 +186,7 @@ go
 Create table Ticket (
 	[ticketID] int identity primary key,
 	[billID] int,
+	[price] int,
 	[scheduleID] varchar(20),
 	[seatMap] varchar(10),
 	[status] bit default(1),	
