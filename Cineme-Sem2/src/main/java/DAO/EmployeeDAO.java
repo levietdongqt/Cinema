@@ -12,10 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.LinkedList;
-=======
->>>>>>> 264c38e989693df51d296563cad948886878dc40
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
