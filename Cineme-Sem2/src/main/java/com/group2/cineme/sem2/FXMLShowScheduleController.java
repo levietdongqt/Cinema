@@ -30,6 +30,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -68,6 +69,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -105,6 +107,7 @@ public class FXMLShowScheduleController implements Initializable {
         popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
             vboxShowSchedule.setDisable(false);
         });
+        loadAgain();
     }
 
     //ButtonHandler
@@ -130,7 +133,7 @@ public class FXMLShowScheduleController implements Initializable {
         });
         colDay.setPrefWidth(250);
 
-        TableColumn<Film, ImageView> colFilmView = new TableColumn("Image Film");
+        TableColumn<Film, ImageView> colFilmView = new TableColumn("Image");
         colFilmView.setCellValueFactory((p) -> {
             Film sc = p.getValue();
             String filmImage = sc.getImageUrl();
@@ -145,7 +148,7 @@ public class FXMLShowScheduleController implements Initializable {
         });
         colFilmView.setPrefWidth(220);
 
-        TableColumn<Film, String> colNameFilm = new TableColumn("Film Name");
+        TableColumn<Film, String> colNameFilm = new TableColumn("Name");
         colNameFilm.setCellValueFactory((o) -> {
             Film sc = o.getValue();
             String filmName = sc.getFilmName();
@@ -168,10 +171,10 @@ public class FXMLShowScheduleController implements Initializable {
             Set<Schedule> lists = film.getListSchedule();
             List<Schedule> result = lists.stream().sorted((o1, o2) -> o1.getStartTime().compareTo(o2.getStartTime())).collect(Collectors.toList());
             for (Schedule schedule : result) {
-                if(schedule.getStartTime().toLocalDate().equals(LocalDate.now())&&(schedule.getStartTime().toLocalTime().toSecondOfDay()-(LocalTime.now().toSecondOfDay())<=300)){
+                if (schedule.getStartTime().toLocalDate().equals(LocalDate.now()) && (schedule.getStartTime().toLocalTime().toSecondOfDay() - (LocalTime.now().toSecondOfDay()) <= 300)) {
                     System.out.println(LocalTime.now().toSecondOfDay());
                     System.out.println(schedule.getStartTime().toLocalTime().toSecondOfDay());
-                  text = changeColorTextFlow("SHOW TIME IS COMING", Color.WHITE, Color.RED);
+                    text = changeColorTextFlow("SHOW TIME IS COMING", Color.WHITE, Color.RED);
                 }
             }
             cb.setItems(FXCollections.observableList(new ArrayList<>(result)));
@@ -211,7 +214,7 @@ public class FXMLShowScheduleController implements Initializable {
                 }
             });
             vbox.getChildren().addAll(cb, text);
-            hbox.getChildren().addAll(vbox,button);
+            hbox.getChildren().addAll(vbox, button);
             button.setUserData(hbox);
             hbox.setStyle("-fx-alignment: CENTER;");
             hbox.setSpacing(50);
@@ -233,19 +236,19 @@ public class FXMLShowScheduleController implements Initializable {
                     if (bln) {
                         setText(null);
                     } else if (t == 0) {
-                        tf = changeColorTextFlow("NEWWW", Color.WHITE, Color.AQUA);                                 
+                        tf = changeColorTextFlow("NEWWW", Color.WHITE, Color.AQUA);
                     } else if (t == films.get(0).getViewFilm()) {
                         tf = changeColorTextFlow("TOP 1!!!", Color.WHITE, Color.RED);
-                    } else if (t!=0 && t == films.get(1).getViewFilm()) {
+                    } else if (t != 0 && t == films.get(1).getViewFilm()) {
                         tf = changeColorTextFlow("TOP 2!!!", Color.WHITE, Color.ORANGE);
                     } else {
-                        tf = changeColorTextFlow("HOT!!!", Color.WHITE, Color.CHARTREUSE);  
+                        tf = changeColorTextFlow("HOT!!!", Color.WHITE, Color.CHARTREUSE);
                     }
                     setGraphic(tf);
                 }
             };
         });
-        this.tableViewSchedule.getColumns().addAll(colView,colDay,colFilmView, colNameFilm, colDuration, colTime);
+        this.tableViewSchedule.getColumns().addAll(colView, colDay, colFilmView, colNameFilm, colDuration, colTime);
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewSchedule.getColumns();
         for (TableColumn<Film, ?> column : columns) {
             column.setStyle("-fx-alignment: CENTER;");
@@ -258,7 +261,7 @@ public class FXMLShowScheduleController implements Initializable {
 //        LocalDateTime currentDate = LocalDateTime.now();
         FilmDAO fd = new FilmDAO();
         films = fd.getScheduleByDateTime(dateTime);
-        
+
         System.out.println(films);
         for (Film film : films) {
             film.setListSchedule(new HashSet<>(sd.getScheduleByDateTime(film.getFilmID(), dateTime)));
@@ -292,9 +295,33 @@ public class FXMLShowScheduleController implements Initializable {
                             setText("");
                         }
                     }
+
                 };
             }
         });
+        //Đoạn mã covert localdatetim ra localdate
+        StringConverter<LocalDateTime> converter = new StringConverter<LocalDateTime>() {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            @Override
+            public String toString(LocalDateTime dateTime) {
+                if (dateTime != null) {
+                    return formatter.format(dateTime);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDateTime fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDateTime.parse(string, formatter);
+                } else {
+                    return null;
+                }
+            }
+        };
+        comboBoxDay.setConverter(converter);
     }
 
     public void setActionForComboBox() {
@@ -312,12 +339,12 @@ public class FXMLShowScheduleController implements Initializable {
     public void setActionForComboBoxFilm() {
         this.comboBoxFilm.setOnAction((o) -> {
             try {
-            List<Film> searchFilm = films.stream().filter((t) -> t.getFilmName().equals(this.comboBoxFilm.getSelectionModel().getSelectedItem().getFilmName())).collect(Collectors.toList());
-            this.tableViewSchedule.setItems(FXCollections.observableList(searchFilm));
+                List<Film> searchFilm = films.stream().filter((t) -> t.getFilmName().equals(this.comboBoxFilm.getSelectionModel().getSelectedItem().getFilmName())).collect(Collectors.toList());
+                this.tableViewSchedule.setItems(FXCollections.observableList(searchFilm));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-           
+
         });
 
     }
@@ -358,7 +385,7 @@ public class FXMLShowScheduleController implements Initializable {
         Text text = new Text(content);
         text.setFill(Color.WHITE);
         text.setStyle("-fx-font-weight: bold;");
-        
+
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.5), new KeyValue(text.fillProperty(), beginColor)),
                 new KeyFrame(Duration.seconds(1.0), new KeyValue(text.fillProperty(), endColor))
@@ -366,6 +393,13 @@ public class FXMLShowScheduleController implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         return text;
+    }
+    public void loadAgain(){
+        Timeline loadAgain = new Timeline(new KeyFrame(Duration.minutes(15),event ->{
+            loadDataView(LocalDateTime.now());
+        }));
+        loadAgain.setCycleCount(Animation.INDEFINITE);
+        loadAgain.play();
     }
 
 }
