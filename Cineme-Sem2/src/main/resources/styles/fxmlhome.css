@@ -10,7 +10,16 @@
     -fx-font-family:sans-serif;
 }
 
+.list-cell {
+    -fx-background-color: #999999;
+    -fx-alignment:  CENTER;
+}
 
+.list-cell:selected {
+    -fx-background-color: #999999;
+    -fx-alignment:  CENTER;
+    -fx-text-fill:white;
+}
 VBox.popup{
     -fx-background-color:#333333;
     -fx-font-size:10;
@@ -19,7 +28,7 @@ VBox.popup{
     -fx-alignment:TOP_CENTER;
     -fx-border-style:none;
     -fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.2),10,0,0,0)
-    
+
 }
 
 HBox.labelpopup{

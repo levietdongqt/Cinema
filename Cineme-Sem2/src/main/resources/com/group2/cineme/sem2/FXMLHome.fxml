@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
@@ -22,7 +23,7 @@
       <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER_RIGHT">
          <children>
             <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="572.0" opacity="0.8" prefHeight="349.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="859.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="850.0" opacity="0.8" prefHeight="383.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="850.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ImageView fitHeight="114.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -37,10 +38,9 @@
                   <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
                   <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" styleClass="buttonPopup" text="Booking" />
                   <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="Film Mananing" />
-                  <Button mnemonicParsing="false" onAction="#loadSigup" styleClass="buttonPopup" text="Employee Manager" />
                   <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="Employee Manager" />
                   <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="Schedule Manager" />
-                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Business statistics" />
+                  <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="22.0" prefWidth="105.0" promptText="Report" styleClass="list-cell" />
                   <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
