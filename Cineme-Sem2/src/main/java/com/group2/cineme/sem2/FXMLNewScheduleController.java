@@ -156,7 +156,6 @@ public class FXMLNewScheduleController implements Initializable {
         } catch (Exception ex) {
             Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void setID() {
@@ -438,7 +437,7 @@ public class FXMLNewScheduleController implements Initializable {
     }
 
     private void loadTableView() {
-        infoTableLabel.setText("Infomation for " + selectedDate.toString());
+        infoTableLabel.setText("Infomation for " + selectedDate.format(DateTimeFormatter.ofPattern("dd/mm/yyyy")));
         infoTableLabel.setStyle("-fx-font-size: 22 ;");
         scheduleList.clear();
         try {
