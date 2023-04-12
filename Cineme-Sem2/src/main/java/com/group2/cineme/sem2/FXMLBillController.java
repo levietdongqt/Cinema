@@ -10,40 +10,36 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
-public class FXMLBillController {
+public class FXMLBillController implements Initializable {
 
     @FXML
     private VBox vbox;
 
-    Bill b1 = new Bill();
+    @FXML
+    private ScrollPane scrollPane;
     
+    Bill b1 = new Bill();
+
     public FXMLBillController(VBox vbox) {
         this.vbox = vbox;
     }
 
     public FXMLBillController() {
-       
-    }
-    
-    public void initialize(URL url, ResourceBundle rb) {
-        try {
-            readData();
-            loadProduct();
-        } catch (Exception ex) {
-            Logger.getLogger(FXMLBillController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     public void readData() throws Exception {
         ProductDAO pdao = new ProductDAO();
-        
+
         pdao.getAll("Product").forEach((t) -> {
             SessionUtil.getProductList().put(t, 4);
         });
-        
+
 //        
 //        Ticket tk = new Ticket();
 //        Ticket tk2 = new Ticket();
@@ -58,30 +54,40 @@ public class FXMLBillController {
 //        
 //        b1.setEmployee(SessionUtil.getEmployee());
 //        b1.setPrintDate(LocalDateTime.now());
-
-        SessionUtil.getProductList().forEach((p,a) -> {
+        SessionUtil.getProductList().forEach((p, a) -> {
             System.out.println(p.getProductName());
             System.out.println(a);
         });
-        System.out.println(SessionUtil.getProductList());
     }
-    
+
     public void loadProduct() {
         SessionUtil.getProductList().forEach((product, quantity) -> {
             
-            System.out.println(product.getProductName() + quantity);
+            HBox hbox = new HBox();
+            
+            hbox.setAlignment(Pos.CENTER);
+            hbox.setSpacing(50);
+            hbox.getChildren().add(new Label(product.getProductName()));
+            hbox.getChildren().add(new Label("" + quantity));
+            hbox.getChildren().add(new Label("" + product.getPrice()));
+        
+            vbox.getChildren().add(hbox);
+            
         });
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("\n VO \n");
+        
+        scrollPane.setMaxHeight(vbox.getPrefHeight());
+        
+        try {
+            readData();
+            loadProduct();
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLBillController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
-
-//            AnchorPane pane = new AnchorPane();
-//            
-//            HBox hbox = new HBox();
-//            hbox.setSpacing(50);
-//            hbox.getChildren().add(new Label(product.getProductName()));
-//            hbox.getChildren().add(new Label("" + quantity));
-//            
-//            pane.getChildren().add(hbox);
-//        
-//            vbox.getChildren().add(pane);
