@@ -437,7 +437,7 @@ public class FXMLNewScheduleController implements Initializable {
     }
 
     private void loadTableView() {
-        infoTableLabel.setText("Infomation for " + selectedDate.format(DateTimeFormatter.ofPattern("dd/mm/yyyy")));
+        infoTableLabel.setText("Infomation for " + selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         infoTableLabel.setStyle("-fx-font-size: 22 ;");
         scheduleList.clear();
         try {
