@@ -195,5 +195,4 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
-
 }

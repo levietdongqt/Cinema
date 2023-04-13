@@ -7,7 +7,9 @@ package TEST;
 import DAO.ActorsDAO;
 import DAO.FilmDAO;
 import DAO.FilmGenreDAO;
+import DAO.RoomSeatDetailDAO;
 import DAO.ScheduleDAO;
+import DAO.TicketDAO;
 import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
@@ -39,7 +41,17 @@ import org.hibernate.Session;
  */
 public class testServices {
     public static void main(String[] args) throws Exception {
-
+//        ScheduleDAO sd = new ScheduleDAO();
+//        TicketDAO td = new TicketDAO();
+//        Schedule schedule =  sd.getById("SC202347173241", Schedule.class);
+//        List<Ticket> tickets = td.getTicketBySchedule(schedule);
+//        tickets.forEach((t) -> {System.out.println(t + "\n");
+//        });
+//        
+//        RoomSeatDetailDAO rd = new RoomSeatDetailDAO();
+//        Long lists = rd.countSeatBySchedule("RT1");
+//        System.out.println(lists);
+        
 
 
 

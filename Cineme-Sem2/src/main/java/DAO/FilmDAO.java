@@ -143,9 +143,10 @@ public class FilmDAO extends GenericDAO<Film, String> {
             LocalDateTime endDate = LocalDateTime.of(sTime.toLocalDate(), LocalTime.MAX);
             Predicate greaterThan = builder.greaterThanOrEqualTo(scheduleJoin.get("startTime"), sTime);
             Predicate lessThan = builder.lessThanOrEqualTo(scheduleJoin.get("startTime"), endDate);
+            Predicate statusEqual = builder.equal(scheduleJoin.get("status"), true);
             criteriaQuery.select(filmRoot)
                     .distinct(true)
-                    .where(builder.and(greaterThan, lessThan));
+                    .where(builder.and(greaterThan, lessThan,statusEqual));
             listFilm = session.createQuery(criteriaQuery).setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
