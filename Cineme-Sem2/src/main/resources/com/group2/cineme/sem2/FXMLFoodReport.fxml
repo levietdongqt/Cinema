@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="393.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFoodReportController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="290.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="174.0" text="Food Report">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="36.0" prefWidth="600.0">
+               <children>
+                  <Spinner fx:id="year" onMouseReleased="#setUpSpinnerYear" prefHeight="26.0" prefWidth="88.0" />
+                  <ComboBox fx:id="month" onAction="#setUpComboBoxMonth" prefHeight="26.0" prefWidth="99.0" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setUpBtnFullYear" prefHeight="27.0" prefWidth="67.0" text="Full Year">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#export" prefHeight="27.0" prefWidth="70.0" text="Export">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="270.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Label fx:id="info" text="label">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableView" prefHeight="297.0" prefWidth="600.0" VBox.vgrow="NEVER">
+              <columns>
+                  <TableColumn fx:id="sttCol" minWidth="0.0" prefWidth="61.5999755859375" text="STT" />
+                <TableColumn fx:id="nameCol" prefWidth="124.00006103515625" text="Name" />
+                <TableColumn fx:id="typeCol" prefWidth="110.4000244140625" text="Type" />
+                  <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="104.79998779296875" text="Price" />
+                  <TableColumn fx:id="quantityCol" minWidth="0.0" prefWidth="88.0" text="Quatity" />
+                  <TableColumn fx:id="totalCol" minWidth="0.0" prefWidth="110.4000244140625" text="Total" />
+              </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

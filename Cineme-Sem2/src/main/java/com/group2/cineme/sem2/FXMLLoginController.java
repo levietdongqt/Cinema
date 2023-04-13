@@ -78,6 +78,7 @@ public class FXMLLoginController implements Initializable {
         System.exit(0);
     }
      
+   // login bằng phím enter 
     public void login(ActionEvent event) throws Exception {
         WorkSession work = new WorkSession();
         EmployeeDAO dao = new EmployeeDAO();
@@ -101,6 +102,28 @@ public class FXMLLoginController implements Initializable {
             }
         });
 
+    }
+    
+    
+    // login bằng button
+    public void btnLogin(ActionEvent event) throws Exception{
+         WorkSession work = new WorkSession();
+        EmployeeDAO dao = new EmployeeDAO();
+        try {
+                    login(null);
+                    boolean log = dao.checkaccount(user.getText().trim(), pass.getText().trim());
+                    Employee employee = SessionUtil.getEmployee();
+                    work.setEmployee(employee);
+                    work.setStartTime(LocalDateTime.now());
+//        work.setEndTime(LocalDateTime.of(2010, 10, 10, 0, 0, 0));
+                    if (log) {
+                        WorkSessionDAO workdao = new WorkSessionDAO();
+                        workdao.add(work);
+                        App.setRoot("FXMLHome");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
     }
 
     @Override

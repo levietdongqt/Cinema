@@ -1,6 +1,5 @@
 package POJO;
 
-import java.math.BigDecimal;
 import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
@@ -13,7 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Product {
     @Id
     @Column(name = "productId")
-    private String productId;
+    public String productId;
 
     @Column(name = "productName")
     private String productName;
@@ -22,7 +21,7 @@ public class Product {
     private String type;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private int price;
 
     @Column(name = "status")
     private Boolean status;
@@ -34,7 +33,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(String productId, String productName, String type, BigDecimal price, Boolean status, Set<ProductBill> productBills) {
+    public Product(String productId, String productName, String type, int price, Boolean status, Set<ProductBill> productBills) {
         this.productId = productId;
         this.productName = productName;
         this.type = type;
@@ -88,14 +87,14 @@ public class Product {
     /**
      * @return the price
      */
-    public BigDecimal getPrice() {
+    public int getPrice() {
         return price;
     }
 
     /**
      * @param price the price to set
      */
-    public void setPrice(BigDecimal price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
