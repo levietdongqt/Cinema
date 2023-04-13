@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 
 public class FXMLBillController implements Initializable {
 
@@ -64,12 +65,26 @@ public class FXMLBillController implements Initializable {
         SessionUtil.getProductList().forEach((product, quantity) -> {
             
             HBox hbox = new HBox();
+            hbox.setPrefWidth(vbox.getPrefWidth());
             
-            hbox.setAlignment(Pos.CENTER);
-            hbox.setSpacing(50);
-            hbox.getChildren().add(new Label(product.getProductName()));
-            hbox.getChildren().add(new Label("" + quantity));
-            hbox.getChildren().add(new Label("" + product.getPrice()));
+            Label name = new Label();
+            name.setPrefWidth(hbox.getPrefWidth()/3);
+            name.setAlignment(Pos.TOP_CENTER);
+            name.setText(product.getProductName());
+           
+            Label quant = new Label();
+            quant.setPrefWidth(hbox.getPrefWidth()/3);
+            quant.setAlignment(Pos.TOP_CENTER);
+            quant.setText("" + quantity);
+            
+            Label price = new Label();
+            price.setPrefWidth(hbox.getPrefWidth()/3);
+            price.setAlignment(Pos.TOP_CENTER);
+            price.setText("" + product.getPrice());
+            
+            hbox.getChildren().add(name);
+            hbox.getChildren().add(quant);
+            hbox.getChildren().add(price);
         
             vbox.getChildren().add(hbox);
             
