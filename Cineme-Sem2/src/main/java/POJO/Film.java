@@ -128,9 +128,9 @@ public class Film implements Serializable{
      * @throws java.lang.Exception
      */
     public void setFilmName(String filmName) throws Exception {
-        if (filmName.trim().isEmpty() || !Pattern.matches("[\\w ]+", filmName)) {
-            throw new Exception("Film name don't have[&^@#$%] or empty");
-        } else {
+        if (filmName.trim().isEmpty() || !Pattern.matches("(([\\w]+[\\s]{0,1})+[.'!&:]){0,1}([\\w]+[\\s]{0,1})+", filmName.trim())) {
+            throw new Exception("Film name don't have[^@#$%*()-+=] or empty or [.'&:] twice");
+        }else {
             this.filmName = filmName;
         }
     }
@@ -234,9 +234,10 @@ public class Film implements Serializable{
      * @param director the director to set
      */
     public void setDirector(String director) throws Error{
-        if (director.trim().isEmpty() || !Pattern.matches("[\\w ]+", director)) {
-            throw new Error("Director don't have[&^@#$%!^*()] or empty");
-        } else {
+        if (director.trim().isEmpty() || !Pattern.matches("(([\\w]+[\\s]{0,1})+[.']){0,1}([\\w]+[\\s]{0,1})+", director.trim())) {
+            throw new Error("Director don't empty or [.'] twice");
+        }
+        else {
             this.director= director;
         }
     }

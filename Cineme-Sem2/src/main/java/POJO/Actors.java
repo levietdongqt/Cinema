@@ -75,7 +75,7 @@ public class Actors implements Serializable{
      * @throws java.lang.Exception
      */
     public void setActorName(String actorName) throws Exception {
-        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w .]+", actorName)){
+        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w .']+", actorName)){
             throw new Exception("Actors name don't have[&^@#$%] or empty");
         }else{
             this.actorName = actorName;

@@ -24,4 +24,21 @@ public class AlertUtils {
         }
         return alert;
     }
+    //Ham de viet hoa cac ki tu dau
+    public static String capitalizeWords(String str){
+        StringBuilder sb = new StringBuilder();
+        boolean capitalizeNext = true;
+        for (char c : str.toCharArray()) {
+            if(Character.isWhitespace(c)){
+                capitalizeNext = true;
+                sb.append(c);
+            }else if(capitalizeNext){
+                sb.append(Character.toUpperCase(c));
+                capitalizeNext = false;
+            }else{
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 }

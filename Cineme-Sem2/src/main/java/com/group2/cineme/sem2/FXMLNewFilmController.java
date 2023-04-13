@@ -37,6 +37,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 
 import javafx.scene.control.DatePicker;
@@ -186,7 +187,7 @@ public class FXMLNewFilmController implements Initializable {
     public void saveButtonHandler(ActionEvent event) {
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
-                || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true)) {      
+                || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true) || (errorLimitAge.isVisible() == true)) {      
             AlertUtils.getAlert("Check Information you want to insert", Alert.AlertType.ERROR).show();
         } else {
             try {
@@ -203,38 +204,24 @@ public class FXMLNewFilmController implements Initializable {
 //                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
                     SessionUtil.getMapFilm().add(film);
                     
-                    AlertUtils.getAlert(fd.getMessAdd(), Alert.AlertType.INFORMATION).show();
+                    String info = fd.getMessAdd() + "\n"+ "Are you switch Film Page?";
+                    Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
+                    Optional<ButtonType> results = alert.showAndWait();
+                    if (results.get().getText().equalsIgnoreCase("OK")) {
+                        App.setView("FXMLFilm");
+                    }else{
+                        App.setView("FXMLNewFilm");
+                    }                
                 }
             } catch (Exception e) {
                 errorID.setText("ID is not null");
-            }
+            }            
         }
 
     }
 
     public void resetButtonHandler(ActionEvent event) {
-        this.txtID.clear();
-        this.txtName.clear();
-        this.txtDuration.clear();
-        this.txtImage.clear();
-        this.txtDescription.clear();
-        this.txtStart.getEditor().clear();
-        this.txtEnd.getEditor().clear();
-        this.txtDirector.clear();
-        this.imageViewFilm.setImage(null);
-        this.listViewGender.getSelectionModel().clearSelection();
-        setFilmGenre.clear();
-        setActors.clear();
-        this.errorFilmName.setText("");
-        this.errorDuration.setText("");
-        this.errorEnd.setText("");
-        this.errorStart.setText("");
-        this.errorImage.setText("");
-        this.errorFilmDes.setText("");
-        this.errorDirector.setText("");
-        this.errorID.setText("");
-        this.listChoiceGenre.setItems(null);
-        this.listChoiceActors.setItems(null);
+        clearDataInFilm();
     }
 
     public void showInformationButtonHandler() {
@@ -279,7 +266,7 @@ public class FXMLNewFilmController implements Initializable {
     public void buttonResetHandlerActor() {
         buttonClear.setOnAction((event) -> {
             clearDataInActor();
-
+            
         });
     }
 
@@ -328,6 +315,7 @@ public class FXMLNewFilmController implements Initializable {
         this.errorFilmDes.setText("");
         this.errorDirector.setText("");
         this.errorID.setText("");
+        this.errorLimitAge.setVisible(false);
 
     }
     public void loadDataActorsOrGenreChoiced(){
@@ -352,6 +340,30 @@ public class FXMLNewFilmController implements Initializable {
         txtHomeTown.clear();
         errBirthDay.setText("");
     }
+    public void clearDataInFilm(){
+        this.txtID.clear();
+        this.txtName.clear();
+        this.txtDuration.clear();
+        this.txtImage.clear();
+        this.txtDescription.clear();
+        this.txtStart.getEditor().clear();
+        this.txtEnd.getEditor().clear();
+        this.txtDirector.clear();
+        this.imageViewFilm.setImage(null);
+        this.listViewGender.getSelectionModel().clearSelection();
+        setFilmGenre.clear();
+        setActors.clear();
+        this.errorFilmName.setText("");
+        this.errorDuration.setText("");
+        this.errorEnd.setText("");
+        this.errorStart.setText("");
+        this.errorImage.setText("");
+        this.errorFilmDes.setText("");
+        this.errorDirector.setText("");
+        this.errorID.setText("");
+        this.listChoiceGenre.setItems(null);
+        this.listChoiceActors.setItems(null);
+    }
 
     //Khu vuc tao khung cho Trang(Bao gom ca nhung action cho khung duoc tao)
     public void createVBoxActors() {
@@ -369,6 +381,7 @@ public class FXMLNewFilmController implements Initializable {
         VBox vBoxDate = new VBox();
         Label labelBDate = new Label("BOD:");
         txtBirthDay = new DatePicker();
+        txtBirthDay.setValue(LocalDate.of(1950, 01, 01));
         txtBirthDay.setEditable(false);
         errBirthDay = new Label("");
         errBirthDay.setWrapText(true);
@@ -444,18 +457,21 @@ public class FXMLNewFilmController implements Initializable {
         film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
         film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
         this.txtName.textProperty().addListener((observable) -> {
-
+            String name = AlertUtils.capitalizeWords(this.txtName.getText().trim());
             boolean errorName = false;
             try {
-                film.setFilmName(txtName.getText().trim());
+                film.setFilmName(name);
                 errorName = true;
-                String[] words = this.txtName.getText().split(" ");
+                String[] words = name.split(" ");
                 String result = "P";
                 for (String word : words) {
                     result += word.charAt(0);
                 }
                 result += (LocalTime.now().getNano());
                 this.txtID.setText(result);
+                if(name.isEmpty()){
+                    this.txtID.clear();
+                }
             } catch (Exception ex) {
                 errorFilmName.setVisible(true);
                 errorFilmName.setText(ex.getMessage());
@@ -481,9 +497,10 @@ public class FXMLNewFilmController implements Initializable {
             }
         });
         this.txtDirector.textProperty().addListener((observable) -> {
+            String nameDirector = AlertUtils.capitalizeWords(this.txtDirector.getText().trim());
             boolean errorName = false;
             try {
-                film.setDirector(txtDirector.getText());
+                film.setDirector(nameDirector);
                 errorName = true;
             } catch (Error ex) {
                 errorDirector.setVisible(true);
@@ -601,9 +618,11 @@ public class FXMLNewFilmController implements Initializable {
             this.errorImage.setText("");
         }
         if(this.limitAge.getValue()==null){
+            errorLimitAge.setVisible(true);
             this.errorLimitAge.setText(errorPopup);
         }else{
             this.errorLimitAge.setText("");
+            errorLimitAge.setVisible(false);
         }
         
     }
