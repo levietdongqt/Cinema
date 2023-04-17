@@ -179,7 +179,7 @@ public class FXMLTicketController implements Initializable {
                 // product  là Key và 1 đối tượng Product
                 // quantity là Value và số lượng đặt mua
                 System.out.println(product.getProductName() + ": " + quantity);
-                foodTotal += product.getPrice().intValue() * quantity;
+                foodTotal += product.getPrice() * quantity;
             });
             foodLabel.setText(String.valueOf(foodTotal) + " VND");
             totalLabel.setText(String.valueOf(ticketTotal + foodTotal) + " VND");

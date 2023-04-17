@@ -24,11 +24,14 @@ import java.util.logging.Logger;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -66,9 +69,11 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private Label labelAdmin2;
-    
+
     @FXML
     private Label timeLabel;
+    @FXML
+    ComboBox<String> report;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -79,7 +84,7 @@ public class FXMLHomeController implements Initializable {
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
         loadInHome("FXMLShowSchedule");
         loadTimeClock();
-        
+        setUpReport();
     }
 
     //Xu ly Button handler
@@ -95,11 +100,48 @@ public class FXMLHomeController implements Initializable {
 
     // xử lý logout và cập nhật endTime
     public void logOut() throws IOException, Exception {
+
         WorkSessionDAO worddao = new WorkSessionDAO();
         worddao.update();
+
         App.setRoot("FXMLLogin");
         Stage stage = (Stage) App.scene.getWindow();
         stage.setFullScreen(false);
+        stage.setMaximized(false);
+
+    }
+
+    @FXML
+    public void loadFXMLReport() throws IOException {
+        String value = report.getValue();
+        if (value.equalsIgnoreCase("Employee")){
+            //Load trang report Employee
+        }
+        if (value.equalsIgnoreCase("Film")) {
+            //Load trang report Film
+        }
+        if (value.equalsIgnoreCase("Food")) {
+            newScene("FXMLFoodReport");
+        }
+    }
+    private void newScene(String fileName) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileName + ".fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+            home.setDisable(true);
+            popup.hide();
+            stage.setOnHiding((t) -> {
+                home.setDisable(false);
+            });
+    }
+
+    public void setUpReport() {
+        ObservableList<String> list = report.getItems();
+        list.add("Employee");
+        list.add("Film");
+        list.add("Food");
+        report.setItems(list);
     }
 
     public void loadAdmin() throws IOException {
@@ -141,7 +183,7 @@ public class FXMLHomeController implements Initializable {
             if (popup.isShowing()) {
                 popup.hide();
             } else {
-                popup.show(hamburger, event.getScreenX() - 720, event.getScreenY());
+                popup.show(hamburger, hamburger.getLayoutX() - 620, hamburger.getLayoutY() + 35);
             }
         });
     }
@@ -154,14 +196,14 @@ public class FXMLHomeController implements Initializable {
 //        imageViewHome.setFitHeight(16);
 //        this.buttonHome.setGraphic(imageViewHome);
 //    }
-    public void loadTimeClock(){
-        Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1),event ->{
+    public void loadTimeClock() {
+        Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             LocalTime localTime = LocalTime.now();
             this.timeLabel.setText(localTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         })
         );
         timeLine.setCycleCount(Animation.INDEFINITE);
         timeLine.play();
-                
+
     }
 }
