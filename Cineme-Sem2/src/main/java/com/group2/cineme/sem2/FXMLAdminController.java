@@ -4,33 +4,25 @@
  */
 package com.group2.cineme.sem2;
 
-import Utils.SessionUtil;
 import DAO.EmployeeDAO;
 import DAO.WorkSessionDAO;
 import POJO.Employee;
-import POJO.Product;
 import POJO.WorkSession;
+import Utils.SessionUtil;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOError;
 import java.io.IOException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import static java.util.Locale.filter;
 import java.util.Map;
-import java.util.Observer;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
