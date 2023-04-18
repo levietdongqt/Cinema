@@ -68,7 +68,7 @@ public class FXMLProductController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         mapProducts.putAll(SessionUtil.getProductList());
         mapProducts.forEach((t, u) -> {
-            total += u * t.getPrice().intValue();
+            total += u * t.getPrice();
             totalLabel.setText(String.valueOf(total));
         });
         try {            
@@ -79,7 +79,6 @@ public class FXMLProductController implements Initializable {
             Logger.getLogger(FXMLProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
         data();
-        
     }
     
     @FXML
@@ -168,7 +167,7 @@ public class FXMLProductController implements Initializable {
             spinner.setMaxWidth(60);
             grid.add(spinner, 2, j + 1);
             spinner.valueProperty().addListener((ov, oldValue, newValue) -> {
-                total = total + (newValue - oldValue) * item.getPrice().intValue();
+                total = total + (newValue - oldValue) * item.getPrice();
                 totalLabel.setText(String.valueOf(total));
                 mapProducts.put(item, ov.getValue());
                 SessionUtil.getProductList().forEach((t, u) -> {
@@ -176,7 +175,7 @@ public class FXMLProductController implements Initializable {
                 });
             });
             //product price
-            grid.add(new Label(String.valueOf(item.getPrice().intValue()) + " VND"), 3, j + 1);
+            grid.add(new Label(String.valueOf(item.getPrice()) + " VND"), 3, j + 1);
         }
         grid.getColumnConstraints().addAll(colContrain, colContrain1, colContrain1, colContrain1);
         return grid;

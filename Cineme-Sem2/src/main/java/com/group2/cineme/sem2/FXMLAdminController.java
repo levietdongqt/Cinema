@@ -38,6 +38,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -178,7 +179,13 @@ public class FXMLAdminController implements Initializable {
     @FXML
     private Button btnUpdate;
 
+    
+    
+    
+    
     public void checkUser() {
+        
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
         tfUser.setOnKeyTyped(event -> {
             String user = tfUser.getText().trim();
             try {
