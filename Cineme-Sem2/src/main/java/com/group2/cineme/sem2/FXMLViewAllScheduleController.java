@@ -90,7 +90,7 @@ public class FXMLViewAllScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.getRoomTypeDetail().getRoom());
         });
-        colRoom.setPrefWidth(100);
+        colRoom.setPrefWidth(90);
         TableColumn<Schedule, String> colRoomType = new TableColumn("Room's Type");
         colRoomType.setCellValueFactory((p) -> {
             Schedule schedule = p.getValue();

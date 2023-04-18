@@ -23,7 +23,7 @@
     <ColumnConstraints maxWidth="800.6000150680542" minWidth="205.0" prefWidth="754.5999755859375" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="52.000003051757815" minHeight="43.19999694824219" prefHeight="52.000003051757815" valignment="CENTER" />
+      <RowConstraints maxHeight="150.0" minHeight="100.0" prefHeight="150.0" valignment="CENTER" />
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
       <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
@@ -83,7 +83,16 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </CheckBox>
-            <Button fx:id="btnSave1" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Button fx:id="btnSave11" mnemonicParsing="false" onAction="#btnClearHanlder" prefHeight="23.0" prefWidth="73.0" style="-fx-background-radius: 15 15;" text="CLEAR">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnSave1" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" style="-fx-background-radius: 15 15;" text="SAVE" />
+               </children>
+            </HBox>
          </children>
       </VBox>
       <Label text="ROOM" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
@@ -140,7 +149,7 @@
       <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
             <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" styleClass="fill-text" />
-            <Button fx:id="btnViewSchedule" disable="true" mnemonicParsing="false" onAction="#setUpViewSchedule" text="View Schdule">
+            <Button fx:id="btnViewSchedule" disable="true" mnemonicParsing="false" onAction="#setUpViewSchedule" style="-fx-background-radius: 15 15;" text="View Schdule">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>

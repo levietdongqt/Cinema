@@ -163,7 +163,7 @@ public class FXMLProductController implements Initializable {
                 }
             });
             Spinner<Integer> spinner = new Spinner<>(0, 100, quatity);
-            spinner.setStyle("-fx-background-color: #C0C0C0; -fx-border-radius: 5; -fx-border-width:0px 0px 0px 0px;");
+            spinner.setStyle("-fx-background: #FFFFE8; -fx-border-width:0px 0px 0px 0px;");
             spinner.setMaxWidth(60);
             grid.add(spinner, 2, j + 1);
             spinner.valueProperty().addListener((ov, oldValue, newValue) -> {

@@ -31,7 +31,7 @@ public class FXMLBillController implements Initializable {
     }
 
     public FXMLBillController() {
-
+        
     }
 
     public void readData() throws Exception {
@@ -93,10 +93,7 @@ public class FXMLBillController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("\n VO \n");
-        
-        scrollPane.setMaxHeight(vbox.getPrefHeight());
-        
+        scrollPane.setMaxHeight(vbox.getPrefHeight());       
         try {
             readData();
             loadProduct();

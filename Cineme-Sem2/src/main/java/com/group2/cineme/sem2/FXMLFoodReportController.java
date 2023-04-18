@@ -91,11 +91,16 @@ public class FXMLFoodReportController implements Initializable {
 
     @FXML
     private void setUpComboBoxMonth() {
+        try{
         selectedMonth = month.getValue().getValue();
         info.setText(String.valueOf(selectedMonth) + "/" + String.valueOf(selectedYear));
         list.clear();
         list = proDAO.countOrderProduct(selectedYear, selectedMonth);
         loadDataTableView();
+        }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -103,6 +108,7 @@ public class FXMLFoodReportController implements Initializable {
         try {
             selectedYear = year.getValue();
             getMonthList();
+            selectedMonth = month.getValue().getValue();
             info.setText(String.valueOf(selectedMonth) + "/" + String.valueOf(selectedYear));
             list.clear();
             list = proDAO.countOrderProduct(selectedYear, selectedMonth);
@@ -111,7 +117,6 @@ public class FXMLFoodReportController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
-
     @FXML
     private void setUpBtnFullYear() {
         info.setText(String.valueOf(selectedYear));
@@ -119,62 +124,6 @@ public class FXMLFoodReportController implements Initializable {
         list.clear();
         list = proDAO.countOrderProduct(selectedYear, 0);
         loadDataTableView();
-    }
-
-    @FXML
-    private void export() {
-        int coutRow = 1;
-        XSSFWorkbook Food_Report = new XSSFWorkbook();
-        try {
-
-            XSSFSheet sheet;
-            if (selectedMonth == 0) {
-                sheet = Food_Report.createSheet(String.valueOf(selectedYear));
-            } else {
-                sheet = Food_Report.createSheet(String.valueOf(selectedMonth) + String.valueOf(selectedYear));
-            }
-
-            XSSFRow headerRow = sheet.createRow(0);
-            ObservableList<TableColumn<Object[], ?>> columns = tableView.getColumns();
-            for (int i = 0; i < columns.size(); i++) {
-                headerRow.createCell(i).setCellValue(columns.get(i).getText());
-            }
-            ObservableList<Object[]> dataList = tableView.getItems();
-            for (int i = 0; i < dataList.size(); i++) {  //Lặp từng Row dữ liệu
-                XSSFRow dataRow = sheet.createRow(i + 1);   //Tạo row dữ liệu
-                for (int j = 0; j < columns.size(); j++) { //Lặp qua các column trong tableView
-                    //Tạo riêng cho số thứ tự
-                    if (j == 0) {
-                        dataRow.createCell(j).setCellValue(coutRow++);
-                        continue;
-                    }
-                    TableColumn<Object[], ?> column = columns.get(j);   //Lấy giá trị từng column theo index j
-                    Object[] object = dataList.get(i);
-                    String cellValue = String.valueOf(column.getCellData(i));
-                    dataRow.createCell(j).setCellValue(cellValue);
-                }
-            }
-
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Excel File");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx"));
-            if (selectedMonth == 0) {
-                fileChooser.setInitialFileName(String.valueOf(selectedYear));
-            } else {
-                fileChooser.setInitialFileName(String.valueOf(selectedMonth) + "-" + String.valueOf(selectedYear));
-            }
-           File file = fileChooser.showSaveDialog(null);
-            if (file != null) {
-                FileOutputStream outputStream = new FileOutputStream(file);
-                Food_Report.write(outputStream);
-                Food_Report.close();
-                outputStream.close();
-                Alert alert = AlertUtils.getAlert("Save File Sussesfully", Alert.AlertType.INFORMATION);
-                alert.show();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     private void loadLayout() {
@@ -187,25 +136,24 @@ public class FXMLFoodReportController implements Initializable {
     }
 
     private void getMonthList() {
-        if (selectedYear < LocalDateTime.now().getYear()) {
-            try {
-                month.setItems(FXCollections.observableList(List.of(Month.values())));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            return;
-        }
         Month[] fullMonths = Month.values();
-        List<Month> listMonth = new ArrayList<>();
-        Month currMonth = LocalDateTime.now().getMonth();
-        for (Month month : fullMonths) {
-            if (month.getValue() <= currMonth.getValue()) {
-                listMonth.add(month);
-            }
-        }
-        month.setItems(FXCollections.observableList(listMonth));
-        month.setValue(LocalDateTime.now().getMonth());
+            if (selectedYear < LocalDateTime.now().getYear()) {
+                month.setItems(null);
+                month.setItems(FXCollections.observableList(List.of(fullMonths)));
+                month.setValue(LocalDateTime.now().getMonth());
 
+                return;
+            }
+            
+            List<Month> listMonth = new ArrayList<>();
+            Month currMonth = LocalDateTime.now().getMonth();
+            for (Month month : fullMonths) {
+                if (month.getValue() <= currMonth.getValue()) {
+                    listMonth.add(month);
+                }
+            }
+            month.setItems(FXCollections.observableList(listMonth));
+            month.setValue(LocalDateTime.now().getMonth());
     }
 
     private void loadDataTableView() {
@@ -263,6 +211,62 @@ public class FXMLFoodReportController implements Initializable {
             return new SimpleObjectProperty<>(Integer.parseInt(item[2].toString()) * Integer.parseInt(item[3].toString()));
         });
 
+    }
+
+    @FXML
+    private void export() {
+        int coutRow = 1;
+        XSSFWorkbook Food_Report = new XSSFWorkbook();
+        try {
+
+            XSSFSheet sheet;
+            if (selectedMonth == 0) {
+                sheet = Food_Report.createSheet(String.valueOf(selectedYear));
+            } else {
+                sheet = Food_Report.createSheet(String.valueOf(selectedMonth) + String.valueOf(selectedYear));
+            }
+
+            XSSFRow headerRow = sheet.createRow(0);
+            ObservableList<TableColumn<Object[], ?>> columns = tableView.getColumns();
+            for (int i = 0; i < columns.size(); i++) {
+                headerRow.createCell(i).setCellValue(columns.get(i).getText());
+            }
+            ObservableList<Object[]> dataList = tableView.getItems();
+            for (int i = 0; i < dataList.size(); i++) {  //Lặp từng Row dữ liệu
+                XSSFRow dataRow = sheet.createRow(i + 1);   //Tạo row dữ liệu
+                for (int j = 0; j < columns.size(); j++) { //Lặp qua các column trong tableView
+                    //Tạo riêng cho số thứ tự
+                    if (j == 0) {
+                        dataRow.createCell(j).setCellValue(coutRow++);
+                        continue;
+                    }
+                    TableColumn<Object[], ?> column = columns.get(j);   //Lấy giá trị từng column theo index j
+                    Object[] object = dataList.get(i);
+                    String cellValue = String.valueOf(column.getCellData(i));
+                    dataRow.createCell(j).setCellValue(cellValue);
+                }
+            }
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Excel File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx"));
+            if (selectedMonth == 0) {
+                fileChooser.setInitialFileName(String.valueOf(selectedYear));
+            } else {
+                fileChooser.setInitialFileName(String.valueOf(selectedMonth) + "-" + String.valueOf(selectedYear));
+            }
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null) {
+                FileOutputStream outputStream = new FileOutputStream(file);
+                Food_Report.write(outputStream);
+                Food_Report.close();
+                outputStream.close();
+                Alert alert = AlertUtils.getAlert("Save File Sussesfully", Alert.AlertType.INFORMATION);
+                alert.show();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
