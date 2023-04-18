@@ -12,6 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,9 +24,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.transform.Scale;
 
 public class FXMLBillController implements Initializable {
 
+    
+    @FXML
+    private VBox wholebill;
+     
     @FXML
     private Label btotal;
 
@@ -78,7 +87,7 @@ public class FXMLBillController implements Initializable {
         ProductDAO pdao = new ProductDAO();
 
         pdao.getAll("Product").forEach((t) -> {
-            SessionUtil.getProductList().put(t, 3);
+            SessionUtil.getProductList().put(t, 4);
         });
 
         Ticket tk = new Ticket();
@@ -128,7 +137,7 @@ public class FXMLBillController implements Initializable {
             Label price = new Label();
             price.setPrefWidth(hbox.getPrefWidth() / 3);
             price.setAlignment(Pos.TOP_CENTER);
-            price.setText(product.getPrice().toString());
+            price.setText("" + product.getPrice());
 
             hbox.getChildren().add(name);
             hbox.getChildren().add(quant);
@@ -136,7 +145,9 @@ public class FXMLBillController implements Initializable {
 
             vbox.getChildren().add(hbox);
 
-            BigDecimal productTotal = product.getPrice().multiply(new BigDecimal(quantity));
+            BigDecimal pp = new BigDecimal(product.getPrice());
+
+            BigDecimal productTotal = pp.multiply(new BigDecimal(quantity));
             total = total.add(productTotal);
 
         });
@@ -147,7 +158,7 @@ public class FXMLBillController implements Initializable {
     public void exportpdf() {
         exportbut.setOnAction(event -> {
             PrinterJob job = PrinterJob.createPrinterJob();
-            
+
             if (job != null) {
                 boolean success = job.printPage(billarea);
                 if (success) {
@@ -168,6 +179,9 @@ public class FXMLBillController implements Initializable {
 
         scrollPane.setMaxHeight(vbox.getPrefHeight());
 
+//        wholebill.setScaleX(0.8);
+//        wholebill.setScaleY(0.8);
+        
         try {
             testData();
             otherData();

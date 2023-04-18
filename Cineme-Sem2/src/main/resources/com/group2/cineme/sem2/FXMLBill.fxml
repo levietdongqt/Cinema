@@ -11,183 +11,29 @@
 <?import javafx.scene.shape.CubicCurve?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLBillController">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="614.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLBillController">
    <children>
-      <VBox alignment="CENTER" prefHeight="810.0" prefWidth="759.0">
+      <VBox fx:id="wholebill" alignment="CENTER" prefHeight="719.0" prefWidth="630.0">
          <children>
-            <AnchorPane prefHeight="773.0" prefWidth="804.0" style="-fx-background-color: linear-gradient(to right, rgba(163,254,252,1) 0%, rgba(234,153,255,1) 100%); -fx-background-radius: 50 50 50;">
+            <AnchorPane prefHeight="579.0" prefWidth="617.0" style="-fx-background-color: linear-gradient(to right, rgba(163,254,252,1) 0%, rgba(234,153,255,1) 100%); -fx-background-radius: 50 50 50;">
                <children>
-                  <CubicCurve controlX1="-100.0" controlX2="100.0" controlY1="132.0" controlY2="132.0" endX="150.0" fill="DODGERBLUE" layoutX="379.0" layoutY="1.0" startX="-150.0" stroke="#ffffff00" style="-fx-fill: linear-gradient(to right, rgba(0,239,255,1) 0%, rgba(255,0,226,1) 100%);" />
-                  <Label layoutX="262.0" layoutY="21.0" text="Cart Acception" textFill="WHITE">
+                  <CubicCurve controlX1="-22.0" controlX2="92.0" controlY1="52.0" controlY2="52.0" endX="140.0" fill="DODGERBLUE" layoutX="276.0" layoutY="1.0" startX="-70.0" stroke="#ffffff00" style="-fx-fill: linear-gradient(to right, rgba(0,239,255,1) 0%, rgba(255,0,226,1) 100%);" />
+                  <Label layoutX="196.0" layoutY="14.0" text="Cart Acception" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="28.0" />
                      </font>
                   </Label>
-                  <AnchorPane fx:id="billarea" layoutX="53.0" layoutY="101.0" prefHeight="443.0" prefWidth="653.0" style="-fx-background-color: rgba(157,157,157,0.3); -fx-background-radius: 30 30 30;">
-                     <children>
-                        <Label layoutX="13.0" layoutY="46.0" style="-fx-text-fill: linear-gradient(to right, rgba(139,0,255,1) 0%, rgba(255,0,54,1) 100%);" text="Film">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Separator layoutX="193.0" layoutY="40.0" orientation="VERTICAL" prefHeight="247.0" prefWidth="0.0" style="-fx-background-color: #000000;" />
-                        <Label layoutX="11.0" layoutY="123.0" text="Ticket:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="11.0" layoutY="155.0" text="Seat:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="11.0" layoutY="186.0" text="Time:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="21.0" layoutY="259.0" text="Total:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="214.0" layoutY="46.0" style="-fx-text-fill: linear-gradient(to right, rgba(139,0,255,1) 0%, rgba(255,0,54,1) 100%);" text="Other" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="252.0" layoutY="74.0" text="Name" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="376.0" layoutY="74.0" text="Quantity" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="213.0" layoutY="259.0" text="Total:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="15.0" layoutY="302.0" style="-fx-text-fill: linear-gradient(to right, rgba(139,0,255,1) 0%, rgba(255,0,54,1) 100%);" text="Promotion" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="13.0" layoutY="92.0" text="Name:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="16.0" layoutY="325.0" text="Accumulated Points:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="276.0" layoutY="327.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Use" textFill="WHITE">
-                           <font>
-                              <Font name="Arial Black" size="10.0" />
-                           </font>
-                        </Button>
-                        <Label layoutX="16.0" layoutY="348.0" text="Vouchers:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="110.0" layoutY="346.0" prefHeight="25.0" prefWidth="171.0" style="-fx-background-color: rgba(230,230,230,0.8); -fx-background-radius: 10 10;">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="219.0" layoutY="328.0" text="1" />
-                        <Separator layoutY="286.0" prefHeight="0.0" prefWidth="653.0" style="-fx-background-color: #000000;" />
-                        <Label fx:id="filmname" layoutX="103.0" layoutY="93.0" text="film name">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="ticket" layoutX="132.0" layoutY="124.0" text="1">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="seats" layoutX="120.0" layoutY="156.0" text="seats">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="time" layoutX="121.0" layoutY="187.0" text="time">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="ftotal" layoutX="85.0" layoutY="260.0" text="100.000">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="520.0" layoutY="74.0" text="Price" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="21.0" layoutY="402.0" text="Total:">
-                           <font>
-                              <Font name="Arial Black" size="20.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="btotal" layoutX="104.0" layoutY="403.0" text="100.000" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="19.0" />
-                           </font>
-                        </Label>
-                        <Separator layoutY="383.0" prefHeight="0.0" prefWidth="653.0" style="-fx-background-color: #000000;" />
-                        <ScrollPane fx:id="scrollPane" layoutX="213.0" layoutY="103.0" prefHeight="142.0" prefWidth="422.0" style="-fx-focus-color: none; -fx-background-color: transparent;" stylesheets="@../../../../styles/billscrollpane.css">
-                           <content>
-                              <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="167.0" prefWidth="397.0" />
-                           </content>
-                        </ScrollPane>
-                        <Label layoutX="15.0" layoutY="14.0" text="Print date:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="pdate" layoutX="110.0" layoutY="15.0" text="1/1/1000">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="431.0" layoutY="14.0" text="Employee:" textFill="#4a4a4a">
-                           <font>
-                              <Font name="Arial Black" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="empid" layoutX="528.0" layoutY="15.0" text="employee id">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Separator layoutY="39.0" prefHeight="0.0" prefWidth="653.0" style="-fx-background-color: #000000;" />
-                        <Label fx:id="ptotal" layoutX="268.0" layoutY="260.0" text="100.000">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <Button layoutX="476.0" layoutY="694.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="111.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Back" textFill="WHITE">
+                  <Button layoutX="417.0" layoutY="510.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="15.0" />
                      </font>
                   </Button>
-                  <Button layoutX="595.0" layoutY="696.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="111.0" style="-fx-background-color: linear-gradient(to left, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Accept" textFill="WHITE">
+                  <Button layoutX="510.0" layoutY="510.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to left, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Accept" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="15.0" />
                      </font>
                   </Button>
-                  <AnchorPane layoutX="53.0" layoutY="544.0" prefHeight="142.0" prefWidth="653.0" style="-fx-background-color: rgba(157,157,157,0.3); -fx-background-radius: 30 30 30; -fx-border-width: 1 0 0 0; -fx-border-color: black;">
+                  <AnchorPane layoutX="35.0" layoutY="426.0" prefHeight="83.0" prefWidth="558.0" style="-fx-background-color: rgba(157,157,157,0.3); -fx-background-radius: 30 30 30; -fx-border-width: 1 0 0 0; -fx-border-color: black;">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" style="-fx-text-fill: linear-gradient(to right, rgba(139,0,255,1) 0%, rgba(255,0,54,1) 100%);" text="Customer" textFill="#4a4a4a">
                            <font>
@@ -196,11 +42,145 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <Button fx:id="exportbut" layoutX="53.0" layoutY="696.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="86.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 3030;" text="Export" textFill="WHITE">
+                  <Button fx:id="exportbut" layoutX="34.0" layoutY="510.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="80.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 3030;" text="Export" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Button>
+                  <AnchorPane fx:id="billarea" layoutX="7.0" layoutY="56.0" prefHeight="371.0" prefWidth="617.0">
+                     <children>
+                        <AnchorPane layoutX="29.0" layoutY="1.0" prefHeight="370.0" prefWidth="560.0" style="-fx-background-color: rgba(157,157,157,0.3); -fx-background-radius: 30 30 30;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="38.0" style="-fx-text-fill: linear-gradient(to right, rgba(139,0,255,1) 0%, rgba(255,0,54,1) 100%);" text="Film">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="167.0" layoutY="32.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="0.0" style="-fx-background-color: #000000;" />
+                              <Label layoutX="13.0" layoutY="89.0" text="Ticket:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="15.0" layoutY="112.0" text="Seat:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="14.0" layoutY="135.0" text="Time:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="11.0" layoutY="201.0" text="Total:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="187.0" layoutY="38.0" style="-fx-text-fill: linear-gradient(to right, rgba(139,0,255,1) 0%, rgba(255,0,54,1) 100%);" text="Other" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="216.0" layoutY="60.0" text="Name" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="327.0" layoutY="60.0" text="Quantity" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="180.0" layoutY="201.0" text="Total:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="11.0" layoutY="234.0" style="-fx-text-fill: linear-gradient(to right, rgba(139,0,255,1) 0%, rgba(255,0,54,1) 100%);" text="Promotion" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="15.0" layoutY="66.0" text="Name:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="12.0" layoutY="257.0" text="Accumulated Points:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="272.0" layoutY="259.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Use" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Black" size="10.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="12.0" layoutY="280.0" text="Vouchers:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="106.0" layoutY="278.0" prefHeight="25.0" prefWidth="171.0" style="-fx-background-color: rgba(230,230,230,0.8); -fx-background-radius: 10 10;">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="215.0" layoutY="260.0" text="1" />
+                              <Separator layoutX="2.0" layoutY="231.0" prefHeight="3.0" prefWidth="558.0" style="-fx-background-color: #000000;" />
+                              <Label fx:id="filmname" layoutX="88.0" layoutY="67.0" text="film name" />
+                              <Label fx:id="ticket" layoutX="117.0" layoutY="90.0" text="1" />
+                              <Label fx:id="seats" layoutX="105.0" layoutY="113.0" text="seats" />
+                              <Label fx:id="time" layoutX="106.0" layoutY="136.0" text="time" />
+                              <Label fx:id="ftotal" layoutX="65.0" layoutY="201.0" text="100.000" />
+                              <Label layoutX="451.0" layoutY="60.0" text="Price" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="21.0" layoutY="328.0" text="Total:">
+                                 <font>
+                                    <Font name="Arial Black" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="btotal" layoutX="72.0" layoutY="328.0" text="100.000" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="2.0" layoutY="316.0" prefHeight="3.0" prefWidth="558.0" style="-fx-background-color: #000000;" />
+                              <ScrollPane fx:id="scrollPane" layoutX="180.0" layoutY="79.0" prefHeight="101.0" prefWidth="373.0" style="-fx-focus-color: none; -fx-background-color: transparent;" stylesheets="@../../../../styles/billscrollpane.css">
+                                 <content>
+                                    <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="171.0" prefWidth="342.0" />
+                                 </content>
+                              </ScrollPane>
+                              <Label layoutX="12.0" layoutY="14.0" text="Print date:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="pdate" layoutX="79.0" layoutY="14.0" text="1/1/1000">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="385.0" layoutY="14.0" text="Employee:" textFill="#4a4a4a">
+                                 <font>
+                                    <Font name="Arial Black" size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="empid" layoutX="452.0" layoutY="14.0" text="employee id">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="2.0" layoutY="28.0" prefHeight="3.0" prefWidth="558.0" style="-fx-background-color: #000000;" />
+                              <Label fx:id="ptotal" layoutX="235.0" layoutY="202.0" text="100.000" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>
