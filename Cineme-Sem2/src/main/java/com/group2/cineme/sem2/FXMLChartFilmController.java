@@ -51,12 +51,12 @@ public class FXMLChartFilmController implements Initializable {
         loadDataPieChart();
         loadViewPieChart();
     }
-
+    @FXML
     public void setUpBtnColse() {
         Popup popup = (Popup) btnClose.getScene().getWindow();
         popup.hide();
     }
-
+    //Load data truyen tu Report mot list pieChart.Data voi 2 gia tri truyen vao de ve
     public void loadDataPieChart() {
         List<PieChart.Data> lists = new ArrayList<>();
         int b = 50000;
@@ -64,28 +64,27 @@ public class FXMLChartFilmController implements Initializable {
             lists.add(new PieChart.Data(film.getFilmName(), film.getSumPriceTicket() + b));
             
         }
-        this.pieChart.setData(FXCollections.observableList(lists));
+        this.pieChart.setData(FXCollections.observableList(lists)); //lay da ta cho PieChart
 
     }
-
+    //Load giao dien cho PieChart
     public void loadViewPieChart() {
         total = 0.0;
         for (PieChart.Data data : pieChart.getData()) {
             total += data.getPieValue();
         }
         String text = getTitlePie();
-        pieChart.setTitle(text);
-        pieChart.setLabelLineLength(10);
+        pieChart.setTitle(text); // Ham de set tieu de
+        pieChart.setLabelLineLength(10); //Ham de set do rong cua line giua cac mang
         pieChart.setLabelsVisible(true);
-        pieChart.setStartAngle(90);
-        pieChart.setClockwise(true);
-        pieChart.setPrefSize(800, 600);
-        pieChart.setLegendVisible(true);
+        pieChart.setStartAngle(90); // Doi truc cua bieu do
+        pieChart.setPrefSize(800, 600); //set do lon cua bieu do
+        pieChart.setLegendVisible(true); //Ham de hien cac chu thich
         pieChart.getData().forEach(data -> {
-            data.nameProperty().setValue(data.getName() + " " + String.format("%.2f%%", (data.getPieValue()*100)/total));
+            data.nameProperty().setValue(data.getName() + " " + String.format("%.2f%%", (data.getPieValue()*100)/total)); // Hien thi du lieu cua PieChart
             
             data.getNode().setScaleX(0.8);
-            data.getNode().setScaleY(0.8);
+            data.getNode().setScaleY(0.8); // set do phong to cua bieu do
             
         });    
         

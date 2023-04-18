@@ -149,6 +149,7 @@ public class FXMLEditFilmController implements Initializable {
     }
 
     //Khu vuc xu ly su kien
+    @FXML
     public void uploadImageHandler(ActionEvent event) {
         File f = null;
         FileChooser filechooser = new FileChooser();
@@ -175,7 +176,7 @@ public class FXMLEditFilmController implements Initializable {
         }
 
     }
-
+    @FXML
     public void updateButtonHandler(ActionEvent event) throws Exception {
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
@@ -193,7 +194,7 @@ public class FXMLEditFilmController implements Initializable {
         }
 
     }
-
+    @FXML
     public void resetButtonHandler(ActionEvent event) {
         this.txtName.clear();
         this.txtDuration.clear();
@@ -236,7 +237,7 @@ public class FXMLEditFilmController implements Initializable {
             this.vBoxActors.setVisible(false);
         }
     }
-
+    @FXML
     public void buttonSaveHandlerActor(Actors actor) {
         buttonSave.setOnAction((event) -> {
             if (errActorsName.isVisible() == true || errBirthDay.isVisible() == true) {
@@ -254,7 +255,7 @@ public class FXMLEditFilmController implements Initializable {
             }
         });
     }
-
+    @FXML
     public void buttonResetHandlerActor() {
         buttonClear.setOnAction((event) -> {
             clearDataInActor();

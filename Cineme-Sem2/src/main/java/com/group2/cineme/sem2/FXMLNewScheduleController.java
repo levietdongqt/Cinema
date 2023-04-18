@@ -19,6 +19,7 @@ import POJO.Schedule;
 import Utils.AlertUtils;
 import Utils.HibernateUtils;
 import Utils.MyException;
+import Utils.SessionUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.IOException;
 import java.net.URL;
@@ -52,6 +53,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -133,12 +135,11 @@ public class FXMLNewScheduleController implements Initializable {
     private RoomType selectedRoomType = new RoomType();
     private RoomTypeDetails selectedRtDetail = new RoomTypeDetails();
     private LocalDate selectedDate;
-    private LocalTime selectedTime = LocalTime.of(8, 0);
+    private LocalTime selectedTime;
     private Room selectedRoom;
     private Film selectedFilm;
     private String IdSchedule;
     private boolean activeNow = true;
-    int count = 3;
     List<RoomTypeDetails> rtDetailList = new ArrayList<>();
     List<Film> listFilm = new ArrayList<>();
     List<Schedule> scheduleList = new ArrayList<>();
@@ -147,15 +148,10 @@ public class FXMLNewScheduleController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setID();
-        checkValidDate();
         comboBoxRoomHanlder();
         yesNoHanlder();
         creatTableView();
-        try {
-            getFilm(selectedFilm);
-        } catch (Exception ex) {
-            Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        comboBoxFilm.setItems(FXCollections.observableArrayList(SessionUtil.getMapFilm()));
     }
 
     private void setID() {
@@ -164,19 +160,23 @@ public class FXMLNewScheduleController implements Initializable {
         txtID.setText(IdSchedule);
     }
 
-    void getFilm(Film film) throws Exception {
-        // selectedFilm = film;
-        FilmDAO filmDAO = new FilmDAO();
-        filmDAO.getAll("Film").forEach((t) -> {
-            listFilm.add(t);
-        });
-        comboBoxFilm.setItems(FXCollections.observableArrayList(listFilm));
+    void getFilm(Film film) {
+        selectedFilm = film;
         comboBoxFilm.setValue(film);
+        date.setDisable(false);
+        durationForDate();
     }
 
     @FXML
     private void setUpComboBoxFilm() {
+        if (selectedFilm == null) {
+            date.setDisable(Boolean.FALSE);
+        }
         selectedFilm = comboBoxFilm.getValue();
+        if (comboBoxFilm.getValue() != null) {
+            durationForDate();
+        }
+
         btnViewSchedule.setDisable(false);
     }
 
@@ -213,6 +213,12 @@ public class FXMLNewScheduleController implements Initializable {
             noteText.setText(noteText.getText().substring(0, 30));
         }
         newSchedule.setNote(noteText.getText());
+    }
+
+    @FXML
+    private void setUpDate() {
+        selectedDate = date.getValue();
+        loadTableView();
     }
 
     @FXML
@@ -254,15 +260,18 @@ public class FXMLNewScheduleController implements Initializable {
             comboBoxRoom.setValue("Choose Room");
             comboBoxRoom.setOnAction((t) -> {
                 try {
-                    selectedRoom = (Room) comboBoxRoom.getValue();
-                    rtDetailList.clear();
+                    if (comboBoxRoom.getValue() != null) {
+                        selectedRoom = (Room) comboBoxRoom.getValue();
+                        rtDetailList.clear();
 
-                    roomDAO.getRoomTypeDetailsList(selectedRoom).forEach((p) -> {
-                        rtDetailList.add(p);
-                    });
+                        roomDAO.getRoomTypeDetailsList(selectedRoom).forEach((p) -> {
+                            rtDetailList.add(p);
+                        });
 
-                    loadTableView();
-                    comboBoxRoomTypeHanlder();
+                        loadTableView();
+                        comboBoxRoomTypeHanlder();
+                    }
+
                 } catch (Exception ex) {
                     Logger.getLogger(FXMLNewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -283,22 +292,28 @@ public class FXMLNewScheduleController implements Initializable {
         });
     }
 
-    private void checkValidDate() {
-        LocalDate minDate = LocalDate.now();
+    private void durationForDate() {
+        LocalDate minDate;
+        if (!selectedFilm.getStartDate().toLocalDate().isAfter(LocalDate.now())) {
+            minDate = LocalDate.now();
+        } else {
+            minDate = selectedFilm.getStartDate().toLocalDate();
+        }
         date.setValue(minDate);
         selectedDate = date.getValue();
-        LocalDate maxDate = minDate.plusDays(30);
-//        date.setDayCellFactory(picker -> new DateCell() {
-//            @Override
-//            public void updateItem(LocalDate date, boolean empty) {
-//                super.updateItem(date, empty);
-//                // Nếu ngày nằm ngoài khoảng thời gian cụ thể thì vô hiệu hóa
-//                if (date.isBefore(minDate) || date.isAfter(maxDate)) {
-//                    setDisable(true);
-//                    setStyle("-fx-background-color: #C0C0C0;"); // Thiết lập màu nền khác cho ngày bị vô hiệu hóa
-//                }
-//            }
-//        });
+        LocalDate maxDate = selectedFilm.getEndDate().toLocalDate();
+        date.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                // Nếu ngày nằm ngoài khoảng thời gian cụ thể thì vô hiệu hóa
+                if (date.isBefore(minDate) || date.isAfter(maxDate)) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #C0C0C0;"); // Thiết lập màu nền khác cho ngày bị vô hiệu hóa
+                }
+            }
+        });
         date.setOnAction((t) -> {
             selectedDate = date.getValue();
             loadTableView();
@@ -319,14 +334,9 @@ public class FXMLNewScheduleController implements Initializable {
         }
         LocalDateTime selectedStartTime = selectedTime.atDate(selectedDate);
         LocalDateTime selectedEndTime = selectedTime.atDate(selectedDate).plusMinutes(selectedFilm.getDuration());
-        System.out.println("Time: ");
-        System.out.println("selecStart: " + selectedStartTime);
-        System.out.println("selecEnd: " + selectedEndTime);
         for (Schedule schedule : scheduleList) {
             LocalDateTime startTime = schedule.getStartTime();
             LocalDateTime endTime = schedule.getEndTime();
-            System.out.println("Start: " + startTime);
-            System.out.println("End: " + endTime);
             if (!((selectedStartTime.isAfter(endTime) && selectedEndTime.isAfter(endTime))
                     || (selectedStartTime.isBefore(startTime) && selectedEndTime.isBefore(startTime)))) {
                 throw new TimeoutException("Time is conflict !! \n Please choose a nother time.");
@@ -353,7 +363,7 @@ public class FXMLNewScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.getRoomTypeDetail().getRoomType().getrTypeName());
         });
-        colRoomType.setPrefWidth(180);
+        colRoomType.setPrefWidth(170);
 
         TableColumn<Schedule, String> colTime = new TableColumn("Time");
         colTime.setCellValueFactory((p) -> {
@@ -428,7 +438,7 @@ public class FXMLNewScheduleController implements Initializable {
             } else {
                 String info = "You can't delete this schedule because it has some Ticket\n"
                         + "You can update Status to off this schedule";
-                Alert alert =  AlertUtils.getAlert(info, Alert.AlertType.ERROR);
+                Alert alert = AlertUtils.getAlert(info, Alert.AlertType.ERROR);
                 alert.show();
             }
         } catch (Exception ex) {
@@ -437,10 +447,11 @@ public class FXMLNewScheduleController implements Initializable {
     }
 
     private void loadTableView() {
-        infoTableLabel.setText("Infomation for " + selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        infoTableLabel.setStyle("-fx-font-size: 22 ;");
-        scheduleList.clear();
         try {
+            infoTableLabel.setText(selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            infoTableLabel.setStyle("-fx-font-size: 22 ;");
+            scheduleList.clear();
+
             //Lấy dữ liệu trong 1 ngày selectedDate
             scheduleList = scheduleDAO.
                     getToView(selectedDate.atStartOfDay(), rtDetailList);
@@ -452,6 +463,36 @@ public class FXMLNewScheduleController implements Initializable {
     }
 
     @FXML
+    private void btnClearHanlder() {
+        Alert alert = AlertUtils.getAlert("Are you sure to clear all data?", Alert.AlertType.CONFIRMATION);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            hourText.clear();
+            selectedTime = null;
+            minuteText.clear();
+            endHourText.clear();
+            endMinuteText.clear();
+            validIcon.setVisible(false);
+            invalidIcon.setVisible(false);
+            errTime.setVisible(false);
+            errNote.setVisible(false);
+            noteText.clear();
+            comboBoxRoom.setValue(null);
+            comboBoxRoomType.setValue(null);
+            comboBoxFilm.setValue(null);
+            comboBoxFilm.setPromptText("Choose Film");
+            comboBoxRoom.setPromptText("Hello");
+            btnViewSchedule.setDisable(true);
+            date.setDisable(true);
+            this.tableViewTime.setItems(null);
+            setID();
+        } else {
+            alert.close();
+        }
+
+    }
+
+    @FXML
     private void buttonSaveHanlder() {
         try {
             if (errTime.isVisible()) {
@@ -460,19 +501,43 @@ public class FXMLNewScheduleController implements Initializable {
             if (errNote.isVisible()) {
                 throw new Exception("Note must be less than 30  character!!");
             }
+            if (selectedDate.isEqual(LocalDate.now())) {
+                throw new Exception("Schedules must be set after today!");
+            }
+            if (selectedTime == null) {
+                throw new Exception("You have to pick time!!");
+            }
             chechValidTime();
-            newSchedule.setStatus(true);
-            newSchedule.setRoomTypeDetail(selectedRtDetail);
-            newSchedule.setStartTime(selectedDate.atTime(selectedTime));
-            newSchedule.setEndTime(selectedDate.atTime(selectedTime).plusMinutes(selectedFilm.getDuration()));
-            newSchedule.setScheduleID(IdSchedule);
-            newSchedule.setStatus(activeNow);
-            newSchedule.setFilm(selectedFilm);
-            scheduleDAO.add(newSchedule);
-            Alert alert = AlertUtils.getAlert("Process successfully!", Alert.AlertType.INFORMATION);
-            alert.show();
-            setID();
-            loadTableView();
+            String info = "Are you sure to save this schedule? \n"
+                    + "Film: "  + selectedFilm.getFilmName() + "\n"
+                    + selectedRoom.getRoomName() + " - " + selectedRtDetail.toString() + "\n"
+                    + selectedDate.atTime(selectedTime).format(DateTimeFormatter.ofPattern("HH:mm - dd/MM/yyy")) + "\n"
+                    + "Note: " + noteText.getText() + "\n"
+                    + "Status: " +  activeNow;
+            Alert alert1 = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
+            Optional<ButtonType> result = alert1.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                newSchedule.setRoomTypeDetail(selectedRtDetail);
+                newSchedule.setStartTime(selectedDate.atTime(selectedTime));
+                newSchedule.setEndTime(selectedDate.atTime(selectedTime).plusMinutes(selectedFilm.getDuration()));
+                newSchedule.setScheduleID(IdSchedule);
+                newSchedule.setStatus(activeNow);
+                newSchedule.setFilm(selectedFilm);
+                scheduleDAO.add(newSchedule);
+                Alert alert = AlertUtils.getAlert("Process successfully!", Alert.AlertType.INFORMATION);
+                alert.show();
+                setID();
+                loadTableView();
+                hourText.clear();
+                selectedTime = null;
+                minuteText.clear();
+                endHourText.clear();
+                endMinuteText.clear();
+                validIcon.setVisible(false);
+            }
+            else{
+                alert1.close();
+            }
 
         } catch (NullPointerException ee) {  // Lỗi không chọn Film
             Alert alert = AlertUtils.getAlert("Choose Film, Please!!", Alert.AlertType.ERROR);

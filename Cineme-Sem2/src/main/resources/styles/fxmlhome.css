@@ -10,16 +10,6 @@
     -fx-font-family:sans-serif;
 }
 
-.list-cell {
-    -fx-background-color: #999999;
-    -fx-alignment:  CENTER;
-}
-
-.list-cell:selected {
-    -fx-background-color: #999999;
-    -fx-alignment:  CENTER;
-    -fx-text-fill:white;
-}
 VBox.popup{
     -fx-background-color:#ffffff;
     -fx-font-size:10;

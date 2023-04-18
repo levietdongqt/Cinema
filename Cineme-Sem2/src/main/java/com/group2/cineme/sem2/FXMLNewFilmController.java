@@ -155,6 +155,7 @@ public class FXMLNewFilmController implements Initializable {
     }
 
     //Khu vuc xu ly su kien
+    @FXML
     public void uploadImageHandler(ActionEvent event) {
         File f = null;
         FileChooser filechooser = new FileChooser();
@@ -183,7 +184,7 @@ public class FXMLNewFilmController implements Initializable {
         }
 
     }
-
+    @FXML
     public void saveButtonHandler(ActionEvent event) {
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
@@ -219,7 +220,7 @@ public class FXMLNewFilmController implements Initializable {
         }
 
     }
-
+    @FXML
     public void resetButtonHandler(ActionEvent event) {
         clearDataInFilm();
     }
@@ -227,16 +228,18 @@ public class FXMLNewFilmController implements Initializable {
     public void showInformationButtonHandler() {
         System.out.println(setActors);
     }
+    @FXML
     public void removeGenre(){
             setFilmGenre.removeAll(this.listChoiceGenre.getSelectionModel().getSelectedItems());
             this.listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
     }
+    @FXML
     public void removeActor(){
         
             setActors.removeAll(this.listChoiceActors.getSelectionModel().getSelectedItems());
             this.listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
     }
-
+    @FXML
     public void addActorButtonHandler() {
         if (this.vBoxActors.isVisible() == false) {
             this.vBoxActors.setVisible(true);
@@ -244,7 +247,7 @@ public class FXMLNewFilmController implements Initializable {
             this.vBoxActors.setVisible(false);
         }
     }
-
+    @FXML
     public void buttonSaveHandlerActor(Actors actor) {
         buttonSave.setOnAction((event) -> {
             if (errActorsName.isVisible() == true || errBirthDay.isVisible() == true) {
@@ -262,7 +265,7 @@ public class FXMLNewFilmController implements Initializable {
             }
         });
     }
-
+    @FXML
     public void buttonResetHandlerActor() {
         buttonClear.setOnAction((event) -> {
             clearDataInActor();

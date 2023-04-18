@@ -80,21 +80,24 @@ public class FXMLHomeController implements Initializable {
     }
 
     //Xu ly Button handler
+    @FXML
     public void homeButtonHandler() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
         App.scene.setRoot(fxmlLoader.load());
 
     }
+    @FXML
     public void DashboardButtonHandler() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
         App.scene.setRoot(fxmlLoader.load());
     }
-
+    @FXML
     public void filmButtonHandler() throws IOException {
         App.setView("FXMLFilm");
     }
 
     // xử lý logout và cập nhật endTime
+    @FXML
     public void logOut() throws IOException, Exception {
 
         WorkSessionDAO worddao = new WorkSessionDAO();
@@ -120,16 +123,18 @@ public class FXMLHomeController implements Initializable {
             newScene("FXMLFoodReport");
         }
     }
-    private void newScene(String fileName) throws IOException{
+    
+    private void newScene(String fileName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileName + ".fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-            home.setDisable(true);
-            popup.hide();
-            stage.setOnHiding((t) -> {
-                home.setDisable(false);
-            });
+        Stage stage = new Stage();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+        home.setDisable(true);
+        popup.hide();
+        stage.setOnHiding((t) -> {
+            home.setDisable(false);
+            report.setValue(null);          
+        });
     }
 
     public void setUpReport() {

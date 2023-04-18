@@ -9,7 +9,6 @@ import DAO.RoomSeatDetailDAO;
 import DAO.ScheduleDAO;
 import DAO.TicketDAO;
 import POJO.Film;
-import POJO.RoomSeatDetail;
 import POJO.RoomType;
 import POJO.Schedule;
 import POJO.Ticket;
@@ -106,15 +105,16 @@ public class FXMLShowScheduleController implements Initializable {
     }
 
     //ButtonHandler
+    @FXML
     public void bookTicketHandler() {
         loadDataView(LocalDateTime.now());
         loadViewComboBoxFilm();
     }
-
+    @FXML
     public void buttonUndoHandler() {
         this.tableViewSchedule.setItems(FXCollections.observableList(films));
     }
-
+    
     public void loadTableView() {
 
         TableColumn<Film, String> colDay = new TableColumn("DAY-SHOWTIME");

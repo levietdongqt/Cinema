@@ -93,6 +93,7 @@ public class FXMLFilmReportController implements Initializable {
     }
     
     //Khu vuc xu ly nut
+    @FXML
     public void DrawHandler(){
         year = this.spinnerYear.getValue();
         if(month==0){
@@ -120,6 +121,7 @@ public class FXMLFilmReportController implements Initializable {
                     System.out.println(e.getMessage());
                 }
     }
+    @FXML
     public void exportButtonHandler(){
         int countRow = 1;
         XSSFWorkbook Film_Report = new XSSFWorkbook();
@@ -172,6 +174,7 @@ public class FXMLFilmReportController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    @FXML
     public void FullYearButtonHandler(){
         year = this.spinnerYear.getValue();
         month = 0;

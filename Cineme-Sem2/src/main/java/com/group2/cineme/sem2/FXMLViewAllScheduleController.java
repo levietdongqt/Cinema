@@ -60,16 +60,16 @@ public class FXMLViewAllScheduleController implements Initializable {
     private void setUpStartPage() {
         filmLabel.setText(film.getFilmName());
         datePicker.setValue(selectedDate.toLocalDate());
-        LocalDate now = LocalDate.now();
+        LocalDate minDate = film.getStartDate().toLocalDate();
         selectedDate = datePicker.getValue().atStartOfDay();
-        LocalDate maxDate = now.plusDays(30);
+        LocalDate maxDate = film.getEndDate().toLocalDate();
 
         datePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 // Nếu ngày nằm ngoài khoảng thời gian cụ thể thì vô hiệu hóa
-                if (date.isBefore(now) || date.isAfter(maxDate)) {
+                if (date.isBefore(minDate) || date.isAfter(maxDate)) {
                     setDisable(true);
                     setStyle("-fx-background-color: #C0C0C0;"); // Thiết lập màu nền khác cho ngày bị vô hiệu hóa
                 }
@@ -90,7 +90,7 @@ public class FXMLViewAllScheduleController implements Initializable {
             Schedule schedule = p.getValue();
             return new SimpleObjectProperty<>(schedule.getRoomTypeDetail().getRoom());
         });
-        colRoom.setPrefWidth(100);
+        colRoom.setPrefWidth(90);
         TableColumn<Schedule, String> colRoomType = new TableColumn("Room's Type");
         colRoomType.setCellValueFactory((p) -> {
             Schedule schedule = p.getValue();
