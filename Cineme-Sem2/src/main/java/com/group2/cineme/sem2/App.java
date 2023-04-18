@@ -68,6 +68,8 @@ public class App extends Application {
         WorkSessionDAO workdao = new WorkSessionDAO();
         workdao.update();
     }
+    
+
 
     public static void main(String[] args) {
         launch();

@@ -65,7 +65,7 @@ CREATE TABLE Product (
   [productName] VARCHAR(100) not null,
   [type] VARCHAR(50),
   [imgUrl] VARCHAR(255),
-  [price] DECIMAL(10,2) not null,
+  [price] int not null,
   [status] BIT default 1
 );
 go
@@ -186,6 +186,7 @@ go
 Create table Ticket (
 	[ticketID] int identity primary key,
 	[billID] int,
+	[price] int,
 	[scheduleID] varchar(20),
 	[seatMap] varchar(10),
 	[status] bit default(1),	
