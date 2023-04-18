@@ -27,6 +27,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.commons.collections4.list.AbstractLinkedList;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -194,5 +195,31 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
             ses.getTransaction().commit();
         }
         return list;
+    }
+    
+    public List<Schedule> ScheduleByFilmID(String id,LocalDate startDate,LocalDate endDate){
+        List<Schedule> lists = new ArrayList<>();
+        try ( Session session = HibernateUtils.getFACTORY().openSession()){
+            session.getTransaction().begin();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Schedule> criteriaQuery = builder.createQuery(Schedule.class);
+            Root<Film> root = criteriaQuery.from(Film.class);
+            Join<Film, Schedule> scheJoin = root.join("listSchedule");
+            
+            LocalDateTime startDateToStartDateTime = startDate.atStartOfDay();
+            LocalDateTime endDateToEndDateTime = endDate.atStartOfDay().with(LocalTime.MAX);
+            
+            Predicate equalID = builder.equal(root.get("filmID"), id);
+            Predicate greaterThan = builder.greaterThanOrEqualTo(scheJoin.get("startTime"), startDateToStartDateTime);
+            Predicate lessThan = builder.lessThanOrEqualTo(scheJoin.get("startTime"), endDateToEndDateTime);
+            
+            criteriaQuery.select(scheJoin);
+            criteriaQuery.where(builder.and(equalID,greaterThan,lessThan));
+            lists= session.createQuery(criteriaQuery).getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }
+        return lists;
     }
 }

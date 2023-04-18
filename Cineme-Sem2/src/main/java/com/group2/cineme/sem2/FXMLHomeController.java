@@ -6,18 +6,12 @@ package com.group2.cineme.sem2;
 
 import DAO.WorkSessionDAO;
 
-import DAO.FilmDAO;
-import POJO.Film;
 import Utils.SessionUtil;
 import com.jfoenix.controls.JFXHamburger;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,8 +27,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -82,7 +74,7 @@ public class FXMLHomeController implements Initializable {
         loadDataPopup();
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
-        loadInHome("FXMLShowSchedule");
+        loadInHome("FXMLFilm");
         loadTimeClock();
         setUpReport();
     }
@@ -92,6 +84,10 @@ public class FXMLHomeController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
         App.scene.setRoot(fxmlLoader.load());
 
+    }
+    public void DashboardButtonHandler() throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
+        App.scene.setRoot(fxmlLoader.load());
     }
 
     public void filmButtonHandler() throws IOException {
@@ -118,7 +114,7 @@ public class FXMLHomeController implements Initializable {
             //Load trang report Employee
         }
         if (value.equalsIgnoreCase("Film")) {
-            //Load trang report Film
+            newScene("FXMLFilmReport");
         }
         if (value.equalsIgnoreCase("Food")) {
             newScene("FXMLFoodReport");

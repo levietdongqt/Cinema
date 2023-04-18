@@ -172,11 +172,11 @@ public class FXMLLoginController implements Initializable {
             cgv.setEffect(shadow);
 
         });
-
-
+        
     }
     public static void loadData() {
         FilmDAO f = new FilmDAO();
+        f.updateByDate("endDate");
         List<Film> films;
         try {
             films = f.searchByDate("endDate");
@@ -190,5 +190,5 @@ public class FXMLLoginController implements Initializable {
         }
 
     }
-
+    
 }

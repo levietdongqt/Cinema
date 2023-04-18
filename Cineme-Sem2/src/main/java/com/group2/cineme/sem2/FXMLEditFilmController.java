@@ -131,7 +131,6 @@ public class FXMLEditFilmController implements Initializable {
 
         //Set du lieu cho LimitAge
         loadDataOrSetDefault();
-        System.out.println(setFilmGenre);
 
         //Set du lieu cho ListView Gender Actor
         loadDataActors("");
@@ -153,7 +152,7 @@ public class FXMLEditFilmController implements Initializable {
     public void uploadImageHandler(ActionEvent event) {
         File f = null;
         FileChooser filechooser = new FileChooser();
-        filechooser.setTitle("Chon anh");
+        filechooser.setTitle("Choose Image:");
         filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = filechooser.showOpenDialog(null);
         if (selectedFile != null) {
@@ -217,10 +216,6 @@ public class FXMLEditFilmController implements Initializable {
         this.errorID.setText("");
         this.listChoiceGenre.setItems(null);
         this.listChoiceActors.setItems(null);
-    }
-
-    public void showInformationButtonHandler() {
-        System.out.println(setActors);
     }
 
     public void removeGenre() {

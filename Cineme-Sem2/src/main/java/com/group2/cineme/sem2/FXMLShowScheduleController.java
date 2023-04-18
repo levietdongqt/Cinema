@@ -117,7 +117,7 @@ public class FXMLShowScheduleController implements Initializable {
 
     public void loadTableView() {
 
-        TableColumn<Film, String> colDay = new TableColumn("Day");
+        TableColumn<Film, String> colDay = new TableColumn("DAY-SHOWTIME");
         colDay.setCellValueFactory((p) -> {
             Film sc = p.getValue();
             LocalDate a = LocalDate.now();
@@ -128,7 +128,7 @@ public class FXMLShowScheduleController implements Initializable {
         });
         colDay.setPrefWidth(250);
 
-        TableColumn<Film, ImageView> colFilmView = new TableColumn("Image");
+        TableColumn<Film, ImageView> colFilmView = new TableColumn("IMAGE");
         colFilmView.setCellValueFactory((p) -> {
             Film sc = p.getValue();
             String filmImage = sc.getImageUrl();
@@ -141,14 +141,14 @@ public class FXMLShowScheduleController implements Initializable {
             return new SimpleObjectProperty<>(imageView);
         });
         colFilmView.setPrefWidth(220);
-        TableColumn<Film, String> colNameFilm = new TableColumn("Name");
+        TableColumn<Film, String> colNameFilm = new TableColumn("NAME");
         colNameFilm.setCellValueFactory((o) -> {
             Film sc = o.getValue();
             String filmName = sc.getFilmName();
             return new SimpleObjectProperty<>(filmName);
         });
         colNameFilm.setPrefWidth(250);
-        TableColumn colDuration = new TableColumn("Duration");
+        TableColumn colDuration = new TableColumn("DURATION");
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
         colDuration.setPrefWidth(100);
         TableColumn<Film, HBox> colTime = new TableColumn("Time");
@@ -169,7 +169,7 @@ public class FXMLShowScheduleController implements Initializable {
                 }
             }
             cb.setItems(FXCollections.observableList(new ArrayList<>(result)));
-            Button button = new Button("Buy ticket");
+            Button button = new Button("BUY-TICKET");
             button.setPrefHeight(50);
             button.setOnAction((t) -> {
                 try {

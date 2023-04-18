@@ -205,7 +205,6 @@ public class FXMLFoodReportController implements Initializable {
         }
         month.setItems(FXCollections.observableList(listMonth));
         month.setValue(LocalDateTime.now().getMonth());
-
     }
 
     private void loadDataTableView() {

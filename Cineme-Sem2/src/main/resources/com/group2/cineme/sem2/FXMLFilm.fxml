@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFilmController">
+<VBox fx:id="vboxShowFilm" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFilmController">
    <children>
       <HBox>
          <children>
@@ -61,12 +61,14 @@
             <Button mnemonicParsing="false" onAction="#buttonSearchByDate" text="Search">
                <graphic>
                   <FontAwesomeIcon glyphName="SEARCH" />
-               </graphic></Button>
+               </graphic>
+            </Button>
             <ComboBox fx:id="comboGenres" prefHeight="25.0" prefWidth="200.0" promptText="Search By Genre" styleClass="comboBox" />
             <Button mnemonicParsing="false" onAction="#buttonSearchByGenre" text="Search">
                <graphic>
                   <FontAwesomeIcon glyphName="SEARCH" />
-               </graphic></Button>
+               </graphic>
+            </Button>
          </children>
       </HBox>
    </children>
