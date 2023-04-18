@@ -71,7 +71,7 @@ public class FXMLBillController implements Initializable {
     }
 
     public FXMLBillController() {
-        
+
     }
 
     public void testData() throws Exception {
@@ -147,7 +147,7 @@ public class FXMLBillController implements Initializable {
     public void exportpdf() {
         exportbut.setOnAction(event -> {
             PrinterJob job = PrinterJob.createPrinterJob();
-            
+
             if (job != null) {
                 boolean success = job.printPage(billarea);
                 if (success) {
@@ -161,13 +161,18 @@ public class FXMLBillController implements Initializable {
         pdate.setText(b1.getPrintDate().toString());
         empid.setText(b1.getEmployee().getEmpName());
     }
+    @FXML
+    private void btnBackHanlder() {
+
+    }
+    @FXML
+    private void btnAcceptHanlder() {
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-
         scrollPane.setMaxHeight(vbox.getPrefHeight());
-
 
         try {
             testData();

@@ -177,12 +177,12 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <Button layoutX="476.0" layoutY="694.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="111.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Back" textFill="WHITE">
+                  <Button fx:id="btnBack" layoutX="476.0" layoutY="694.0" mnemonicParsing="false" onAction="#btnBackHanlder" prefHeight="53.0" prefWidth="111.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="15.0" />
                      </font>
                   </Button>
-                  <Button layoutX="595.0" layoutY="696.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="111.0" style="-fx-background-color: linear-gradient(to left, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Accept" textFill="WHITE">
+                  <Button fx:id="btnAccept" layoutX="595.0" layoutY="696.0" mnemonicParsing="false" onAction="#btnAcceptHanlder" prefHeight="53.0" prefWidth="111.0" style="-fx-background-color: linear-gradient(to left, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Accept" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="15.0" />
                      </font>
