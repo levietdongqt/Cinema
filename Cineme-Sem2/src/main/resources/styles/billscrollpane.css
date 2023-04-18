@@ -1,9 +1,9 @@
 .scroll-pane {
-    -fx-background:  linear-gradient(to right, rgba(163,254,252,0.3) 0%, rgba(234,153,255,0.3) 100%);
+    -fx-background:  linear-gradient(to right, rgba(163,254,252,0.8) 0%, rgba(234,153,255,0.8) 100%);
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical {
-    -fx-background-color: rgba(163,254,252,0.3);
+    -fx-background-color: rgba(163,254,252,0);
 }
 
 .thumb {
@@ -15,9 +15,9 @@
 }
 
 .increment-arrow , .decrement-arrow {
-    -fx-background-color: rgba(234,153,255,0.5);
+    -fx-background-color: rgba(234,153,255,0);
 }
 
 .increment-button , .decrement-button {
-    -fx-background-color: rgba(163,254,252,0.8);
+    -fx-background-color: rgba(163,254,252,0);
 }
