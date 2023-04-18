@@ -1,6 +1,5 @@
 package DAO;
 
-import Utils.SessionUtil;
 import POJO.Employee;
 import Utils.HibernateUtils;
 import Utils.SessionUtil;
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
