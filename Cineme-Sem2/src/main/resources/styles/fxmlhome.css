@@ -43,6 +43,7 @@ Button.buttonPopup{
     -fx-background-color:#291400;
     -fx-text-fill:white;
     -fx-font-weight: bold;
+    -fx-font-size:12;
 }
 
 AnchorPane{
