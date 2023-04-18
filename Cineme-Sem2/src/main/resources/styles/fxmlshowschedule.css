@@ -30,3 +30,17 @@
 .tableView .table-cell{
     -fx-font-size: 14px;
 }
+.table-header .sort-order-arrow{
+    -fx-background-color: #333333;
+}
+
+.list-cell {
+    -fx-background-color: #999999;
+    -fx-alignment:  CENTER;
+}
+
+.list-cell:selected {
+    -fx-background-color: #999999;
+    -fx-alignment:  CENTER;
+    -fx-text-fill:white;
+}

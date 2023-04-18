@@ -89,6 +89,7 @@ public class FXMLTicketController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         loadDataFilm();
         setSeatGird();
     }
@@ -154,13 +155,13 @@ public class FXMLTicketController implements Initializable {
 
     }
 
-    public void getSchedule() {
-        try {
-            this.scheule = scheDAO.getById("SC202347173241", Schedule.class);
-        } catch (Exception ex) {
-            Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void getSchedule() {
+//        try {
+//            this.scheule = scheDAO.getById("SC202347173241", Schedule.class);
+//        } catch (Exception ex) {
+//            Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     private void loadDataFilm() {
         filmLabel.setText(scheule.getFilm().getFilmName());

@@ -30,7 +30,7 @@ public class FilmGenreDAO extends GenericDAO<FilmGenre, Integer>{
                 query.setParameter("kw", '%'+kw+'%');
             }     
             
-            listGenre = query.getResultList();
+            listGenre = query.setCacheable(true).getResultList();
         } catch (Exception e) {
             AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
         }       

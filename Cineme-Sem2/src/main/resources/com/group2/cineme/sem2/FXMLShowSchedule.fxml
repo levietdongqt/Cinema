@@ -11,7 +11,7 @@
 
 <VBox fx:id="vboxShowSchedule" stylesheets="@../../../../styles/fxmlshowschedule.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLShowScheduleController">
    <children>
-      <HBox alignment="BOTTOM_LEFT" prefHeight="46.0" prefWidth="400.0">
+      <HBox alignment="BOTTOM_LEFT">
          <children>
             <Button mnemonicParsing="false" onAction="#bookTicketHandler" prefWidth="100.0" text="Book Ticket">
                <graphic>

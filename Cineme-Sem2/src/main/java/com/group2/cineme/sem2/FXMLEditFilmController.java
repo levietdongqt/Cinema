@@ -131,7 +131,6 @@ public class FXMLEditFilmController implements Initializable {
 
         //Set du lieu cho LimitAge
         loadDataOrSetDefault();
-        System.out.println(setFilmGenre);
 
         //Set du lieu cho ListView Gender Actor
         loadDataActors("");
@@ -150,10 +149,11 @@ public class FXMLEditFilmController implements Initializable {
     }
 
     //Khu vuc xu ly su kien
+    @FXML
     public void uploadImageHandler(ActionEvent event) {
         File f = null;
         FileChooser filechooser = new FileChooser();
-        filechooser.setTitle("Chon anh");
+        filechooser.setTitle("Choose Image:");
         filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = filechooser.showOpenDialog(null);
         if (selectedFile != null) {
@@ -176,7 +176,7 @@ public class FXMLEditFilmController implements Initializable {
         }
 
     }
-
+    @FXML
     public void updateButtonHandler(ActionEvent event) throws Exception {
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
@@ -194,7 +194,7 @@ public class FXMLEditFilmController implements Initializable {
         }
 
     }
-
+    @FXML
     public void resetButtonHandler(ActionEvent event) {
         this.txtName.clear();
         this.txtDuration.clear();
@@ -219,10 +219,6 @@ public class FXMLEditFilmController implements Initializable {
         this.listChoiceActors.setItems(null);
     }
 
-    public void showInformationButtonHandler() {
-        System.out.println(setActors);
-    }
-
     public void removeGenre() {
         setFilmGenre.removeAll(this.listChoiceGenre.getSelectionModel().getSelectedItems());
         this.listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
@@ -241,7 +237,7 @@ public class FXMLEditFilmController implements Initializable {
             this.vBoxActors.setVisible(false);
         }
     }
-
+    @FXML
     public void buttonSaveHandlerActor(Actors actor) {
         buttonSave.setOnAction((event) -> {
             if (errActorsName.isVisible() == true || errBirthDay.isVisible() == true) {
@@ -259,7 +255,7 @@ public class FXMLEditFilmController implements Initializable {
             }
         });
     }
-
+    @FXML
     public void buttonResetHandlerActor() {
         buttonClear.setOnAction((event) -> {
             clearDataInActor();
