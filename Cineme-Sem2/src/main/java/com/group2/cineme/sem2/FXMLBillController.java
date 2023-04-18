@@ -71,7 +71,7 @@ public class FXMLBillController implements Initializable {
     }
 
     public FXMLBillController() {
-
+        
     }
 
     public void testData() throws Exception {
@@ -128,7 +128,7 @@ public class FXMLBillController implements Initializable {
             Label price = new Label();
             price.setPrefWidth(hbox.getPrefWidth() / 3);
             price.setAlignment(Pos.TOP_CENTER);
-            price.setText(product.getPrice().toString());
+            price.setText(String.valueOf(product.getPrice()));
 
             hbox.getChildren().add(name);
             hbox.getChildren().add(quant);
@@ -136,7 +136,7 @@ public class FXMLBillController implements Initializable {
 
             vbox.getChildren().add(hbox);
 
-            BigDecimal productTotal = product.getPrice().multiply(new BigDecimal(quantity));
+            BigDecimal productTotal = BigDecimal.valueOf((product.getPrice() * quantity));
             total = total.add(productTotal);
 
         });
@@ -164,9 +164,10 @@ public class FXMLBillController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("\n VO \n");
+
 
         scrollPane.setMaxHeight(vbox.getPrefHeight());
+
 
         try {
             testData();

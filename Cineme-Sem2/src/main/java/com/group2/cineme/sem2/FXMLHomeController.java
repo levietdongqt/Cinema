@@ -113,27 +113,33 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     public void loadFXMLReport() throws IOException {
-        String value = report.getValue();
-        if (value.equalsIgnoreCase("Employee")){
-            //Load trang report Employee
+        if (report.getValue() != null) {
+            String value = report.getValue();
+            if (value.equalsIgnoreCase("Employee")) {
+                //Load trang report Employee
+            }
+            if (value.equalsIgnoreCase("Film")) {
+                //Load trang report Film
+            }
+            if (value.equalsIgnoreCase("Food")) {
+                newScene("FXMLFoodReport");
+            }
         }
-        if (value.equalsIgnoreCase("Film")) {
-            //Load trang report Film
-        }
-        if (value.equalsIgnoreCase("Food")) {
-            newScene("FXMLFoodReport");
-        }
+
     }
-    private void newScene(String fileName) throws IOException{
+
+    private void newScene(String fileName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileName + ".fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-            home.setDisable(true);
-            popup.hide();
-            stage.setOnHiding((t) -> {
-                home.setDisable(false);
-            });
+        Stage stage = new Stage();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+        home.setDisable(true);
+        popup.hide();
+        stage.setOnHiding((t) -> {
+            home.setDisable(false);
+            report.setValue(null);
+            
+        });
     }
 
     public void setUpReport() {

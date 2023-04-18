@@ -40,7 +40,7 @@
                   <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="Film Mananing" />
                   <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="Employee Manager" />
                   <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="Schedule Manager" />
-                  <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="22.0" prefWidth="105.0" promptText="Report" styleClass="list-cell" />
+                  <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="22.0" prefWidth="105.0" promptText="Report" stylesheets="@../../../../styles/reportComboBox.css" />
                   <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
