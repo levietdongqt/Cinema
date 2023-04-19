@@ -38,7 +38,7 @@
                   </Label>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#setUpBtnConfirm" text="CONFIRM" textFill="#400707">
+            <Button mnemonicParsing="false" onAction="#setUpBtnConfirm" style="-fx-background-radius: 15 15;" text="CONFIRM" textFill="#400707">
                <font>
                   <Font size="13.0" />
                </font></Button>

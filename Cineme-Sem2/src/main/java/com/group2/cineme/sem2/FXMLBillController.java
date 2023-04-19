@@ -1,18 +1,29 @@
 package com.group2.cineme.sem2;
 
+import DAO.BillDAO;
+import DAO.FilmDAO;
 import DAO.ProductDAO;
+import DAO.TicketDAO;
 import POJO.Bill;
+import POJO.Film;
+import POJO.ProductBill;
 import POJO.Ticket;
+import Utils.AlertUtils;
 import Utils.SessionUtil;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.print.PrinterJob;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -20,6 +31,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
 public class FXMLBillController implements Initializable {
 
@@ -65,6 +77,7 @@ public class FXMLBillController implements Initializable {
     BigDecimal total = BigDecimal.ZERO;
 
     Bill b1 = new Bill();
+    BillDAO billDAO = new BillDAO();
 
     public FXMLBillController(VBox vbox) {
         this.vbox = vbox;
@@ -161,12 +174,55 @@ public class FXMLBillController implements Initializable {
         pdate.setText(b1.getPrintDate().toString());
         empid.setText(b1.getEmployee().getEmpName());
     }
+
     @FXML
     private void btnBackHanlder() {
+        Stage stage = (Stage) vbox.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void btnAcceptHanlder() throws Exception {
+        b1.setEmployee(SessionUtil.getEmployee());
+        billDAO.add(b1);
+        saveToDB();
+        Alert alert = AlertUtils.getAlert("Buy Ticket successful!!", Alert.AlertType.INFORMATION);
+        SessionUtil.getProductList().clear();
+        SessionUtil.getTicketList().clear();
+        alert.showAndWait();
+        App.setView("FXMLShowSchedule");
+        Stage stage = (Stage) vbox.getScene().getWindow();
+        stage.close();
 
     }
-    @FXML
-    private void btnAcceptHanlder() {
+
+    private void saveToDB() throws Exception {
+        FilmDAO fd = new FilmDAO();
+        TicketDAO ticDAO = new TicketDAO();
+        List<ProductBill> proBillList = new ArrayList<>();
+//        Film film = scheule.getFilm();
+//        int currentView = film.getViewFilm();
+//        int selectView = currentView + SessionUtil.getTicketList().size();
+        SessionUtil.getTicketList().forEach((t) -> {
+            try {
+                t.setBill(b1);
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+        SessionUtil.getProductList().forEach((key, vaule) -> {
+            ProductBill proBill = new ProductBill();
+            String proBillID = String.valueOf(b1.getBillID()) + key.productId.substring(1);
+            proBill.setBill(b1);
+            proBill.setProBillID(proBillID);
+            proBill.setProduct(key);
+            proBill.setQuantity(vaule);
+            proBillList.add(proBill);
+        });
+        ticDAO.addListTicketAndProduct(SessionUtil.getTicketList(), proBillList);
+//        film.setViewFilm(selectView);
+//        fd.update(film);
 
     }
 
@@ -175,7 +231,7 @@ public class FXMLBillController implements Initializable {
         scrollPane.setMaxHeight(vbox.getPrefHeight());
 
         try {
-            testData();
+            //testData();
             otherData();
             loadProduct();
             exportpdf();

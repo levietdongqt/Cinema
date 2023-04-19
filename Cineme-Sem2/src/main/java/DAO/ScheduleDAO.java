@@ -122,7 +122,7 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
             String hql = "FROM Schedule WHERE film = :film AND status = :status";
-            Query query = ses.createQuery(hql);
+            Query query = ses.createQuery(hql).setCacheable(true);
             query.setParameter("film", film);
             query.setParameter("status", true);
             list = query.getResultList();
