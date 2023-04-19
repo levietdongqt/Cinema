@@ -2,11 +2,14 @@ package com.group2.cineme.sem2;
 
 import DAO.ProductDAO;
 import POJO.Bill;
+import POJO.Schedule;
 import POJO.Ticket;
 import Utils.SessionUtil;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,13 +68,16 @@ public class FXMLBillController implements Initializable {
     BigDecimal total = BigDecimal.ZERO;
 
     Bill b1 = new Bill();
+    private Schedule schedule;
+    private BigDecimal sumTicket=BigDecimal.ZERO;
+    
 
     public FXMLBillController(VBox vbox) {
         this.vbox = vbox;
     }
 
-    public FXMLBillController() {
-
+    public FXMLBillController(Schedule schedule) {
+        this.schedule = schedule;
     }
 
     public void testData() throws Exception {
@@ -106,9 +112,27 @@ public class FXMLBillController implements Initializable {
             System.out.println(a);
         });
     }
+    public void loadToView(){
+        this.filmname.setText(schedule.getFilm().getFilmName());
+        this.empid.setText(SessionUtil.getEmployee().getEmpName());
+        String text = "";
+        List<Ticket> tickets = SessionUtil.getTicketList();
+        int sum = 0;
+        for (Ticket ticket1 : tickets) {
+            text+=ticket1.getSeatMap()+" ";
+            sum+= ticket1.getPrice();  
+        }
+        sumTicket = BigDecimal.valueOf(sum);
+        this.seats.setText(text);
+        this.ticket.setText(String.format("%d",tickets.size()));
+        this.time.setText(schedule.getStartTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        this.ftotal.setText(sumTicket.toString());
+        this.pdate.setText(LocalDateTime.now().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        this.btotal.setText(total.add(sumTicket).toString());
+    }
 
     public void loadProduct() {
-
+        System.out.println(SessionUtil.getProductList().toString());
         SessionUtil.getProductList().forEach((product, quantity) -> {
 
             HBox hbox = new HBox();
@@ -157,10 +181,10 @@ public class FXMLBillController implements Initializable {
         });
     }
 
-    public void otherData() {
-        pdate.setText(b1.getPrintDate().toString());
-        empid.setText(b1.getEmployee().getEmpName());
-    }
+//    public void otherData() {
+//        pdate.setText(b1.getPrintDate().toString());
+//        empid.setText(b1.getEmployee().getEmpName());
+//    }
     @FXML
     private void btnBackHanlder() {
 
@@ -175,9 +199,11 @@ public class FXMLBillController implements Initializable {
         scrollPane.setMaxHeight(vbox.getPrefHeight());
 
         try {
-            testData();
-            otherData();
             loadProduct();
+            loadToView();
+//            testData();
+//            otherData();
+            
             exportpdf();
         } catch (Exception ex) {
             Logger.getLogger(FXMLBillController.class.getName()).log(Level.SEVERE, null, ex);
