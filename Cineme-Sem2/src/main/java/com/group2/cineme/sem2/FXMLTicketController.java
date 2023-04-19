@@ -89,7 +89,8 @@ public class FXMLTicketController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        SessionUtil.getProductList().clear();
+        SessionUtil.getTicketList().clear();
         loadDataFilm();
         setSeatGird();
     }
@@ -105,7 +106,6 @@ public class FXMLTicketController implements Initializable {
             alert.show();
             return;
         }
-        saveToDB();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLBill.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
@@ -122,39 +122,38 @@ public class FXMLTicketController implements Initializable {
         });
     }
 
-    private void saveToDB() throws Exception {
-        FilmDAO fd = new FilmDAO();
-        BillDAO billDAO = new BillDAO();
-        TicketDAO ticDAO = new TicketDAO();
-        Bill bill = billDAO.getById(7, Bill.class);
-        List<ProductBill> proBillList = new ArrayList<>();
-        Film film = scheule.getFilm();
-        int currentView = film.getViewFilm();
-        int selectView = currentView + SessionUtil.getTicketList().size();
-        SessionUtil.getTicketList().forEach((t) -> {
-            try {
-                t.setBill(bill);
-            } catch (Exception ex) {
-                Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        });
-        SessionUtil.getProductList().forEach((key, vaule) -> {
-            ProductBill proBill = new ProductBill();
-            String proBillID = String.valueOf(LocalDate.now().getDayOfMonth())
-                    + String.valueOf(LocalTime.now().getHour()) + String.valueOf(LocalTime.now().getMinute()) + i++;
-            proBill.setBill(bill);
-            proBill.setProBillID(proBillID);
-            proBill.setProduct(key);
-            proBill.setQuantity(vaule);
-            proBillList.add(proBill);
-        });
-        ticDAO.addListTicketAndProduct(SessionUtil.getTicketList(), proBillList);
-        film.setViewFilm(selectView);
-        fd.update(film);
-
-    }
-
+//    private void saveToDB() throws Exception {
+//        FilmDAO fd = new FilmDAO();
+//        BillDAO billDAO = new BillDAO();
+//        TicketDAO ticDAO = new TicketDAO();
+//        Bill bill = billDAO.getById(7, Bill.class);
+//        List<ProductBill> proBillList = new ArrayList<>();
+//        Film film = scheule.getFilm();
+//        int currentView = film.getViewFilm();
+//        int selectView = currentView + SessionUtil.getTicketList().size();
+//        SessionUtil.getTicketList().forEach((t) -> {
+//            try {
+//                t.setBill(bill);
+//            } catch (Exception ex) {
+//                Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        });
+//        SessionUtil.getProductList().forEach((key, vaule) -> {
+//            ProductBill proBill = new ProductBill();
+//            String proBillID = String.valueOf(LocalDate.now().getDayOfMonth())
+//                    + String.valueOf(LocalTime.now().getHour()) + String.valueOf(LocalTime.now().getMinute()) + i++;
+//            proBill.setBill(bill);
+//            proBill.setProBillID(proBillID);
+//            proBill.setProduct(key);
+//            proBill.setQuantity(vaule);
+//            proBillList.add(proBill);
+//        });
+//        ticDAO.addListTicketAndProduct(SessionUtil.getTicketList(), proBillList);
+//        film.setViewFilm(selectView);
+//        fd.update(film);
+//
+//    }
 //    public void getSchedule() {
 //        try {
 //            this.scheule = scheDAO.getById("SC202347173241", Schedule.class);
@@ -162,7 +161,6 @@ public class FXMLTicketController implements Initializable {
 //            Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
     private void loadDataFilm() {
         filmLabel.setText(scheule.getFilm().getFilmName());
         roomLabel.setText(scheule.getRoomTypeDetail().getRoom().getRoomName() + "  " + scheule.getNote());
@@ -175,7 +173,7 @@ public class FXMLTicketController implements Initializable {
     private void getSelectedSeats() {
         seatNameList = "";
         ticketTotal = 0;
-        SessionUtil.getTicketList().sort((o1, o2) -> {         
+        SessionUtil.getTicketList().sort((o1, o2) -> {
             int seatNum1 = Integer.parseInt(o1.getSeatMap().substring(1));
             int seatNum2 = Integer.parseInt(o2.getSeatMap().substring(1));
             int result = String.valueOf(o1.getSeatMap().charAt(0)).compareTo(String.valueOf(o2.getSeatMap().charAt(0)));
@@ -224,6 +222,7 @@ public class FXMLTicketController implements Initializable {
             totalLabel.setText(String.valueOf(ticketTotal + foodTotal) + " VND");
         });
     }
+
     private void setSeatGird() {
 
         //Lấy list vé đã chọn

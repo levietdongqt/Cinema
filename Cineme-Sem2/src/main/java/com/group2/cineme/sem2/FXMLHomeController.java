@@ -66,6 +66,17 @@ public class FXMLHomeController implements Initializable {
     private Label timeLabel;
     @FXML
     ComboBox<String> report;
+    @FXML
+    private Button btnBooking;
+
+    @FXML
+    private Button btnEmp;
+
+    @FXML
+    private Button btnFilm;
+
+    @FXML
+    private Button btnSche;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,7 +85,14 @@ public class FXMLHomeController implements Initializable {
         loadDataPopup();
         this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
-        loadInHome("FXMLFilm");
+        if (SessionUtil.getEmployee().getPosition().equalsIgnoreCase("manager")) {
+            loadInHome("FXMLFilm");
+        } else {
+            loadInHome("FXMLShowSchedule");
+            btnBooking.setDisable(true);
+            btnFilm.setDisable(true);
+            btnSche.setDisable(true);
+        }
         loadTimeClock();
         setUpReport();
     }
@@ -86,11 +104,13 @@ public class FXMLHomeController implements Initializable {
         App.scene.setRoot(fxmlLoader.load());
 
     }
+
     @FXML
-    public void DashboardButtonHandler() throws IOException{
+    public void DashboardButtonHandler() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXMLHome.fxml"));
         App.scene.setRoot(fxmlLoader.load());
     }
+
     @FXML
     public void filmButtonHandler() throws IOException {
         App.setView("FXMLFilm");
@@ -113,7 +133,7 @@ public class FXMLHomeController implements Initializable {
     @FXML
     public void loadFXMLReport() throws IOException {
         String value = report.getValue();
-        if (value.equalsIgnoreCase("Employee")){
+        if (value.equalsIgnoreCase("Employee")) {
             //Load trang report Employee
         }
         if (value.equalsIgnoreCase("Film")) {
@@ -123,7 +143,7 @@ public class FXMLHomeController implements Initializable {
             newScene("FXMLFoodReport");
         }
     }
-    
+
     private void newScene(String fileName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileName + ".fxml"));
         Stage stage = new Stage();
@@ -133,7 +153,7 @@ public class FXMLHomeController implements Initializable {
         popup.hide();
         stage.setOnHiding((t) -> {
             home.setDisable(false);
-            report.setValue(null);          
+            report.setValue(null);
         });
     }
 
