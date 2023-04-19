@@ -43,9 +43,9 @@
                         <Font name="System Bold" size="13.0" />
                      </font></Button>
                   <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" prefHeight="51.0" styleClass="buttonPopup" text="BOOKING" />
-                  <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="FILM MANAGER" />
-                  <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
-                  <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
+                  <Button fx:id="btnFilm" mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="FILM MANAGER" />
+                  <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
+                  <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
                   <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="46.0" prefWidth="108.0" promptText="Report" styleClass="list-cell" />
                   <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>
