@@ -1,6 +1,7 @@
 
 package POJO;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import javax.persistence.Column;
@@ -22,13 +23,13 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int promoID;
     private String promoName;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private boolean status;
     @OneToMany(mappedBy = "promotion")
     private Set<Bill> billList;
 
-    public Promotion(int promoID, String promoName, LocalTime startTime, LocalTime endTime, boolean status, Set<Bill> billList) {
+    public Promotion(int promoID, String promoName, LocalDateTime startTime, LocalDateTime endTime, boolean status, Set<Bill> billList) {
         this.promoID = promoID;
         this.promoName = promoName;
         this.startTime = startTime;
@@ -71,28 +72,28 @@ public class Promotion {
     /**
      * @return the startTime
      */
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
     /**
      * @param startTime the startTime to set
      */
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
     /**
      * @return the endTime
      */
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
     /**
      * @param endTime the endTime to set
      */
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
@@ -123,6 +124,12 @@ public class Promotion {
     public void setBillList(Set<Bill> billList) {
         this.billList = billList;
     }
+
+    @Override
+    public String toString() {
+        return this.getPromoName();
+    }
+    
     
     
     
