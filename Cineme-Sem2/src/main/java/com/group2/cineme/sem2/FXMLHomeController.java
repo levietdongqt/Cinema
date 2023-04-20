@@ -133,6 +133,7 @@ public class FXMLHomeController implements Initializable {
     @FXML
     public void loadFXMLReport() throws IOException {
         String value = report.getValue();
+        if(value != null){
         if (value.equalsIgnoreCase("Employee")) {
             //Load trang report Employee
         }
@@ -141,6 +142,7 @@ public class FXMLHomeController implements Initializable {
         }
         if (value.equalsIgnoreCase("Food")) {
             newScene("FXMLFoodReport");
+        }                 
         }
     }
 

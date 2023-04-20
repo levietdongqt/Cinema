@@ -9,9 +9,11 @@ import POJO.Employee;
 import POJO.Film;
 import POJO.Product;
 import POJO.Ticket;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 /**
  *
@@ -25,6 +27,11 @@ public class SessionUtil {
     private static Map<Product,Integer> productList = new HashMap<>();
     
     private static Employee employee = new Employee();
+    public static String toMoney(Object object){
+        String money = NumberFormat.getCurrencyInstance(Locale.of("vi", "VN")).
+                format(object);
+        return  money.substring(0, money.length()-1);
+    }
     /**
      * @return the mapFilm
      */
