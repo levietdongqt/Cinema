@@ -45,6 +45,13 @@ public class FXMLCustomerController implements Initializable {
 
     @FXML
     private TextField cuspoints;
+    
+    private String phone;
+
+    public FXMLCustomerController(String phone) {
+        this.phone=phone;
+    }
+    
 
     private void checkName() {
         cusname.setOnKeyTyped(event -> {
@@ -188,7 +195,12 @@ public class FXMLCustomerController implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle rb) {
-
+        this.cusphone.setText(phone);
+        try {
+            cus.setCusPhone(cusphone.getText().trim());
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         checkName();
         checkBday();
         checkAddr();

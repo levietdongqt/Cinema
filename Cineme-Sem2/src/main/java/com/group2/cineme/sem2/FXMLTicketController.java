@@ -110,7 +110,7 @@ public class FXMLTicketController implements Initializable {
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> p) {
-                return new FXMLBillController();
+                return new FXMLBillController(scheule);
             }
         });
         Stage stage = new Stage();
