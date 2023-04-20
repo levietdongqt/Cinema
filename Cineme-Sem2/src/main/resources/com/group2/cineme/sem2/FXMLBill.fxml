@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.CubicCurve?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLBillController">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLBillController">
    <children>
       <VBox alignment="CENTER" prefHeight="810.0" prefWidth="759.0">
          <children>
@@ -31,7 +31,7 @@
                               <Font name="Arial Black" size="15.0" />
                            </font>
                         </Label>
-                        <Separator layoutX="207.0" layoutY="43.0" orientation="VERTICAL" prefHeight="247.0" prefWidth="0.0" style="-fx-background-color: #000000;" />
+                        <Separator layoutX="202.0" layoutY="43.0" orientation="VERTICAL" prefHeight="247.0" prefWidth="0.0" style="-fx-background-color: #000000;" />
                         <Label layoutX="11.0" layoutY="123.0" text="Ticket:" textFill="#4a4a4a">
                            <font>
                               <Font name="Arial Black" size="15.0" />
@@ -87,7 +87,7 @@
                               <Font name="Arial Black" size="15.0" />
                            </font>
                         </Label>
-                        <Button layoutX="286.0" layoutY="316.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="48.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Use" textFill="WHITE">
+                        <Button fx:id="buttonUsePoint" layoutX="286.0" layoutY="316.0" mnemonicParsing="false" onAction="#usePointButtonHandler" prefHeight="22.0" prefWidth="48.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Use" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="10.0" />
                            </font>
@@ -123,7 +123,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="ftotal" layoutX="67.0" layoutY="260.0" prefHeight="21.0" prefWidth="70.0" text="100.000">
+                        <Label fx:id="ftotal" layoutX="67.0" layoutY="260.0" prefHeight="21.0" prefWidth="140.0" text="100.000">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -144,7 +144,7 @@
                               <Font name="Arial Black" size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="pdate" layoutX="110.0" layoutY="15.0" text="1/1/1000">
+                        <Label fx:id="pdate" layoutX="110.0" layoutY="15.0" prefHeight="21.0" prefWidth="200.0" text="1/1/1000">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -160,7 +160,7 @@
                            </font>
                         </Label>
                         <Separator layoutY="39.0" prefHeight="0.0" prefWidth="653.0" style="-fx-background-color: #000000;" />
-                        <Label fx:id="ptotal" layoutX="268.0" layoutY="260.0" text="100.000">
+                        <Label fx:id="ptotal" layoutX="268.0" layoutY="260.0" prefHeight="21.0" prefWidth="150.0" text="100.000">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -170,14 +170,14 @@
                               <Font name="Arial Black" size="15.0" />
                            </font>
                         </Label>
-                        <Button layoutX="286.0" layoutY="351.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="48.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Use" textFill="WHITE">
+                        <Button fx:id="buttonUseVoucher" layoutX="286.0" layoutY="351.0" mnemonicParsing="false" onAction="#useVoucherButtonHandler" prefHeight="17.0" prefWidth="48.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Use" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="10.0" />
                            </font>
                         </Button>
                         <VBox layoutX="107.0" layoutY="402.0">
                            <children>
-                              <TextField fx:id="txtPhone" prefHeight="28.0" prefWidth="177.0" style="-fx-background-color: rgba(230,230,230,0.8); -fx-background-radius: 10 10;">
+                              <TextField fx:id="txtPhone" prefHeight="28.0" prefWidth="200.0" style="-fx-background-color: rgba(230,230,230,0.8); -fx-background-radius: 10 10;">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -185,13 +185,13 @@
                               <Label fx:id="error" text="error" textFill="#f01414" visible="false" />
                            </children>
                         </VBox>
-                        <Button layoutX="294.0" layoutY="405.0" mnemonicParsing="false" onAction="#searchPhoneButtonHandler" prefHeight="22.0" prefWidth="53.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Search" textFill="WHITE">
+                        <Button layoutX="316.0" layoutY="405.0" mnemonicParsing="false" onAction="#searchPhoneButtonHandler" prefHeight="22.0" prefWidth="53.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Search" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="10.0" />
                            </font>
                         </Button>
                         <ComboBox fx:id="cBVoicher" layoutX="111.0" layoutY="349.0" prefWidth="150.0" />
-                        <Button layoutX="358.0" layoutY="405.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="80.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Register" textFill="WHITE">
+                        <Button layoutX="376.0" layoutY="405.0" mnemonicParsing="false" onAction="#registerButtonHandler" prefHeight="22.0" prefWidth="80.0" style="-fx-background-color: linear-gradient(to right, rgba(0,251,255,1) 0%, rgba(141,167,255,1) 100%); -fx-background-radius: 30 30;" text="Register" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="10.0" />
                            </font>
@@ -215,7 +215,7 @@
                               <Font name="Arial Black" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="btotal" layoutX="107.0" layoutY="58.0" text="100.000" textFill="#4a4a4a">
+                        <Label fx:id="btotal" layoutX="107.0" layoutY="58.0" prefHeight="28.0" prefWidth="210.0" text="100.000" textFill="#4a4a4a">
                            <font>
                               <Font name="Arial Black" size="19.0" />
                            </font>
