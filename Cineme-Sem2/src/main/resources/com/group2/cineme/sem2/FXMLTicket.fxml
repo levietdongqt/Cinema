@@ -25,13 +25,13 @@
                   <String fx:value="shadow" />
                </styleClass>
                <children>
-                  <GridPane alignment="CENTER" prefHeight="312.0" prefWidth="201.0">
+                  <GridPane alignment="CENTER" prefHeight="286.0" prefWidth="201.0">
                     <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="60.000006103515624" minWidth="10.0" prefWidth="56.000006103515624" />
-                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="164.80001220703124" minWidth="10.0" prefWidth="134.39999389648438" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="60.000006103515624" minWidth="10.0" prefWidth="47.19999389648437" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="164.80001220703124" minWidth="10.0" prefWidth="154.0000061035156" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" valignment="CENTER" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -43,10 +43,6 @@
                         <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="filmLabel" text="Film" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font></Label>
                         <Label fx:id="roomLabel" text="Room" GridPane.columnSpan="2" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
@@ -77,13 +73,15 @@
                               <Font size="16.0" />
                            </font></Label>
                         <FontAwesomeIcon glyphName="FILM" size="1.5em">
-                           <GridPane.margin>
-                              <Insets left="6.0" />
-                           </GridPane.margin>
                            <font>
                               <Font size="14.0" />
                            </font>
                         </FontAwesomeIcon>
+                        <Label fx:id="filmLabel" text="Film" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
                         <Button fx:id="btnFood" mnemonicParsing="false" onAction="#setUpBtnFood" prefHeight="30.0" prefWidth="113.0" style="-fx-background-radius: 30 30; -fx-background-color: linear-gradient(to right, #FFEBEB 0%, #F6BA6F 100%)  linear-gradient(to right, #FFEBEB 0%, #F6BA6F 100%);" text="ORDER FOOD" GridPane.columnSpan="2" GridPane.rowIndex="8" />
                         <Label text="Food" GridPane.rowIndex="5">
                            <font>

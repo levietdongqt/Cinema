@@ -187,8 +187,8 @@ public class FXMLTicketController implements Initializable {
             seatNameList += t.getSeatMap() + " ";
         });
         seatLabel.setText(seatNameList);
-        ticketLabel.setText(String.valueOf(ticketTotal) + " VND");
-        totalLabel.setText(String.valueOf(ticketTotal + foodTotal) + " VND");
+        ticketLabel.setText(SessionUtil.toMoney(ticketTotal) + " VND");
+        totalLabel.setText(SessionUtil.toMoney(ticketTotal + foodTotal) + " VND");
     }
 
     @FXML
@@ -218,8 +218,8 @@ public class FXMLTicketController implements Initializable {
                 System.out.println(product.getProductName() + ": " + quantity);
                 foodTotal += product.getPrice() * quantity;
             });
-            foodLabel.setText(String.valueOf(foodTotal) + " VND");
-            totalLabel.setText(String.valueOf(ticketTotal + foodTotal) + " VND");
+            foodLabel.setText(SessionUtil.toMoney(foodTotal) + " VND");
+            totalLabel.setText(SessionUtil.toMoney(ticketTotal + foodTotal) + " VND");
         });
     }
 

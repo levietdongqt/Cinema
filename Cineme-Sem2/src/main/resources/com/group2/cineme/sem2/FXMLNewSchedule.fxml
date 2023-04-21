@@ -23,7 +23,7 @@
     <ColumnConstraints maxWidth="800.6000150680542" minWidth="205.0" prefWidth="754.5999755859375" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="150.0" minHeight="100.0" prefHeight="150.0" valignment="CENTER" />
+      <RowConstraints maxHeight="120.0" minHeight="70.0" prefHeight="120.0" valignment="CENTER" />
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
       <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />

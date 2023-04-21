@@ -9,10 +9,16 @@ import POJO.Employee;
 import POJO.Film;
 import POJO.Product;
 import POJO.Ticket;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
 /**
  *
  * @author thuhuytran
@@ -20,11 +26,16 @@ import java.util.Map;
 public class SessionUtil {
 
     private static List<Film> mapFilm;
-    
+
     private static List<Ticket> ticketList = new ArrayList<>();
     private static Map<Product,Integer> productList = new HashMap<>();
-    
+
     private static Employee employee = new Employee();
+
+    public static String toMoney(Object object) {
+         DecimalFormat format = new DecimalFormat("#,###");
+        return format.format(object);
+    }
     /**
      * @return the mapFilm
      */

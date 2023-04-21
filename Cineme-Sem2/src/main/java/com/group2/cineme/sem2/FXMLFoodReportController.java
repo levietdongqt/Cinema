@@ -7,15 +7,19 @@ package com.group2.cineme.sem2;
 import DAO.ProductDAO;
 import POJO.Product;
 import Utils.AlertUtils;
+import Utils.SessionUtil;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +30,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -36,6 +43,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -53,13 +63,13 @@ public class FXMLFoodReportController implements Initializable {
     @FXML
     private TableColumn<Object[], Integer> sttCol;
     @FXML
-    private TableColumn<Object[], Integer> priceCol;
+    private TableColumn<Object[], String> priceCol;
 
     @FXML
     private TableColumn<Object[], Integer> quantityCol;
 
     @FXML
-    private TableColumn<Object[], Integer> totalCol;
+    private TableColumn<Object[],String> totalCol;
 
     @FXML
     private TableColumn<Object[], String> typeCol;
@@ -71,11 +81,14 @@ public class FXMLFoodReportController implements Initializable {
     private ComboBox<Month> month;
     @FXML
     private Label info;
+    @FXML
+    private Label totalLabel;
     List<Product> productList = new ArrayList<>();
     ProductDAO proDAO = new ProductDAO();
     List<Object[]> list = new ArrayList<>();
     int selectedYear;
     int selectedMonth;
+    BigDecimal priceTotal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,14 +104,13 @@ public class FXMLFoodReportController implements Initializable {
 
     @FXML
     private void setUpComboBoxMonth() {
-        try{
-        selectedMonth = month.getValue().getValue();
-        info.setText(String.valueOf(selectedMonth) + "/" + String.valueOf(selectedYear));
-        list.clear();
-        list = proDAO.countOrderProduct(selectedYear, selectedMonth);
-        loadDataTableView();
-        }
-        catch(Exception e) {
+        try {
+            selectedMonth = month.getValue().getValue();
+            info.setText(String.valueOf(selectedMonth) + "/" + String.valueOf(selectedYear));
+            list.clear();
+            list = proDAO.countOrderProduct(selectedYear, selectedMonth);
+            loadDataTableView();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -117,13 +129,30 @@ public class FXMLFoodReportController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+
     @FXML
     private void setUpBtnFullYear() {
         info.setText(String.valueOf(selectedYear));
         selectedMonth = 0;
+        month.setValue(null);
         list.clear();
         list = proDAO.countOrderProduct(selectedYear, 0);
         loadDataTableView();
+        
+    }
+
+    @FXML
+    private void setUpBtnChart() throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("FXMLFoodChart.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> p) {
+                return new FXMLFoodChartController(list, selectedYear, selectedMonth);
+            }
+        });
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
     }
 
     private void loadLayout() {
@@ -137,27 +166,28 @@ public class FXMLFoodReportController implements Initializable {
 
     private void getMonthList() {
         Month[] fullMonths = Month.values();
-            if (selectedYear < LocalDateTime.now().getYear()) {
-                month.setItems(null);
-                month.setItems(FXCollections.observableList(List.of(fullMonths)));
-                month.setValue(LocalDateTime.now().getMonth());
-
-                return;
-            }
-            
-            List<Month> listMonth = new ArrayList<>();
-            Month currMonth = LocalDateTime.now().getMonth();
-            for (Month month : fullMonths) {
-                if (month.getValue() <= currMonth.getValue()) {
-                    listMonth.add(month);
-                }
-            }
-            month.setItems(FXCollections.observableList(listMonth));
+        if (selectedYear < LocalDateTime.now().getYear()) {
+            month.setItems(null);
+            month.setItems(FXCollections.observableList(List.of(fullMonths)));
             month.setValue(LocalDateTime.now().getMonth());
+
+            return;
+        }
+
+        List<Month> listMonth = new ArrayList<>();
+        Month currMonth = LocalDateTime.now().getMonth();
+        for (Month month : fullMonths) {
+            if (month.getValue() <= currMonth.getValue()) {
+                listMonth.add(month);
+            }
+        }
+        month.setItems(FXCollections.observableList(listMonth));
+        month.setValue(LocalDateTime.now().getMonth());
     }
 
     private void loadDataTableView() {
         //Thêm các sản phẩm có quatity = 0 và tableView;
+        priceTotal = BigDecimal.valueOf(0);
         for (Product product : productList) {
             int count = 0;
             for (Object[] objects : list) {
@@ -167,12 +197,17 @@ public class FXMLFoodReportController implements Initializable {
                 }
             }
             if (count == 0) {
-                Object[] new1 = {product.getProductName(), product.getType(), String.valueOf(product.getPrice()), "0"};
+                Object[] new1 = {product.getProductName(), product.getType(), String.valueOf(product.getPrice()), "0", "0"};
                 list.add(new1);
             }
 
         }
+        list.forEach((t) -> {
+            priceTotal = priceTotal.add(BigDecimal.valueOf(Integer.parseInt(t[4].toString())));
+        });
+        System.out.println(priceTotal);
         tableView.setItems(FXCollections.observableList(list));
+        totalLabel.setText(SessionUtil.toMoney(priceTotal));
     }
 
     private void creatTableView() {
@@ -200,7 +235,7 @@ public class FXMLFoodReportController implements Initializable {
         });
         priceCol.setCellValueFactory((p) -> {
             Object[] item = p.getValue();
-            return new SimpleObjectProperty<>(Integer.parseInt(item[2].toString()));
+            return new SimpleObjectProperty<>(SessionUtil.toMoney(item[2]));
         });
         quantityCol.setCellValueFactory((p) -> {
             Object[] item = p.getValue();
@@ -208,7 +243,7 @@ public class FXMLFoodReportController implements Initializable {
         });
         totalCol.setCellValueFactory((p) -> {
             Object[] item = p.getValue();
-            return new SimpleObjectProperty<>(Integer.parseInt(item[2].toString()) * Integer.parseInt(item[3].toString()));
+            return new SimpleObjectProperty<>(SessionUtil.toMoney(item[4]));
         });
 
     }

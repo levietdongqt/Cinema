@@ -25,7 +25,7 @@ public class ProductDAO extends GenericDAO<Product, String> {
         ses.getTransaction().begin();
 //        String hql = "SELECT A.productName, COUNT(*) FROM Product A inner join "
 //                + "ProductBill B ON A.productId = B.product.productId  GROUP BY B.productName";
-        String hql = "Select C.productName,  C.type, C.price,sum(A.quantity) FROM "
+        String hql = "Select C.productName,  C.type, C.price,sum(A.quantity), C.price*sum(A.quantity) FROM "
                 + "Bill B inner join ProductBill A ON A.bill.billID = B.billID "
                 + "inner join Product C on C.productId = A.product.productId ";
         Query query;
@@ -45,9 +45,9 @@ public class ProductDAO extends GenericDAO<Product, String> {
         if (list.isEmpty()) {
             System.out.println("Khong co san pham nao duoc mua");
         }
-//        list.forEach((t) -> {
-//            System.out.println(t[0] + ": " + t[1] + " " + t[2] + " " + t[3]);
-//        });
+        list.forEach((t) -> {
+            System.out.println(t[0] + ": " + t[1] + " " + t[2] + " " + t[3] + " " + t[4]);
+        });
         return list;
     }
 
@@ -60,4 +60,4 @@ public class ProductDAO extends GenericDAO<Product, String> {
 //            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-}
+        }
