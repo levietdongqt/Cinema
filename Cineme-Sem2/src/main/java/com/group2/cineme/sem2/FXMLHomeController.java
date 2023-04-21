@@ -61,6 +61,9 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private Label labelAdmin2;
+    
+    @FXML
+    private Label labelAdmin21;
 
     @FXML
     private Label timeLabel;
@@ -85,15 +88,17 @@ public class FXMLHomeController implements Initializable {
 
 //        loadDataImageView();
         loadDataPopup();
-        this.labelAdmin1.setText(SessionUtil.getEmployee().getEmpName());
+        this.labelAdmin1.setText(SessionUtil.getEmployee().getUserName());
         this.labelAdmin2.setText(SessionUtil.getEmployee().getEmpName());
+        this.labelAdmin21.setText(SessionUtil.getEmployee().getPosition());
         if (SessionUtil.getEmployee().getPosition().equalsIgnoreCase("manager")) {
             loadInHome("FXMLFilm");
+            
         } else {
             loadInHome("FXMLShowSchedule");
-            btnBooking.setDisable(true);
             btnFilm.setDisable(true);
             btnSche.setDisable(true);
+            report.setDisable(true);
         }
         loadTimeClock();
         setUpReport();
@@ -117,11 +122,11 @@ public class FXMLHomeController implements Initializable {
     public void filmButtonHandler() throws IOException {
         App.setView("FXMLFilm");
     }
+
     @FXML
     public void billButtonHandler() throws IOException {
         App.setView("FXMLBillManager");
     }
-    
 
     // xử lý logout và cập nhật endTime
     @FXML
@@ -139,18 +144,23 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     public void loadFXMLReport() throws IOException {
-        String value = report.getValue();
-        if(value != null){
-        if (value.equalsIgnoreCase("Employee")) {
-            //Load trang report Employee
-        }
-        if (value.equalsIgnoreCase("Film")) {
-            newScene("FXMLFilmReport");
-        }
-        if (value.equalsIgnoreCase("Food")) {
-            newScene("FXMLFoodReport");
-        }                 
-        }
+         try {
+            String value = report.getSelectionModel().getSelectedItem();
+            if (value.equalsIgnoreCase("Employee")) {
+                //Load trang report Employee
+            }else if (value.equalsIgnoreCase("Film")) {
+                newScene("FXMLFilmReport");
+            } else if (value.equalsIgnoreCase("Food")) {
+                newScene("FXMLFoodReport");
+            }
+        } catch (NullPointerException e) {
+               System.out.println(e.getMessage());
+        }       
+
+    }
+    @FXML
+    public void loadEmpButtonHandler() throws IOException{
+        newScene("FXMLCustomerManager");
     }
 
     private void newScene(String fileName) throws IOException {

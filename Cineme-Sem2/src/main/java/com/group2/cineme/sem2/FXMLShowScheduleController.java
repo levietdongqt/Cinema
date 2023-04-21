@@ -151,7 +151,7 @@ public class FXMLShowScheduleController implements Initializable {
         TableColumn colDuration = new TableColumn("DURATION");
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
         colDuration.setPrefWidth(100);
-        TableColumn<Film, HBox> colTime = new TableColumn("Time");
+        TableColumn<Film, HBox> colTime = new TableColumn();
         colTime.setCellValueFactory((p) -> {
             HBox hbox = new HBox();
             VBox vbox = new VBox();

@@ -375,6 +375,12 @@ public class FXMLBillController implements Initializable {
         Film film = schedule.getFilm();
         int currentView = film.getViewFilm();
         int selectView = currentView + SessionUtil.getTicketList().size();
+        List<Film> a = SessionUtil.getMapFilm();
+        for (Film film1 : a) {
+            if(film1.getFilmName().equals(film.getFilmName())){
+                film1.setViewFilm(selectView);
+            }
+        }
         SessionUtil.getTicketList().forEach((t) -> {
             try {
                 t.setBill(b1);

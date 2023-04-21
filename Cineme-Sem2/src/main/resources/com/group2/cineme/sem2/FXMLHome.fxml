@@ -32,10 +32,29 @@
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="141.0" styleClass="labelpopup">
                      <children>
-                        <Label fx:id="labelAdmin2" text="dfgdf" textFill="#111010">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font></Label>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label fx:id="labelAdmin2" text="dfgdf" textFill="#111010">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label text="Pos: " textFill="#4724e4">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="labelAdmin21" text="Manager" textFill="#4724e4">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" onAction="#DashboardButtonHandler" prefHeight="58.0" prefWidth="121.0" styleClass="buttonPopup" text="DASDBOARD" textFill="WHITE">
@@ -47,6 +66,7 @@
                   <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
                   <Button fx:id="btnBill" mnemonicParsing="false" onAction="#billButtonHandler" styleClass="buttonPopup" text="BILL MANAGER" />
                   <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
+                  <Button mnemonicParsing="false" onAction="#loadEmpButtonHandler" styleClass="buttonPopup" text="CUS. MANAGER" />
                   <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="46.0" prefWidth="108.0" promptText="Report" styleClass="list-cell" />
                   <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>
