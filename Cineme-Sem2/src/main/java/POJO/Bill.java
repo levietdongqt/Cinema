@@ -7,8 +7,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +44,12 @@ public class Bill {
     @ManyToOne
     @JoinColumn(name = "userName")
     private Employee employee ;
-
+    @OneToMany(mappedBy = "bill")
+    private Set<Ticket> tickets;
+    
+    @OneToMany(mappedBy = "bill")
+    private Set<ProductBill> productBills;
+    
     public Bill() {
     }
 
@@ -140,6 +147,34 @@ public class Bill {
      */
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    /**
+     * @return the tickets
+     */
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    /**
+     * @param tickets the tickets to set
+     */
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    /**
+     * @return the productBills
+     */
+    public Set<ProductBill> getProductBills() {
+        return productBills;
+    }
+
+    /**
+     * @param productBills the productBills to set
+     */
+    public void setProductBills(Set<ProductBill> productBills) {
+        this.productBills = productBills;
     }
     
     
