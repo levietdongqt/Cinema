@@ -10,20 +10,11 @@
     -fx-font-family:sans-serif;
 }
 
-.list-cell {
-    -fx-background-color: #999999;
-    -fx-alignment:  CENTER;
-}
 
-.list-cell:selected {
-    -fx-background-color: #999999;
-    -fx-alignment:  CENTER;
-    -fx-text-fill:white;
-}
 VBox.popup{
-    -fx-background-color:#333333;
+    -fx-background-color:#ffffff;
     -fx-font-size:10;
-    -fx-spacing:10;
+    -fx-spacing:20;
     -fx-padding:20;
     -fx-alignment:TOP_CENTER;
     -fx-border-style:none;
@@ -38,17 +29,19 @@ Label.labelpopup{
     -fx-text-fill:white;
 }
 Button.buttonPopup{
-    -fx-pref-width:100;
-    -fx-pref-height:30;
-    -fx-background-color:#333333;
-    -fx-text-fill:white
+    -fx-pref-width:200;
+    -fx-pref-height:40;
+    -fx-background-color:#291400;
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+    -fx-font-size:12;
 }
 
 AnchorPane{
     -fx-background-color:#333333;
 }
 Label.labelSession{
-    -fx-text-fill:white;
+    -fx-text-fill:#291400;
 }
 HBox.session{
     -fx-spacing:10;

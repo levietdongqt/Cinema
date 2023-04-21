@@ -1,27 +1,22 @@
 package POJO;
 
-import DAO.ActorsDAO;
-import DAO.FilmDAO;
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -50,7 +45,14 @@ public class Film implements Serializable{
     private int viewFilm;
 
     private String description;
-
+    
+    private Boolean status = true;
+    @Transient
+    private int countSchedule;
+    @Transient
+    private long sumPriceTicket;
+    @Transient
+    private int countTicket;
 
     @ManyToMany
     @JoinTable(
@@ -128,9 +130,12 @@ public class Film implements Serializable{
      * @throws java.lang.Exception
      */
     public void setFilmName(String filmName) throws Exception {
-        if (filmName.trim().isEmpty() || !Pattern.matches("[\\w ]+", filmName)) {
-            throw new Exception("Film name don't have[&^@#$%] or empty");
-        } else {
+        if (filmName.trim().isEmpty()) {
+            throw new Exception("Film name dont Empty");
+        }else if(!Pattern.matches("(([\\w]+[\\s]{0,1})+[.'!&:]{0,1}[\\s]{0,1})*([\\w]+[\\s]{0,1})+", filmName)){
+            throw new Exception("Film name dont special characters except [.'!&:]");
+        }
+        else {
             this.filmName = filmName;
         }
     }
@@ -234,9 +239,12 @@ public class Film implements Serializable{
      * @param director the director to set
      */
     public void setDirector(String director) throws Error{
-        if (director.trim().isEmpty() || !Pattern.matches("[\\w ]+", director)) {
-            throw new Error("Director don't have[&^@#$%!^*()] or empty");
-        } else {
+        if (director.trim().isEmpty()) {
+            throw new Error("Director don't empty, please check again!!");
+        }else if(!Pattern.matches("(([\\w]+[\\s]{0,1})+[.']{0,1}[\\s]{0,1})*([\\w]+[\\s]{0,1})+", director)){
+            throw new Error("Director dont have special characters except [.']");
+        }
+        else {
             this.director= director;
         }
     }
@@ -267,7 +275,7 @@ public class Film implements Serializable{
      */
     public void setDescription(String description) throws Error{
         if(description.length()<=10){
-            throw new Error("Description must be greater than 10 letter");
+            throw new Error("Description must be greater than 10 letter, please check");
         }
         this.description=description;
     }
@@ -312,6 +320,62 @@ public class Film implements Serializable{
      */
     public void setListSchedule(Set<Schedule> listSchedule) {
         this.listSchedule = listSchedule;
+    }
+
+    /**
+     * @return the status
+     */
+    public Boolean getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the countSchedule
+     */
+    public int getCountSchedule() {
+        return countSchedule;
+    }
+
+    /**
+     * @param countSchedule the countSchedule to set
+     */
+    public void setCountSchedule(int countSchedule) {
+        this.countSchedule = countSchedule;
+    }
+
+    /**
+     * @return the sumPriceTicket
+     */
+    public long getSumPriceTicket() {
+        return sumPriceTicket;
+    }
+
+    /**
+     * @param sumPriceTicket the sumPriceTicket to set
+     */
+    public void setSumPriceTicket(long sumPriceTicket) {
+        this.sumPriceTicket = sumPriceTicket;
+    }
+
+    /**
+     * @return the countTicket
+     */
+    public int getCountTicket() {
+        return countTicket;
+    }
+
+    /**
+     * @param countTicket the countTicket to set
+     */
+    public void setCountTicket(int countTicket) {
+        this.countTicket = countTicket;
     }
 
 }

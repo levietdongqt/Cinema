@@ -17,6 +17,7 @@
 
     -fx-background-color:transparent;
 
+    
     -fx-font-size: 18px;
     -fx-cursor: hand;
     -fx-alignment:CENTER-LEFT;
@@ -39,7 +40,6 @@
     -fx-border-width:0px 0px 2px 0px;
     /*-fx-padding: 3px 3px 3px 25px;*/
 }
-
 .dark {
     -fx-background-color:
         #090a0c,
@@ -91,5 +91,3 @@
     -fx-font-style: italic;
     -fx-font-size: 14px;
 }
-
-

@@ -122,7 +122,7 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         try ( Session ses = HibernateUtils.getFACTORY().openSession()) {
             ses.getTransaction().begin();
             String hql = "FROM Schedule WHERE film = :film AND status = :status";
-            Query query = ses.createQuery(hql);
+            Query query = ses.createQuery(hql).setCacheable(true);
             query.setParameter("film", film);
             query.setParameter("status", true);
             list = query.getResultList();
@@ -195,5 +195,30 @@ public class ScheduleDAO extends GenericDAO<Schedule, String> {
         }
         return list;
     }
-
+    
+    public List<Schedule> ScheduleByFilmID(String id,LocalDate startDate,LocalDate endDate){
+        List<Schedule> lists = new ArrayList<>();
+        try ( Session session = HibernateUtils.getFACTORY().openSession()){
+            session.getTransaction().begin();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Schedule> criteriaQuery = builder.createQuery(Schedule.class);
+            Root<Film> root = criteriaQuery.from(Film.class);
+            Join<Film, Schedule> scheJoin = root.join("listSchedule");
+            
+            LocalDateTime startDateToStartDateTime = startDate.atStartOfDay();
+            LocalDateTime endDateToEndDateTime = endDate.atStartOfDay().with(LocalTime.MAX);
+            
+            Predicate equalID = builder.equal(root.get("filmID"), id);
+            Predicate greaterThan = builder.greaterThanOrEqualTo(scheJoin.get("startTime"), startDateToStartDateTime);
+            Predicate lessThan = builder.lessThanOrEqualTo(scheJoin.get("startTime"), endDateToEndDateTime);
+            
+            criteriaQuery.select(scheJoin);
+            criteriaQuery.where(builder.and(equalID,greaterThan,lessThan));
+            lists= session.createQuery(criteriaQuery).getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }
+        return lists;
+    }
 }

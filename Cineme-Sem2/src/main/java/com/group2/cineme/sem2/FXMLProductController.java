@@ -69,7 +69,7 @@ public class FXMLProductController implements Initializable {
         mapProducts.putAll(SessionUtil.getProductList());
         mapProducts.forEach((t, u) -> {
             total += u * t.getPrice();
-            totalLabel.setText(String.valueOf(total));
+            totalLabel.setText(SessionUtil.toMoney(total));
         });
         try {            
             proDAO.getAll("Product").forEach((t) -> {
@@ -163,19 +163,22 @@ public class FXMLProductController implements Initializable {
                 }
             });
             Spinner<Integer> spinner = new Spinner<>(0, 100, quatity);
-            spinner.setStyle("-fx-background-color: #C0C0C0; -fx-border-radius: 5; -fx-border-width:0px 0px 0px 0px;");
+            spinner.setStyle("-fx-background: #FFFFE8; -fx-border-width:0px 0px 0px 0px;");
             spinner.setMaxWidth(60);
             grid.add(spinner, 2, j + 1);
             spinner.valueProperty().addListener((ov, oldValue, newValue) -> {
                 total = total + (newValue - oldValue) * item.getPrice();
-                totalLabel.setText(String.valueOf(total));
+
+                totalLabel.setText(SessionUtil.toMoney(total));
                 mapProducts.put(item, ov.getValue());
                 SessionUtil.getProductList().forEach((t, u) -> {
                     System.out.println(t.getProductName() + ": " + u);
                 });
             });
             //product price
-            grid.add(new Label(String.valueOf(item.getPrice()) + " VND"), 3, j + 1);
+
+            grid.add(new Label(SessionUtil.toMoney(item.getPrice()) + " VND"), 3, j + 1);
+
         }
         grid.getColumnConstraints().addAll(colContrain, colContrain1, colContrain1, colContrain1);
         return grid;

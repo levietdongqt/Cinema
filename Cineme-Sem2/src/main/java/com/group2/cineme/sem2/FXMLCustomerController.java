@@ -16,10 +16,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import org.hibernate.sql.Update;
 
 public class FXMLCustomerController implements Initializable {
 
-    Customer cus = new Customer();
+    private Customer cus = new Customer();
     CustomerDAO cusDAO = new CustomerDAO();
 
     @FXML
@@ -45,6 +46,19 @@ public class FXMLCustomerController implements Initializable {
 
     @FXML
     private TextField cuspoints;
+
+    private String phone;
+
+    private boolean upDate;
+
+    public FXMLCustomerController(String phone) {
+        this.phone = phone;
+    }
+
+    public FXMLCustomerController(Customer customer, boolean update) {
+        this.cus = customer;
+        this.upDate = update;
+    }
 
     private void checkName() {
         cusname.setOnKeyTyped(event -> {
@@ -132,17 +146,27 @@ public class FXMLCustomerController implements Initializable {
 
     public void submit(ActionEvent event) throws Exception {
         try {
-            checkEmptyWhenClickButton();
-            if (errpane.isVisible() == false) {
-                System.out.println(cus.getBirthDate());
-                cusDAO.add(cus);
-                cusname.clear();
-                cusaddr.clear();
-                cusbday.getEditor().clear();
-                cusemail.clear();
-                cusphone.clear();
+            if (upDate == true) {
+                checkEmptyWhenClickButton();
+                if (errpane.isVisible() == false) {
+                    cusDAO.update(cus);
+                    cusname.clear();
+                    cusaddr.clear();
+                    cusbday.getEditor().clear();
+                    cusemail.clear();
+                    cusphone.clear();
+                }
+            }else {
+                checkEmptyWhenClickButton();
+                if (errpane.isVisible() == false) {
+                    cusDAO.add(cus);
+                    cusname.clear();
+                    cusaddr.clear();
+                    cusbday.getEditor().clear();
+                    cusemail.clear();
+                    cusphone.clear();
+                }
             }
-//            cuspoints.clear();
         } catch (Exception ex) {
             AlertUtils.getAlert(cusDAO.getMessAdd(), Alert.AlertType.ERROR).show();
         }
@@ -188,13 +212,25 @@ public class FXMLCustomerController implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle rb) {
-
+        if (upDate) {
+            this.cusphone.setText(cus.getCusPhone());
+            this.cusaddr.setText(cus.getAddress());
+            this.cusbday.setValue(cus.getBirthDate());
+            this.cusemail.setText(cus.getEmail());
+            this.cusname.setText(cus.getCustomerName());
+        } else {
+            this.cusphone.setText(phone);
+            try {
+                cus.setCusPhone(cusphone.getText().trim());
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         checkName();
         checkBday();
         checkAddr();
         checkPhone();
         checkEmail();
-//        checkPoints();
     }
 
 }

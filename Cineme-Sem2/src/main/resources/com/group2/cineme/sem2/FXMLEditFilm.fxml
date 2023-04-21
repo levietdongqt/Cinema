@@ -175,13 +175,13 @@
       </VBox>
       <HBox alignment="BOTTOM_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="buttonInfo" mnemonicParsing="false" onAction="#showInformationButtonHandler" prefHeight="39.0" prefWidth="226.0" text="LIST GENDER AND ACTOR">
+            <Button fx:id="buttonInfo" mnemonicParsing="false" prefHeight="39.0" prefWidth="226.0" text="LIST GENDER AND ACTOR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
          </children>
       </HBox>
-      <VBox fx:id="vBoxActors" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+      <VBox fx:id="vBoxActors" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="9" />
       <HBox alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="14">
          <children>
             <Button mnemonicParsing="false" onAction="#addActorButtonHandler" text="ADD ACTORS">

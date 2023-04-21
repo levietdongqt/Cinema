@@ -23,25 +23,64 @@
       <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER_RIGHT">
          <children>
             <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="850.0" opacity="0.8" prefHeight="383.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="850.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="850.0" opacity="0.8" prefHeight="800.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="-417.0" AnchorPane.leftAnchor="850.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fitHeight="114.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="114.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../images/icon/avatar.png" /> 
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="141.0" styleClass="labelpopup">
                      <children>
-                        <Label fx:id="labelAdmin2" styleClass="labelpopup" />
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label fx:id="labelAdmin2" text="dfgdf" textFill="#111010">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label text="Pos: " textFill="#4724e4">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="labelAdmin21" text="Manager" textFill="#4724e4">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" styleClass="buttonPopup" text="Dashboard" />
-                  <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" styleClass="buttonPopup" text="Booking" />
-                  <Button mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="Film Mananing" />
-                  <Button mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="Employee Manager" />
-                  <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="Schedule Manager" />
-                  <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="22.0" prefWidth="105.0" promptText="Report" styleClass="list-cell" />
-                  <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" VBox.vgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#DashboardButtonHandler" prefHeight="58.0" prefWidth="121.0" styleClass="buttonPopup" text="DASDBOARD" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Button>
+                  <Button fx:id="btnFilm" mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="FILM MANAGER" />
+                  <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" prefHeight="51.0" styleClass="buttonPopup" text="BOOKING" />
+                  <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
+                  <Button fx:id="btnBill" mnemonicParsing="false" onAction="#billButtonHandler" styleClass="buttonPopup" text="BILL MANAGER" />
+                  <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
+                  <Button mnemonicParsing="false" onAction="#loadEmpButtonHandler" styleClass="buttonPopup" text="CUS. MANAGER" />
+                  <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="46.0" prefWidth="108.0" promptText="Report" styleClass="list-cell" />
+                  <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button defaultButton="true" ellipsisString="" mnemonicParsing="false" onAction="#logOut" prefHeight="40.0" prefWidth="82.0" text="Log Out">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="OUTDENT" />
+                           </graphic>
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="3.0" styleClass="session" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -50,7 +89,7 @@
                      <graphic>
                         <FontAwesomeIcon fill="#f7f5f5" glyphName="UNIVERSITY" />
                      </graphic></Button>
-                  <Label styleClass="labelSession" text="Hello:">
+                  <Label text="Hello:" textFill="#f7f2f2">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -69,9 +108,9 @@
                         </Lighting>
                      </effect>
                   </Label>
-                  <Label fx:id="labelAdmin1" styleClass="labelSession">
+                  <Label fx:id="labelAdmin1" text="sfgffgfg" textFill="#eeeaea">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <effect>
                         <Lighting specularConstant="0.72">
@@ -90,7 +129,7 @@
                   </Label>
                </children>
             </HBox>
-            <Text fill="#fffdfd" layoutX="122.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO CGV" textAlignment="CENTER" wrappingWidth="267.337890625">
+            <Text fill="#fffdfd" layoutX="122.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO CGV" textAlignment="CENTER" wrappingWidth="267.337890625" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="620.162109375">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

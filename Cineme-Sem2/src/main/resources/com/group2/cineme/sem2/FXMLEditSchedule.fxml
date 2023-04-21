@@ -93,7 +93,7 @@
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font></Label>
-                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#setUpBtnChange" text="Change" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#setUpBtnChange" style="-fx-background-radius: 15 15;" text="Change" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                   <Label fx:id="filmLabel" text="Label" GridPane.columnIndex="1" />
                   <Label text="Note" GridPane.rowIndex="5">
                      <font>

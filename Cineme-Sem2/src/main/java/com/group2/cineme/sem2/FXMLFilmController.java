@@ -10,6 +10,7 @@ import POJO.Schedule;
 import Utils.AlertUtils;
 import Utils.SessionUtil;
 import static com.group2.cineme.sem2.App.scene;
+import com.jfoenix.controls.JFXProgressBar;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +34,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,7 +42,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.util.Callback;
 
 /**
@@ -49,7 +54,8 @@ import javafx.util.Callback;
  * @author thuhuytran
  */
 public class FXMLFilmController implements Initializable {
-
+    @FXML
+    private VBox vboxShowFilm;
     @FXML
     private TableView<Film> tableViewFilm;
 
@@ -65,19 +71,22 @@ public class FXMLFilmController implements Initializable {
     private TextField txtName;
     List<Film> listFilm;
     List<FilmGenre> listGenre;
-
-    public FXMLFilmController() {
-         
-    }
+    private Popup popup = new Popup();
     
+    public FXMLFilmController() {
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         loadTableView();
         loadDataTableView();
         loadDataCombobox();
         searchByName();
         textTableFilm();
+        popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
+            vboxShowFilm.setDisable(false);
+        });
     }
 
     //Khu vuc nut
@@ -105,14 +114,14 @@ public class FXMLFilmController implements Initializable {
 //        } else {
             this.tableViewFilm.setItems(FXCollections.observableList(listByName));
 //        }
-        }); 
-    }
-    public void textTableFilm(){
-        this.textTableFilm.setOnMouseReleased((t) -> {
-             this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
         });
-           
-        
+    }
+
+    public void textTableFilm() {
+        this.textTableFilm.setOnMouseReleased((t) -> {
+            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
+        });
+
     }
 
     public void buttonSearchByGenre() {
@@ -131,7 +140,8 @@ public class FXMLFilmController implements Initializable {
             this.tableViewFilm.setItems(FXCollections.observableList(listByGenre));
         }
     }
-    public void buttonNewFilm() throws IOException{
+
+    public void buttonNewFilm() throws IOException {
         App.setView("FXMLNewFilm");
     }
 
@@ -141,35 +151,35 @@ public class FXMLFilmController implements Initializable {
         colFilmID.setCellValueFactory(new PropertyValueFactory("filmID"));
         colFilmID.setPrefWidth(150);
 
-        TableColumn colFilmName = new TableColumn("Name");
+        TableColumn colFilmName = new TableColumn("NAME");
         colFilmName.setCellValueFactory(new PropertyValueFactory("filmName"));
-        colFilmName.setPrefWidth(150);
+        colFilmName.setPrefWidth(250);
 
-        TableColumn colDirector = new TableColumn("Director");
+        TableColumn colDirector = new TableColumn("DIRECTOR");
         colDirector.setCellValueFactory(new PropertyValueFactory("director"));
         colDirector.setPrefWidth(100);
 
-        TableColumn colDuration = new TableColumn("Duration");
+        TableColumn colDuration = new TableColumn("DURATION");
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
-        colDuration.setPrefWidth(80);
+        colDuration.setPrefWidth(100);
 
-        TableColumn colStartDate = new TableColumn("Start Date");
+        TableColumn colStartDate = new TableColumn("START-DATE");
         colStartDate.setCellValueFactory(new PropertyValueFactory("startDate"));
         colStartDate.setPrefWidth(100);
 
-        TableColumn colEndDate = new TableColumn("End Date");
+        TableColumn colEndDate = new TableColumn("END-DATE");
         colEndDate.setCellValueFactory(new PropertyValueFactory("endDate"));
         colEndDate.setPrefWidth(100);
 
-        TableColumn colLimitAge = new TableColumn("Age");
+        TableColumn colLimitAge = new TableColumn("AGE");
         colLimitAge.setCellValueFactory(new PropertyValueFactory("limitAge"));
-        colLimitAge.setPrefWidth(50);
+        colLimitAge.setPrefWidth(100);
 
-//        TableColumn colViewFilm = new TableColumn("View");
-//        colViewFilm.setCellValueFactory(new PropertyValueFactory("viewFilm"));
-//        colViewFilm.setPrefWidth(50);
+        TableColumn colViewFilm = new TableColumn("VIEW");
+        colViewFilm.setCellValueFactory(new PropertyValueFactory("viewFilm"));
+        colViewFilm.setPrefWidth(100);
 
-        TableColumn<Film, ImageView> colImageURL = new TableColumn("Image");
+        TableColumn<Film, ImageView> colImageURL = new TableColumn("IMAGE");
         colImageURL.setCellValueFactory((column) -> {
             ImageView imageView = new ImageView();
             Film p = column.getValue();
@@ -185,8 +195,7 @@ public class FXMLFilmController implements Initializable {
 //        TableColumn colDescription = new TableColumn("Description");
 //        colDescription.setCellValueFactory(new PropertyValueFactory("description"));
 //        colDescription.setPrefWidth(200);
-
-        TableColumn<Film, String> colGenre = new TableColumn("Genre");
+        TableColumn<Film, String> colGenre = new TableColumn("GENRE");
         colGenre.setCellValueFactory((column) -> {
             Film p = column.getValue();
             Set<FilmGenre> setGenres = p.getListGenre();
@@ -198,7 +207,7 @@ public class FXMLFilmController implements Initializable {
         });
         colGenre.setPrefWidth(100);
 
-        TableColumn<Film, String> colActors = new TableColumn("Actors");
+        TableColumn<Film, String> colActors = new TableColumn("ACTOR");
         colActors.setCellValueFactory((column) -> {
             Film p = column.getValue();
             Set<Actors> setActors = p.getListActors();
@@ -213,8 +222,7 @@ public class FXMLFilmController implements Initializable {
         TableColumn<Film, Button> colButtonEdit = new TableColumn<>();
         colButtonEdit.setCellValueFactory((o) -> {
             Film p = o.getValue();
-            Button button = new Button("Edit");
-
+            Button button = new Button("EDIT");
             button.setOnAction((t) -> {
                 try {
                     FXMLLoader fxmlLoader1 = new FXMLLoader(App.class.getResource("FXMLEditFilm.fxml"));
@@ -236,14 +244,13 @@ public class FXMLFilmController implements Initializable {
             return new SimpleObjectProperty<>(button);
         });
 
-
-        TableColumn<Film,Button> colNewSchedule = new TableColumn<>(); 
+        TableColumn<Film, Button> colNewSchedule = new TableColumn<>();
         colNewSchedule.setCellValueFactory((o) -> {
             Film p = o.getValue();
-            Button button =new Button("New Schedule");       
+            Button button = new Button("NEW SCHEDULE");
             button.setOnAction((t) -> {
                 try {
-                   FXMLLoader fxmlLoader = App.setView("FXMLNewSchedule");
+                    FXMLLoader fxmlLoader = App.setView("FXMLNewSchedule");
                     FXMLNewScheduleController newScheduleControl = fxmlLoader.getController();
                     newScheduleControl.getFilm(p);
                 } catch (Exception ex) {
@@ -252,25 +259,30 @@ public class FXMLFilmController implements Initializable {
             });
             return new SimpleObjectProperty<>(button);
         });
-        
-        TableColumn<Film,Button> colDelete = new TableColumn<>(); 
+
+        TableColumn<Film, Button> colDelete = new TableColumn<>();
         colDelete.setCellValueFactory((o) -> {
-            Film p = o.getValue(); 
-            Button button =new Button("Delete");       
+            Film p = o.getValue();
+            Button button = new Button("DELETE");
             button.setOnAction((t) -> {
                 try {
-                    
+
                     FilmDAO f = new FilmDAO();
                     ScheduleDAO sd = new ScheduleDAO();
                     List<Schedule> listSchedule = sd.checkStatus(p);
                     String info = "Are you sure? \n Delete ";
-                    if(!listSchedule.isEmpty()){
+                    if (!listSchedule.isEmpty()) {
                         info += listSchedule + " are active in Schedule";
                     }
                     Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get().getText().equalsIgnoreCase("OK")) {
-                        f.delete(p.getFilmID(), Film.class);
+                        p.setStatus(false);
+                        f.update(p);
+                        for (Schedule schedule : listSchedule) {
+                            schedule.setStatus(false);
+                            sd.update(schedule);
+                        }
                         SessionUtil.getMapFilm().remove(p);
                         loadDataTableView();
                     }
@@ -280,9 +292,9 @@ public class FXMLFilmController implements Initializable {
             });
             return new SimpleObjectProperty<>(button);
         });
-        
-        TableColumn<Film,Integer> indexColumn = new TableColumn<>("Index");
-        indexColumn.setCellFactory((o) -> new TableCell<Film,Integer>(){
+
+        TableColumn<Film, Integer> indexColumn = new TableColumn<>("INDEX");
+        indexColumn.setCellFactory((o) -> new TableCell<Film, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
@@ -297,13 +309,44 @@ public class FXMLFilmController implements Initializable {
                     setText("");
                 }
             }
-        
+
         });
         indexColumn.setPrefWidth(50);
         indexColumn.setStyle("-fx-font-weight: bold;");
-        this.tableViewFilm.getColumns().addAll(indexColumn,colFilmID,colImageURL,colFilmName,colGenre,colDirector,colActors,colDuration,colStartDate,colEndDate,
-                colLimitAge,colButtonEdit,colDelete,colNewSchedule);
-        
+
+        TableColumn<Film, Hyperlink> colDetails = new TableColumn<>();
+        colDetails.setCellValueFactory((o) -> {
+            Film p = o.getValue();
+            Hyperlink hp = new Hyperlink("DETAILS");
+            hp.setStyle("-fx-text-fill: green;-fx-border:none");
+            hp.setOnAction((t) -> {
+                hp.setStyle("-fx-text-fill: red;-fx-border:none");
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLViewFilmDetails.fxml"));
+                    fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
+                        @Override
+                        public Object call(Class<?> param) {
+                            return new FXMLViewFilmDetailsController(p);
+                        }
+
+                    });
+                    AnchorPane popupContent = fxmlLoader.load();
+                    popup.getContent().add(popupContent);
+                    popupContent.setStyle("-fx-background-color:brown;-fx-text-fill: white;");
+                    popup.show(vboxShowFilm.getScene().getWindow());
+                    vboxShowFilm.setDisable(true);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                } catch (NullPointerException e) {
+                    System.out.println(e.getMessage());
+                }
+            });
+
+            return new SimpleObjectProperty<>(hp);
+        });
+
+        this.tableViewFilm.getColumns().addAll(indexColumn, colImageURL, colFilmName, colGenre, colDirector, colLimitAge, colViewFilm, colDuration, colStartDate,
+                colButtonEdit, colDelete, colNewSchedule,colDetails);
 
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewFilm.getColumns();
         for (TableColumn<Film, ?> column : columns) {
@@ -320,8 +363,8 @@ public class FXMLFilmController implements Initializable {
 //        } catch (Exception ex) {
 //            Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-          this.listFilm = SessionUtil.getMapFilm();
-          this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
+        this.listFilm = SessionUtil.getMapFilm();
+        this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
     }
 
     public void loadDataCombobox() {
@@ -333,6 +376,5 @@ public class FXMLFilmController implements Initializable {
             AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR).show();
         }
     }
-
 
 }

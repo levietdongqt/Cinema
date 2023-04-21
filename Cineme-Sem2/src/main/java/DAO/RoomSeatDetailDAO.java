@@ -7,6 +7,7 @@ package DAO;
 import POJO.Room;
 import POJO.RoomSeatDetail;
 import POJO.RoomType;
+import POJO.Schedule;
 import POJO.SeatMap;
 import POJO.SeatType;
 import Utils.HibernateUtils;
@@ -16,7 +17,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -92,4 +98,23 @@ public class RoomSeatDetailDAO extends GenericDAO<RoomSeatDetailDAO, Integer> {
             Logger.getLogger(FXMLTicketController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public int countSeatBySchedule(String id) {
+    int count = 0;
+    Session session = HibernateUtils.getFACTORY().openSession();
+    try {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
+        Root<RoomSeatDetail> root = criteriaQuery.from(RoomSeatDetail.class);
+        Join<RoomSeatDetail, RoomType> roomJoin = root.join("roomType");
+        criteriaQuery.select(builder.count(root));
+        criteriaQuery.where(builder.equal(roomJoin.get("rTypeID"), id));
+        Long countLong = session.createQuery(criteriaQuery).setCacheable(true).getSingleResult();
+        count = (countLong != null)?countLong.intValue():0;
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    } finally {
+        session.close();
+    }
+    return count;
+}
 }

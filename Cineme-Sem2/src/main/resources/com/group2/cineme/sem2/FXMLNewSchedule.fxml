@@ -17,21 +17,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="gridPane" alignment="TOP_CENTER" prefHeight="560.0" prefWidth="812.0" stylesheets="@../../../../styles/fxmladmin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLNewScheduleController">
+
+<GridPane fx:id="gridPane" alignment="TOP_CENTER" prefHeight="657.0" prefWidth="812.0" stylesheets="@../../../../styles/fxmladmin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLNewScheduleController">
   <columnConstraints>
     <ColumnConstraints halignment="RIGHT" maxWidth="56.8000244140625" minWidth="48.000006103515624" prefWidth="56.8000244140625" />
     <ColumnConstraints maxWidth="800.6000150680542" minWidth="205.0" prefWidth="754.5999755859375" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="52.000003051757815" minHeight="43.19999694824219" prefHeight="52.000003051757815" valignment="CENTER" />
-    <RowConstraints maxHeight="44.000003051757815" minHeight="29.599981689453124" prefHeight="35.999996948242185" />
-    <RowConstraints maxHeight="35.0" minHeight="35.799987792968736" prefHeight="35.799987792968736" />
-      <RowConstraints maxHeight="35.0" minHeight="41.40001831054687" prefHeight="35.0" />
-    <RowConstraints maxHeight="45.20000000000002" minHeight="41.0" prefHeight="38.800012207031244" />
-      <RowConstraints maxHeight="50.0" minHeight="18.0" prefHeight="50.0" valignment="CENTER" />
-      <RowConstraints maxHeight="50.0" minHeight="18.0" prefHeight="50.0" />
-      <RowConstraints maxHeight="210.3999633789063" minHeight="21.600012207031256" prefHeight="194.39996948242185" />
-      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="36.199951171875" prefHeight="57.80003051757808" />
+      <RowConstraints maxHeight="120.0" minHeight="70.0" prefHeight="120.0" valignment="CENTER" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="225.60001220703128" minHeight="-Infinity" prefHeight="225.60001220703128" />
+      <RowConstraints maxHeight="80.0" minHeight="-Infinity" />
   </rowConstraints>
    <children>
       <Text fill="#000000e8" strokeType="OUTSIDE" strokeWidth="0.0" text=" NEW SCHEDULE" GridPane.columnSpan="2" GridPane.halignment="CENTER">
@@ -67,7 +68,7 @@
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font></Label>
-      <HBox prefWidth="651.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <HBox alignment="CENTER_LEFT" prefWidth="651.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <TextField fx:id="txtID" editable="false" maxWidth="128.0" prefHeight="23.0" prefWidth="128.0" styleClass="fill-text" />
          </children>
@@ -75,15 +76,24 @@
             <Insets top="5.0" />
          </padding>
       </HBox>
-      <DatePicker fx:id="date" prefHeight="23.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <VBox alignment="CENTER" prefHeight="85.0" prefWidth="830.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
+      <DatePicker fx:id="date" disable="true" onAction="#setUpDate" prefHeight="23.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <VBox alignment="CENTER" prefHeight="90.0" prefWidth="814.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
          <children>
             <CheckBox fx:id="checkBoxYesNo" mnemonicParsing="false" text="Active now">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </CheckBox>
-            <Button fx:id="btnSave1" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" text="SAVE" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Button fx:id="btnSave11" mnemonicParsing="false" onAction="#btnClearHanlder" prefHeight="23.0" prefWidth="73.0" style="-fx-background-radius: 15 15;" text="CLEAR">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnSave1" mnemonicParsing="false" onAction="#buttonSaveHanlder" prefHeight="23.0" prefWidth="73.0" style="-fx-background-radius: 15 15;" text="SAVE" />
+               </children>
+            </HBox>
          </children>
       </VBox>
       <Label text="ROOM" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
@@ -137,17 +147,17 @@
             <Label fx:id="errTime" text="Time is invalid" textFill="#df0c0c" visible="false" />
          </children>
       </VBox>
-      <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
             <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" styleClass="fill-text" />
-            <Button fx:id="btnViewSchedule" disable="true" mnemonicParsing="false" onAction="#setUpViewSchedule" text="View Schdule">
+            <Button fx:id="btnViewSchedule" disable="true" mnemonicParsing="false" onAction="#setUpViewSchedule" style="-fx-background-radius: 15 15;" text="View Schdule">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <VBox alignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="7">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnSpan="2" GridPane.rowIndex="7">
          <children>
             <Label fx:id="infoTableLabel" alignment="CENTER" text="Infomation">
                <VBox.margin>
@@ -157,7 +167,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TableView fx:id="tableViewTime" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="164.0" prefWidth="813.0" styleClass="shadow" />
+            <TableView fx:id="tableViewTime" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="194.0" prefWidth="814.0" styleClass="shadow" />
          </children>
       </VBox>
       <Label text="NOTE" GridPane.halignment="LEFT" GridPane.rowIndex="6">

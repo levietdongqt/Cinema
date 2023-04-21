@@ -6,10 +6,8 @@ import java.sql.Date;
 import java.util.*;
 import java.util.regex.Pattern;
 import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -75,9 +73,12 @@ public class Actors implements Serializable{
      * @throws java.lang.Exception
      */
     public void setActorName(String actorName) throws Exception {
-        if(actorName.trim().isEmpty() || !Pattern.matches("[\\w .]+", actorName)){
-            throw new Exception("Actors name don't have[&^@#$%] or empty");
-        }else{
+        if(actorName.trim().isEmpty()){
+            throw new Exception("Actors name don't empty");
+        }else if(!Pattern.matches("(([\\w]+[\\s]{0,1})+[.']{0,1}[\\s]{0,1})*([\\w]+[\\s]{0,1})+", actorName)){
+            throw new Exception("Director dont have special characters except [.']");
+        }
+        else{
             this.actorName = actorName;
         }
     }

@@ -102,7 +102,8 @@ CREATE TABLE Film (
 	[imageUrl] varchar(255) not null,
 	[director] varchar(100),
 	[viewFilm] int default 0,
-	[description] varchar(255)	
+	[description] varchar(255),
+	[status] bit default 1
 )
 go
 
