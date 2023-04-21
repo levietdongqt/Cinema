@@ -181,7 +181,7 @@
                </font></Button>
          </children>
       </HBox>
-      <VBox fx:id="vBoxActors" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+      <VBox fx:id="vBoxActors" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="9" />
       <HBox alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="14">
          <children>
             <Button mnemonicParsing="false" onAction="#addActorButtonHandler" text="ADD ACTORS">
