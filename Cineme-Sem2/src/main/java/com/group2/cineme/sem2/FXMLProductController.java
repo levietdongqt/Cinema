@@ -178,7 +178,6 @@ public class FXMLProductController implements Initializable {
             //product price
 
             grid.add(new Label(SessionUtil.toMoney(item.getPrice()) + " VND"), 3, j + 1);
-
         }
         grid.getColumnConstraints().addAll(colContrain, colContrain1, colContrain1, colContrain1);
         return grid;

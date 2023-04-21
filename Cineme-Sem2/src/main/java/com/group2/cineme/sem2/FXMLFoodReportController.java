@@ -64,10 +64,14 @@ public class FXMLFoodReportController implements Initializable {
     private TableColumn<Object[], Integer> sttCol;
     @FXML
     private TableColumn<Object[], String> priceCol;
+
+
     @FXML
     private TableColumn<Object[], Integer> quantityCol;
+
     @FXML
     private TableColumn<Object[],String> totalCol;
+
     @FXML
     private TableColumn<Object[], String> typeCol;
     @FXML
