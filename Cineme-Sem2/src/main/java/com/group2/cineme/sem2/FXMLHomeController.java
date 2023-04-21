@@ -77,6 +77,8 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private Button btnSche;
+    @FXML
+    private Button btnBill;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -115,6 +117,11 @@ public class FXMLHomeController implements Initializable {
     public void filmButtonHandler() throws IOException {
         App.setView("FXMLFilm");
     }
+    @FXML
+    public void billButtonHandler() throws IOException {
+        App.setView("FXMLBillManager");
+    }
+    
 
     // xử lý logout và cập nhật endTime
     @FXML
