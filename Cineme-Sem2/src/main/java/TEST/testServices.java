@@ -5,6 +5,7 @@
 package TEST;
 
 import DAO.ActorsDAO;
+import DAO.BillDAO;
 import DAO.FilmDAO;
 import DAO.FilmGenreDAO;
 import DAO.PromotionDAO;
@@ -12,6 +13,7 @@ import DAO.RoomSeatDetailDAO;
 import DAO.ScheduleDAO;
 import DAO.TicketDAO;
 import POJO.Actors;
+import POJO.Bill;
 import POJO.Film;
 import POJO.FilmGenre;
 import POJO.Promotion;
@@ -39,6 +41,7 @@ import java.util.TimerTask;
 import java.util.logging.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
 
 /**
  *
@@ -46,10 +49,8 @@ import org.hibernate.Session;
  */
 public class testServices {
     public static void main(String[] args){
-        LocalDateTime current = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        System.out.println(current.toString());
-        PromotionDAO pd = new PromotionDAO();
-     List<Promotion> pros = pd.getPromoByDateTime("endTime");
-        System.out.println(pros);
+       
+          
+        
 }
 }
