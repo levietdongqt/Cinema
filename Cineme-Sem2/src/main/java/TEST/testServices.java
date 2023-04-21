@@ -49,7 +49,13 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
  */
 public class testServices {
     public static void main(String[] args){
-       
+       FilmDAO fd = new FilmDAO();
+       List<Film> lists = fd.getFilmForReport(2023, 0);
+       lists.forEach((t) -> {
+           System.out.println(t.getFilmName());
+           long a = fd.countTicket(t.getFilmID(), t.getStartDate().toLocalDate(), t.getEndDate().toLocalDate());
+           System.out.println(a);
+       });
           
         
 }

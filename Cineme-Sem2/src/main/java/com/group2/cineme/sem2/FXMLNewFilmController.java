@@ -377,6 +377,7 @@ public class FXMLNewFilmController implements Initializable {
         txtActorsName = new TextField();
         errActorsName = new Label("");
         errActorsName.setWrapText(true);
+        errActorsName.setStyle("-fx-text-fill:red");
         vBoxName.getChildren().addAll(txtActorsName, errActorsName);
         hBoxName.getChildren().addAll(labelActorsName, vBoxName);
 
@@ -388,6 +389,7 @@ public class FXMLNewFilmController implements Initializable {
         txtBirthDay.setEditable(false);
         errBirthDay = new Label("");
         errBirthDay.setWrapText(true);
+        errBirthDay.setStyle("-fx-text-fill:red");
         vBoxDate.getChildren().addAll(txtBirthDay, errBirthDay);
         hBoxBDate.getChildren().addAll(labelBDate, vBoxDate);
 
@@ -396,7 +398,7 @@ public class FXMLNewFilmController implements Initializable {
         Label labelHomeTown = new Label("Home Town:");
         txtHomeTown = new TextField();
         errHomeTown = new Label("");
-        errHomeTown.setWrapText(true);
+        errHomeTown.setWrapText(true);       
         vBoxHomeTown.getChildren().addAll(txtHomeTown, errHomeTown);
         hBoxHomeTown.getChildren().addAll(labelHomeTown, vBoxHomeTown);
 
