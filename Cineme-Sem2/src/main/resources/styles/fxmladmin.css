@@ -41,6 +41,7 @@
     /*-fx-padding: 3px 3px 3px 25px;*/
 }
 
+
 .dark {
     -fx-background-color:
         #090a0c,
@@ -92,4 +93,5 @@
     -fx-font-style: italic;
     -fx-font-size: 14px;
 }
+
 
