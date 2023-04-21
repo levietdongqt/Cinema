@@ -2,12 +2,14 @@ package com.group2.cineme.sem2;
 
 import DAO.ProductDAO;
 import POJO.Bill;
+import POJO.Product;
 import POJO.Ticket;
 import Utils.SessionUtil;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.*;
@@ -109,36 +111,37 @@ public class FXMLBillController implements Initializable {
 
     public void loadProduct() {
 
-        SessionUtil.getProductList().forEach((product, quantity) -> {
-
-            HBox hbox = new HBox();
-            hbox.setPrefWidth(vbox.getPrefWidth());
-            hbox.styleProperty().setValue("-fx-border-width: 0 0 2 0; -fx-border-color: #ffffff;");
-
-            Label name = new Label();
-            name.setPrefWidth(hbox.getPrefWidth() / 3);
-            name.setAlignment(Pos.TOP_CENTER);
-            name.setText(product.getProductName());
-
-            Label quant = new Label();
-            quant.setPrefWidth(hbox.getPrefWidth() / 3);
-            quant.setAlignment(Pos.TOP_CENTER);
-            quant.setText(quantity.toString());
-
-            Label price = new Label();
-            price.setPrefWidth(hbox.getPrefWidth() / 3);
-            price.setAlignment(Pos.TOP_CENTER);
-            price.setText(product.getPrice().toString());
-
-            hbox.getChildren().add(name);
-            hbox.getChildren().add(quant);
-            hbox.getChildren().add(price);
-
-            vbox.getChildren().add(hbox);
-
-            BigDecimal productTotal = product.getPrice().multiply(new BigDecimal(quantity));
-            total = total.add(productTotal);
-
+        SessionUtil.getProductList().forEach(new BiConsumer<Product, Integer>() {
+            @Override
+            public void accept(Product product, Integer quantity) {
+                HBox hbox = new HBox();
+                hbox.setPrefWidth(vbox.getPrefWidth());
+                hbox.styleProperty().setValue("-fx-border-width: 0 0 2 0; -fx-border-color: #ffffff;");
+                
+                Label name = new Label();
+                name.setPrefWidth(hbox.getPrefWidth() / 3);
+                name.setAlignment(Pos.TOP_CENTER);
+                name.setText(product.getProductName());
+                
+                Label quant = new Label();
+                quant.setPrefWidth(hbox.getPrefWidth() / 3);
+                quant.setAlignment(Pos.TOP_CENTER);
+                quant.setText(quantity.toString());
+                
+                Label price = new Label();
+                price.setPrefWidth(hbox.getPrefWidth() / 3);
+                price.setAlignment(Pos.TOP_CENTER);
+                price.setText(String.valueOf(product.getPrice()));
+                
+                hbox.getChildren().add(name);
+                hbox.getChildren().add(quant);
+                hbox.getChildren().add(price);
+                
+                vbox.getChildren().add(hbox);
+                
+                BigDecimal productTotal = BigDecimal.valueOf((product.getPrice()*quantity));
+                total = total.add(productTotal);
+            }
         });
 
         ptotal.setText(total.toString());

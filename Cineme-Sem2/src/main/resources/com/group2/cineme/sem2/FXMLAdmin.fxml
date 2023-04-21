@@ -23,7 +23,7 @@
                <left>
                   <AnchorPane prefHeight="623.0" prefWidth="200.0" stylesheets="@../../../../styles/fxmladmin.css" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="btnInsert" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#submit" prefHeight="42.0" prefWidth="177.0" text="INSERT" textAlignment="CENTER">
+                        <Button fx:id="btnInsert" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#submit" prefHeight="42.0" prefWidth="177.0" styleClass="dark" text="INSERT" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -39,7 +39,7 @@
                            </font>
                         </Button>
                         <FontAwesomeIcon glyphName="WRENCH" layoutX="15.0" layoutY="101.0" size="2.5em" />
-                        <FontAwesomeIcon glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="USER_PLUS" layoutX="15.0" layoutY="45.0" size="2.5em" />
                         <FontAwesomeIcon glyphName="CLOSE" layoutX="17.0" layoutY="212.0" size="2.5em" />
                         <Button alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="357.0" mnemonicParsing="false" onAction="#exportToExcel" prefHeight="42.0" prefWidth="177.0" text="EXPORT">
                            <font>
@@ -61,7 +61,7 @@
                         <FontAwesomeIcon glyphName="ERASER" layoutX="16.0" layoutY="266.0" size="2.5em" />
                      </children>
                      <styleClass>
-                        <String fx:value="nav-form" />
+                        <String fx:value="dark" />
                         <String fx:value="shadow" />
                      </styleClass>
                   </AnchorPane>

@@ -104,6 +104,8 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 
     }
 
+    
+    //update thông tin employee trừ pass
     public void updateEmployee(Employee employee) {
         try ( Session session = HibernateUtils.getFACTORY().openSession()) {
             session.beginTransaction();
@@ -130,7 +132,28 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             setMessUpdate("Cập nhật dữ liệu không thành công");
         }
     }
-
+    
+       // update status thành false
+       public void updateStatus(Employee employee) {
+        try ( Session session = HibernateUtils.getFACTORY().openSession()) {
+            session.beginTransaction();
+            Employee existingEmployee = session.get(Employee.class, employee.getUserName());
+            if (existingEmployee != null) {
+                existingEmployee.setStatus(false);
+                session.update(existingEmployee);
+                session.getTransaction().commit();
+                setMessUpdate("Cập nhật dữ liệu thành công");
+            } else {
+                setMessUpdate("Không tìm thấy dữ liệu để cập nhật");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            setMessUpdate("Cập nhật dữ liệu không thành công");
+        }
+    }
+       
+       
+       //update password
     public void updatePassword(Employee employee, String pass) throws Exception {
         Session session = HibernateUtils.getFACTORY().openSession();
         try {
@@ -153,11 +176,43 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
             session.close();
         }
     }
+    
+    public List<Employee> getAll() throws Exception{
 
+        List<Employee> list = new LinkedList<>();
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+
+//            if (!"Course,Batch,Student".contains(className)) {
+//                throw new Exception();
+//            }
+
+
+            session.getTransaction().begin();
+            var hql = "FROM Employee WHERE status = true ";
+            Query query = session.createQuery(hql).setCacheable(true);
+            list = query.getResultList();
+            
+            if (list == null) {
+                setMessGetAll("He Thong chua co du lieu");
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            setMessGetAll("Ten toi tuong khong hop le");
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        return list;
+    }
+    
+    
+    
+    // tạo user admin 
     public void insert() throws Exception {
         Session session = HibernateUtils.getFACTORY().openSession();
         Employee e = new Employee();
-        e.setUserName("admin5");
+        e.setUserName("admin");
         e.setEmpName("BOSSSSSS");
         e.setEmail("admin@gmail.com");
         e.setEmpPhone("0123456789");

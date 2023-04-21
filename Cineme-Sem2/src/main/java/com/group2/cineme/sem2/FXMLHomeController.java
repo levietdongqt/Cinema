@@ -115,7 +115,7 @@ public class FXMLHomeController implements Initializable {
     public void loadFXMLReport() throws IOException {
         String value = report.getValue();
         if (value.equalsIgnoreCase("Employee")){
-            //Load trang report Employee
+            newScene("FXMLReportEmployee");
         }
         if (value.equalsIgnoreCase("Film")) {
             //Load trang report Film

@@ -1,11 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLReportEmployeeController">
-    
+<AnchorPane id="AnchorPane" prefHeight="686.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLReportEmployeeController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="20.0" layoutY="20.0" prefHeight="686.0" prefWidth="765.0">
+         <children>
+            <ImageView fitHeight="137.0" fitWidth="146.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../images/icon/CGV.png" />
+               </image>
+            </ImageView>
+            <Text fill="RED" layoutX="158.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Công ty TNHH CJ CGV Việt Nam" wrappingWidth="347.13671875">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="158.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="275 Nguyen Van Dau Street, Ward 11, Binh Thanh District, Ho Chi Minh City." wrappingWidth="332.13671875">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text fill="RED" layoutX="158.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="www.cgv.vn" wrappingWidth="160.13671875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="158.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monthly Employee Attendance Report" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Text>
+            <Text layoutX="34.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Name:" />
+            <Text layoutX="344.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserName:" />
+            <TextField fx:id="tfUser11" focusTraversable="false" layoutX="402.0" layoutY="230.0" prefHeight="25.0" prefWidth="168.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </TextField>
+            <Text layoutX="610.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moth:" />
+            <TableView fx:id="tvTime11" layoutX="34.0" layoutY="286.0" prefHeight="200.0" prefWidth="698.0">
+               <columns>
+                  <TableColumn fx:id="colDay11" prefWidth="178.0" text="DAY" />
+                  <TableColumn fx:id="colStartTime11" prefWidth="172.0" text="START TIME" />
+                  <TableColumn fx:id="colEndTime11" prefWidth="167.0" text="END TIME" />
+                  <TableColumn fx:id="colWorking11" prefWidth="180.0" text="WORKING TIME" />
+               </columns>
+            </TableView>
+            <Text layoutX="34.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total hours:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="tfTotalHours11" layoutX="99.0" layoutY="508.0" prefHeight="25.0" prefWidth="168.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </TextField>
+            <Text layoutX="246.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total working day:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="tfTotalDay11" layoutX="352.0" layoutY="508.0" prefHeight="25.0" prefWidth="168.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </TextField>
+            <Text layoutX="67.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Clerk:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="312.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Head of Department:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="578.0" layoutY="564.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Manager:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="79.0" layoutY="634.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le Viet Dong">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="332.0" layoutY="634.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tran Thu Huy">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="570.0" layoutY="633.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nguyen Nhat Minh">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="247.0" layoutY="668.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © Navigos Group Vietnam Joint Stock Company" />
+            <ComboBox fx:id="cbName" layoutX="123.0" layoutY="232.0" prefHeight="30.0" prefWidth="180.0" styleClass="boxrp" stylesheets="@../../../../styles/fxmladmin.css" />
+            <DatePicker fx:id="pdMoth" layoutX="645.0" layoutY="233.0" prefHeight="25.0" prefWidth="89.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

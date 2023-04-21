@@ -462,8 +462,9 @@ public class FXMLAdminController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
-                dao.delete(tfUser.getText().trim(), Employee.class);
-                System.out.println(tfUser.getText().trim());
+                em.setUserName(tfUser.getText().trim());
+                dao.updateStatus(em);
+//                System.out.println(tfUser.getText().trim());
 
                 showEmployee();
                 clear(event);
@@ -548,8 +549,8 @@ public class FXMLAdminController implements Initializable {
             
 
             if (power.equals(SessionUtil.getEmployee().getPosition())) {
-               emList = dao.getAll("Employee"); 
-                
+               emList = dao.getAll(); 
+               
             }else{
                 emList = dao.getById(user);
             }

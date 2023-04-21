@@ -9,6 +9,7 @@ import POJO.WorkSession;
 import Utils.HibernateUtils;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -36,81 +37,64 @@ public class WorkSessionDAO extends GenericDAO<WorkSession, Float> {
 
     }
 
-  
-        public Map<String, Double> getTotalWorkTimeByUserAndMonth(int month) {
-    Session session = HibernateUtils.getFACTORY().openSession();
-    String hql = "SELECT ws.employee.userName, sum(hour(ws.endTime) - hour(ws.startTime)) "
+    public Map<String, Double> getTotalWorkTimeByUserAndMonth(int month) {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        String hql = "SELECT ws.employee.userName, sum(hour(ws.endTime) - hour(ws.startTime)) "
                 + "FROM WorkSession ws "
                 + "WHERE MONTH(ws.startTime) = :month "
                 + "GROUP BY ws.employee.userName";
-    Query query = session.createQuery(hql);
-    query.setParameter("month", month);
-    List<Object[]> results = query.getResultList();
+        Query query = session.createQuery(hql);
+        query.setParameter("month", month);
+        List<Object[]> results = query.getResultList();
 
-    Map<String, Double> totalWorkTimeByUser = new HashMap<>();
-    for (Object[] result : results) {
-        String userName = (String) result[0];
-      
-        long totalSeconds = (long) result[1];
-        double x = totalSeconds/8.0;
-        Employee employee = getEmployeeByUsername(userName);
-        String name = employee.getUserName();
-        totalWorkTimeByUser.put(name,x);
-        System.out.println(name + ": "+ (x));
-     
-         
-        
-      
+        Map<String, Double> totalWorkTimeByUser = new HashMap<>();
+        for (Object[] result : results) {
+            String userName = (String) result[0];
+
+            long totalSeconds = (long) result[1];
+            double x = totalSeconds / 8.0;
+            Employee employee = getEmployeeByUsername(userName);
+            String name = employee.getUserName();
+            totalWorkTimeByUser.put(name, x);
+            System.out.println(name + ": " + (x));
+
+        }
+        return totalWorkTimeByUser;
     }
-    return totalWorkTimeByUser;
-}
 
-private Employee getEmployeeByUsername(String username) {
-    Session session = HibernateUtils.getFACTORY().openSession();
-    String hql = "FROM Employee e WHERE e.userName = :username";
-    Query query = session.createQuery(hql);
-    query.setParameter("username", username);
-    return (Employee) query.getSingleResult();
-}
-    
-    
-    
-    
-//    
-//    public Long getTotalWorkTimeByUserAndMonth(int month) {
-//    Session session = HibernateUtils.getFACTORY().openSession();
-//    String hql = "SELECT ws.employee.userName, sum(hour(ws.endTime) - hour(ws.startTime)) "
-//                + "FROM WorkSession ws "
-//                + "WHERE MONTH(ws.startTime) = :month "
-//                + "GROUP BY ws.employee.userName";
-//    Query query = session.createQuery(hql);
-//    query.setParameter("month", month);
-//    List<Object[]> results = query.getResultList();
-//
-//long totalSeconds ;
-//    for (Object[] result : results) {
-//        String userName = (String) result[0];
-//        totalSeconds = (long) result[1];
-//        Employee employee = getEmployeeByUsername(userName);
-//        String name = employee.getEmpName();
-//        totalWorkTimeByUser.put(name, totalSeconds);
-//        System.out.println(name + ": " + Duration.ofHours(totalSeconds));
-//    }
-//    return totalWorkTimeByUser;
-//}
-//
-//private Employee getEmployeeByUsername(String username) {
-//    Session session = HibernateUtils.getFACTORY().openSession();
-//    String hql = "FROM Employee e WHERE e.userName = :username";
-//    Query query = session.createQuery(hql);
-//    query.setParameter("username", username);
-//    return (Employee) query.getSingleResult();
-//}
-//
-//
+    private Employee getEmployeeByUsername(String username) {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        
+        String hql = "FROM Employee e WHERE e.userName = :username";
+        Query query = session.createQuery(hql);
+        query.setParameter("username", username);
+        return (Employee) query.getSingleResult();
+    }
 
-    
-    
-    
-    
+    public List<WorkSession> getTime(String username, int month) throws Exception {
+
+        List<WorkSession> list = new LinkedList<>();
+        Session session = HibernateUtils.getFACTORY().openSession();
+        try {
+
+            session.getTransaction().begin();
+            var hql = "FROM WorkSession w WHERE w.employee.userName = :employee AND MONTH(startTime) = :month"; //w.employee.userName  -- employee : tên đặt trong pojo | userName : tên thực tế ở database
+            Query query = session.createQuery(hql).setCacheable(true);
+            query.setParameter("employee", username);
+            query.setParameter("month", month);
+            list = query.getResultList();
+
+            if (list == null) {
+                setMessGetAll("He Thong chua co du lieu");
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            setMessGetAll("Ten toi tuong khong hop le");
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        return list;
+    }
+
 }
