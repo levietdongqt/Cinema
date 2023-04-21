@@ -168,7 +168,6 @@ public class FXMLProductController implements Initializable {
             grid.add(spinner, 2, j + 1);
             spinner.valueProperty().addListener((ov, oldValue, newValue) -> {
                 total = total + (newValue - oldValue) * item.getPrice();
-
                 totalLabel.setText(SessionUtil.toMoney(total));
                 mapProducts.put(item, ov.getValue());
                 SessionUtil.getProductList().forEach((t, u) -> {
@@ -176,7 +175,6 @@ public class FXMLProductController implements Initializable {
                 });
             });
             //product price
-
             grid.add(new Label(SessionUtil.toMoney(item.getPrice()) + " VND"), 3, j + 1);
         }
         grid.getColumnConstraints().addAll(colContrain, colContrain1, colContrain1, colContrain1);

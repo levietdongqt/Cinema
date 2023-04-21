@@ -83,7 +83,6 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private Button btnBill;
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -148,7 +147,7 @@ public class FXMLHomeController implements Initializable {
          try {
             String value = report.getSelectionModel().getSelectedItem();
             if (value.equalsIgnoreCase("Employee")) {
-                //Load trang report Employee
+                newScene("FXMLReportEmployee");
             }else if (value.equalsIgnoreCase("Film")) {
                 newScene("FXMLFilmReport");
             } else if (value.equalsIgnoreCase("Food")) {
@@ -177,7 +176,6 @@ public class FXMLHomeController implements Initializable {
             home.setDisable(false);
             report.setValue(null);
         });
-
     }
 
     public void setUpReport() {

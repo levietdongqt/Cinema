@@ -1,6 +1,5 @@
 package com.group2.cineme.sem2;
 
-
 import DAO.BillDAO;
 import DAO.CustomerDAO;
 import DAO.FilmDAO;
@@ -49,7 +48,6 @@ public class FXMLBillController implements Initializable {
 
     private DecimalFormat formatter = new DecimalFormat("#,##0");
 
-
     @FXML
     private Label btotal;
 
@@ -87,7 +85,6 @@ public class FXMLBillController implements Initializable {
     private Label time;
 
     @FXML
-
     private Label accPoint;
 
     @FXML
@@ -119,7 +116,6 @@ public class FXMLBillController implements Initializable {
     public FXMLBillController(VBox vbox) {
         this.vbox = vbox;
     }
-
 
     public FXMLBillController(Schedule schedule) {
         this.schedule = schedule;
@@ -405,7 +401,6 @@ public class FXMLBillController implements Initializable {
         ticDAO.addListTicketAndProduct(SessionUtil.getTicketList(), proBillList);
         film.setViewFilm(selectView);
         fd.update(film);
-
 
     }
 

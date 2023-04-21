@@ -65,7 +65,6 @@ public class FXMLFoodReportController implements Initializable {
     @FXML
     private TableColumn<Object[], String> priceCol;
 
-
     @FXML
     private TableColumn<Object[], Integer> quantityCol;
 
@@ -291,7 +290,6 @@ public class FXMLFoodReportController implements Initializable {
             } else {
                 fileChooser.setInitialFileName(String.valueOf(selectedMonth) + "-" + String.valueOf(selectedYear));
             }
-
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {
                 FileOutputStream outputStream = new FileOutputStream(file);

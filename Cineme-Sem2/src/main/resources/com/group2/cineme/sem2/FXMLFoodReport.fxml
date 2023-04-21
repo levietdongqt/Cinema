@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -14,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="AnchorPane" prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFoodReportController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="290.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -26,7 +24,6 @@
             </Label>
             <HBox prefHeight="36.0" prefWidth="600.0">
                <children>
-
                   <Spinner fx:id="year" onMouseReleased="#setUpSpinnerYear" prefHeight="26.0" prefWidth="88.0" style="-fx-background-radius: 15 15;" />
                   <ComboBox fx:id="month" onAction="#setUpComboBoxMonth" prefHeight="26.0" prefWidth="99.0" style="-fx-background-radius: 15 15;">
                      <HBox.margin>
@@ -40,13 +37,11 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setUpBtnChart" prefHeight="27.0" prefWidth="66.0" style="-fx-background-radius: 15 15;" text=" Chart">
                      <font>
                         <Font size="13.0" />
                      </font>
                      <HBox.margin>
-
                         <Insets left="140.0" />
                      </HBox.margin>
                   </Button>
@@ -71,7 +66,6 @@
                   <Font size="18.0" />
                </font>
             </Label>
-
             <TableView fx:id="tableView" prefHeight="273.0" prefWidth="600.0" VBox.vgrow="NEVER">
               <columns>
                   <TableColumn fx:id="sttCol" minWidth="0.0" prefWidth="61.5999755859375" text="STT" />
