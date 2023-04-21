@@ -58,10 +58,9 @@ public class FXMLChartFilmController implements Initializable {
     }
     //Load data truyen tu Report mot list pieChart.Data voi 2 gia tri truyen vao de ve
     public void loadDataPieChart() {
-            List<PieChart.Data> lists = new ArrayList<>();
-        int b = 50000;
+        List<PieChart.Data> lists = new ArrayList<>();
         for (Film film : films) {
-            lists.add(new PieChart.Data(film.getFilmName(), film.getSumPriceTicket() + b));
+            lists.add(new PieChart.Data(film.getFilmName(), film.getSumPriceTicket()));
             
         }
         this.pieChart.setData(FXCollections.observableList(lists)); //lay da ta cho PieChart

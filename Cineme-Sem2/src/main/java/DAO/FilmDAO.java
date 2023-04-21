@@ -288,31 +288,31 @@ public class FilmDAO extends GenericDAO<Film, String> {
         return sum;
     }
     
-//    public int countTicket(String id,LocalDate startDate,LocalDate endDate){
-//        int count = 0;
-//        try ( Session session = HibernateUtils.getFACTORY().openSession()){
-//            session.getTransaction().begin();
-//            CriteriaBuilder builder = session.getCriteriaBuilder();
-//            CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
-//            Root<Film> root = criteriaQuery.from(Film.class);
-//            Join<Film, Schedule> scheJoin = root.join("listSchedule");
-//            Join<Schedule,Ticket> ticketJoin=scheJoin.join("listTicket");
-//            
-//            LocalDateTime startDateToStartDateTime = startDate.atStartOfDay();
-//            LocalDateTime endDateToEndDateTime = endDate.atStartOfDay().with(LocalTime.MAX);
-//            
-//            Predicate equalID = builder.equal(root.get("filmID"), id);
-//            Predicate greaterThan = builder.greaterThanOrEqualTo(scheJoin.get("startTime"), startDateToStartDateTime);
-//            Predicate lessThan = builder.lessThan(scheJoin.get("startTime"), endDateToEndDateTime);
-//            
-//            criteriaQuery.select(builder.count(ticketJoin));
-//            criteriaQuery.where(builder.and(equalID,greaterThan,lessThan));
-//            Long countLong = session.createQuery(criteriaQuery).setCacheable(true).getSingleResult();
-//            count = (countLong != null)?countLong.intValue():0;
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
-//        }
-//        return count;
-//    }
+    public int countTicket(String id,LocalDate startDate,LocalDate endDate){
+        int count = 0;
+        try ( Session session = HibernateUtils.getFACTORY().openSession()){
+            session.getTransaction().begin();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
+            Root<Film> root = criteriaQuery.from(Film.class);
+            Join<Film, Schedule> scheJoin = root.join("listSchedule");
+            Join<Schedule,Ticket> ticketJoin=scheJoin.join("listTicket");
+            
+            LocalDateTime startDateToStartDateTime = startDate.atStartOfDay();
+            LocalDateTime endDateToEndDateTime = endDate.atStartOfDay().with(LocalTime.MAX);
+            
+            Predicate equalID = builder.equal(root.get("filmID"), id);
+            Predicate greaterThan = builder.greaterThanOrEqualTo(scheJoin.get("startTime"), startDateToStartDateTime);
+            Predicate lessThan = builder.lessThan(scheJoin.get("startTime"), endDateToEndDateTime);
+            
+            criteriaQuery.select(builder.count(ticketJoin));
+            criteriaQuery.where(builder.and(equalID,greaterThan,lessThan));
+            Long countLong = session.createQuery(criteriaQuery).setCacheable(true).getSingleResult();
+            count = (countLong != null)?countLong.intValue():0;
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            AlertUtils.getAlert(e.getMessage(), Alert.AlertType.ERROR).show();
+        }
+        return count;
+    }
 }

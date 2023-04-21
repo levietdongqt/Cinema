@@ -370,6 +370,7 @@ public class FXMLEditFilmController implements Initializable {
         txtActorsName = new TextField();
         errActorsName = new Label("");
         errActorsName.setWrapText(true);
+        errActorsName.setStyle("-fx-text-fill:red");
         vBoxName.getChildren().addAll(txtActorsName, errActorsName);
         hBoxName.getChildren().addAll(labelActorsName, vBoxName);
 
@@ -380,6 +381,7 @@ public class FXMLEditFilmController implements Initializable {
         txtBirthDay.setEditable(false);
         errBirthDay = new Label("");
         errBirthDay.setWrapText(true);
+        errBirthDay.setStyle("-fx-text-fill:red");
         vBoxDate.getChildren().addAll(txtBirthDay, errBirthDay);
         hBoxBDate.getChildren().addAll(labelBDate, vBoxDate);
 
