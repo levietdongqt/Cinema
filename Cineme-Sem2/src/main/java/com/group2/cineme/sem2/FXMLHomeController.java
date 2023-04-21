@@ -93,9 +93,9 @@ public class FXMLHomeController implements Initializable {
         this.labelAdmin21.setText(SessionUtil.getEmployee().getPosition());
         if (SessionUtil.getEmployee().getPosition().equalsIgnoreCase("manager")) {
             loadInHome("FXMLFilm");
+            
         } else {
             loadInHome("FXMLShowSchedule");
-            btnBooking.setDisable(true);
             btnFilm.setDisable(true);
             btnSche.setDisable(true);
             report.setDisable(true);
