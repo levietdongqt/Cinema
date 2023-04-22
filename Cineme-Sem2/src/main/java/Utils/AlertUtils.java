@@ -17,8 +17,7 @@ import javafx.util.StringConverter;
 public class AlertUtils {
     public static Alert getAlert(String content,Alert.AlertType typeAlert){
         Alert alert = new Alert(typeAlert);
-        alert.setContentText(content);
-       
+        alert.setHeaderText(content);
         return alert;
     }
     
