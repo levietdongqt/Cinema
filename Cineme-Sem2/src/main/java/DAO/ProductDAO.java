@@ -45,7 +45,6 @@ public class ProductDAO extends GenericDAO<Product, String> {
         if (list.isEmpty()) {
             System.out.println("Khong co san pham nao duoc mua");
         }
-
         list.forEach((t) -> {
             System.out.println(t[0] + ": " + t[1] + " " + t[2] + " " + t[3] + " " + t[4]);
         });
@@ -61,5 +60,4 @@ public class ProductDAO extends GenericDAO<Product, String> {
 //            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
         }

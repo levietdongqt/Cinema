@@ -147,7 +147,7 @@ public class FXMLHomeController implements Initializable {
          try {
             String value = report.getSelectionModel().getSelectedItem();
             if (value.equalsIgnoreCase("Employee")) {
-                newScene("FXMLReportEmployee");
+                //Load trang report Employee
             }else if (value.equalsIgnoreCase("Film")) {
                 newScene("FXMLFilmReport");
             } else if (value.equalsIgnoreCase("Food")) {
