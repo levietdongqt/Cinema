@@ -8,100 +8,129 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFoodReportController">
+
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFoodReportController">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="290.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane id="AnchorPane" prefHeight="426.0" prefWidth="600.0">
          <children>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="174.0" text="Food Report">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <HBox prefHeight="36.0" prefWidth="600.0">
+            <VBox alignment="TOP_CENTER" prefHeight="591.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Spinner fx:id="year" onMouseReleased="#setUpSpinnerYear" prefHeight="26.0" prefWidth="88.0" style="-fx-background-radius: 15 15;" />
-                  <ComboBox fx:id="month" onAction="#setUpComboBoxMonth" prefHeight="26.0" prefWidth="99.0" style="-fx-background-radius: 15 15;">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin></ComboBox>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setUpBtnFullYear" prefHeight="27.0" prefWidth="84.0" style="-fx-background-radius: 15 15;" text="Full Year">
+                  <AnchorPane>
+                     <children>
+                        <ImageView fitHeight="111.0" fitWidth="118.0" layoutX="48.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../images/icon/CGV.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="RED" layoutX="159.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Công ty TNHH CJ CGV Việt Nam" wrappingWidth="347.13671875">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="159.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="275 Nguyen Van Dau Street, Ward 11, Binh Thanh District, Ho Chi Minh City." wrappingWidth="332.13671875">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="174.0" text="Food Report">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setUpBtnChart" prefHeight="27.0" prefWidth="66.0" style="-fx-background-radius: 15 15;" text=" Chart">
+                  </Label>
+                  <HBox prefHeight="36.0" prefWidth="600.0">
+                     <children>
+                        <Spinner fx:id="year" onMouseReleased="#setUpSpinnerYear" prefHeight="26.0" prefWidth="88.0" style="-fx-background-radius: 15 15;" />
+                        <ComboBox fx:id="month" onAction="#setUpComboBoxMonth" prefHeight="26.0" prefWidth="99.0" style="-fx-background-radius: 15 15;">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setUpBtnFullYear" prefHeight="27.0" prefWidth="84.0" style="-fx-background-radius: 15 15;" text="Full Year">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setUpBtnChart" prefHeight="27.0" prefWidth="66.0" style="-fx-background-radius: 15 15;" text=" Chart">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="140.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#export" prefHeight="28.0" prefWidth="86.0" text="Export">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                           <graphic>
+                              <FontAwesomeIcon glyphName="FILE" size="1.5em" />
+                           </graphic>
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="info" text="label">
                      <font>
-                        <Font size="13.0" />
+                        <Font size="18.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets left="140.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#export" prefHeight="28.0" prefWidth="86.0" text="Export">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <FontAwesomeIcon glyphName="FILE" size="1.5em" />
-                     </graphic>
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding>
-                  </Button>
+                  </Label>
+                  <TableView fx:id="tableView" prefHeight="273.0" prefWidth="600.0" VBox.vgrow="NEVER">
+                    <columns>
+                        <TableColumn fx:id="sttCol" minWidth="0.0" prefWidth="61.5999755859375" text="STT" />
+                      <TableColumn fx:id="nameCol" prefWidth="111.20001220703125" text="Name" />
+                      <TableColumn fx:id="typeCol" prefWidth="112.0" text="Type" />
+                        <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="106.4000244140625" text="Price" />
+                        <TableColumn fx:id="quantityCol" minWidth="0.0" prefWidth="90.39996337890625" text="Quatity" />
+                        <TableColumn fx:id="totalCol" minWidth="0.0" prefWidth="104.0001220703125" text="Total(VND)" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label text="TOTAL REVENUE: ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalLabel" text="total">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="VND">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © Navigos Group Vietnam Joint Stock Company" />
                </children>
-            </HBox>
-            <Label fx:id="info" text="label">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <TableView fx:id="tableView" prefHeight="273.0" prefWidth="600.0" VBox.vgrow="NEVER">
-              <columns>
-                  <TableColumn fx:id="sttCol" minWidth="0.0" prefWidth="61.5999755859375" text="STT" />
-                <TableColumn fx:id="nameCol" prefWidth="111.20001220703125" text="Name" />
-                <TableColumn fx:id="typeCol" prefWidth="112.0" text="Type" />
-                  <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="106.4000244140625" text="Price" />
-                  <TableColumn fx:id="quantityCol" minWidth="0.0" prefWidth="90.39996337890625" text="Quatity" />
-                  <TableColumn fx:id="totalCol" minWidth="0.0" prefWidth="104.0001220703125" text="Total(VND)" />
-              </columns>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </TableView>
-            <HBox alignment="CENTER_RIGHT">
-               <children>
-                  <Label text="TOTAL REVENUE: ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="totalLabel" text="total">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="VND">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
+            </VBox>
          </children>
-      </VBox>
+      </AnchorPane>
    </children>
 </AnchorPane>

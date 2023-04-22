@@ -10,6 +10,7 @@ import POJO.Film;
 import POJO.FilmGenre;
 import java.io.File;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -75,8 +76,8 @@ public class FXMLViewFilmDetailsController implements Initializable {
         this.txtID.setText(film.getFilmID());
         this.txtDirector.setText(film.getDirector());
         this.txtAge.setText(String.format("%s", film.getLimitAge()));
-        this.txtStartDate.setText(film.getStartDate().toString());
-        this.txtEndDate.setText(film.getEndDate().toString());
+        this.txtStartDate.setText(film.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        this.txtEndDate.setText(film.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         this.txtDescription.setText(film.getDescription());
         File file = new File(film.getImageUrl());
         Image image = new Image(file.toURI().toString());

@@ -211,12 +211,12 @@ public class FXMLFilmReportController implements Initializable {
                 }
             };
         });
-        TableColumn<Film,Hyperlink> colDetails = new TableColumn<>();
-        colDetails.setCellValueFactory((p) -> {
-            Hyperlink hyperlink = new Hyperlink("DETAILS");
-            return new SimpleObjectProperty<>(hyperlink);
-        });
-        this.tableViewReport.getColumns().addAll(sttCol,colName, colStatus, colView, colSchedule, colTicket,colDetails);
+//        TableColumn<Film,Hyperlink> colDetails = new TableColumn<>();
+//        colDetails.setCellValueFactory((p) -> {
+//            Hyperlink hyperlink = new Hyperlink("DETAILS");
+//            return new SimpleObjectProperty<>(hyperlink);
+//        });
+        this.tableViewReport.getColumns().addAll(sttCol,colName, colStatus, colView, colSchedule, colTicket);
         
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewReport.getColumns();
         for (TableColumn<Film, ?> column : columns) {
