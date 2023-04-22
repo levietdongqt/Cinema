@@ -4,6 +4,7 @@
  */
 package Utils;
 
+import DAO.EmployeeDAO;
 import DAO.RoomSeatDetailDAO;
 import DAO.SeatMapDAO;
 import POJO.*;
@@ -85,11 +86,14 @@ public class HibernateUtils {
     public static SessionFactory getFACTORY() {
         return FACTORY;
     }
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws Exception {
         SeatMapDAO seatDAO = new SeatMapDAO();
         seatDAO.addSeatMapList();
-        RoomSeatDetailDAO rsdDAO  = new RoomSeatDetailDAO();
-       rsdDAO.addList();
+        RoomSeatDetailDAO rsdDAO = new RoomSeatDetailDAO();
+        rsdDAO.addList();
+        EmployeeDAO emDao = new EmployeeDAO();
+        emDao.insert();
     }
 
 }

@@ -3,6 +3,7 @@ package POJO;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "WorkSession")
@@ -32,16 +34,19 @@ public class WorkSession {
     @ManyToOne
     @JoinColumn(name = "userName")
     private Employee employee ;
-
+    
+     @Transient
+     private double totalWorkTime;
     
      public WorkSession() {
     }
 
-    public WorkSession(int sessionID, LocalDateTime startTime, LocalDateTime endTime, Employee employee) {
+    public WorkSession(int sessionID, LocalDateTime startTime, LocalDateTime endTime, Employee employee , double totalWorkTime ) {
         this.sessionID = sessionID;
         this.startTime = startTime;
         this.endTime = endTime;
         this.employee = employee;
+        this.totalWorkTime = totalWorkTime;
     }
     
     public int getSessionID() {
@@ -76,7 +81,13 @@ public class WorkSession {
         this.employee = employee;
     }
 
-   
+   public double getTotalWorkTime() {
+        return totalWorkTime;
+    }
+
+    public void setTotalWorkTime(double totalWorkTime) {
+     this.totalWorkTime = totalWorkTime;
+    }
 
    
 }

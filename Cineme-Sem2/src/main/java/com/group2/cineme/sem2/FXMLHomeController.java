@@ -61,7 +61,10 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private Label labelAdmin2;
-    
+
+    @FXML
+    private Label labelAdmin21;
+
     @FXML
     private Label labelAdmin21;
 

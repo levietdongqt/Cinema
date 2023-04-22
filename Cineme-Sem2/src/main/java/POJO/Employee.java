@@ -48,6 +48,7 @@ public class Employee {
 //    @Formula("(SELECT SUM((EXTRACT(epoch FROM (ws.endTime - ws.startTime))) FROM WorkSession ws WHERE ws.userName = userName)")
    @Transient
      private double totalWorkTime;
+   
     public Employee(String userName, String empName, String password, String position, LocalDate birthDate, LocalDate startDate, String email, boolean status, boolean gender, String empPhone,double totalWorkTime,  Set<Bill> billList, Set<WorkSession> worksessionList) {
         this.userName = userName;
         this.empName = empName;

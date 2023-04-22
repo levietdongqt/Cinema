@@ -30,6 +30,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -170,7 +171,13 @@ public class FXMLAdminController implements Initializable {
     @FXML
     private Button btnUpdate;
 
+    
+    
+    
+    
     public void checkUser() {
+        
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
         tfUser.setOnKeyTyped(event -> {
             String user = tfUser.getText().trim();
             try {
@@ -455,8 +462,9 @@ public class FXMLAdminController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
-                dao.delete(tfUser.getText().trim(), Employee.class);
-                System.out.println(tfUser.getText().trim());
+                em.setUserName(tfUser.getText().trim());
+                dao.updateStatus(em);
+//                System.out.println(tfUser.getText().trim());
 
                 showEmployee();
                 clear(event);
@@ -541,8 +549,8 @@ public class FXMLAdminController implements Initializable {
             
 
             if (power.equals(SessionUtil.getEmployee().getPosition())) {
-               emList = dao.getAll("Employee"); 
-                
+               emList = dao.getAll(); 
+               
             }else{
                 emList = dao.getById(user);
             }
