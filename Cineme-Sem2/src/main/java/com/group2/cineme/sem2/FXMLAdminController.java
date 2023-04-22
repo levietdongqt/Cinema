@@ -9,6 +9,7 @@ import DAO.WorkSessionDAO;
 import POJO.Employee;
 import POJO.WorkSession;
 import Utils.SessionUtil;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -171,7 +172,11 @@ public class FXMLAdminController implements Initializable {
     @FXML
     private Button btnUpdate;
 
-    
+    @FXML
+    private Label txtEm;
+
+    @FXML
+    private FontAwesomeIcon txtIcon;
     
     
     
@@ -386,7 +391,7 @@ public class FXMLAdminController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm New Employee");
-        alert.setHeaderText("Are you sure you want to add new employee ?");
+        alert.setHeaderText("Are you sure want to add new employee ?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
@@ -410,7 +415,7 @@ public class FXMLAdminController implements Initializable {
     public void update(ActionEvent event) throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Employee Information Update");
-        alert.setHeaderText("Are you sure you want to update the employee information?");
+        alert.setHeaderText("Are you sure want to update the employee information?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
@@ -435,7 +440,7 @@ public class FXMLAdminController implements Initializable {
     public void updatePass(ActionEvent event) throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Update Password");
-        alert.setHeaderText("Are you sure you want to update the password?");
+        alert.setHeaderText("Are you sure want to update the password?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
@@ -458,7 +463,7 @@ public class FXMLAdminController implements Initializable {
     public void delete(ActionEvent event) throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Delete");
-        alert.setHeaderText("Are you sure you want to delete the data?");
+        alert.setHeaderText("Are you sure want to delete the data?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
