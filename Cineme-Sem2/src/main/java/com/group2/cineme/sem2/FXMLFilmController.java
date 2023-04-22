@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -163,8 +164,12 @@ public class FXMLFilmController implements Initializable {
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
         colDuration.setPrefWidth(100);
 
-        TableColumn colStartDate = new TableColumn("START-DATE");
-        colStartDate.setCellValueFactory(new PropertyValueFactory("startDate"));
+        TableColumn<Film,String> colStartDate = new TableColumn("START-DATE");
+        colStartDate.setCellValueFactory((p) -> {
+            Film f = p.getValue();
+            String date = f.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM"));
+            return new SimpleObjectProperty<>(date);
+        });
         colStartDate.setPrefWidth(100);
 
         TableColumn colEndDate = new TableColumn("END-DATE");

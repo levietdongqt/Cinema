@@ -18,13 +18,13 @@ import org.hibernate.Session;
  */
 public class App extends Application {
 
-//    static {
-//        Thread thread1 = new Thread(new updateStatusScheduleForFuture(0, 1));
-//        thread1.start();
-//        Thread thread2 = new Thread(new updateStatusScheduleForPass());
-//        thread2.start();
-//
-//    }
+    static {
+        Thread thread1 = new Thread(new updateStatusScheduleForFuture(0, 1));
+        thread1.start();
+        Thread thread2 = new Thread(new updateStatusScheduleForPass());
+        thread2.start();
+
+    }
     public static Scene scene;
 
     @Override
