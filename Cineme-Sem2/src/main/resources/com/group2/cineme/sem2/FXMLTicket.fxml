@@ -28,38 +28,37 @@
                   <GridPane alignment="CENTER" prefHeight="286.0" prefWidth="201.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="60.000006103515624" minWidth="10.0" prefWidth="47.19999389648437" />
-                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="164.80001220703124" minWidth="10.0" prefWidth="154.0000061035156" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" valignment="CENTER" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="36.79999389648438" minHeight="10.0" prefHeight="36.79999389648438" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="40.000036621093756" minHeight="10.0" prefHeight="40.000036621093756" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="roomLabel" text="Room" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                        <Label fx:id="roomLabel" text="Room" GridPane.columnSpan="2">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <Label text="Seat" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                        <Label text="Seat" GridPane.rowIndex="3" GridPane.valignment="TOP">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <Label text="Total" GridPane.rowIndex="7">
+                        <Label text="Total" GridPane.rowIndex="6">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
-                        <Label fx:id="totalLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Label fx:id="totalLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <ScrollPane prefHeight="22.0" prefWidth="141.0" style="-fx-background: #ECE8DD; -fx-border-color: #ECE8DD;" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                        <ScrollPane prefHeight="22.0" prefWidth="141.0" style="-fx-background: #ECE8DD; -fx-border-color: #ECE8DD;" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
                            <content>
                               <Label fx:id="seatLabel" text="Seat">
                                  <font>
@@ -68,47 +67,37 @@
                               </Label>
                            </content>
                         </ScrollPane>
-                        <Label fx:id="scheduleLabel" text="Details" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                        <Label fx:id="scheduleLabel" text="Details" GridPane.columnSpan="2" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <FontAwesomeIcon glyphName="FILM" size="1.5em">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </FontAwesomeIcon>
-                        <Label fx:id="filmLabel" text="Film" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnFood" mnemonicParsing="false" onAction="#setUpBtnFood" prefHeight="30.0" prefWidth="113.0" style="-fx-background-radius: 30 30; -fx-background-color: linear-gradient(to right, #FFEBEB 0%, #F6BA6F 100%)  linear-gradient(to right, #FFEBEB 0%, #F6BA6F 100%);" text="ORDER FOOD" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-                        <Label text="Food" GridPane.rowIndex="5">
+                        <Button fx:id="btnFood" mnemonicParsing="false" onAction="#setUpBtnFood" prefHeight="30.0" prefWidth="113.0" style="-fx-background-radius: 30 30; -fx-background-color: linear-gradient(to right, #FFEBEB 0%, #F6BA6F 100%)  linear-gradient(to right, #FFEBEB 0%, #F6BA6F 100%);" text="ORDER FOOD" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                        <Label text="Food" GridPane.rowIndex="4">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="foodLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="foodLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Ticket" GridPane.rowIndex="6">
+                        <Label text="Ticket" GridPane.rowIndex="5">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="ticketLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Label fx:id="ticketLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnNextStep" mnemonicParsing="false" onAction="#setUpBtnBill" prefHeight="16.0" prefWidth="72.0" style="-fx-background-radius: 15 15; -fx-background-color: linear-gradient(to right, #FFF3E2 0%, #E74646 100%)  linear-gradient(to right, #FFF3E2 0%, #E74646 100%);" text="BILL" GridPane.columnSpan="2" GridPane.rowIndex="9">
+                        <Button fx:id="btnNextStep" mnemonicParsing="false" onAction="#setUpBtnBill" prefHeight="16.0" prefWidth="72.0" style="-fx-background-radius: 15 15; -fx-background-color: linear-gradient(to right, #FFF3E2 0%, #E74646 100%)  linear-gradient(to right, #FFF3E2 0%, #E74646 100%);" text="BILL" GridPane.columnSpan="2" GridPane.rowIndex="8">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Label fx:id="dateLabel" text="Date" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                        <Label fx:id="dateLabel" text="Date" GridPane.columnSpan="2" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -118,14 +107,38 @@
                </children></VBox>
             <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="423.0" prefWidth="760.0" style="-fx-background-color: F5F5F5;">
                <children>
-                  <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="512.0" style="-fx-background-color: #AAE3E2;" text="SCREEN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
+                  <HBox alignment="CENTER" maxHeight="40.0" prefHeight="40.0">
+                     <children>
+                        <FontAwesomeIcon glyphName="FILM" size="2em">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </FontAwesomeIcon>
+                        <Label fx:id="filmLabel" prefHeight="27.0" text="Film" wrapText="true" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
                      <VBox.margin>
-                        <Insets bottom="30.0" top="80.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
-                  </Label>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="35.0" prefHeight="35.0">
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label id="screenLabel" fx:id="screenLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="32.0" prefHeight="32.0" prefWidth="512.0" style="-fx-background-color: #AAE3E2;" text="SCREEN" textAlignment="CENTER">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="790.0">
                      <children>
                         <GridPane id="seatGrid" fx:id="seatGrid" alignment="CENTER">
@@ -207,7 +220,6 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="600.0" />
                </children>
                <styleClass>
                   <String fx:value="ins-form" />
