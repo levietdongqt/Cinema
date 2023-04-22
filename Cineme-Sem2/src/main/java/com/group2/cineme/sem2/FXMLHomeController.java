@@ -66,6 +66,9 @@ public class FXMLHomeController implements Initializable {
     private Label labelAdmin21;
 
     @FXML
+    private Label labelAdmin21;
+
+    @FXML
     private Label timeLabel;
     @FXML
     ComboBox<String> report;
