@@ -66,9 +66,6 @@ public class FXMLHomeController implements Initializable {
     private Label labelAdmin21;
 
     @FXML
-    private Label labelAdmin21;
-
-    @FXML
     private Label timeLabel;
     @FXML
     ComboBox<String> report;
@@ -150,7 +147,7 @@ public class FXMLHomeController implements Initializable {
          try {
             String value = report.getSelectionModel().getSelectedItem();
             if (value.equalsIgnoreCase("Employee")) {
-                //Load trang report Employee
+                newScene("FXMLReportEmployee");
             }else if (value.equalsIgnoreCase("Film")) {
                 newScene("FXMLFilmReport");
             } else if (value.equalsIgnoreCase("Food")) {

@@ -41,7 +41,6 @@ import java.util.TimerTask;
 import java.util.logging.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
 
 /**
  *
