@@ -74,8 +74,6 @@ import javafx.util.Callback;
 public class FXMLNewScheduleController implements Initializable {
 
     @FXML
-    VBox lod;
-    @FXML
     GridPane gridPane;
 
     @FXML
@@ -86,9 +84,6 @@ public class FXMLNewScheduleController implements Initializable {
 
     @FXML
     private TextField minuteText;
-
-    @FXML
-    private Button btnSave;
 
     @FXML
     private ComboBox comboBoxRoom;
@@ -106,10 +101,6 @@ public class FXMLNewScheduleController implements Initializable {
     private ComboBox<Film> comboBoxFilm;
     @FXML
     private TextField txtID;
-    @FXML
-    private Button btnCheck;
-    @FXML
-    private Button btnFood;
     @FXML
     private TextField endHourText;
     @FXML
@@ -164,6 +155,7 @@ public class FXMLNewScheduleController implements Initializable {
         selectedFilm = film;
         comboBoxFilm.setValue(film);
         date.setDisable(false);
+        btnViewSchedule.setDisable(false);
         durationForDate();
     }
 

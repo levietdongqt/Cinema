@@ -148,7 +148,7 @@
       </VBox>
       <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" styleClass="fill-text" />
+            <ComboBox fx:id="comboBoxFilm" onAction="#setUpComboBoxFilm" prefHeight="23.0" prefWidth="238.0" promptText="Choose Film" styleClass="fill-text" />
             <Button fx:id="btnViewSchedule" disable="true" mnemonicParsing="false" onAction="#setUpViewSchedule" style="-fx-background-radius: 15 15;" text="View Schdule">
                <HBox.margin>
                   <Insets left="15.0" />

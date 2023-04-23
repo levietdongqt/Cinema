@@ -392,16 +392,14 @@ public class FXMLAdminController implements Initializable {
     public void submit(ActionEvent event) throws Exception {
         boolean check =  dao.checkUser(tfUser.getText());
 
-        if (check) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText("Duplicate User");
-            alert.showAndWait();
-        }
-        else if(){
-            
-        }
-        else{
+//        if (check) {
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("Warning");
+//            alert.setHeaderText("Duplicate User");
+//            alert.showAndWait();
+//        }
+      
+        
             Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
         alert1.setTitle("Confirm New Employee");
         alert1.setHeaderText("Are you sure want to add new employee ?");
@@ -421,7 +419,7 @@ public class FXMLAdminController implements Initializable {
                 e.getMessage();
             }
         }
-        }
+        
 
         
     }

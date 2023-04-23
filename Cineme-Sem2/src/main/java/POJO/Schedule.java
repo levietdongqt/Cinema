@@ -152,7 +152,7 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return this.getStartTime().toLocalTime().toString()+", "+this.note+" VietSub";
+        return this.getStartTime().toLocalTime().toString()+" "+this.note;
     }
 
     /**

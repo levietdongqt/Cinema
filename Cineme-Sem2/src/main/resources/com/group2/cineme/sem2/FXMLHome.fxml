@@ -23,7 +23,7 @@
       <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER_RIGHT">
          <children>
             <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="850.0" opacity="0.8" prefHeight="800.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="-417.0" AnchorPane.leftAnchor="850.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="850.0" opacity="0.8" prefHeight="735.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="-289.0" AnchorPane.leftAnchor="850.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ImageView fitHeight="114.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -61,12 +61,12 @@
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Button>
-                  <Button fx:id="btnFilm" mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="FILM MANAGER" />
                   <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" prefHeight="51.0" styleClass="buttonPopup" text="BOOKING" />
-                  <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
                   <Button fx:id="btnBill" mnemonicParsing="false" onAction="#billButtonHandler" styleClass="buttonPopup" text="BILL MANAGER" />
-                  <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
                   <Button mnemonicParsing="false" onAction="#loadEmpButtonHandler" styleClass="buttonPopup" text="CUS. MANAGER" />
+                  <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
+                  <Button fx:id="btnFilm" mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="FILM MANAGER" />
+                  <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
                   <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="46.0" prefWidth="108.0" promptText="Report" styleClass="list-cell" />
                   <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>

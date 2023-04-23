@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -84,16 +86,17 @@ public class FXMLEditScheduleController implements Initializable {
     List<Schedule> scheduleList;
     RoomTypeDetails selectedRtDetail;
     LocalDate selectedDate;
+
     public FXMLEditScheduleController() {
     }
 
-    public FXMLEditScheduleController(LocalDate selectedDate,Schedule schdule, List<Schedule> scheduleList, Room room, RoomTypeDetails selectedRtDetail, List<RoomTypeDetails> rtDetailList) {
+    public FXMLEditScheduleController(LocalDate selectedDate, Schedule schdule, List<Schedule> scheduleList, Room room, RoomTypeDetails selectedRtDetail, List<RoomTypeDetails> rtDetailList) {
         this.schedule = schdule;
         this.room = room;
         this.scheduleList = scheduleList;
         this.rtDetailsList = rtDetailList;
         this.selectedRtDetail = selectedRtDetail;
-        this.selectedDate= selectedDate;
+        this.selectedDate = selectedDate;
     }
 
     @Override
@@ -144,16 +147,22 @@ public class FXMLEditScheduleController implements Initializable {
                 return;
             }
             chechValidTime();
-            schedule.setStartTime(schedule.getStartTime().toLocalDate().atTime(selectedTime));
-            schedule.setEndTime(schedule.getStartTime().toLocalDate().atTime(selectedTime)
-                    .plusMinutes(schedule.getFilm().getDuration()));
-            schedule.setRoomTypeDetail(comboBoxRoomType.getValue());
-            schedule.setStatus(activeCheckBox.isSelected());
-            scheduleDAO.update(schedule);
-            Alert alert = AlertUtils.getAlert("Update successfully!", Alert.AlertType.INFORMATION);
-            alert.show();
-            Stage stage = (Stage) btnChange.getScene().getWindow();
-            stage.close();
+            Alert alert1 = AlertUtils.getAlert("Are you sure to update this schedule?", Alert.AlertType.CONFIRMATION);
+            Optional<ButtonType> result = alert1.showAndWait();
+            if (result.get().equals(ButtonType.OK)) {
+                schedule.setStartTime(schedule.getStartTime().toLocalDate().atTime(selectedTime));
+                schedule.setEndTime(schedule.getStartTime().toLocalDate().atTime(selectedTime)
+                        .plusMinutes(schedule.getFilm().getDuration()));
+                schedule.setRoomTypeDetail(comboBoxRoomType.getValue());
+                schedule.setStatus(activeCheckBox.isSelected());
+                scheduleDAO.update(schedule);
+                Alert alert = AlertUtils.getAlert("Update successfully!", Alert.AlertType.INFORMATION);
+                alert.show();
+                Stage stage = (Stage) btnChange.getScene().getWindow();
+                stage.close();
+            }else
+                return;
+            
         } catch (Exception ex) {
             Alert alert = AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR);
             alert.showAndWait();
