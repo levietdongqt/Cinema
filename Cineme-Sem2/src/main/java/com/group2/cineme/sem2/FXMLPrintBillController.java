@@ -84,6 +84,9 @@ public class FXMLPrintBillController implements Initializable {
 
     private String text3 = String.format("%-10s %20s %20s","Name","Quantity","Price")+"\n";
 
+    public FXMLPrintBillController() {
+    }
+    
     public FXMLPrintBillController(Customer cus, Schedule sche, LocalDateTime printDate, BigDecimal total,long discount) {
         this.cus = cus;
         this.sche = sche;
