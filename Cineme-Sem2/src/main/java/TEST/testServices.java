@@ -48,14 +48,11 @@ import org.hibernate.Session;
  */
 public class testServices {
     public static void main(String[] args){
-       FilmDAO fd = new FilmDAO();
-       List<Film> lists = fd.getFilmForReport(2023, 0);
-       lists.forEach((t) -> {
-           System.out.println(t.getFilmName());
-           long a = fd.countTicket(t.getFilmID(), t.getStartDate().toLocalDate(), t.getEndDate().toLocalDate());
-           System.out.println(a);
-       });
-          
+        System.out.printf("%-10s %20s %20s","Name","Quatity","Price");
+        System.out.println();
+        System.out.printf("%-10s %20d %20d","Popcorn",1,60000);
+        System.out.println();
+        System.out.printf("%-10s %20d %20d","Snack",1,30000);
         
 }
 }
