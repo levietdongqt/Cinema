@@ -14,8 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javax.persistence.Query;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -104,6 +106,20 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 
     }
 
+    //check trùng username
+    public boolean checkUser(String user){
+        Session session = HibernateUtils.getFACTORY().openSession();
+        
+            Criteria criteria = session.createCriteria(Employee.class);
+            criteria.add(Restrictions.eq("userName", user));
+            Employee employee = (Employee) criteria.uniqueResult();
+            
+            session.close();
+            return true;
+      
+    }
+    
+    
     
     //update thông tin employee trừ pass
     public void updateEmployee(Employee employee) {

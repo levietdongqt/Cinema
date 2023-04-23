@@ -8,6 +8,8 @@ import DAO.EmployeeDAO;
 import DAO.WorkSessionDAO;
 import POJO.Employee;
 import POJO.WorkSession;
+import Utils.AlertUtils;
+import Utils.MyException;
 import Utils.SessionUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
@@ -48,6 +50,7 @@ import javafx.util.StringConverter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.exception.ConstraintViolationException;
 
 /**
  * FXML Controller class
@@ -55,6 +58,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author BE BAU
  */
 public class FXMLAdminController implements Initializable {
+
     WorkSession ws = new WorkSession();
     Employee em = new Employee();
     WorkSessionDAO workdao = new WorkSessionDAO();
@@ -177,11 +181,9 @@ public class FXMLAdminController implements Initializable {
 
     @FXML
     private FontAwesomeIcon txtIcon;
-    
-    
-    
+
     public void checkUser() {
-        
+
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         tfUser.setOnKeyTyped(event -> {
             String user = tfUser.getText().trim();
@@ -388,27 +390,40 @@ public class FXMLAdminController implements Initializable {
 
     // tạo mới nhân viên 
     public void submit(ActionEvent event) throws Exception {
-        
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm New Employee");
-        alert.setHeaderText("Are you sure want to add new employee ?");
-        Optional<ButtonType> result = alert.showAndWait();
+        boolean check =  dao.checkUser(tfUser.getText());
+
+        if (check) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Duplicate User");
+            alert.showAndWait();
+        }
+        else if(){
+            
+        }
+        else{
+            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+        alert1.setTitle("Confirm New Employee");
+        alert1.setHeaderText("Are you sure want to add new employee ?");
+        Optional<ButtonType> result = alert1.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
-                   String user = tfUser.getText();
-                  em.setUserName(user);
-                    ws.setEmployee(em);
-                    ws.setStartTime(LocalDateTime.now());
-                    ws.setEndTime(LocalDateTime.now());
+                String user = tfUser.getText();
+                em.setUserName(user);
+                ws.setEmployee(em);
+                ws.setStartTime(LocalDateTime.now());
+                ws.setEndTime(LocalDateTime.now());
                 dao.add(em);
                 workdao.add(ws);
                 showEmployee();
                 clear(event);
-
             } catch (Exception e) {
                 e.getMessage();
             }
         }
+        }
+
+        
     }
 
     // update thông tin nhân viên
@@ -538,7 +553,7 @@ public class FXMLAdminController implements Initializable {
     public void showEmployee() {
         String power = "Manager";
         String user = SessionUtil.getEmployee().getUserName();
-        
+
         WorkSessionDAO wdao = new WorkSessionDAO();
         month();
         LocalDate selectedDate = pdMonth.getValue();
@@ -551,23 +566,22 @@ public class FXMLAdminController implements Initializable {
 
         Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(selectedMonth);
         try {
-            
 
             if (power.equals(SessionUtil.getEmployee().getPosition())) {
-               emList = dao.getAll(); 
-               
-            }else{
+                emList = dao.getAll();
+
+            } else {
                 emList = dao.getById(user);
             }
-               
-                for (Employee employee : emList) {
-                    for (String employee1 : totalWorkTime.keySet()) {
-                        if (employee1.equals(employee.getUserName())) {
-                            employee.setTotalWorkTime(totalWorkTime.get(employee1));
-                        }
+
+            for (Employee employee : emList) {
+                for (String employee1 : totalWorkTime.keySet()) {
+                    if (employee1.equals(employee.getUserName())) {
+                        employee.setTotalWorkTime(totalWorkTime.get(employee1));
                     }
                 }
-           
+            }
+
             tcUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
             tcName.setCellValueFactory(new PropertyValueFactory<>("empName"));
             tcGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
