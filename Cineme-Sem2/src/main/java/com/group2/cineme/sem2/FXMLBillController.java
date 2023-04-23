@@ -99,10 +99,10 @@ public class FXMLBillController implements Initializable {
     private ComboBox cBVoicher;
     @FXML
     private Button buttonUseVoucher;
-    
+
     @FXML
     private Button buttonUsePoint;
-    
+
     private LocalDateTime printDate;
     BigDecimal total = BigDecimal.ZERO;
 
@@ -110,6 +110,8 @@ public class FXMLBillController implements Initializable {
     private Schedule schedule;
     private BigDecimal sumTicket = BigDecimal.ZERO;
     private Customer cus;
+    private long cusMoney;
+    private int sale;
 
     BillDAO billDAO = new BillDAO();
 
@@ -152,7 +154,7 @@ public class FXMLBillController implements Initializable {
         } else {
             CustomerDAO cd = new CustomerDAO();
             int cusPoint = cus.getTotalPoints();
-            long cusMoney = cusPoint * 100;
+            cusMoney = cusPoint * 100;
             String info = "You have " + String.format("%d * 100 = %d", cusPoint, cusMoney) + "\n" + "Are you sure use all the Point";
             Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
             Optional<ButtonType> results = alert.showAndWait();
@@ -163,7 +165,7 @@ public class FXMLBillController implements Initializable {
                 if (total.compareTo(BigDecimal.ZERO) < 0) {
                     total = BigDecimal.ZERO;
                 }
-                this.btotal.setText(formatter.format(total)+" VND");
+                this.btotal.setText(formatter.format(total) + " VND");
                 try {
                     cus.setTotalPoints(0);
                     cd.update(cus);
@@ -214,7 +216,7 @@ public class FXMLBillController implements Initializable {
             AlertUtils.getAlert("Please choice Voucher!!", Alert.AlertType.WARNING).show();
         } else {
             String choice = this.cBVoicher.getSelectionModel().getSelectedItem().toString();
-            int sale = promoLogic(choice);
+            sale = promoLogic(choice);
             String info = "Are you sure use " + choice + "?";
             Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
             Optional<ButtonType> results = alert.showAndWait();
@@ -225,7 +227,7 @@ public class FXMLBillController implements Initializable {
                 if (total.compareTo(BigDecimal.ZERO) < 0) {
                     total = BigDecimal.ZERO;
                 }
-                this.btotal.setText(formatter.format(total)+" VND");
+                this.btotal.setText(formatter.format(total) + " VND");
                 this.buttonUseVoucher.setDisable(true);
             }
         }
@@ -249,7 +251,7 @@ public class FXMLBillController implements Initializable {
 
     //Ham de load tat ca cac noi dung len Bill
     public void loadToView() {
-        printDate=LocalDateTime.now();
+        printDate = LocalDateTime.now();
         this.pdate.setText(printDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         this.filmname.setText(schedule.getFilm().getFilmName());
         this.empid.setText(SessionUtil.getEmployee().getEmpName());
@@ -268,9 +270,9 @@ public class FXMLBillController implements Initializable {
         } else {
             this.time.setText(schedule.getStartTime().format(DateTimeFormatter.ofPattern("dd/MM HH:mm")));
         }
-        this.ftotal.setText(formatter.format(sumTicket)+" VND");
+        this.ftotal.setText(formatter.format(sumTicket) + " VND");
         total = total.add(sumTicket);
-        this.btotal.setText(formatter.format(total)+" VND");
+        this.btotal.setText(formatter.format(total) + " VND");
     }
 
     public void loadProduct() {
@@ -307,7 +309,7 @@ public class FXMLBillController implements Initializable {
 
         });
 
-        ptotal.setText(formatter.format(total)+" VND");
+        ptotal.setText(formatter.format(total) + " VND");
     }
 
     //Ham de load data cho comboBox voicher
@@ -317,23 +319,6 @@ public class FXMLBillController implements Initializable {
         this.cBVoicher.setItems(FXCollections.observableList(promotions));
     }
 
-    public void exportpdf() {
-        exportbut.setOnAction(event -> {
-            PrinterJob job = PrinterJob.createPrinterJob();
-
-            if (job != null) {
-                boolean success = job.printPage(billarea);
-                if (success) {
-                    job.endJob();
-                }
-            }
-        });
-    }
-
-//    public void otherData() {
-//        pdate.setText(b1.getPrintDate().toString());
-//        empid.setText(b1.getEmployee().getEmpName());
-//    }
     @FXML
     private void btnBackHanlder() {
         Stage stage = (Stage) vbox.getScene().getWindow();
@@ -342,30 +327,43 @@ public class FXMLBillController implements Initializable {
 
     @FXML
     private void btnAcceptHanlder() throws Exception {
-        if(!this.cBVoicher.getSelectionModel().isEmpty()){
+        if (!this.cBVoicher.getSelectionModel().isEmpty()) {
             b1.setPromotion((Promotion) this.cBVoicher.getSelectionModel().getSelectedItem());
-        }else{
+        } else {
             b1.setPromotion(null);
         }
         b1.setPrintDate(printDate);
         b1.setCustomer(cus);
-        b1.setEmployee(SessionUtil.getEmployee());     
-        b1.setExchangePoints((total.floatValue()/1000));
+        b1.setEmployee(SessionUtil.getEmployee());
+        b1.setExchangePoints((total.floatValue() / 1000));
         billDAO.add(b1);
         saveToDB();
-        if(cus!=null){
+        if (cus != null) {
             CustomerDAO cd = new CustomerDAO();
-            cus.setTotalPoints(cus.getTotalPoints()+(total.intValue()/1000));
+            cus.setTotalPoints(cus.getTotalPoints() + (total.intValue() / 1000));
             cd.update(cus);
+        }     
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLPrintBill.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> p) {
+                return new FXMLPrintBillController(cus, schedule, printDate, total,cusMoney+sale);
+            }
+        });
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+            hbox.setDisable(true);
+            stage.setOnHiding((t) -> {
+                hbox.setDisable(false);
+            });
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        Alert alert = AlertUtils.getAlert("Buy Ticket successful!!", Alert.AlertType.INFORMATION);
-        SessionUtil.getProductList().clear();
-        SessionUtil.getTicketList().clear();
-        alert.showAndWait();
-        App.setView("FXMLShowSchedule");
-        Stage stage = (Stage) vbox.getScene().getWindow();
-        stage.close();
 
+        Stage stage = (Stage) hbox.getScene().getWindow();
+        stage.close();
     }
 
     private void saveToDB() throws Exception {
@@ -377,7 +375,7 @@ public class FXMLBillController implements Initializable {
         int selectView = currentView + SessionUtil.getTicketList().size();
         List<Film> a = SessionUtil.getMapFilm();
         for (Film film1 : a) {
-            if(film1.getFilmName().equals(film.getFilmName())){
+            if (film1.getFilmName().equals(film.getFilmName())) {
                 film1.setViewFilm(selectView);
             }
         }
@@ -412,7 +410,6 @@ public class FXMLBillController implements Initializable {
             checkValidatePhone();
             loadProduct();
             loadToView();
-            exportpdf();
         } catch (Exception ex) {
             Logger.getLogger(FXMLBillController.class.getName()).log(Level.SEVERE, null, ex);
         }

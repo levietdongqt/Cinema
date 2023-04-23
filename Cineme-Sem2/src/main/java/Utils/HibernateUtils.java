@@ -26,7 +26,7 @@ public class HibernateUtils {
     static {
         Configuration conf = new Configuration();
         Properties props = new Properties();
-        props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
+        props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServer2012Dialect");
         props.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //Kết nối DB trên Azure
         props.put(Environment.URL, "jdbc:sqlserver://cinema-sem2.database.windows.net;database=CinemaDB");

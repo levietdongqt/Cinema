@@ -8,31 +8,29 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" fx:id="billarea" prefHeight="611.0" prefWidth="444.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="com.group2.cineme.sem2.FXMLPrintBillController">
+<AnchorPane id="AnchorPane" fx:id="billprint" prefHeight="611.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLPrintBillController">
    <children>
-      <AnchorPane />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="155.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="137.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../images/icon/CGV.png" />
          </image>
       </ImageView>
-      <Text fill="RED" layoutX="56.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Công ty TNHH CJ CGV Việt Nam" wrappingWidth="347.13671875">
+      <Text fill="RED" layoutX="29.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Công ty TNHH CJ CGV Việt Nam" textAlignment="CENTER" wrappingWidth="347.13671875" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="64.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="275 Nguyen Van Dau Street, Ward 11, Binh Thanh District, Ho Chi Minh City." wrappingWidth="332.13671875">
+      <Text layoutX="37.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="275 Nguyen Van Dau Street, Ward 11, Binh Thanh District, Ho Chi Minh City." textAlignment="CENTER" wrappingWidth="332.13671875">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="167.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello: " wrappingWidth="39.13671875">
+      <Text layoutX="64.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello: " wrappingWidth="39.13671875">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="206.0" layoutY="203.0" prefHeight="30.0" prefWidth="158.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="tên khách hàng">
+      <TextField fx:id="txtCus" layoutX="104.0" layoutY="205.0" prefHeight="47.0" prefWidth="158.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="tên khách hàng">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -42,12 +40,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="131.0" layoutY="247.0" prefHeight="30.0" prefWidth="144.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="tên nhân viên">
+      <TextField fx:id="txtEmp" layoutX="131.0" layoutY="247.0" prefHeight="30.0" prefWidth="144.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="tên nhân viên">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </TextField>
-      <TextField layoutX="299.0" layoutY="247.0" prefHeight="30.0" prefWidth="134.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="ngày xuất bill">
+      <TextField fx:id="txtDateTime" alignment="CENTER" layoutX="78.0" layoutY="190.0" prefHeight="30.0" prefWidth="227.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="ngày xuất bill" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="107.0">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -57,7 +55,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="113.0" layoutY="299.0" prefHeight="30.0" prefWidth="297.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="Sát thủ John Wick: Phần 4">
+      <TextField fx:id="txtFilm" layoutX="113.0" layoutY="299.0" prefHeight="30.0" prefWidth="297.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="Sát thủ John Wick: Phần 4">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -67,7 +65,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="113.0" layoutY="329.0" prefHeight="30.0" prefWidth="297.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="120p">
+      <TextField fx:id="txtTime" layoutX="113.0" layoutY="329.0" prefHeight="30.0" prefWidth="297.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="120p">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -77,7 +75,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="116.0" layoutY="354.0" prefHeight="30.0" prefWidth="258.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="a1 b2 a3 c4">
+      <TextField fx:id="txtSeat" layoutX="116.0" layoutY="354.0" prefHeight="30.0" prefWidth="258.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="a1 b2 a3 c4">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -87,28 +85,42 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="116.0" layoutY="384.0" prefHeight="30.0" prefWidth="191.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="4">
+      <TextField fx:id="txtTicket" layoutX="116.0" layoutY="384.0" prefHeight="30.0" prefWidth="191.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="4">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </TextField>
-      <Text layoutX="254.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="59.13671875" AnchorPane.leftAnchor="254.0">
+      <Text layoutX="219.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="59.13671875" AnchorPane.leftAnchor="219.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <TextField layoutX="306.0" layoutY="536.0" prefHeight="30.0" prefWidth="104.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="2000000">
+      <TextField fx:id="txtTotal" layoutX="262.0" layoutY="560.0" prefHeight="29.0" prefWidth="121.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="2000000">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </TextField>
-      <Text layoutX="64.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------------------------------------------------------------" wrappingWidth="347.13671875" />
-      <Text layoutX="68.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product:" wrappingWidth="59.13671875">
+      <Text layoutX="45.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------------------------------------------------------------" wrappingWidth="347.13671875" />
+      <Text layoutX="60.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product:" wrappingWidth="59.13671875">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextArea layoutX="67.0" layoutY="450.0" prefHeight="73.0" prefWidth="339.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" />
-      <Text layoutX="78.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © Navigos Group Vietnam Joint Stock Company" wrappingWidth="317.76953125" />
+      <TextArea fx:id="txtPro" layoutX="56.0" layoutY="433.0" prefHeight="111.0" prefWidth="325.0">
+         <font>
+            <Font size="11.0" />
+         </font></TextArea>
+      <Text layoutX="60.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © Navigos Group Vietnam Joint Stock Company" textAlignment="CENTER" wrappingWidth="317.76953125" />
+      <Text layoutX="37.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="----------------------------------------------------------------------" wrappingWidth="377.63671875" />
+      <Text layoutX="217.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discount:" wrappingWidth="90.13671875">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtDis" layoutX="287.0" layoutY="540.0" prefHeight="29.0" prefWidth="97.0" styleClass="tfreport" stylesheets="@../../../../styles/fxmladmin.css" text="2000000">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>
