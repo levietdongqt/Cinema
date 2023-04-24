@@ -9,9 +9,12 @@ import DAO.GenericDAO;
 import POJO.Employee;
 import POJO.Film;
 import POJO.WorkSession;
+import Utils.AlertUtils;
 import Utils.HibernateUtils;
 import Utils.SessionUtil;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -68,17 +71,16 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private Label welcom;
-  
+
     static {
         loadData();
     }
-    
-    
+
     public void close() {
         System.exit(0);
     }
-     
-   // login bằng phím enter 
+
+    // login bằng phím enter 
     public void login(ActionEvent event) throws Exception {
         WorkSession work = new WorkSession();
         EmployeeDAO dao = new EmployeeDAO();
@@ -103,27 +105,26 @@ public class FXMLLoginController implements Initializable {
         });
 
     }
-    
-    
+
     // login bằng button
-    public void btnLogin(ActionEvent event) throws Exception{
-         WorkSession work = new WorkSession();
+    public void btnLogin(ActionEvent event) throws Exception {
+        WorkSession work = new WorkSession();
         EmployeeDAO dao = new EmployeeDAO();
         try {
-                    login(null);
-                    boolean log = dao.checkaccount(user.getText().trim(), pass.getText().trim());
-                    Employee employee = SessionUtil.getEmployee();
-                    work.setEmployee(employee);
-                    work.setStartTime(LocalDateTime.now());
+            login(null);
+            boolean log = dao.checkaccount(user.getText().trim(), pass.getText().trim());
+            Employee employee = SessionUtil.getEmployee();
+            work.setEmployee(employee);
+            work.setStartTime(LocalDateTime.now());
 //        work.setEndTime(LocalDateTime.of(2010, 10, 10, 0, 0, 0));
-                    if (log) {
-                        WorkSessionDAO workdao = new WorkSessionDAO();
-                        workdao.add(work);
-                        App.setRoot("FXMLHome");
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+            if (log) {
+                WorkSessionDAO workdao = new WorkSessionDAO();
+                workdao.add(work);
+                App.setRoot("FXMLHome");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -172,8 +173,30 @@ public class FXMLLoginController implements Initializable {
             cgv.setEffect(shadow);
 
         });
-        
+
+        String jarFile;
+        try {
+            jarFile = FXMLLoginController.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            String directoryPath = "C:\\saveImage";           
+            File directory = new File(directoryPath);
+            
+            if (!directory.exists()) {
+                directory.mkdir();
+            }else{
+                directory.delete();
+                directory.mkdir();
+            }
+// Lưu hình ảnh vào thư mục mới tạo
+            String dirToExtract = "images";
+            AlertUtils.extract(jarFile, directoryPath, dirToExtract);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
+
     public static void loadData() {
         FilmDAO f = new FilmDAO();
         f.updateByDate("endDate");
@@ -190,5 +213,5 @@ public class FXMLLoginController implements Initializable {
         }
 
     }
-    
+
 }

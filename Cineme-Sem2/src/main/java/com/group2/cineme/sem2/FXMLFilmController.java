@@ -13,7 +13,10 @@ import static com.group2.cineme.sem2.App.scene;
 import com.jfoenix.controls.JFXProgressBar;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -188,8 +191,17 @@ public class FXMLFilmController implements Initializable {
         colImageURL.setCellValueFactory((column) -> {
             ImageView imageView = new ImageView();
             Film p = column.getValue();
-            File file = new File(p.getImageUrl());
-            Image image = new Image(file.toURI().toString());
+//            File file = new File(p.getImageUrl());
+            String view = p.getImageUrl();
+            Path path = Paths.get(view);
+            String fileName = path.getFileName().toString();
+            
+
+//            ClassLoader classLoader = getClass().getClassLoader();
+//            URL imageURL = classLoader.getResource(file.toURI().toString());
+//            String imageUrlString = imageURL.toExternalForm();
+            InputStream inputStream = getClass().getResourceAsStream("/images/"+fileName);
+            Image image = new Image(inputStream);
             imageView.setImage(image);
             imageView.setFitWidth(120);
             imageView.setFitHeight(150);

@@ -12,8 +12,16 @@ import POJO.Film;
 import POJO.FilmGenre;
 import Utils.AlertUtils;
 import Utils.SessionUtil;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,8 +33,12 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.ResourceBundle;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.jar.JarOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -87,7 +99,7 @@ public class FXMLNewFilmController implements Initializable {
     private ListView<FilmGenre> listViewGender;
     @FXML
     private ListView<Actors> listActors;
-    
+
     @FXML
     private ListView<Actors> listChoiceActors;
     @FXML
@@ -95,9 +107,6 @@ public class FXMLNewFilmController implements Initializable {
 
     @FXML
     private ImageView imageViewFilm;
-
-    
-   
 
     @FXML
     private Label errorFilmName;
@@ -133,8 +142,7 @@ public class FXMLNewFilmController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-        
+
         //Set du lieu cho LimitAge
         loadDataOrSetDefault();
         //Set du lieu cho ListView Gender Actor
@@ -150,14 +158,15 @@ public class FXMLNewFilmController implements Initializable {
         buttonSaveHandlerActor(validateActors());
         buttonResetHandlerActor();
         film = validateFilm();
-        
 
     }
 
     //Khu vuc xu ly su kien
     @FXML
-    public void uploadImageHandler(ActionEvent event) {
+    public void uploadImageHandler(ActionEvent event) throws FileNotFoundException, IOException {
         File f = null;
+        File f1 = null;
+        String textPath="";
         FileChooser filechooser = new FileChooser();
         filechooser.setTitle("Chon anh");
         filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
@@ -165,16 +174,60 @@ public class FXMLNewFilmController implements Initializable {
         if (selectedFile != null) {
             Path copied = Paths.get(selectedFile.getPath());
             String s = copied.getFileName().toString();
-            f = new File("src\\main\\resources\\images\\" + s);
-            Path target = f.toPath();
+//            f = new File("C:\\saveImage\\images\\" + s);
+            String projectPath = System.getProperty("user.dir");
+//            System.out.println(projectPath);
+            textPath = "src\\main\\resources\\images\\" + s;
+            f1 = new File(projectPath+"\\" + textPath);
+//            Path target = f.toPath();
+            Path target1 = f1.toPath();
             try {
-                Files.copy(copied, target, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(copied, target1, StandardCopyOption.REPLACE_EXISTING);
+//                Files.copy(copied, target, StandardCopyOption.REPLACE_EXISTING);  
             } catch (IOException ex) {
-                AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR).show();
+               AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR).show();
             }
         }
-        if (f != null) {
-            this.txtImage.setText(f.getPath());
+//            File originalJar = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+//            File tempJar = new File(System.getProperty("java.io.tmpdir") + "/temp.jar");
+//            Files.copy(originalJar.toPath(), tempJar.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//
+//            JarFile jarFile = new JarFile(tempJar);
+//            JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(originalJar));
+//            Enumeration<JarEntry> entries = jarFile.entries();
+//            while (entries.hasMoreElements()) {
+//                JarEntry entry = entries.nextElement();
+//                InputStream entryStream = jarFile.getInputStream(entry);
+//                jarOut.putNextEntry(entry);
+//                byte[] buffer = new byte[1024];
+//                int count;
+//                while ((count = entryStream.read(buffer)) != -1) {
+//                    jarOut.write(buffer, 0, count);
+//                }
+//                entryStream.close();
+//                jarOut.closeEntry();
+//            }
+//            JarEntry imageEntry = new JarEntry("images/" + selectedFile.getName());
+//            jarOut.putNextEntry(imageEntry);
+//            BufferedInputStream in = new BufferedInputStream(new FileInputStream(selectedFile));
+//            byte[] buffer = new byte[1024];
+//            int count = 0;
+//            while ((count = in.read(buffer)) != -1) {
+//                jarOut.write(buffer, 0, count);
+//            }
+//            in.close();
+//            jarOut.closeEntry();
+//            jarOut.close();
+//            jarFile.close();
+//            tempJar.delete();
+
+//            ClassLoader classLoader = getClass().getClassLoader();
+//            URL imageURL = classLoader.getResource("images\\"+selectedFile.getName());
+//            System.out.println(imageURL.toString());
+//            String imageUrlString = imageURL.toExternalForm();
+        if (f1 != null) {
+            this.txtImage.setText(textPath);
+//            InputStream inputStream = getClass().getResourceAsStream("/images/" + selectedFile.getName());
             Image imageFilm = new Image(f.toURI().toString());
             imageViewFilm.setImage(imageFilm);
             imageViewFilm.setFitWidth(230);
@@ -184,11 +237,12 @@ public class FXMLNewFilmController implements Initializable {
         }
 
     }
+
     @FXML
     public void saveButtonHandler(ActionEvent event) {
         checkEmptyWhenClickButton();
         if ((errorFilmName.isVisible() == true) || (errorImage.isVisible() == true) || (errorDuration.isVisible() == true) || (errorStart.isVisible() == true)
-                || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true) || (errorLimitAge.isVisible() == true)) {      
+                || (errorEnd.isVisible() == true) || (errorDirector.isVisible() == true) || (errorFilmDes.isVisible() == true) || (errorLimitAge.isVisible() == true)) {
             AlertUtils.getAlert("Check Information you want to insert", Alert.AlertType.ERROR).show();
         } else {
             try {
@@ -203,23 +257,24 @@ public class FXMLNewFilmController implements Initializable {
                     fd.add(film);
 //                    fd.saveActorsforFilm(film.getFilmID(), setActors);
 //                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
-                    SessionUtil.getMapFilm().add(film);
-                    
-                    String info = fd.getMessAdd() + "\n"+ "Are you switch Film Page?";
+                    SessionUtil.getMapFilm().add(0, film);
+
+                    String info = fd.getMessAdd() + "\n" + "Are you switch Film Page?";
                     Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
                     Optional<ButtonType> results = alert.showAndWait();
                     if (results.get().getText().equalsIgnoreCase("OK")) {
                         App.setView("FXMLFilm");
-                    }else{
+                    } else {
                         App.setView("FXMLNewFilm");
-                    }                
+                    }
                 }
             } catch (Exception e) {
                 errorID.setText("ID is not null");
-            }            
+            }
         }
 
     }
+
     @FXML
     public void resetButtonHandler(ActionEvent event) {
         clearDataInFilm();
@@ -228,17 +283,20 @@ public class FXMLNewFilmController implements Initializable {
     public void showInformationButtonHandler() {
         System.out.println(setActors);
     }
+
     @FXML
-    public void removeGenre(){
-            setFilmGenre.removeAll(this.listChoiceGenre.getSelectionModel().getSelectedItems());
-            this.listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
+    public void removeGenre() {
+        setFilmGenre.removeAll(this.listChoiceGenre.getSelectionModel().getSelectedItems());
+        this.listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<FilmGenre>(setFilmGenre)));
     }
+
     @FXML
-    public void removeActor(){
-        
-            setActors.removeAll(this.listChoiceActors.getSelectionModel().getSelectedItems());
-            this.listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
+    public void removeActor() {
+
+        setActors.removeAll(this.listChoiceActors.getSelectionModel().getSelectedItems());
+        this.listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
     }
+
     @FXML
     public void addActorButtonHandler() {
         if (this.vBoxActors.isVisible() == false) {
@@ -247,6 +305,7 @@ public class FXMLNewFilmController implements Initializable {
             this.vBoxActors.setVisible(false);
         }
     }
+
     @FXML
     public void buttonSaveHandlerActor(Actors actor) {
         buttonSave.setOnAction((event) -> {
@@ -265,11 +324,12 @@ public class FXMLNewFilmController implements Initializable {
             }
         });
     }
+
     @FXML
     public void buttonResetHandlerActor() {
         buttonClear.setOnAction((event) -> {
             clearDataInActor();
-            
+
         });
     }
 
@@ -306,7 +366,7 @@ public class FXMLNewFilmController implements Initializable {
         this.txtEnd.setValue(LocalDate.now().plusDays(10));
 
         this.txtImage.setEditable(false);
-        
+
         this.errorLimitAge.setText("");
         this.errorFilmName.setText("");
         this.errorDuration.setText("");
@@ -321,12 +381,13 @@ public class FXMLNewFilmController implements Initializable {
         this.errorLimitAge.setVisible(false);
 
     }
-    public void loadDataActorsOrGenreChoiced(){
+
+    public void loadDataActorsOrGenreChoiced() {
         this.listActors.setOnMouseClicked((event) -> {
             setActors.addAll(this.listActors.getSelectionModel().getSelectedItems());
             listChoiceActors.setItems(FXCollections.observableList(new ArrayList<Actors>(setActors)));
             listChoiceActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            
+
         });
         this.listViewGender.setOnMouseClicked((event) -> {
             setFilmGenre.addAll(this.listViewGender.getSelectionModel().getSelectedItems());
@@ -343,7 +404,8 @@ public class FXMLNewFilmController implements Initializable {
         txtHomeTown.clear();
         errBirthDay.setText("");
     }
-    public void clearDataInFilm(){
+
+    public void clearDataInFilm() {
         this.txtID.clear();
         this.txtName.clear();
         this.txtDuration.clear();
@@ -398,7 +460,7 @@ public class FXMLNewFilmController implements Initializable {
         Label labelHomeTown = new Label("Home Town:");
         txtHomeTown = new TextField();
         errHomeTown = new Label("");
-        errHomeTown.setWrapText(true);       
+        errHomeTown.setWrapText(true);
         vBoxHomeTown.getChildren().addAll(txtHomeTown, errHomeTown);
         hBoxHomeTown.getChildren().addAll(labelHomeTown, vBoxHomeTown);
 
@@ -474,7 +536,7 @@ public class FXMLNewFilmController implements Initializable {
                 }
                 result += (LocalTime.now().getNano());
                 this.txtID.setText(result);
-                if(name.isEmpty()){
+                if (name.isEmpty()) {
                     this.txtID.clear();
                 }
             } catch (Exception ex) {
@@ -617,18 +679,18 @@ public class FXMLNewFilmController implements Initializable {
         } else {
             this.errorDirector.setText("");
         }
-        if (this.txtImage.getText().isEmpty()){
+        if (this.txtImage.getText().isEmpty()) {
             this.errorImage.setText(errorPopup);
         } else {
             this.errorImage.setText("");
         }
-        if(this.limitAge.getValue()==null){
+        if (this.limitAge.getValue() == null) {
             errorLimitAge.setVisible(true);
             this.errorLimitAge.setText(errorPopup);
-        }else{
+        } else {
             this.errorLimitAge.setText("");
             errorLimitAge.setVisible(false);
         }
-        
+
     }
 }
