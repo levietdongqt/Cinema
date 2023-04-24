@@ -69,8 +69,8 @@
                <top>
                   <AnchorPane prefHeight="44.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
                      <children>
-                        <FontAwesomeIcon fx:id="txtIcon" glyphName="USERS" layoutX="626.0" layoutY="41.0" size="2em" />
-                        <Label fx:id="txtEm" alignment="CENTER" contentDisplay="CENTER" layoutX="666.0" layoutY="15.0" text="EMPLOYEE MANAGER" textAlignment="CENTER">
+                        <FontAwesomeIcon fx:id="txtIcon" fill="WHITE" glyphName="USERS" layoutX="626.0" layoutY="41.0" size="2em" />
+                        <Label fx:id="txtEm" alignment="CENTER" contentDisplay="CENTER" layoutX="666.0" layoutY="15.0" text="EMPLOYEE MANAGER" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font>
@@ -214,8 +214,8 @@
                                     <TableColumn fx:id="tcEmail" prefWidth="173.0" text="EMAIL" />
                                     <TableColumn fx:id="tcPhone" prefWidth="139.0" text="PHONE NUMBER" />
                                     <TableColumn fx:id="tcPosition" prefWidth="110.0" text="POSITION" />
-                                    <TableColumn fx:id="tcStatus" prefWidth="84.0" text="STATUS" />
-                                    <TableColumn fx:id="tcStartDate" minWidth="0.0" prefWidth="127.0" text="START DATE" />
+                                    <TableColumn fx:id="tcStatus" prefWidth="99.0" text="BIRTH DAY" />
+                                    <TableColumn fx:id="tcStartDate" minWidth="0.0" prefWidth="112.0" text="START DATE" />
                                     <TableColumn fx:id="tcWorking" prefWidth="109.0" text="WORKING DAY" />
                                 </columns>
                               </TableView>

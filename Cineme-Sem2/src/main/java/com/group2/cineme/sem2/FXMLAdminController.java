@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -278,7 +279,7 @@ public class FXMLAdminController implements Initializable {
                     errRPass.setVisible(false);
                 } else {
                     errRPass.setVisible(true);
-                    errRPass.setText("repass#pass");
+                    errRPass.setText("Repass & Pass không trùng nhau");
 
                 }
             } catch (IOException e) {
@@ -390,7 +391,7 @@ public class FXMLAdminController implements Initializable {
 
     // tạo mới nhân viên 
     public void submit(ActionEvent event) throws Exception {
-        boolean check =  dao.checkUser(tfUser.getText());
+        boolean check = dao.checkUser(tfUser.getText());
 
 //        if (check) {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -398,9 +399,7 @@ public class FXMLAdminController implements Initializable {
 //            alert.setHeaderText("Duplicate User");
 //            alert.showAndWait();
 //        }
-      
-        
-            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
         alert1.setTitle("Confirm New Employee");
         alert1.setHeaderText("Are you sure want to add new employee ?");
         Optional<ButtonType> result = alert1.showAndWait();
@@ -419,9 +418,7 @@ public class FXMLAdminController implements Initializable {
                 e.getMessage();
             }
         }
-        
 
-        
     }
 
     // update thông tin nhân viên
@@ -582,11 +579,14 @@ public class FXMLAdminController implements Initializable {
 
             tcUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
             tcName.setCellValueFactory(new PropertyValueFactory<>("empName"));
-            tcGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+            tcGender.setCellValueFactory(cellData -> {
+                boolean isMale = cellData.getValue().isGender();
+                return new SimpleStringProperty(isMale ? "Male" : "Female");
+            });
             tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
             tcPhone.setCellValueFactory(new PropertyValueFactory<>("empPhone"));
             tcPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
-            tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+            tcStatus.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
             tcStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
             tcWorking.setCellValueFactory(new PropertyValueFactory<>("totalWorkTime"));
             tvEmployee.setItems(FXCollections.observableList(emList));
@@ -691,7 +691,7 @@ public class FXMLAdminController implements Initializable {
             headerRow.createCell(3).setCellValue("Email");
             headerRow.createCell(4).setCellValue("Phone");
             headerRow.createCell(5).setCellValue("Position");
-            headerRow.createCell(6).setCellValue("Status");
+            headerRow.createCell(6).setCellValue("Birth Day");
             headerRow.createCell(7).setCellValue("Start Date");
             headerRow.createCell(8).setCellValue("Total Work Time");
 
@@ -705,7 +705,7 @@ public class FXMLAdminController implements Initializable {
                 row.createCell(3).setCellValue(employee.getEmail());
                 row.createCell(4).setCellValue(employee.getEmpPhone());
                 row.createCell(5).setCellValue(employee.getPosition());
-                row.createCell(6).setCellValue(employee.isStatus());
+                row.createCell(6).setCellValue(employee.getBirthDate());
                 row.createCell(7).setCellValue(employee.getStartDate());
                 row.createCell(8).setCellValue(employee.getTotalWorkTime());
             }
