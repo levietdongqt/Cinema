@@ -166,7 +166,7 @@ public class FXMLNewFilmController implements Initializable {
     public void uploadImageHandler(ActionEvent event) throws FileNotFoundException, IOException {
         File f = null;
         File f1 = null;
-        String textPath="";
+        String textPath = "";
         FileChooser filechooser = new FileChooser();
         filechooser.setTitle("Chon anh");
         filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
@@ -187,44 +187,25 @@ public class FXMLNewFilmController implements Initializable {
             } catch (IOException ex) {
                AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR).show();
             }
-        }
-//            File originalJar = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-//            File tempJar = new File(System.getProperty("java.io.tmpdir") + "/temp.jar");
-//            Files.copy(originalJar.toPath(), tempJar.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//
-//            JarFile jarFile = new JarFile(tempJar);
-//            JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(originalJar));
-//            Enumeration<JarEntry> entries = jarFile.entries();
-//            while (entries.hasMoreElements()) {
-//                JarEntry entry = entries.nextElement();
-//                InputStream entryStream = jarFile.getInputStream(entry);
-//                jarOut.putNextEntry(entry);
-//                byte[] buffer = new byte[1024];
-//                int count;
-//                while ((count = entryStream.read(buffer)) != -1) {
-//                    jarOut.write(buffer, 0, count);
-//                }
-//                entryStream.close();
-//                jarOut.closeEntry();
-//            }
-//            JarEntry imageEntry = new JarEntry("images/" + selectedFile.getName());
-//            jarOut.putNextEntry(imageEntry);
-//            BufferedInputStream in = new BufferedInputStream(new FileInputStream(selectedFile));
+//            String jarFileName = "C:\\1Study-Aptech\\My Code\\Cinema\\Cineme-Sem2\\target\\Cineme-Sem2-1.0-SNAPSHOT.jar";
+//            String imageFileName = selectedFile.toURI().toString();
+//            FileInputStream fis = new FileInputStream(imageFileName);
+//            BufferedInputStream bis = new BufferedInputStream(fis);
+//            JarOutputStream jos = new JarOutputStream(new FileOutputStream(jarFileName));
+//            JarEntry entry = new JarEntry("images/" + imageFileName);
+//            jos.putNextEntry(entry);
 //            byte[] buffer = new byte[1024];
-//            int count = 0;
-//            while ((count = in.read(buffer)) != -1) {
-//                jarOut.write(buffer, 0, count);
+//            int bytesRead;
+//            while ((bytesRead = bis.read(buffer)) != -1) {
+//                jos.write(buffer, 0, bytesRead);
 //            }
-//            in.close();
-//            jarOut.closeEntry();
-//            jarOut.close();
-//            jarFile.close();
-//            tempJar.delete();
+//            bis.close();
+//            fis.close();
+//            jos.closeEntry();
+//            jos.close();
+//            AlertUtils.getAlert("them thanh cong", Alert.AlertType.CONFIRMATION).show();
+        }
 
-//            ClassLoader classLoader = getClass().getClassLoader();
-//            URL imageURL = classLoader.getResource("images\\"+selectedFile.getName());
-//            System.out.println(imageURL.toString());
-//            String imageUrlString = imageURL.toExternalForm();
         if (f1 != null) {
             this.txtImage.setText(textPath);
 //            InputStream inputStream = getClass().getResourceAsStream("/images/" + selectedFile.getName());
