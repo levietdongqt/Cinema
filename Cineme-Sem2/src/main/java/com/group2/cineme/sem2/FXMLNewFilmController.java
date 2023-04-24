@@ -12,36 +12,21 @@ import POJO.Film;
 import POJO.FilmGenre;
 import Utils.AlertUtils;
 import Utils.SessionUtil;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.ResourceBundle;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.jar.JarOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -163,8 +148,7 @@ public class FXMLNewFilmController implements Initializable {
 
     //Khu vuc xu ly su kien
     @FXML
-    public void uploadImageHandler(ActionEvent event) throws FileNotFoundException, IOException {
-        File f = null;
+    public void uploadImageHandler(ActionEvent event) throws FileNotFoundException, IOException, URISyntaxException {
         File f1 = null;
         String textPath = "";
         FileChooser filechooser = new FileChooser();
@@ -174,42 +158,23 @@ public class FXMLNewFilmController implements Initializable {
         if (selectedFile != null) {
             Path copied = Paths.get(selectedFile.getPath());
             String s = copied.getFileName().toString();
-//            f = new File("C:\\saveImage\\images\\" + s);
+            
             String projectPath = System.getProperty("user.dir");
-//            System.out.println(projectPath);
-            textPath = "src\\main\\resources\\images\\" + s;
-            f1 = new File(projectPath+"\\" + textPath);
-//            Path target = f.toPath();
+            if(!projectPath.endsWith("Cineme-sem2")){
+                projectPath = new File(projectPath).getParentFile().toString();
+            }
+            textPath = "src\\main\\resources\\images\\"+s;
+            f1 = new File(projectPath+"\\"+textPath);
             Path target1 = f1.toPath();
             try {
                 Files.copy(copied, target1, StandardCopyOption.REPLACE_EXISTING);
-//                Files.copy(copied, target, StandardCopyOption.REPLACE_EXISTING);  
             } catch (IOException ex) {
                AlertUtils.getAlert(ex.getMessage(), Alert.AlertType.ERROR).show();
             }
-//            String jarFileName = "C:\\1Study-Aptech\\My Code\\Cinema\\Cineme-Sem2\\target\\Cineme-Sem2-1.0-SNAPSHOT.jar";
-//            String imageFileName = selectedFile.toURI().toString();
-//            FileInputStream fis = new FileInputStream(imageFileName);
-//            BufferedInputStream bis = new BufferedInputStream(fis);
-//            JarOutputStream jos = new JarOutputStream(new FileOutputStream(jarFileName));
-//            JarEntry entry = new JarEntry("images/" + imageFileName);
-//            jos.putNextEntry(entry);
-//            byte[] buffer = new byte[1024];
-//            int bytesRead;
-//            while ((bytesRead = bis.read(buffer)) != -1) {
-//                jos.write(buffer, 0, bytesRead);
-//            }
-//            bis.close();
-//            fis.close();
-//            jos.closeEntry();
-//            jos.close();
-//            AlertUtils.getAlert("them thanh cong", Alert.AlertType.CONFIRMATION).show();
         }
-
         if (f1 != null) {
             this.txtImage.setText(textPath);
-//            InputStream inputStream = getClass().getResourceAsStream("/images/" + selectedFile.getName());
-            Image imageFilm = new Image(f.toURI().toString());
+            Image imageFilm = new Image(f1.toURI().toString());
             imageViewFilm.setImage(imageFilm);
             imageViewFilm.setFitWidth(230);
             imageViewFilm.setFitHeight(203);
@@ -217,8 +182,8 @@ public class FXMLNewFilmController implements Initializable {
             this.txtImage.setText("");
         }
 
+    
     }
-
     @FXML
     public void saveButtonHandler(ActionEvent event) {
         checkEmptyWhenClickButton();
@@ -238,7 +203,7 @@ public class FXMLNewFilmController implements Initializable {
                     fd.add(film);
 //                    fd.saveActorsforFilm(film.getFilmID(), setActors);
 //                    fd.saveGenresforFilm(film.getFilmID(), setFilmGenre);
-                    SessionUtil.getMapFilm().add(0, film);
+                    SessionUtil.getMapFilm().add(0,film);
 
                     String info = fd.getMessAdd() + "\n" + "Are you switch Film Page?";
                     Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);

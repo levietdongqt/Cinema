@@ -191,17 +191,13 @@ public class FXMLFilmController implements Initializable {
         colImageURL.setCellValueFactory((column) -> {
             ImageView imageView = new ImageView();
             Film p = column.getValue();
-//            File file = new File(p.getImageUrl());
             String view = p.getImageUrl();
-            Path path = Paths.get(view);
-            String fileName = path.getFileName().toString();
-            
-
-//            ClassLoader classLoader = getClass().getClassLoader();
-//            URL imageURL = classLoader.getResource(file.toURI().toString());
-//            String imageUrlString = imageURL.toExternalForm();
-            InputStream inputStream = getClass().getResourceAsStream("/images/"+fileName);
-            Image image = new Image(inputStream);
+            String projectPath = System.getProperty("user.dir");
+            if(!projectPath.endsWith("Cineme-sem2")){
+                projectPath = new File(projectPath).getParentFile().toString();
+            }
+            File f = new File(projectPath+"/"+view);
+            Image image = new Image(f.toURI().toString());
             imageView.setImage(image);
             imageView.setFitWidth(120);
             imageView.setFitHeight(150);

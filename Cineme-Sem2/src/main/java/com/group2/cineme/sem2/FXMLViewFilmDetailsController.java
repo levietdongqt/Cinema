@@ -82,10 +82,12 @@ public class FXMLViewFilmDetailsController implements Initializable {
         this.txtDescription.setText(film.getDescription());
 
         String view = film.getImageUrl();
-        Path path = Paths.get(view);
-        String fileName = path.getFileName().toString();
-        InputStream inputStream = getClass().getResourceAsStream("/images/" + fileName);
-        Image image = new Image(inputStream);
+        String projectPath = System.getProperty("user.dir");
+        if (!projectPath.endsWith("Cineme-sem2")) {
+            projectPath = new File(projectPath).getParentFile().toString();
+        }
+        File f = new File(projectPath + "/" + view);
+        Image image = new Image(f.toURI().toString());
         this.imageFilm.setImage(image);
         imageFilm.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
         for (FilmGenre genre : fd.getFilmGenreByID(film.getFilmID())) {

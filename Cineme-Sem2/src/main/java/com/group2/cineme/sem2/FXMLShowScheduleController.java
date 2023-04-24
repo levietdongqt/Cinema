@@ -136,18 +136,13 @@ public class FXMLShowScheduleController implements Initializable {
         colFilmView.setCellValueFactory((p) -> {
             Film sc = p.getValue();
             String view = sc.getImageUrl();
-            Path path = Paths.get(view);
-            String fileName = path.getFileName().toString();
             ImageView imageView = new ImageView();
-//            File file = new File("C:\\1Study-Aptech\\"+filmImage);
-////            ClassLoader classLoader = getClass().getClassLoader();
-//            System.out.println(file.getName());
-//            InputStream inputStream = getClass().getResourceAsStream("images/" + file.getName());
-////            URL imageURL = classLoader.getResource("images\\"+file.getName());
-//            System.out.println(inputStream.toString());
-////            String imageUrlString = imageURL.toExternalForm();
-            InputStream inputStream = getClass().getResourceAsStream("/images/"+fileName);
-            Image image = new Image(inputStream);
+            String projectPath = System.getProperty("user.dir");
+            if(!projectPath.endsWith("Cineme-sem2")){
+                projectPath = new File(projectPath).getParentFile().toString();
+            }
+            File f = new File(projectPath+"/"+view);
+            Image image = new Image(f.toURI().toString());
             imageView.setImage(image);
             imageView.setFitWidth(200);
             imageView.setFitHeight(230);

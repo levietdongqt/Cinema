@@ -147,8 +147,13 @@ public class FXMLProductController implements Initializable {
             Product item = productArray[j];
             //Product Image
             ImageView imageView = new ImageView();
-            File file = new File(item.getImgUrl());
-            Image image = new Image(file.toURI().toString());
+            String view = item.getImgUrl();
+            String projectPath = System.getProperty("user.dir");
+            if(!projectPath.endsWith("Cineme-sem2")){
+                projectPath = new File(projectPath).getParentFile().toString();
+            }
+            File f = new File(projectPath+"/"+view);
+            Image image = new Image(f.toURI().toString());
             imageView.setImage(image);
             imageView.setFitWidth(120);
             imageView.setFitHeight(120);

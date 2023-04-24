@@ -174,26 +174,6 @@ public class FXMLLoginController implements Initializable {
 
         });
 
-        String jarFile;
-        try {
-            jarFile = FXMLLoginController.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            String directoryPath = "C:\\saveImage";           
-            File directory = new File(directoryPath);
-            
-            if (!directory.exists()) {
-                directory.mkdir();
-            }else{
-                directory.delete();
-                directory.mkdir();
-            }
-// Lưu hình ảnh vào thư mục mới tạo
-            String dirToExtract = "images";
-            AlertUtils.extract(jarFile, directoryPath, dirToExtract);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
     }
 
