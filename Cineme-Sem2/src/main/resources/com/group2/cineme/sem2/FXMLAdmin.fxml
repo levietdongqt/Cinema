@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLAdminController">
+<StackPane prefHeight="748.0" prefWidth="1354.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLAdminController">
    <children>
-      <AnchorPane prefHeight="739.0" prefWidth="1380.0">
+      <AnchorPane prefHeight="739.0" prefWidth="1300.0">
          <children>
-            <BorderPane layoutX="320.0" layoutY="143.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <BorderPane minWidth="-Infinity" prefHeight="748.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <left>
                   <AnchorPane prefHeight="623.0" prefWidth="200.0" stylesheets="@../../../../styles/fxmladmin.css" BorderPane.alignment="CENTER">
                      <children>
@@ -67,7 +67,7 @@
                   </AnchorPane>
                </left>
                <top>
-                  <AnchorPane prefHeight="44.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+                  <AnchorPane minWidth="-Infinity" prefHeight="46.0" prefWidth="1367.0" BorderPane.alignment="CENTER">
                      <children>
                         <FontAwesomeIcon fx:id="txtIcon" fill="WHITE" glyphName="USERS" layoutX="626.0" layoutY="41.0" size="2em" />
                         <Label fx:id="txtEm" alignment="CENTER" contentDisplay="CENTER" layoutX="666.0" layoutY="15.0" text="EMPLOYEE MANAGER" textAlignment="CENTER" textFill="WHITE">
@@ -79,9 +79,9 @@
                   </AnchorPane>
                </top>
                <center>
-                  <AnchorPane BorderPane.alignment="CENTER">
+                  <AnchorPane minWidth="-Infinity" prefHeight="702.0" prefWidth="990.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="5.0" layoutY="5.0" prefHeight="278.0" prefWidth="1170.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="412.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <AnchorPane layoutX="5.0" prefHeight="290.0" prefWidth="1116.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="412.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="ins-form" />
@@ -112,7 +112,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="errRPass" layoutX="814.0" layoutY="46.0" prefHeight="17.0" prefWidth="390.0" text="ERRREPASS" textFill="RED" visible="false">
+                              <Label fx:id="errRPass" layoutX="814.0" layoutY="46.0" prefHeight="17.0" prefWidth="302.0" text="ERRREPASS" textFill="RED" visible="false">
                                  <font>
                                     <Font size="11.0" />
                                  </font></Label>
@@ -178,7 +178,7 @@
                                  </font>
                               </Label>
                               <TextField fx:id="tfPhone" layoutX="910.0" layoutY="74.0" prefHeight="25.0" prefWidth="199.0" styleClass="fill-text" />
-                              <Label fx:id="errPhone" layoutX="814.0" layoutY="115.0" prefHeight="17.0" prefWidth="390.0" text="ERRPHONE" textFill="RED" visible="false">
+                              <Label fx:id="errPhone" layoutX="814.0" layoutY="115.0" prefHeight="17.0" prefWidth="297.0" text="ERRPHONE" textFill="RED" visible="false">
                                  <font>
                                     <Font size="11.0" />
                                  </font></Label>
@@ -187,7 +187,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="errTimeSta" layoutX="814.0" layoutY="166.0" prefHeight="17.0" prefWidth="390.0" text="ERRSTA" textFill="RED" visible="false">
+                              <Label fx:id="errTimeSta" layoutX="814.0" layoutY="166.0" prefHeight="17.0" prefWidth="301.0" text="ERRSTA" textFill="RED" visible="false">
                                  <font>
                                     <Font size="11.0" />
                                  </font></Label>
@@ -200,28 +200,28 @@
                               <PasswordField fx:id="tfRPass" layoutX="913.0" layoutY="13.0" prefHeight="26.0" prefWidth="201.0" styleClass="fill-text" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="6.0" layoutY="293.0" prefHeight="400.0" prefWidth="1169.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="293.0">
+                        <AnchorPane layoutX="6.0" layoutY="302.0" prefHeight="398.0" prefWidth="1116.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="302.0">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="ins-form" />
                            </styleClass>
                            <children>
-                              <TableView fx:id="tvEmployee" layoutX="5.0" layoutY="54.0" onMouseClicked="#selectEmployee" prefHeight="344.0" prefWidth="1160.0">
+                              <TableView fx:id="tvEmployee" layoutX="5.0" layoutY="54.0" onMouseClicked="#selectEmployee" prefHeight="344.0" prefWidth="1108.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="54.0">
                                 <columns>
-                                  <TableColumn fx:id="tcUser" prefWidth="127.0" text="USER" />
-                                  <TableColumn fx:id="tcName" prefWidth="161.0" text="FULL NAME" />
-                                    <TableColumn fx:id="tcGender" prefWidth="127.0" text="GENDER" />
-                                    <TableColumn fx:id="tcEmail" prefWidth="173.0" text="EMAIL" />
-                                    <TableColumn fx:id="tcPhone" prefWidth="139.0" text="PHONE NUMBER" />
-                                    <TableColumn fx:id="tcPosition" prefWidth="110.0" text="POSITION" />
-                                    <TableColumn fx:id="tcStatus" prefWidth="99.0" text="BIRTH DAY" />
-                                    <TableColumn fx:id="tcStartDate" minWidth="0.0" prefWidth="112.0" text="START DATE" />
-                                    <TableColumn fx:id="tcWorking" prefWidth="109.0" text="WORKING DAY" />
+                                  <TableColumn fx:id="tcUser" prefWidth="116.0" text="USER" />
+                                  <TableColumn fx:id="tcName" prefWidth="142.0" text="FULL NAME" />
+                                    <TableColumn fx:id="tcGender" prefWidth="106.0" text="GENDER" />
+                                    <TableColumn fx:id="tcEmail" prefWidth="175.0" text="EMAIL" />
+                                    <TableColumn fx:id="tcPhone" prefWidth="157.0" text="PHONE NUMBER" />
+                                    <TableColumn fx:id="tcPosition" prefWidth="88.0" text="POSITION" />
+                                    <TableColumn fx:id="tcStatus" prefWidth="114.0" text="BIRTH DAY" />
+                                    <TableColumn fx:id="tcStartDate" minWidth="0.0" prefWidth="87.0" text="START DATE" />
+                                    <TableColumn fx:id="tcWorking" prefWidth="128.0" text="WORKING DAY" />
                                 </columns>
                               </TableView>
                               <TextField fx:id="tfSearch" alignment="CENTER" layoutX="462.0" layoutY="14.0" prefHeight="26.0" prefWidth="269.0" promptText="Search" />
                               <FontAwesomeIcon glyphName="SEARCH" layoutX="468.0" layoutY="32.0" size="1.5em" />
-                              <DatePicker fx:id="pdMonth" layoutX="968.0" layoutY="14.0" />
+                              <DatePicker fx:id="pdMonth" layoutX="931.0" layoutY="15.0" />
                            </children>
                         </AnchorPane>
                      </children>

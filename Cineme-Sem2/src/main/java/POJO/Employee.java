@@ -137,8 +137,8 @@ public class Employee {
             throw new IOException("Phone number cannot be empty");
         }
 
-        if (!Pattern.matches("\\d{10}", empPhone)) {
-            throw new IOException("Phone number must be 10 digits");
+        if (!Pattern.matches("^0\\d{9}", empPhone)) {
+            throw new IOException("Phone number must start with 0 and be 10 digits long");
         }
         this.empPhone = empPhone;
     }
@@ -224,9 +224,9 @@ public class Employee {
         if (startDate == null) {
             throw new IOException("Start date cannot null");
         }
-        if (startDate.isAfter(LocalDate.now())) {
-            throw new IOException("Start date cannot be in the future");
-        }
+        if (startDate.isBefore(LocalDate.now())) {
+        throw new IOException("Start date cannot be in the past");
+    }
         this.startDate = startDate;
 
     }

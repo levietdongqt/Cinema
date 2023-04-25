@@ -107,17 +107,34 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
     }
 
     //check trùng username
-    public boolean checkUser(String user){
+   public boolean checkUser(String username) throws Exception {
         Session session = HibernateUtils.getFACTORY().openSession();
-        
-            Criteria criteria = session.createCriteria(Employee.class);
-            criteria.add(Restrictions.eq("userName", user));
-            Employee employee = (Employee) criteria.uniqueResult();
-            
+        List<Employee> list = new ArrayList<>();
+        try {
+            session.getTransaction().begin();
+            var hql = "FROM Employee WHERE userName =:userName";
+            Query query = session.createQuery(hql);
+            query.setParameter("userName", username);
+            System.out.println(hql);
+            list = query.getResultList();
+            session.getTransaction().commit();
+            if (!list.isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
+
+        } finally {
             session.close();
-            return true;
-      
+        }
+
+        return true;
+
     }
+
     
     
     

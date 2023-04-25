@@ -366,57 +366,91 @@ public class FXMLAdminController implements Initializable {
 
     }
 
+    public boolean onCheckStart = false;
+
     public void checkStart() {
-        dpTimeSta.setValue(LocalDate.now());
+//        dpTimeSta.setValue(LocalDate.now());
+//        try {
+//            em.setStartDate(dpTimeSta.getValue());
+//        } catch (Exception e) {
+//            System.out.println("123");
+//        }
+// 
+//        dpTimeSta.setOnAction(even -> {
+
+        LocalDate start = dpTimeSta.getValue();
+
         try {
-            em.setStartDate(dpTimeSta.getValue());
-        } catch (Exception e) {
-            System.out.println("123");
+            em.setStartDate(start);
+            errTimeSta.setVisible(false);
+        } catch (IOException e) {
+            errTimeSta.setVisible(true);
+            errTimeSta.setText(e.getMessage());
         }
 
-        dpTimeSta.setOnAction(even -> {
-            LocalDate start = dpTimeSta.getValue();
-            try {
-                em.setStartDate(start);
-//                empl.setStartDate(start);
-
-                errTimeSta.setVisible(false);
-            } catch (IOException e) {
-                errTimeSta.setVisible(true);
-                errTimeSta.setText(e.getMessage());
-            }
-        });
-
+//        });
     }
 
     // tạo mới nhân viên 
     public void submit(ActionEvent event) throws Exception {
+        checkStart();
         boolean check = dao.checkUser(tfUser.getText());
+        if (check) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Duplicate User");
+            alert.showAndWait();
+        } else if (errUser.isVisible()
+                || errName.isVisible()
+                || errRPass.isVisible()
+                || errPhone.isVisible()
+                || errPass.isVisible()
+                || errMail.isVisible()
+                || errGender.isVisible()
+                || errPos.isVisible()
+                || errStatus.isVisible()
+                || errBirth.isVisible()
+                || errTimeSta.isVisible()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please fill in the fields correctly");
+            alert.showAndWait();
+        } else if (tfUser.getText().isEmpty()
+                || tfName.getText().isEmpty()
+                || tfRPass.getText().isEmpty()
+                || tfPhone.getText().isEmpty()
+                || tfPass.getText().isEmpty()
+                || tfMail.getText().isEmpty()
+                || cbGender.getValue().isEmpty()
+                || cbPosition.getValue().isEmpty()
+                || cbStatus.getValue().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please complete all fields");
+            alert.showAndWait();
 
-//        if (check) {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Warning");
-//            alert.setHeaderText("Duplicate User");
-//            alert.showAndWait();
-//        }
-        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-        alert1.setTitle("Confirm New Employee");
-        alert1.setHeaderText("Are you sure want to add new employee ?");
-        Optional<ButtonType> result = alert1.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            try {
-                String user = tfUser.getText();
-                em.setUserName(user);
-                ws.setEmployee(em);
-                ws.setStartTime(LocalDateTime.now());
-                ws.setEndTime(LocalDateTime.now());
-                dao.add(em);
-                workdao.add(ws);
-                showEmployee();
-                clear(event);
-            } catch (Exception e) {
-                e.getMessage();
+        } else {
+            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+            alert1.setTitle("Confirm New Employee");
+            alert1.setHeaderText("Are you sure want to add new employee ?");
+            Optional<ButtonType> result = alert1.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                try {
+                    String user = tfUser.getText();
+                    em.setUserName(user);
+                    ws.setEmployee(em);
+                    ws.setStartTime(LocalDateTime.now());
+                    ws.setEndTime(LocalDateTime.now());
+                    dao.add(em);
+                    workdao.add(ws);
+                    showEmployee();
+                    clear(event);
+                } catch (Exception e) {
+                    e.getMessage();
+                }
             }
+
         }
 
     }
@@ -647,8 +681,8 @@ public class FXMLAdminController implements Initializable {
         tfName.setText(String.valueOf(employee.getEmpName()));
         tfMail.setText(String.valueOf(employee.getEmail()));
         tfPhone.setText(String.valueOf(employee.getEmpPhone()));
-        tfPass.setText(String.valueOf(employee.getPassword()));
-        tfRPass.setText(String.valueOf(employee.getPassword()));
+//        tfPass.setText(String.valueOf(employee.getPassword()));
+//        tfRPass.setText(String.valueOf(employee.getPassword()));
         tfPhone.setText(String.valueOf(employee.getEmpPhone()));
         cbPosition.setValue(String.valueOf(employee.getPosition()));
         dpTimeSta.setValue(employee.getStartDate());
@@ -752,7 +786,6 @@ public class FXMLAdminController implements Initializable {
         checkBirth();
         checkPosi();
         checkStatus();
-        checkStart();
         checkGender();
         showEmployee();
         power();
