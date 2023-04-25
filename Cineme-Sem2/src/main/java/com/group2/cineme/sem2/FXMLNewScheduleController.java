@@ -327,8 +327,8 @@ public class FXMLNewScheduleController implements Initializable {
         LocalDateTime selectedStartTime = selectedTime.atDate(selectedDate);
         LocalDateTime selectedEndTime = selectedTime.atDate(selectedDate).plusMinutes(selectedFilm.getDuration());
         for (Schedule schedule : scheduleList) {
-            LocalDateTime startTime = schedule.getStartTime();
-            LocalDateTime endTime = schedule.getEndTime();
+            LocalDateTime startTime = schedule.getStartTime().minusMinutes(15);
+            LocalDateTime endTime = schedule.getEndTime().plusMinutes(15);
             if (!((selectedStartTime.isAfter(endTime) && selectedEndTime.isAfter(endTime))
                     || (selectedStartTime.isBefore(startTime) && selectedEndTime.isBefore(startTime)))) {
                 throw new TimeoutException("Time is conflict !! \n Please choose a nother time.");
