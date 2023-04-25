@@ -334,7 +334,6 @@ public class FXMLNewScheduleController implements Initializable {
                 throw new TimeoutException("Time is conflict !! \n Please choose a nother time.");
             }
         };
-
     }
 
     private void creatTableView() {
