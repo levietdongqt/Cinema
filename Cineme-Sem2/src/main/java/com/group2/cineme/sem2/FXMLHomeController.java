@@ -27,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -41,6 +42,8 @@ import javafx.util.Duration;
  */
 public class FXMLHomeController implements Initializable {
 
+    @FXML
+    private ImageView imageView;
     @FXML
     private JFXHamburger hamburger;
     @FXML
@@ -85,6 +88,7 @@ public class FXMLHomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println(imageView.getImage().getUrl());
 
 //        loadDataImageView();
         loadDataPopup();

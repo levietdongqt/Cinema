@@ -25,7 +25,7 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="850.0" opacity="0.8" prefHeight="735.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="-289.0" AnchorPane.leftAnchor="850.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fitHeight="114.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageView" fitHeight="114.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../images/icon/avatar.png" /> 
                      </image>

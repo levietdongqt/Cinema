@@ -9,7 +9,10 @@ import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -29,7 +32,7 @@ import javafx.stage.Popup;
  * @author thuhuytran
  */
 public class FXMLViewFilmDetailsController implements Initializable {
-    
+
     @FXML
     private Text textName;
     @FXML
@@ -42,35 +45,33 @@ public class FXMLViewFilmDetailsController implements Initializable {
     private Label txtStartDate;
     @FXML
     private Label txtEndDate;
-    
+
     @FXML
     private Label txtDescription;
-    
+
     @FXML
     private ImageView imageFilm;
     @FXML
     private Button btnClose;
     @FXML
     private VBox VBoxGenres;
-    
+
     @FXML
     private VBox VBoxActors;
-    
+
     private Film film;
 
     public FXMLViewFilmDetailsController(Film film) {
         this.film = film;
     }
-    
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadData();
-        
+
     }
-    
-    public void loadData(){
+
+    public void loadData() {
         FilmDAO fd = new FilmDAO();
         this.textName.setText(film.getFilmName());
         this.txtID.setText(film.getFilmID());
@@ -79,27 +80,32 @@ public class FXMLViewFilmDetailsController implements Initializable {
         this.txtStartDate.setText(film.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         this.txtEndDate.setText(film.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         this.txtDescription.setText(film.getDescription());
-        File file = new File(film.getImageUrl());
-        Image image = new Image(file.toURI().toString());
+
+        String view = film.getImageUrl();
+        String projectPath = System.getProperty("user.dir");
+        if (!projectPath.endsWith("Cineme-sem2")) {
+            projectPath = new File(projectPath).getParentFile().toString();
+        }
+        File f = new File(projectPath + "/" + view);
+        Image image = new Image(f.toURI().toString());
         this.imageFilm.setImage(image);
         imageFilm.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
         for (FilmGenre genre : fd.getFilmGenreByID(film.getFilmID())) {
             Label label = new Label(genre.getfGenreName());
             VBoxGenres.getChildren().add(label);
-            
+
         }
-        
-        
+
         for (Actors actor : fd.getFilmActorsByID(film.getFilmID())) {
-           Label label = new Label(actor.getActorName());
+            Label label = new Label(actor.getActorName());
             VBoxActors.getChildren().add(label);
         }
-        
-        
+
     }
+
     public void setUpBtnColse() {
         Popup popup = (Popup) btnClose.getScene().getWindow();
         popup.hide();
     }
-    
+
 }

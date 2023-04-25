@@ -13,6 +13,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.StringConverter;
+import java.io.*;
+import java.nio.file.*;
+import java.util.jar.*;
 
 public class AlertUtils {
     public static Alert getAlert(String content,Alert.AlertType typeAlert){
@@ -74,5 +77,28 @@ public class AlertUtils {
         };
         comboBox.setConverter(converter);
     }
+//    public static void extract(String jarFile, String destDir, String dirToExtract) throws IOException {
+//        try (JarFile jar = new JarFile(jarFile)) {
+//            Path destDirPath = Paths.get(destDir);
+//            if (!Files.exists(destDirPath)) {
+//                Files.createDirectories(destDirPath);
+//            }
+//
+//            jar.stream().filter(jarEntry -> jarEntry.getName().startsWith(dirToExtract)).forEach(jarEntry -> {
+//                try {
+//                    Path path = destDirPath.resolve(jarEntry.getName());
+//                    if (jarEntry.isDirectory()) {
+//                        Files.createDirectories(path);
+//                    } else {
+//                        Files.copy(jar.getInputStream(jarEntry), path);
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//        }
+//    }
+    
+
     
 }
