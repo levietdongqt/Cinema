@@ -528,6 +528,7 @@ public class FXMLAdminController implements Initializable {
     public void clear(ActionEvent event) throws Exception {
 
         this.tfUser.clear();
+        this.tfUser.setEditable(true);
         this.errUser.setVisible(false);
         this.tfName.clear();
         this.errName.setVisible(false);
@@ -678,6 +679,7 @@ public class FXMLAdminController implements Initializable {
         }
 
         tfUser.setText(String.valueOf(employee.getUserName()));
+        tfUser.setEditable(false);
         tfName.setText(String.valueOf(employee.getEmpName()));
         tfMail.setText(String.valueOf(employee.getEmail()));
         tfPhone.setText(String.valueOf(employee.getEmpPhone()));
