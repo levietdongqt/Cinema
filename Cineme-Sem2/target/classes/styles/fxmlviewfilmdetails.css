@@ -1,0 +1,18 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+ImageView .imageView{
+    -fx-border-color: red; 
+    -fx-border-width: 2px;
+}
+
+*{
+    -fx-text-fill: white;
+}
+
+.button{
+   -fx-border-color: transparent; 
+   -fx-border-width: 0px;
+   -fx-background-color: grey;
+}
