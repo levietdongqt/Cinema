@@ -1,0 +1,19 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Apr 17, 2023, 9:26:03 PM
+    Author     : DONG
+*/
+.list-cell {
+    -fx-background-color: #999999;
+    -fx-alignment:  CENTER;
+}
+
+.list-cell:selected {
+    -fx-background-color: #999999;
+    -fx-alignment:  CENTER;
+    -fx-text-fill:white;
+}
+

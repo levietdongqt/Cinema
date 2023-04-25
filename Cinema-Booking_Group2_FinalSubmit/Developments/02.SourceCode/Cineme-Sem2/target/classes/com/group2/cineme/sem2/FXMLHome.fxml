@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="home" prefHeight="800.0" prefWidth="1000.0" stylesheets="@../../../../styles/fxmlhome.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLHomeController">
+   <top>
+      <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <JFXHamburger fx:id="hamburger" alignment="CENTER_RIGHT" layoutX="576.0" layoutY="3.0" opacity="0.56" styleClass="hamburger" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="850.0" opacity="0.8" prefHeight="735.0" prefWidth="160.0" styleClass="popup" stylesheets="@../../../../styles/fxmlhome.css" AnchorPane.bottomAnchor="-289.0" AnchorPane.leftAnchor="850.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fx:id="imageView" fitHeight="114.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../images/icon/avatar.png" /> 
+                     </image>
+                  </ImageView>
+                  <HBox alignment="CENTER" prefHeight="22.0" prefWidth="141.0" styleClass="labelpopup">
+                     <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label fx:id="labelAdmin2" text="dfgdf" textFill="#111010">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label text="Pos: " textFill="#4724e4">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="labelAdmin21" text="Manager" textFill="#4724e4">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#DashboardButtonHandler" prefHeight="58.0" prefWidth="121.0" styleClass="buttonPopup" text="DASDBOARD" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Button>
+                  <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" prefHeight="51.0" styleClass="buttonPopup" text="BOOKING" />
+                  <Button fx:id="btnBill" mnemonicParsing="false" onAction="#billButtonHandler" styleClass="buttonPopup" text="BILL MANAGER" />
+                  <Button mnemonicParsing="false" onAction="#loadEmpButtonHandler" styleClass="buttonPopup" text="CUS. MANAGER" />
+                  <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
+                  <Button fx:id="btnFilm" mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="FILM MANAGER" />
+                  <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
+                  <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="46.0" prefWidth="108.0" promptText="Report" styleClass="list-cell" />
+                  <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button defaultButton="true" ellipsisString="" mnemonicParsing="false" onAction="#logOut" prefHeight="40.0" prefWidth="82.0" text="Log Out">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="OUTDENT" />
+                           </graphic>
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="3.0" styleClass="session" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="buttonHome" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#homeButtonHandler" styleClass="buttonHome" textFill="#776c6c">
+                     <graphic>
+                        <FontAwesomeIcon fill="#f7f5f5" glyphName="UNIVERSITY" />
+                     </graphic></Button>
+                  <Label text="Hello:" textFill="#f7f2f2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <effect>
+                        <Lighting specularConstant="0.72">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant>
+                                 <color>
+                                    <Color red="0.9934210777282715" green="0.9888218641281128" blue="0.9888218641281128" />
+                                 </color>
+                              </Light.Distant>
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Label>
+                  <Label fx:id="labelAdmin1" text="sfgffgfg" textFill="#eeeaea">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <effect>
+                        <Lighting specularConstant="0.72">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant>
+                                 <color>
+                                    <Color red="0.9934210777282715" green="0.9888218641281128" blue="0.9888218641281128" />
+                                 </color>
+                              </Light.Distant>
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Label>
+               </children>
+            </HBox>
+            <Text fill="#fffdfd" layoutX="122.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO CGV" textAlignment="CENTER" wrappingWidth="267.337890625" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="620.162109375">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.6583364009857178" green="0.9144737124443054" blue="0.7437154650688171" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Text>
+            <Label fx:id="timeLabel" alignment="TOP_CENTER" layoutX="837.0" layoutY="3.0" prefHeight="19.0" prefWidth="57.0" textFill="#f0ebeb" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <effect>
+                  <Lighting specularConstant="0.55">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.25600025057792664" green="0.6578947305679321" blue="0.24214181303977966" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
+            <Label alignment="CENTER" layoutX="836.0" layoutY="-1.0" prefHeight="23.0" prefWidth="49.0" text="Clock:" textFill="#fffdfd" AnchorPane.rightAnchor="100.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <effect>
+                  <Lighting diffuseConstant="1.24" specularConstant="0.69">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.3989682197570801" green="0.7828947305679321" blue="0.37876155972480774" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

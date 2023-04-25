@@ -1,0 +1,65 @@
+
+
+/*nửa bên phải login*/
+.login-r{
+    /*-fx-background-color: linear-gradient(to bottom right,#6a9ae7,#426fb1);*/
+        -fx-background-color:#ff2b00;
+
+}
+
+
+/*nửa bên trái login*/
+.login-l{
+    -fx-background-color:#30363f ;
+    /*-fx-background-image:url('78e.jpg');*/
+    -fx-background-size: cover;
+}
+
+/*user&pass*/
+.fill-text{
+    -fx-background-color:none;
+    -fx-border-color:#D3D3D3;
+    -fx-border-width:0px 0px 2px 0px;
+    -fx-padding: 3px 3px 3px 25px;
+}
+
+
+/*button submti*/
+.btn-submit{
+    -fx-background-radius:40px;
+    -fx-cursor:hand;
+    -fx-background-color:#2c6eb5;
+}
+
+
+.btn-submit:hover{
+    -fx-background-color:#5aa0ea;
+
+}
+
+
+/*nút close*/
+.bnt-close{
+    -fx-background-color:none;
+    -fx-background-radius:40px;
+    -fx-cursor:hand;
+   
+}
+.bnt-close:hover{
+    -fx-background-color:#F8FF1C;
+
+}
+.x-close:hover{
+   -fx-fill: #ff2b00;
+   
+}
+
+
+/*text cgc-cinemas*/
+.text-cgv{
+    -fx-text-fill:#ff2b00;
+    -fx-cursor:hand;
+
+}
+
+
