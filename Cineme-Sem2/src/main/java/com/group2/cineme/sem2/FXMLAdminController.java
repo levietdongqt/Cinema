@@ -8,6 +8,8 @@ import DAO.EmployeeDAO;
 import DAO.WorkSessionDAO;
 import POJO.Employee;
 import POJO.WorkSession;
+import Utils.AlertUtils;
+import Utils.MyException;
 import Utils.SessionUtil;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.io.File;
@@ -24,6 +26,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -48,6 +51,7 @@ import javafx.util.StringConverter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.exception.ConstraintViolationException;
 
 /**
  * FXML Controller class
@@ -55,6 +59,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author BE BAU
  */
 public class FXMLAdminController implements Initializable {
+
     WorkSession ws = new WorkSession();
     Employee em = new Employee();
     WorkSessionDAO workdao = new WorkSessionDAO();
@@ -177,11 +182,9 @@ public class FXMLAdminController implements Initializable {
 
     @FXML
     private FontAwesomeIcon txtIcon;
-    
-    
-    
+
     public void checkUser() {
-        
+
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         tfUser.setOnKeyTyped(event -> {
             String user = tfUser.getText().trim();
@@ -276,7 +279,7 @@ public class FXMLAdminController implements Initializable {
                     errRPass.setVisible(false);
                 } else {
                     errRPass.setVisible(true);
-                    errRPass.setText("repass#pass");
+                    errRPass.setText("Repass & Pass không trùng nhau");
 
                 }
             } catch (IOException e) {
@@ -363,52 +366,93 @@ public class FXMLAdminController implements Initializable {
 
     }
 
+    public boolean onCheckStart = false;
+
     public void checkStart() {
-        dpTimeSta.setValue(LocalDate.now());
+//        dpTimeSta.setValue(LocalDate.now());
+//        try {
+//            em.setStartDate(dpTimeSta.getValue());
+//        } catch (Exception e) {
+//            System.out.println("123");
+//        }
+// 
+//        dpTimeSta.setOnAction(even -> {
+
+        LocalDate start = dpTimeSta.getValue();
+
         try {
-            em.setStartDate(dpTimeSta.getValue());
-        } catch (Exception e) {
-            System.out.println("123");
+            em.setStartDate(start);
+            errTimeSta.setVisible(false);
+        } catch (IOException e) {
+            errTimeSta.setVisible(true);
+            errTimeSta.setText(e.getMessage());
         }
 
-        dpTimeSta.setOnAction(even -> {
-            LocalDate start = dpTimeSta.getValue();
-            try {
-                em.setStartDate(start);
-//                empl.setStartDate(start);
-
-                errTimeSta.setVisible(false);
-            } catch (IOException e) {
-                errTimeSta.setVisible(true);
-                errTimeSta.setText(e.getMessage());
-            }
-        });
-
+//        });
     }
 
     // tạo mới nhân viên 
     public void submit(ActionEvent event) throws Exception {
-        
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm New Employee");
-        alert.setHeaderText("Are you sure want to add new employee ?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            try {
-                   String user = tfUser.getText();
-                  em.setUserName(user);
+        checkStart();
+        boolean check = dao.checkUser(tfUser.getText());
+        if (check) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Duplicate User");
+            alert.showAndWait();
+        } else if (errUser.isVisible()
+                || errName.isVisible()
+                || errRPass.isVisible()
+                || errPhone.isVisible()
+                || errPass.isVisible()
+                || errMail.isVisible()
+                || errGender.isVisible()
+                || errPos.isVisible()
+                || errStatus.isVisible()
+                || errBirth.isVisible()
+                || errTimeSta.isVisible()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please fill in the fields correctly");
+            alert.showAndWait();
+        } else if (tfUser.getText().isEmpty()
+                || tfName.getText().isEmpty()
+                || tfRPass.getText().isEmpty()
+                || tfPhone.getText().isEmpty()
+                || tfPass.getText().isEmpty()
+                || tfMail.getText().isEmpty()
+                || cbGender.getValue().isEmpty()
+                || cbPosition.getValue().isEmpty()
+                || cbStatus.getValue().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please complete all fields");
+            alert.showAndWait();
+
+        } else {
+            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+            alert1.setTitle("Confirm New Employee");
+            alert1.setHeaderText("Are you sure want to add new employee ?");
+            Optional<ButtonType> result = alert1.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                try {
+                    String user = tfUser.getText();
+                    em.setUserName(user);
                     ws.setEmployee(em);
                     ws.setStartTime(LocalDateTime.now());
                     ws.setEndTime(LocalDateTime.now());
-                dao.add(em);
-                workdao.add(ws);
-                showEmployee();
-                clear(event);
-
-            } catch (Exception e) {
-                e.getMessage();
+                    dao.add(em);
+                    workdao.add(ws);
+                    showEmployee();
+                    clear(event);
+                } catch (Exception e) {
+                    e.getMessage();
+                }
             }
+
         }
+
     }
 
     // update thông tin nhân viên
@@ -538,7 +582,7 @@ public class FXMLAdminController implements Initializable {
     public void showEmployee() {
         String power = "Manager";
         String user = SessionUtil.getEmployee().getUserName();
-        
+
         WorkSessionDAO wdao = new WorkSessionDAO();
         month();
         LocalDate selectedDate = pdMonth.getValue();
@@ -551,30 +595,32 @@ public class FXMLAdminController implements Initializable {
 
         Map<String, Double> totalWorkTime = wdao.getTotalWorkTimeByUserAndMonth(selectedMonth);
         try {
-            
 
             if (power.equals(SessionUtil.getEmployee().getPosition())) {
-               emList = dao.getAll(); 
-               
-            }else{
+                emList = dao.getAll();
+
+            } else {
                 emList = dao.getById(user);
             }
-               
-                for (Employee employee : emList) {
-                    for (String employee1 : totalWorkTime.keySet()) {
-                        if (employee1.equals(employee.getUserName())) {
-                            employee.setTotalWorkTime(totalWorkTime.get(employee1));
-                        }
+
+            for (Employee employee : emList) {
+                for (String employee1 : totalWorkTime.keySet()) {
+                    if (employee1.equals(employee.getUserName())) {
+                        employee.setTotalWorkTime(totalWorkTime.get(employee1));
                     }
                 }
-           
+            }
+
             tcUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
             tcName.setCellValueFactory(new PropertyValueFactory<>("empName"));
-            tcGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+            tcGender.setCellValueFactory(cellData -> {
+                boolean isMale = cellData.getValue().isGender();
+                return new SimpleStringProperty(isMale ? "Male" : "Female");
+            });
             tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
             tcPhone.setCellValueFactory(new PropertyValueFactory<>("empPhone"));
             tcPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
-            tcStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+            tcStatus.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
             tcStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
             tcWorking.setCellValueFactory(new PropertyValueFactory<>("totalWorkTime"));
             tvEmployee.setItems(FXCollections.observableList(emList));
@@ -635,8 +681,8 @@ public class FXMLAdminController implements Initializable {
         tfName.setText(String.valueOf(employee.getEmpName()));
         tfMail.setText(String.valueOf(employee.getEmail()));
         tfPhone.setText(String.valueOf(employee.getEmpPhone()));
-        tfPass.setText(String.valueOf(employee.getPassword()));
-        tfRPass.setText(String.valueOf(employee.getPassword()));
+//        tfPass.setText(String.valueOf(employee.getPassword()));
+//        tfRPass.setText(String.valueOf(employee.getPassword()));
         tfPhone.setText(String.valueOf(employee.getEmpPhone()));
         cbPosition.setValue(String.valueOf(employee.getPosition()));
         dpTimeSta.setValue(employee.getStartDate());
@@ -679,7 +725,7 @@ public class FXMLAdminController implements Initializable {
             headerRow.createCell(3).setCellValue("Email");
             headerRow.createCell(4).setCellValue("Phone");
             headerRow.createCell(5).setCellValue("Position");
-            headerRow.createCell(6).setCellValue("Status");
+            headerRow.createCell(6).setCellValue("Birth Day");
             headerRow.createCell(7).setCellValue("Start Date");
             headerRow.createCell(8).setCellValue("Total Work Time");
 
@@ -693,7 +739,7 @@ public class FXMLAdminController implements Initializable {
                 row.createCell(3).setCellValue(employee.getEmail());
                 row.createCell(4).setCellValue(employee.getEmpPhone());
                 row.createCell(5).setCellValue(employee.getPosition());
-                row.createCell(6).setCellValue(employee.isStatus());
+                row.createCell(6).setCellValue(employee.getBirthDate());
                 row.createCell(7).setCellValue(employee.getStartDate());
                 row.createCell(8).setCellValue(employee.getTotalWorkTime());
             }
@@ -740,7 +786,6 @@ public class FXMLAdminController implements Initializable {
         checkBirth();
         checkPosi();
         checkStatus();
-        checkStart();
         checkGender();
         showEmployee();
         power();

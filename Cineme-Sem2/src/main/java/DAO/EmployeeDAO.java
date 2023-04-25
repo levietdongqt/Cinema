@@ -14,8 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javax.persistence.Query;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -104,6 +106,37 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
 
     }
 
+    //check trùng username
+   public boolean checkUser(String username) throws Exception {
+        Session session = HibernateUtils.getFACTORY().openSession();
+        List<Employee> list = new ArrayList<>();
+        try {
+            session.getTransaction().begin();
+            var hql = "FROM Employee WHERE userName =:userName";
+            Query query = session.createQuery(hql);
+            query.setParameter("userName", username);
+            System.out.println(hql);
+            list = query.getResultList();
+            session.getTransaction().commit();
+            if (!list.isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
+
+        } finally {
+            session.close();
+        }
+
+        return true;
+
+    }
+
+    
+    
     
     //update thông tin employee trừ pass
     public void updateEmployee(Employee employee) {
