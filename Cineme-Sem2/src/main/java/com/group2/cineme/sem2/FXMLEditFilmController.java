@@ -176,6 +176,7 @@ public class FXMLEditFilmController implements Initializable {
         }
 
     }
+
     @FXML
     public void updateButtonHandler(ActionEvent event) throws Exception {
         checkEmptyWhenClickButton();
@@ -184,16 +185,17 @@ public class FXMLEditFilmController implements Initializable {
             AlertUtils.getAlert("Check Information you want to update", Alert.AlertType.ERROR).show();
         } else {
             FilmDAO fd = new FilmDAO();
-            try {   
-                    fd = new FilmDAO();
-                    fd.update(film);
-                    App.setView("FXMLFilm");
+            try {
+                fd = new FilmDAO();
+                fd.update(film);
+                App.setView("FXMLFilm");
             } catch (Exception e) {
-               AlertUtils.getAlert(fd.getMessUpdate(), Alert.AlertType.ERROR).show(); 
+                AlertUtils.getAlert(fd.getMessUpdate(), Alert.AlertType.ERROR).show();
             }
         }
 
     }
+
     @FXML
     public void resetButtonHandler(ActionEvent event) {
         this.txtName.clear();
@@ -237,6 +239,7 @@ public class FXMLEditFilmController implements Initializable {
             this.vBoxActors.setVisible(false);
         }
     }
+
     @FXML
     public void buttonSaveHandlerActor(Actors actor) {
         buttonSave.setOnAction((event) -> {
@@ -255,6 +258,7 @@ public class FXMLEditFilmController implements Initializable {
             }
         });
     }
+
     @FXML
     public void buttonResetHandlerActor() {
         buttonClear.setOnAction((event) -> {
@@ -295,8 +299,11 @@ public class FXMLEditFilmController implements Initializable {
         this.txtDirector.setText(this.film.getDirector());
 
         this.txtImage.setText(this.film.getImageUrl());
-        File f = new File(this.film.getImageUrl());
-        Image imageFilm = new Image(f.toURI().toString());
+        String view = this.film.getImageUrl();
+        Path path = Paths.get(view);
+        String fileName = path.getFileName().toString();
+//        File f = new File(this.film.getImageUrl());
+        Image imageFilm = new Image("/images/"+fileName);
         imageViewFilm.setImage(imageFilm);
 
         this.setFilmGenre = this.film.getListGenre();
@@ -343,9 +350,9 @@ public class FXMLEditFilmController implements Initializable {
             listChoiceActors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         });
-        this.listViewGender.setOnMouseClicked((event) ->{   
-                        
-            setFilmGenre.add(this.listViewGender.getSelectionModel().getSelectedItem());         
+        this.listViewGender.setOnMouseClicked((event) -> {
+
+            setFilmGenre.add(this.listViewGender.getSelectionModel().getSelectedItem());
             listChoiceGenre.setItems(FXCollections.observableList(new ArrayList<>(setFilmGenre)));
             listChoiceGenre.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 

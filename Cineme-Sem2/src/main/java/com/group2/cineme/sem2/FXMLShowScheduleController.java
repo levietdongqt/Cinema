@@ -17,7 +17,10 @@ import Utils.MyException;
 import static com.group2.cineme.sem2.App.scene;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -110,11 +113,12 @@ public class FXMLShowScheduleController implements Initializable {
         loadDataView(LocalDateTime.now());
         loadViewComboBoxFilm();
     }
+
     @FXML
     public void buttonUndoHandler() {
         this.tableViewSchedule.setItems(FXCollections.observableList(films));
     }
-    
+
     public void loadTableView() {
 
         TableColumn<Film, String> colDay = new TableColumn("DAY-SHOWTIME");
@@ -131,16 +135,20 @@ public class FXMLShowScheduleController implements Initializable {
         TableColumn<Film, ImageView> colFilmView = new TableColumn("IMAGE");
         colFilmView.setCellValueFactory((p) -> {
             Film sc = p.getValue();
-            String filmImage = sc.getImageUrl();
+            String view = sc.getImageUrl();
             ImageView imageView = new ImageView();
-            File file = new File(filmImage);
-            Image image = new Image(file.toURI().toString());
+            String projectPath = System.getProperty("user.dir");
+            if(!projectPath.endsWith("Cineme-sem2")){
+                projectPath = new File(projectPath).getParentFile().toString();
+            }
+            File f = new File(projectPath+"/"+view);
+            Image image = new Image(f.toURI().toString());
             imageView.setImage(image);
-            imageView.setFitWidth(220);
-            imageView.setFitHeight(250);
+            imageView.setFitWidth(200);
+            imageView.setFitHeight(230);
             return new SimpleObjectProperty<>(imageView);
         });
-        colFilmView.setPrefWidth(220);
+        colFilmView.setPrefWidth(200);
         TableColumn<Film, String> colNameFilm = new TableColumn("NAME");
         colNameFilm.setCellValueFactory((o) -> {
             Film sc = o.getValue();
@@ -202,32 +210,32 @@ public class FXMLShowScheduleController implements Initializable {
                 ScheduleDAO sd = new ScheduleDAO();
                 RoomSeatDetailDAO rsdd = new RoomSeatDetailDAO();
                 TicketDAO td = new TicketDAO();
-                try {                  
+                try {
                     Schedule schedule = sd.getById(cb.getSelectionModel().getSelectedItem().getScheduleID(), Schedule.class);
-                    if(schedule.getStartTime().isBefore(LocalDateTime.now().minusSeconds(60))){      
+                    if (schedule.getStartTime().isBefore(LocalDateTime.now().minusSeconds(60))) {
                         schedule.setStatus(false);
                         sd.update(schedule);
                     }
-                    if (schedule.isStatus()== false) {
-                        throw new MyException("Time is end!!!!");                    
+                    if (schedule.isStatus() == false) {
+                        throw new MyException("Time is end!!!!");
                     }
-                List<Ticket> tickets = td.getTicketBySchedule(schedule);
-                RoomType roomtype = schedule.getRoomTypeDetail().getRoomType();             
-                int countSeatDetails = rsdd.countSeatBySchedule(roomtype.getrTypeID());
-                    if(tickets.size()==countSeatDetails){
+                    List<Ticket> tickets = td.getTicketBySchedule(schedule);
+                    RoomType roomtype = schedule.getRoomTypeDetail().getRoomType();
+                    int countSeatDetails = rsdd.countSeatBySchedule(roomtype.getrTypeID());
+                    if (tickets.size() == countSeatDetails) {
                         schedule.setStatus(false);
                         sd.update(schedule);
                         throw new Error("Room is full");
-                    } 
+                    }
                 } catch (MyException | Error ex) {
-                    String info = ex.getMessage() + "\n"+ "Are you reload the table?";
+                    String info = ex.getMessage() + "\n" + "Are you reload the table?";
                     Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
                     Optional<ButtonType> results = alert.showAndWait();
                     if (results.get().getText().equalsIgnoreCase("OK")) {
-                       loadDataView(LocalDateTime.now());
-                       loadViewComboBoxFilm();
+                        loadDataView(LocalDateTime.now());
+                        loadViewComboBoxFilm();
                     }
-                }catch (Exception ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(FXMLShowScheduleController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
@@ -274,6 +282,7 @@ public class FXMLShowScheduleController implements Initializable {
         }
         this.tableViewSchedule.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;");
     }
+
     public void loadDataView(LocalDateTime dateTime) {
         ScheduleDAO sd = new ScheduleDAO();
         FilmDAO fd = new FilmDAO();
