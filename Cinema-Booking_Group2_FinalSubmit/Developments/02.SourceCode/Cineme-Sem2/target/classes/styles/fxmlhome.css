@@ -1,0 +1,86 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+/*.mainFxmlClass {
+
+}*/
+
+*{
+    -fx-font-family:sans-serif;
+}
+
+VBox.popup{
+    -fx-background-color:#ffffff;
+    -fx-font-size:10;
+    -fx-spacing:20;
+    -fx-padding:20;
+    -fx-alignment:TOP_CENTER;
+    -fx-border-style:none;
+    -fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.2),10,0,0,0)
+
+}
+
+HBox.labelpopup{
+    -fx-font-size:15;
+}
+Label.labelpopup{
+    -fx-text-fill:white;
+}
+Button.buttonPopup{
+    -fx-pref-width:200;
+    -fx-pref-height:40;
+    -fx-background-color:#291400;
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+    -fx-font-size:12;
+}
+
+AnchorPane{
+    -fx-background-color:#333333;
+}
+Label.labelSession{
+    -fx-text-fill:#291400;
+}
+HBox.session{
+    -fx-spacing:10;
+}
+.buttonHome{
+    -fx-background-color:#333333;
+}
+
+
+/*btn dark*/
+.dark {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+}
+.dark {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+.dark:hover {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(255,255,255,0),rgba(114,131,148,0.9) );
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+}

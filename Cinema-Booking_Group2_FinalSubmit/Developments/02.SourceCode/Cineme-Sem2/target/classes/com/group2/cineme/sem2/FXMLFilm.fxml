@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="vboxShowFilm" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFilmController">
+   <children>
+      <HBox>
+         <children>
+            <Text fx:id="textTableFilm" fill="#32e8a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Table Film" wrappingWidth="132.27783203125">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <effect>
+                  <Lighting specularConstant="0.39">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.33528265357017517" green="0.8421052694320679" blue="0.6562703251838684" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Text>
+            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+               <children>
+                  <TextField fx:id="txtName" prefHeight="26.0" prefWidth="543.0" promptText="Search By Name" styleClass="textSearch" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#buttonAddNewHandler" prefHeight="31.0" prefWidth="106.0" text="New Film" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="#fcf8f8" glyphName="PLUS" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <TableView fx:id="tableViewFilm" prefWidth="758.0" styleClass="tableView" VBox.vgrow="ALWAYS" />
+      <HBox>
+         <children>
+            <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="199.0" promptText="Search By StartDate" styleClass="textSearch" />
+            <Button mnemonicParsing="false" onAction="#buttonSearchByDate" text="Search">
+               <graphic>
+                  <FontAwesomeIcon glyphName="SEARCH" />
+               </graphic>
+            </Button>
+            <ComboBox fx:id="comboGenres" prefHeight="25.0" prefWidth="200.0" promptText="Search By Genre" styleClass="comboBox" />
+            <Button mnemonicParsing="false" onAction="#buttonSearchByGenre" text="Search">
+               <graphic>
+                  <FontAwesomeIcon glyphName="SEARCH" />
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../styles/fxmlshowschedule.css" />
+      <URL value="@../../../../styles/fxmlfilm.css" />
+   </stylesheets>
+</VBox>
