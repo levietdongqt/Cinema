@@ -57,16 +57,16 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" onAction="#DashboardButtonHandler" prefHeight="58.0" prefWidth="121.0" styleClass="buttonPopup" text="DASDBOARD" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#DashboardButtonHandler" prefHeight="58.0" prefWidth="121.0" styleClass="dark" text="DASDBOARD" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Button>
-                  <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" prefHeight="51.0" styleClass="buttonPopup" text="BOOKING" />
-                  <Button fx:id="btnBill" mnemonicParsing="false" onAction="#billButtonHandler" styleClass="buttonPopup" text="BILL MANAGER" />
-                  <Button mnemonicParsing="false" onAction="#loadEmpButtonHandler" styleClass="buttonPopup" text="CUS. MANAGER" />
-                  <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="buttonPopup" text="EMP. MANAGER" />
-                  <Button fx:id="btnFilm" mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="buttonPopup" text="FILM MANAGER" />
-                  <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="buttonPopup" text="SCHE. MANAGER" />
+                  <Button fx:id="btnBooking" mnemonicParsing="false" onAction="#loadShowSchedule" prefHeight="51.0" styleClass="dark" text="BOOKING" />
+                  <Button fx:id="btnBill" mnemonicParsing="false" onAction="#billButtonHandler" styleClass="dark" text="BILL MANAGER" />
+                  <Button mnemonicParsing="false" onAction="#loadEmpButtonHandler" styleClass="dark" text="CUS. MANAGER" />
+                  <Button fx:id="btnEmp" mnemonicParsing="false" onAction="#loadAdmin" styleClass="dark" text="EMP. MANAGER" />
+                  <Button fx:id="btnFilm" mnemonicParsing="false" onAction="#filmButtonHandler" styleClass="dark" text="FILM MANAGER" />
+                  <Button fx:id="btnSche" mnemonicParsing="false" onAction="#loadNewSchedule" styleClass="dark" text="SCHE. MANAGER" />
                   <ComboBox fx:id="report" onAction="#loadFXMLReport" prefHeight="46.0" prefWidth="108.0" promptText="Report" styleClass="list-cell" />
                   <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>

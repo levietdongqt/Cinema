@@ -155,8 +155,8 @@ public class FXMLPrintBillController implements Initializable {
             });
         }
         this.txtPro.setText(text3);
-        this.txtDis.setText(String.format("-%d", discount));
-        this.txtTotal.setText(formatter.format(total) + " VND");
+        this.txtDis.setText("-"+formatter.format(discount).replace(",", "."));
+        this.txtTotal.setText(formatter.format(total).replace(",", ".") + " VND");
         SessionUtil.getProductList().clear();
         SessionUtil.getTicketList().clear();
 

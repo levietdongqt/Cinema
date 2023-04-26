@@ -52,6 +52,9 @@ HBox.session{
 
 /*btn dark*/
 .dark {
+    -fx-pref-width:200;
+    -fx-pref-height:40;
+    -fx-font-weight: bold;
     -fx-background-color:
             #090a0c,
             linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
@@ -63,7 +66,7 @@ HBox.session{
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
-    -fx-font-size: 12px;
+    -fx-font-size: 9px;
     -fx-padding: 10 20 10 20;
 }
 .dark {
@@ -81,6 +84,6 @@ HBox.session{
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
-    -fx-font-size: 12px;
+    -fx-font-size: 10px;
     -fx-padding: 10 20 10 20;
 }
