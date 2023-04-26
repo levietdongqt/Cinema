@@ -11,6 +11,7 @@ import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
 import Utils.AlertUtils;
+import Utils.MyException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +24,8 @@ import java.time.LocalDate;
 
 import java.util.*;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 
@@ -520,9 +523,14 @@ public class FXMLEditFilmController implements Initializable {
         txtStart.setOnAction((event) -> {
             boolean errorBD = false;
             try {
-                film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
+                LocalDate endDate = txtEnd.getValue().minusDays(10);
+                LocalDate startDate = txtStart.getValue();
+                if(startDate.isAfter(endDate)){
+                    throw new MyException("StartDate must be less than EndDate 10 days");
+                }
+                film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));             
                 errorBD = true;
-            } catch (Error | NullPointerException ex) {
+            } catch (Error | NullPointerException | MyException ex) {
                 errorStart.setVisible(true);
                 errorStart.setText(ex.getMessage());
             } finally {
@@ -535,7 +543,7 @@ public class FXMLEditFilmController implements Initializable {
             boolean errorBD = false;
             try {
                 film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
-                errorBD = true;
+                errorBD = true;              
             } catch (Error ex) {
                 errorEnd.setVisible(true);
                 errorEnd.setText(ex.getMessage());
@@ -544,8 +552,8 @@ public class FXMLEditFilmController implements Initializable {
                 errorEnd.setText("Must be set startDate");
             } finally {
                 if (errorBD == true) {
-                    errorEnd.setVisible(false);
-                }
+                    errorEnd.setVisible(false);                  
+                }              
             }
         });
         txtImage.textProperty().addListener((observable) -> {

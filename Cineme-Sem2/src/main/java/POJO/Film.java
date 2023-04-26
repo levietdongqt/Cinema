@@ -172,7 +172,8 @@ public class Film implements Serializable{
         Date patternNow = Date.valueOf(LocalDate.now());
         if (startDate.before(patternNow)) {
             throw new Error("Start Date Film must > " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        } else {
+        }
+        else {
             this.startDate = startDate;
         }
     }

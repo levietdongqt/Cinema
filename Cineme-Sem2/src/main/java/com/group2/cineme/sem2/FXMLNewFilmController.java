@@ -11,6 +11,7 @@ import POJO.Actors;
 import POJO.Film;
 import POJO.FilmGenre;
 import Utils.AlertUtils;
+import Utils.MyException;
 import Utils.SessionUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -467,6 +468,7 @@ public class FXMLNewFilmController implements Initializable {
 
     public Film validateFilm() {
         Film film = new Film();
+        
         film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
         film.setEndDate(java.sql.Date.valueOf(txtEnd.getValue()));
         this.txtName.textProperty().addListener((observable) -> {
@@ -534,11 +536,17 @@ public class FXMLNewFilmController implements Initializable {
             boolean errorBD = false;
             try {
                 film.setStartDate(java.sql.Date.valueOf(txtStart.getValue()));
-                errorBD = true;
-            } catch (Error | NullPointerException ex) {
+                LocalDate endDate = txtEnd.getValue().minusDays(10);
+                LocalDate startDate = txtStart.getValue();
+                if(startDate.isAfter(endDate)){
+                    throw new Utils.MyException("StartDate must be less than EndDate 10 days");
+                }
+                errorBD = true;               
+            } catch (Error | NullPointerException | MyException ex) {
                 errorStart.setVisible(true);
                 errorStart.setText(ex.getMessage());
-            } finally {
+            } 
+            finally {
                 if (errorBD == true) {
                     errorStart.setVisible(false);
                 }
