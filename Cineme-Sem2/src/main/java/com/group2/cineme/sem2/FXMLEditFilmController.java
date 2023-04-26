@@ -152,6 +152,7 @@ public class FXMLEditFilmController implements Initializable {
     @FXML
     public void uploadImageHandler(ActionEvent event) {
         File f = null;
+        String textPath = "";
         FileChooser filechooser = new FileChooser();
         filechooser.setTitle("Choose Image:");
         filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
@@ -159,7 +160,13 @@ public class FXMLEditFilmController implements Initializable {
         if (selectedFile != null) {
             Path copied = Paths.get(selectedFile.getPath());
             String s = copied.getFileName().toString();
-            f = new File("src\\main\\resources\\images\\" + s);
+            
+            String projectPath = System.getProperty("user.dir");
+            if(!projectPath.endsWith("Cineme-Sem2")){
+                projectPath = new File(projectPath).getParentFile().toString();
+            }
+            textPath = "src\\main\\resources\\images\\"+s;
+            f = new File(projectPath+"\\"+textPath);
             Path target = f.toPath();
             try {
                 Files.copy(copied, target, StandardCopyOption.REPLACE_EXISTING);
@@ -168,7 +175,7 @@ public class FXMLEditFilmController implements Initializable {
             }
         }
         if (f != null) {
-            this.txtImage.setText(f.getPath());
+            this.txtImage.setText(textPath);
             Image imageFilm = new Image(f.toURI().toString());
             imageViewFilm.setImage(imageFilm);
         } else {
@@ -300,10 +307,12 @@ public class FXMLEditFilmController implements Initializable {
 
         this.txtImage.setText(this.film.getImageUrl());
         String view = this.film.getImageUrl();
-        Path path = Paths.get(view);
-        String fileName = path.getFileName().toString();
-//        File f = new File(this.film.getImageUrl());
-        Image imageFilm = new Image("/images/"+fileName);
+         String projectPath = System.getProperty("user.dir");
+            if(!projectPath.endsWith("Cineme-Sem2")){
+                projectPath = new File(projectPath).getParentFile().toString();
+            }
+            File f = new File(projectPath+"/"+view);
+        Image imageFilm = new Image(f.toURI().toString());
         imageViewFilm.setImage(imageFilm);
 
         this.setFilmGenre = this.film.getListGenre();
@@ -311,7 +320,7 @@ public class FXMLEditFilmController implements Initializable {
         this.setActors = this.film.getListActors();
         listChoiceActors.setItems(FXCollections.observableList(new ArrayList<>(setActors)));
 
-        List<Integer> limitAgeList = List.of(13, 16, 18);
+        List<Integer> limitAgeList = List.of(0,13, 16, 18);
         this.limitAge.setItems(FXCollections.observableList(limitAgeList));
 
         this.txtStart.setEditable(false);

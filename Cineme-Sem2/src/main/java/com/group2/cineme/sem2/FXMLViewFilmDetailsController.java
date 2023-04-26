@@ -76,14 +76,18 @@ public class FXMLViewFilmDetailsController implements Initializable {
         this.textName.setText(film.getFilmName());
         this.txtID.setText(film.getFilmID());
         this.txtDirector.setText(film.getDirector());
-        this.txtAge.setText(String.format("%s", film.getLimitAge()));
+        if(film.getLimitAge()==0){
+            this.txtAge.setText("P");
+        }else{
+            this.txtAge.setText("C"+film.getLimitAge());
+        }
         this.txtStartDate.setText(film.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         this.txtEndDate.setText(film.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         this.txtDescription.setText(film.getDescription());
 
         String view = film.getImageUrl();
         String projectPath = System.getProperty("user.dir");
-        if (!projectPath.endsWith("Cineme-sem2")) {
+        if (!projectPath.endsWith("Cineme-Sem2")) {
             projectPath = new File(projectPath).getParentFile().toString();
         }
         File f = new File(projectPath + "/" + view);

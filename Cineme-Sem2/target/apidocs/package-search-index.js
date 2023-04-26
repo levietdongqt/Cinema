@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"com.group2.cineme.sem2","l":"com.group2.cineme.sem2"}];updateSearchResults();

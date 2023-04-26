@@ -18,7 +18,7 @@
 
 <VBox fx:id="vboxShowFilm" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group2.cineme.sem2.FXMLFilmController">
    <children>
-      <HBox>
+      <HBox alignment="CENTER">
          <children>
             <Text fx:id="textTableFilm" fill="#32e8a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Table Film" wrappingWidth="132.27783203125">
                <font>
@@ -42,7 +42,7 @@
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                <children>
                   <TextField fx:id="txtName" prefHeight="26.0" prefWidth="543.0" promptText="Search By Name" styleClass="textSearch" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#buttonAddNewHandler" prefHeight="31.0" prefWidth="106.0" text="New Film" textAlignment="CENTER" textFill="WHITE">
+                  <Button maxHeight="20.0" maxWidth="100.0" mnemonicParsing="false" onAction="#buttonAddNewHandler" prefHeight="20.0" prefWidth="100.0" styleClass="dark" text="New Film" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIcon fill="#fcf8f8" glyphName="PLUS" />
                      </graphic>
@@ -57,14 +57,14 @@
       <TableView fx:id="tableViewFilm" prefWidth="758.0" styleClass="tableView" VBox.vgrow="ALWAYS" />
       <HBox>
          <children>
-            <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="199.0" promptText="Search By StartDate" styleClass="textSearch" />
-            <Button mnemonicParsing="false" onAction="#buttonSearchByDate" text="Search">
+            <DatePicker fx:id="datePicker" prefHeight="30.0" prefWidth="199.0" promptText="Search By StartDate" styleClass="textSearch" />
+            <Button maxHeight="20.0" maxWidth="100.0" mnemonicParsing="false" onAction="#buttonSearchByDate" prefHeight="20.0" prefWidth="100.0" styleClass="dark" text="Search">
                <graphic>
                   <FontAwesomeIcon glyphName="SEARCH" />
                </graphic>
             </Button>
-            <ComboBox fx:id="comboGenres" prefHeight="25.0" prefWidth="200.0" promptText="Search By Genre" styleClass="comboBox" />
-            <Button mnemonicParsing="false" onAction="#buttonSearchByGenre" text="Search">
+            <ComboBox fx:id="comboGenres" prefHeight="30.0" prefWidth="200.0" promptText="Search By Genre" styleClass="comboBox" />
+            <Button maxHeight="20.0" maxWidth="100.0" mnemonicParsing="false" onAction="#buttonSearchByGenre" prefHeight="20.0" prefWidth="100.0" styleClass="dark" text="Search">
                <graphic>
                   <FontAwesomeIcon glyphName="SEARCH" />
                </graphic>

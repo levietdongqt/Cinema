@@ -58,6 +58,7 @@ import javafx.util.Callback;
  * @author thuhuytran
  */
 public class FXMLFilmController implements Initializable {
+
     @FXML
     private VBox vboxShowFilm;
     @FXML
@@ -76,7 +77,7 @@ public class FXMLFilmController implements Initializable {
     List<Film> listFilm;
     List<FilmGenre> listGenre;
     private Popup popup = new Popup();
-    
+
     public FXMLFilmController() {
 
     }
@@ -88,6 +89,7 @@ public class FXMLFilmController implements Initializable {
         loadDataCombobox();
         searchByName();
         textTableFilm();
+        datePicker.setEditable(false);
         popup.setOnHiding((t) -> {   // Hiện lại trang Home khi popUp tắt
             vboxShowFilm.setDisable(false);
         });
@@ -99,14 +101,18 @@ public class FXMLFilmController implements Initializable {
     }
 
     public void buttonSearchByDate() {
-        List<Film> listAfterStartDate = listFilm.stream().filter((t) -> t.getStartDate().after(Date.valueOf(this.datePicker.getValue()))).collect(Collectors.toList());
+        try {
+            List<Film> listAfterStartDate = listFilm.stream().filter((t) -> t.getStartDate().after(Date.valueOf(this.datePicker.getValue()))).collect(Collectors.toList());
         if (listAfterStartDate.isEmpty()) {
-            AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
+            AlertUtils.getAlert("Don't have record you need, please check StartDate again,", Alert.AlertType.WARNING).show();
             this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
         } else {
             this.tableViewFilm.setItems(FXCollections.observableList(listAfterStartDate));
         }
-
+        } catch (Exception e) {
+            AlertUtils.getAlert("Please choose StartDate to search!!!!", Alert.AlertType.ERROR).show();
+        }
+        
     }
 
     public void searchByName() {
@@ -128,21 +134,26 @@ public class FXMLFilmController implements Initializable {
 
     }
 
-    public void buttonSearchByGenre() {
-        List<Film> listByGenre = new ArrayList<>();
-        listFilm.forEach((t) -> {
-            for (FilmGenre filmGenre : t.getListGenre()) {
-                if (filmGenre.getfGenreName().equals(this.comboGenres.getSelectionModel().getSelectedItem().getfGenreName())) {
-                    listByGenre.add(t);
+    public void buttonSearchByGenre() { 
+        try {
+            List<Film> listByGenre = new ArrayList<>();
+            listFilm.forEach((t) -> {
+                for (FilmGenre filmGenre : t.getListGenre()) {
+                    if (filmGenre.getfGenreName().equals(this.comboGenres.getSelectionModel().getSelectedItem().getfGenreName())) {
+                        listByGenre.add(t);
+                    }
                 }
+            });
+            if (listByGenre.isEmpty()) {
+                AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
+                this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
+            } else {
+                this.tableViewFilm.setItems(FXCollections.observableList(listByGenre));
             }
-        });
-        if (listByGenre.isEmpty()) {
-            AlertUtils.getAlert("Don't have record you need", Alert.AlertType.WARNING).show();
-            this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
-        } else {
-            this.tableViewFilm.setItems(FXCollections.observableList(listByGenre));
+        } catch (NullPointerException e) {
+            AlertUtils.getAlert("Please choose Genres to search!!!!", Alert.AlertType.ERROR).show();     
         }
+
     }
 
     public void buttonNewFilm() throws IOException {
@@ -167,7 +178,7 @@ public class FXMLFilmController implements Initializable {
         colDuration.setCellValueFactory(new PropertyValueFactory("duration"));
         colDuration.setPrefWidth(100);
 
-        TableColumn<Film,String> colStartDate = new TableColumn("START-DATE");
+        TableColumn<Film, String> colStartDate = new TableColumn("START-DATE");
         colStartDate.setCellValueFactory((p) -> {
             Film f = p.getValue();
             String date = f.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM"));
@@ -179,8 +190,18 @@ public class FXMLFilmController implements Initializable {
         colEndDate.setCellValueFactory(new PropertyValueFactory("endDate"));
         colEndDate.setPrefWidth(100);
 
-        TableColumn colLimitAge = new TableColumn("AGE");
-        colLimitAge.setCellValueFactory(new PropertyValueFactory("limitAge"));
+        TableColumn<Film,String> colLimitAge = new TableColumn("AGE");
+        colLimitAge.setCellValueFactory((p) -> {
+            Film f = p.getValue();
+            int age = f.getLimitAge();
+            String text = "";
+            if(age==0){
+                text = "P";
+            }else{
+                text = "C"+age;
+            }
+            return new SimpleObjectProperty<>(text);
+        });
         colLimitAge.setPrefWidth(100);
 
         TableColumn colViewFilm = new TableColumn("VIEW");
@@ -193,10 +214,10 @@ public class FXMLFilmController implements Initializable {
             Film p = column.getValue();
             String view = p.getImageUrl();
             String projectPath = System.getProperty("user.dir");
-            if(!projectPath.endsWith("Cineme-Sem2")){
+            if (!projectPath.endsWith("Cineme-Sem2")) {
                 projectPath = new File(projectPath).getParentFile().toString();
             }
-            File f = new File(projectPath+"/"+view);
+            File f = new File(projectPath + "/" + view);
             Image image = new Image(f.toURI().toString());
             imageView.setImage(image);
             imageView.setFitWidth(120);
@@ -359,7 +380,7 @@ public class FXMLFilmController implements Initializable {
         });
 
         this.tableViewFilm.getColumns().addAll(indexColumn, colImageURL, colFilmName, colGenre, colDirector, colLimitAge, colViewFilm, colDuration, colStartDate,
-                colButtonEdit, colDelete, colNewSchedule,colDetails);
+                colButtonEdit, colDelete, colNewSchedule, colDetails);
 
         ObservableList<TableColumn<Film, ?>> columns = this.tableViewFilm.getColumns();
         for (TableColumn<Film, ?> column : columns) {
@@ -377,6 +398,7 @@ public class FXMLFilmController implements Initializable {
 //            Logger.getLogger(FXMLFilmController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
         this.listFilm = SessionUtil.getMapFilm();
+        this.listFilm.sort((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate()));
         this.tableViewFilm.setItems(FXCollections.observableList(listFilm));
     }
 

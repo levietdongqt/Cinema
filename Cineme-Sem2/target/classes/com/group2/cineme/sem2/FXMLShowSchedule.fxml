@@ -13,15 +13,15 @@
    <children>
       <HBox alignment="BOTTOM_LEFT">
          <children>
-            <Button mnemonicParsing="false" onAction="#bookTicketHandler" prefWidth="100.0" text="Book Ticket">
+            <Button mnemonicParsing="false" onAction="#bookTicketHandler" prefWidth="100.0" text="Ticket">
                <graphic>
                   <FontAwesomeIcon fill="#fdfdfd" glyphName="HOME" />
                </graphic>
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <ComboBox fx:id="comboBoxDay" prefWidth="150.0" promptText="By Day" styleClass="comboBox" />
-            <ComboBox fx:id="comboBoxFilm" prefWidth="150.0" promptText="By Film" styleClass="comboBox" />
+            <ComboBox fx:id="comboBoxDay" prefHeight="32.0" prefWidth="150.0" promptText="By Day" styleClass="comboBox" />
+            <ComboBox fx:id="comboBoxFilm" prefHeight="32.0" prefWidth="150.0" promptText="By Film" styleClass="comboBox" />
             <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets />

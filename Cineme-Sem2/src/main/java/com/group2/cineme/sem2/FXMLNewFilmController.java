@@ -301,7 +301,7 @@ public class FXMLNewFilmController implements Initializable {
     }
 
     public void loadDataOrSetDefault() {
-        List<Integer> limitAgeList = List.of(13, 16, 18);
+        List<Integer> limitAgeList = List.of(0,13, 16, 18);
         this.limitAge.setItems(FXCollections.observableList(limitAgeList));
 
         this.txtStart.setEditable(false);

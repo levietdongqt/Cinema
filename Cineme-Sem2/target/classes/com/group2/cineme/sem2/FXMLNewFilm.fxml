@@ -45,7 +45,7 @@
    <children>
       <HBox GridPane.rowIndex="1">
          <children>
-            <Label alignment="CENTER" text="FILM ID*:">
+            <Label alignment="CENTER" text="FILM ID:">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -147,7 +147,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" GridPane.columnIndex="2" GridPane.rowIndex="5">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#uploadImageHandler" prefHeight="23.0" prefWidth="150.0" text="LOAD FILE">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#uploadImageHandler" prefHeight="23.0" prefWidth="150.0" styleClass="dark" text="LOAD FILE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -203,10 +203,10 @@
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></Button>
-      <VBox fx:id="vBoxActors" alignment="CENTER" styleClass="hboxActors" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+      <VBox fx:id="vBoxActors" alignment="CENTER" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="9" />
       <HBox alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="14">
          <children>
-            <Button mnemonicParsing="false" onAction="#addActorButtonHandler" text="ADD ACTORS">
+            <Button mnemonicParsing="false" onAction="#addActorButtonHandler" styleClass="dark" text="ADD ACTORS">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -245,13 +245,13 @@
             <Label fx:id="errorImage" text="Label" textFill="#e62b01" />
          </children>
       </VBox>
-      <HBox alignment="TOP_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="4">
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
          <children>
-            <Button mnemonicParsing="false" onAction="#removeGenre" text="REMOVE GENRE">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#removeGenre" styleClass="dark" text="REMOVE GENRE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#removeActor" text="REMOVE ACTORS">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#removeActor" styleClass="dark" text="REMOVE ACTORS">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -259,12 +259,12 @@
       </HBox>
       <HBox alignment="BOTTOM_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="15">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveButtonHandler" prefHeight="23.0" prefWidth="73.0" text="SAVE">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveButtonHandler" prefHeight="30.0" prefWidth="133.0" styleClass="sale" text="SAVE" textFill="#fffefd">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#resetButtonHandler" prefHeight="23.0" prefWidth="75.0" text="RESET">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#resetButtonHandler" prefHeight="30.0" prefWidth="133.0" styleClass="sale" text="RESET" textAlignment="CENTER" textFill="#3f943d">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

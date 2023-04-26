@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -74,6 +75,8 @@ public class FXMLFilmReportController implements Initializable {
     private Popup popup = new Popup();
     int month;
     int year;
+    private DecimalFormat formatter = new DecimalFormat("#,###");
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -189,12 +192,26 @@ public class FXMLFilmReportController implements Initializable {
         colName.setPrefWidth(300);
         TableColumn colView = new TableColumn("TICKET");
         colView.setCellValueFactory(new PropertyValueFactory("viewFilm"));
-        TableColumn colStatus = new TableColumn("STATUS");
-        colStatus.setCellValueFactory(new PropertyValueFactory("status"));
+        TableColumn<Film,String> colStatus = new TableColumn("STATUS");
+        colStatus.setCellValueFactory((p) -> {
+            Film f = p.getValue();
+            String status = "";
+            if(f.getStatus()){
+                status = "Movie is active";
+            }else{
+                status = "Movie not working";
+            }
+            return new SimpleObjectProperty<>(status);
+        });
         TableColumn colSchedule = new TableColumn("TOTAL SCHEDULE");
         colSchedule.setCellValueFactory(new PropertyValueFactory("countSchedule"));
-        TableColumn colTicket = new TableColumn("REVENUE");
-        colTicket.setCellValueFactory(new PropertyValueFactory("sumPriceTicket"));
+        TableColumn<Film,String> colTicket = new TableColumn("REVENUE");
+        colTicket.setCellValueFactory((p) -> {
+            Film f = p.getValue();
+            long money = f.getSumPriceTicket();
+            String number = formatter.format(money).replace(",",".");
+            return new SimpleObjectProperty<>(number);
+        });
         colTicket.setPrefWidth(250);
         TableColumn sttCol = new TableColumn("ID");
         sttCol.setCellFactory((column) -> {
@@ -239,8 +256,8 @@ public class FXMLFilmReportController implements Initializable {
         });
         this.tableViewReport.setItems(FXCollections.observableList(lists));
         
-        this.labelTotalTicket.setText(String.format("%d (ticket)", countTicket));
-        this.labelTotalPrice.setText(String.format("%d (VND)", sumPriceTicket));
+        this.labelTotalTicket.setText(String.format("%d (tickets)", countTicket));
+        this.labelTotalPrice.setText(formatter.format(sumPriceTicket).replace(",", ".")+" (VND)");
         this.labelTotalFilm.setText(String.format("%d (films)", lists.size()));
         this.labelTotalSche.setText(String.format("%d (sches)", countSche));
     }
