@@ -13,6 +13,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Reflection;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javax.persistence.Query;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -270,4 +278,232 @@ public class EmployeeDAO extends GenericDAO<Employee, String> {
         }
     }
 
+    //set màu cho button ds2 is2 là màu khi hover
+       public void setShadowBtn(Color ds, Color is, Color ds2, Color is2, Button btn, Button hover) {
+
+        DropShadow drop = new DropShadow();
+        drop.setRadius(127);
+        drop.setHeight(130);
+        drop.setWidth(255);
+        drop.setSpread(0.5);
+        drop.setColor(ds);
+
+        InnerShadow inner = new InnerShadow();
+        inner.setRadius(29.5);
+        inner.setHeight(15);
+        inner.setWidth(15);
+        inner.setChoke(0.4);
+        inner.setColor(is);
+
+        Reflection ref = new Reflection();
+        ref.setFraction(0.5);
+
+        inner.setInput(ref);
+        drop.setInput(inner);
+        btn.setEffect(drop);
+
+        hover.setOnMouseEntered((MouseEvent event)
+                -> {
+            DropShadow dropShadow = new DropShadow();
+            dropShadow.setRadius(127);
+            dropShadow.setHeight(150);
+            dropShadow.setWidth(255);
+            dropShadow.setSpread(0.5);
+            dropShadow.setColor(ds2);
+
+            InnerShadow innerShadow = new InnerShadow();
+            innerShadow.setRadius(29.5);
+            innerShadow.setHeight(15);
+            innerShadow.setWidth(15);
+            innerShadow.setChoke(0.4);
+            innerShadow.setColor(is2);
+
+            Reflection reflection = new Reflection();
+            reflection.setFraction(0.5);
+
+            innerShadow.setInput(reflection);
+            dropShadow.setInput(innerShadow);
+            btn.setEffect(dropShadow);
+        });
+
+        hover.setOnMouseExited((MouseEvent event)
+                -> {
+            DropShadow drop2 = new DropShadow();
+            drop2.setRadius(127);
+            drop2.setHeight(150);
+            drop2.setWidth(255);
+            drop2.setSpread(0.5);
+            drop2.setColor(ds);
+
+            InnerShadow inner2 = new InnerShadow();
+            inner2.setRadius(29.5);
+            inner2.setHeight(15);
+            inner2.setWidth(15);
+            inner2.setChoke(0.4);
+            inner2.setColor(is);
+
+            Reflection ref2 = new Reflection();
+            ref2.setFraction(0.5);
+
+            inner2.setInput(ref2);
+            drop2.setInput(inner2);
+            btn.setEffect(drop2);
+        });
+
+    }
+//set màu cho label ds2 is2 là màu khi hover
+    public void setShadowLB(Color ds, Color is, Color ds2, Color is2, Label btn, AnchorPane hover) {
+
+        DropShadow drop = new DropShadow();
+//        drop.setOffsetY(-50);
+        drop.setRadius(127);
+        drop.setHeight(255);
+        drop.setWidth(255);
+        drop.setSpread(0.5);
+        drop.setColor(ds);
+
+        InnerShadow inner = new InnerShadow();
+        inner.setRadius(29.5);
+        inner.setHeight(15);
+        inner.setWidth(15);
+        inner.setChoke(0.4);
+        inner.setColor(is);
+
+        Reflection ref = new Reflection();
+        ref.setFraction(0.5);
+
+        inner.setInput(ref);
+        drop.setInput(inner);
+        btn.setEffect(drop);
+
+        hover.setOnMouseEntered((MouseEvent event)
+                -> {
+            DropShadow dropShadow = new DropShadow();
+//            dropShadow.setOffsetY(-50);
+            dropShadow.setRadius(127);
+            dropShadow.setHeight(150);
+            dropShadow.setWidth(255);
+            dropShadow.setSpread(0.5);
+            dropShadow.setColor(ds2);
+
+            InnerShadow innerShadow = new InnerShadow();
+            innerShadow.setRadius(29.5);
+            innerShadow.setHeight(15);
+            innerShadow.setWidth(15);
+            innerShadow.setChoke(0.4);
+            innerShadow.setColor(is2);
+
+            Reflection reflection = new Reflection();
+            reflection.setFraction(0.5);
+
+            innerShadow.setInput(reflection);
+            dropShadow.setInput(innerShadow);
+            btn.setEffect(dropShadow);
+        });
+
+        hover.setOnMouseExited((MouseEvent event)
+                -> {
+            DropShadow drop2 = new DropShadow();
+//            drop2.setOffsetY(-50);
+            drop2.setRadius(127);
+            drop2.setHeight(150);
+            drop2.setWidth(255);
+            drop2.setSpread(0.5);
+            drop2.setColor(ds);
+
+            InnerShadow inner2 = new InnerShadow();
+            inner2.setRadius(29.5);
+            inner2.setHeight(15);
+            inner2.setWidth(15);
+            inner2.setChoke(0.4);
+            inner2.setColor(is);
+
+            Reflection ref2 = new Reflection();
+          
+            ref2.setFraction(0.5);
+
+            inner2.setInput(ref2);
+            drop2.setInput(inner2);
+            btn.setEffect(drop2);
+        });
+
+    }
+    
+    //set màu cho label ds2 is2 là màu khi hover
+    public void setShadowLB2(Color ds, Color is, Color ds2, Color is2, Label btn, AnchorPane hover) {
+
+        DropShadow drop = new DropShadow();
+//        drop.setOffsetY(-50);
+        drop.setRadius(127);
+        drop.setHeight(255);
+        drop.setWidth(255);
+        drop.setSpread(0.5);
+        drop.setColor(ds);
+
+        InnerShadow inner = new InnerShadow();
+        inner.setRadius(29.5);
+        inner.setHeight(15);
+        inner.setWidth(15);
+        inner.setChoke(0.4);
+        inner.setColor(is);
+
+//        Reflection ref = new Reflection();
+//        ref.setFraction(0.5);
+//
+//        inner.setInput(ref);
+        drop.setInput(inner);
+        btn.setEffect(drop);
+
+        hover.setOnMouseEntered((MouseEvent event)
+                -> {
+            DropShadow dropShadow = new DropShadow();
+//            dropShadow.setOffsetY(-50);
+            dropShadow.setRadius(127);
+            dropShadow.setHeight(150);
+            dropShadow.setWidth(255);
+            dropShadow.setSpread(0.5);
+            dropShadow.setColor(ds2);
+
+            InnerShadow innerShadow = new InnerShadow();
+            innerShadow.setRadius(29.5);
+            innerShadow.setHeight(15);
+            innerShadow.setWidth(15);
+            innerShadow.setChoke(0.4);
+            innerShadow.setColor(is2);
+
+//            Reflection reflection = new Reflection();
+//            reflection.setFraction(0.5);
+//
+//            innerShadow.setInput(reflection);
+            dropShadow.setInput(innerShadow);
+            btn.setEffect(dropShadow);
+        });
+
+        hover.setOnMouseExited((MouseEvent event)
+                -> {
+            DropShadow drop2 = new DropShadow();
+//            drop2.setOffsetY(-50);
+            drop2.setRadius(127);
+            drop2.setHeight(150);
+            drop2.setWidth(255);
+            drop2.setSpread(0.5);
+            drop2.setColor(ds);
+
+            InnerShadow inner2 = new InnerShadow();
+            inner2.setRadius(29.5);
+            inner2.setHeight(15);
+            inner2.setWidth(15);
+            inner2.setChoke(0.4);
+            inner2.setColor(is);
+
+//            Reflection ref2 = new Reflection();
+//          
+//            ref2.setFraction(0.5);
+//
+//            inner2.setInput(ref2);
+            drop2.setInput(inner2);
+            btn.setEffect(drop2);
+        });
+
+    }
 }

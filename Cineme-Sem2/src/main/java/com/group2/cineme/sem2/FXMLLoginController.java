@@ -49,6 +49,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -56,7 +57,8 @@ import javafx.scene.input.KeyCode;
  * @author BE BAU
  */
 public class FXMLLoginController implements Initializable {
-
+    @FXML
+    private AnchorPane apSigin;
     @FXML
     private Label cgv;
 
@@ -72,6 +74,7 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private Label welcom;
 
+    EmployeeDAO dao = new EmployeeDAO();
     static {
         loadData();
     }
@@ -129,52 +132,54 @@ public class FXMLLoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
-        DropShadow original = new DropShadow(20, Color.valueOf("blue"));
-        welcom.setEffect(original);
-        cgv.setEffect(original);
-
-        //set viền sáng vàng cho chữ cinemas
-        welcom.setOnMouseEntered((MouseEvent event)
-                -> {
-            DropShadow shadow = new DropShadow(50, Color.valueOf("#F8FF1C"));
-
-//            welcom.setStyle("-fx-text-fill:#ff2b00");
-            welcom.setEffect(shadow);
-            cgv.setEffect(shadow);
-
-        });
-
-        welcom.setOnMouseExited((MouseEvent event)
-                -> {
-            DropShadow shadow = new DropShadow(20, Color.valueOf("#F8FF1C"));
-//            welcom.setStyle("-fx-text-fill:#ff2b00");
-            welcom.setEffect(shadow);
-            cgv.setEffect(shadow);
-
-        });
-
-        //set viền sáng vàng cho chữ cgv 
-        cgv.setOnMouseEntered((MouseEvent event)
-                -> {
-            DropShadow shadow = new DropShadow(50, Color.valueOf("#F8FF1C"));
-
-//            welcom.setStyle("-fx-text-fill:#ff2b00");
-            welcom.setEffect(shadow);
-            cgv.setEffect(shadow);
-
-        });
-
-        cgv.setOnMouseExited((MouseEvent event)
-                -> {
-            DropShadow shadow = new DropShadow(20, Color.valueOf("#F8FF1C"));
-//            welcom.setStyle("-fx-text-fill:#ff2b00");
-            welcom.setEffect(shadow);
-            cgv.setEffect(shadow);
-
-        });
-
-
+//        //set vùng sáng mặc định cho 2 chữ khi vừa mới mở app lên 
+//        DropShadow original = new DropShadow(20, Color.valueOf("blue"));
+//        welcom.setEffect(original);
+//        cgv.setEffect(original);
+//
+//        //set viền sáng vàng cho chữ cinemas
+//        welcom.setOnMouseEntered((MouseEvent event)
+//                -> {
+//            DropShadow shadow = new DropShadow(50, Color.valueOf("#F8FF1C"));
+//
+////            welcom.setStyle("-fx-text-fill:#ff2b00");
+//            welcom.setEffect(shadow);
+//            cgv.setEffect(shadow);
+//
+//        });
+//
+//        welcom.setOnMouseExited((MouseEvent event)
+//                -> {
+//            DropShadow shadow = new DropShadow(20, Color.valueOf("#F8FF1C"));
+////            welcom.setStyle("-fx-text-fill:#ff2b00");
+//            welcom.setEffect(shadow);
+//            cgv.setEffect(shadow);
+//
+//        });
+//
+//        //set viền sáng vàng cho chữ cgv 
+//        cgv.setOnMouseEntered((MouseEvent event)
+//                -> {
+//            DropShadow shadow = new DropShadow(50, Color.valueOf("#F8FF1C"));
+//
+////            welcom.setStyle("-fx-text-fill:#ff2b00");
+//            welcom.setEffect(shadow);
+//            cgv.setEffect(shadow);
+//
+//        });
+//
+//        cgv.setOnMouseExited((MouseEvent event)
+//                -> {
+//            DropShadow shadow = new DropShadow(20, Color.valueOf("#F8FF1C"));
+////            welcom.setStyle("-fx-text-fill:#ff2b00");
+//            welcom.setEffect(shadow);
+//            cgv.setEffect(shadow);
+//
+//        });
+        
+        dao.setShadowBtn(Color.WHITE, Color.WHITE, new Color(0.0, 1.0, 1.0, 1.0), Color.WHITE, login_btn, login_btn);
+        dao.setShadowLB2(Color.WHITE, Color.WHITE, new Color(0.0, 1.0, 1.0, 1.0), Color.WHITE, cgv, apSigin);
+        dao.setShadowLB2(Color.WHITE, Color.WHITE, new Color(0.0, 1.0, 1.0, 1.0), Color.WHITE, welcom, apSigin);
     }
 
     public static void loadData() {

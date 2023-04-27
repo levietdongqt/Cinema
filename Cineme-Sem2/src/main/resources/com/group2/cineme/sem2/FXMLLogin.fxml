@@ -14,18 +14,18 @@
          <children>
             <AnchorPane layoutY="3.0" prefHeight="550.0" prefWidth="375.0" styleClass="login-l">
                <children>
-                  <Label fx:id="welcom" alignment="CENTER" layoutX="4.0" layoutY="140.0" prefHeight="404.0" prefWidth="367.0" styleClass="text-cgv" text="CINEMAS" textFill="RED">
+                  <Label fx:id="welcom" alignment="CENTER" layoutX="4.0" layoutY="275.0" prefHeight="89.0" prefWidth="367.0" styleClass="text-cgv" text="CINEMAS" textFill="RED">
                      <font>
                         <Font name="Comic Sans MS Bold" size="67.0" />
                      </font>
                   </Label>
-                  <Label fx:id="cgv" alignment="CENTER" layoutX="7.0" prefHeight="330.0" prefWidth="367.0" styleClass="text-cgv" text="CGV" textAlignment="CENTER" textFill="#ff2b00">
+                  <Label fx:id="cgv" alignment="CENTER" layoutX="4.0" layoutY="60.0" prefHeight="67.0" prefWidth="367.0" styleClass="text-cgv" text="CGV" textAlignment="CENTER" textFill="#ff2b00">
                      <font>
                         <Font name="Comic Sans MS Bold" size="96.0" />
                      </font>
                   </Label>
                </children></AnchorPane>
-            <AnchorPane layoutX="375.0" layoutY="3.0" prefHeight="550.0" prefWidth="382.0" styleClass="login-r">
+            <AnchorPane fx:id="apSigin" layoutX="375.0" layoutY="3.0" prefHeight="550.0" prefWidth="382.0" styleClass="login-r">
                <children>
                   <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="127.0" layoutY="187.0" size="10em" />
                   <Label layoutX="127.0" layoutY="213.0" text=" Login" textFill="WHITE">
@@ -50,7 +50,7 @@
                         <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" styleClass="x-close" wrappingWidth="8.428571701049805" />
                      </graphic>
                   </Button>
-                  <Button fx:id="login_btn" alignment="CENTER" layoutX="141.0" layoutY="412.0" mnemonicParsing="false" onAction="#btnLogin" prefHeight="36.0" prefWidth="105.0" styleClass="btn-submit" text="Login" textFill="WHITE">
+                  <Button fx:id="login_btn" alignment="CENTER" layoutX="139.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnLogin" prefHeight="36.0" prefWidth="105.0" styleClass="btn-submit" text="Login" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="18.0" />
                      </font>
