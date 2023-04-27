@@ -1,6 +1,10 @@
 package com.group2.cineme.sem2;
 
+import DAO.EmployeeDAO;
+import DAO.RoomSeatDetailDAO;
+import DAO.SeatMapDAO;
 import DAO.WorkSessionDAO;
+import POJO.SeatMap;
 import Utils.HibernateUtils;
 import Utils.updateStatusScheduleForFuture;
 import Utils.updateStatusScheduleForPass;
@@ -11,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Session;
 
 /**
@@ -30,8 +36,19 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Session ses = HibernateUtils.getFACTORY().openSession();
+        if(ses.find(SeatMap.class, "A1")==null){
+            try {
+                SeatMapDAO seatDAO = new SeatMapDAO();
+                seatDAO.addSeatMapList();
+                RoomSeatDetailDAO rsdDAO = new RoomSeatDetailDAO();
+                rsdDAO.addList();
+                EmployeeDAO emDao = new EmployeeDAO();
+                emDao.insert();
+            } catch (Exception ex) {
+                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         ses.clear();
-
         ses.close();
         scene = new Scene(loadFXML("FXMLLogin"));
         stage.setScene(scene);

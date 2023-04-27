@@ -138,7 +138,7 @@ public class FXMLFoodReportController implements Initializable {
         list.clear();
         list = proDAO.countOrderProduct(selectedYear, 0);
         loadDataTableView();
-        
+
     }
 
     @FXML
@@ -288,7 +288,7 @@ public class FXMLFoodReportController implements Initializable {
             if (selectedMonth == 0) {
                 fileChooser.setInitialFileName(String.valueOf(selectedYear));
             } else {
-                fileChooser.setInitialFileName(String.valueOf(selectedMonth) + "-" + String.valueOf(selectedYear));
+                fileChooser.setInitialFileName("Food_Report_" + String.valueOf(selectedMonth) + "-" + String.valueOf(selectedYear));
             }
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {

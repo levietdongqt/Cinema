@@ -28,7 +28,7 @@
             <AnchorPane fx:id="apSigin" layoutX="375.0" layoutY="3.0" prefHeight="550.0" prefWidth="382.0" styleClass="login-r">
                <children>
                   <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="127.0" layoutY="187.0" size="10em" />
-                  <Label layoutX="127.0" layoutY="213.0" text="Sign In" textFill="WHITE">
+                  <Label layoutX="127.0" layoutY="213.0" text=" Login" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="40.0" />
                      </font>

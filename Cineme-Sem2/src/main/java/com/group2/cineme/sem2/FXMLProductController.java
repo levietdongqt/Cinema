@@ -149,7 +149,7 @@ public class FXMLProductController implements Initializable {
             ImageView imageView = new ImageView();
             String view = item.getImgUrl();
             String projectPath = System.getProperty("user.dir");
-            if(!projectPath.endsWith("Cineme-sem2")){
+            if(!projectPath.endsWith("Cineme-Sem2")){
                 projectPath = new File(projectPath).getParentFile().toString();
             }
             File f = new File(projectPath+"/"+view);

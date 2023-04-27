@@ -132,8 +132,12 @@ public class Film implements Serializable{
     public void setFilmName(String filmName) throws Exception {
         if (filmName.trim().isEmpty()) {
             throw new Exception("Film name dont Empty");
-        }else if(!Pattern.matches("(([\\w]+[\\s]{0,1})+[.'!&:]{0,1}[\\s]{0,1})*([\\w]+[\\s]{0,1})+", filmName)){
+        }else if(!Pattern.matches("(([\\w]+[\\s]{0,1})+[.'!&:]{0,1}[\\s]{0,1})*([\\w]+[\\s]{0,1}[!]{0,1})+", filmName)){
             throw new Exception("Film name dont special characters except [.'!&:]");
+        }else if(filmName.contains("  ")){
+            throw new Exception("Film name dont have two white spaces");
+        }else if(filmName.length()>50){
+            throw new Exception("Film name must be < 50 letters");
         }
         else {
             this.filmName = filmName;
@@ -168,7 +172,8 @@ public class Film implements Serializable{
         Date patternNow = Date.valueOf(LocalDate.now());
         if (startDate.before(patternNow)) {
             throw new Error("Start Date Film must > " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        } else {
+        }
+        else {
             this.startDate = startDate;
         }
     }
@@ -186,10 +191,15 @@ public class Film implements Serializable{
     public void setEndDate(Date endDate) throws Error, NullPointerException {
         String startDateS = this.startDate.toString();
         LocalDate startDatePlus = LocalDate.parse(startDateS).plusDays(10);
+        LocalDate startDatePlus2 = LocalDate.parse(startDateS).plusDays(30);
         Date patternEndDate = Date.valueOf(startDatePlus);
+        Date patternEndDate2 = Date.valueOf(startDatePlus2);
         if (endDate.before(patternEndDate)) {
             throw new Error("End Date must be >" + startDatePlus.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        } else {
+        }else if(endDate.after(patternEndDate2)){
+            throw new Error("End Date dont have greater than Start Date 30 days");
+        } 
+        else {
             this.endDate = endDate;
         }
 
@@ -222,7 +232,7 @@ public class Film implements Serializable{
      */
     public void setImageUrl(String imageUrl) throws Exception {
         if (imageUrl.trim().isEmpty()) {
-            throw new Exception("Image is not null");
+            throw new Exception("Image is not null!!!!");
         } else {
             this.imageUrl = imageUrl;
         }
@@ -242,7 +252,11 @@ public class Film implements Serializable{
         if (director.trim().isEmpty()) {
             throw new Error("Director don't empty, please check again!!");
         }else if(!Pattern.matches("(([\\w]+[\\s]{0,1})+[.']{0,1}[\\s]{0,1})*([\\w]+[\\s]{0,1})+", director)){
-            throw new Error("Director dont have special characters except [.']");
+            throw new Error("Director dont have special characters except [.']!!!");
+        }else if(director.contains("  ")){
+            throw new Error("Director dont have two white spaces!!!");
+        }else if(director.length()>30){
+            throw new Error("Director must be < 30 letters!!!");
         }
         else {
             this.director= director;
@@ -275,7 +289,9 @@ public class Film implements Serializable{
      */
     public void setDescription(String description) throws Error{
         if(description.length()<=10){
-            throw new Error("Description must be greater than 10 letter, please check");
+            throw new Error("Description must be greater than 10 letter, please check again!!");
+        }else if(description.toLowerCase().contains("fuck")|| description.toLowerCase().contains("shit")|| description.toLowerCase().contains("bitch")){
+            throw new Error("Description dont contains foul language,please check again!!");
         }
         this.description=description;
     }

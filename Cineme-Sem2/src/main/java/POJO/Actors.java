@@ -74,9 +74,13 @@ public class Actors implements Serializable{
      */
     public void setActorName(String actorName) throws Exception {
         if(actorName.trim().isEmpty()){
-            throw new Exception("Actors name don't empty");
+            throw new Exception("Actors name don't empty!!");
         }else if(!Pattern.matches("(([\\w]+[\\s]{0,1})+[.']{0,1}[\\s]{0,1})*([\\w]+[\\s]{0,1})+", actorName)){
-            throw new Exception("Director dont have special characters except [.']");
+            throw new Exception("Actors dont have special characters except [.']!!");
+        }else if(actorName.length()>30){
+            throw new Exception("Actors must be <=30 letters");
+        }else if(actorName.contains("  ")){
+            throw new Exception("Actors dont have two white spaces");
         }
         else{
             this.actorName = actorName;

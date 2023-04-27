@@ -1,0 +1,1 @@
+moduleSearchIndex = [{"l":"com.group2.cineme.sem2"}];updateSearchResults();

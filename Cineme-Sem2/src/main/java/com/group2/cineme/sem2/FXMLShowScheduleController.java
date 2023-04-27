@@ -138,21 +138,26 @@ public class FXMLShowScheduleController implements Initializable {
             String view = sc.getImageUrl();
             ImageView imageView = new ImageView();
             String projectPath = System.getProperty("user.dir");
-            if(!projectPath.endsWith("Cineme-sem2")){
+            if(!projectPath.endsWith("Cineme-Sem2")){
                 projectPath = new File(projectPath).getParentFile().toString();
             }
             File f = new File(projectPath+"/"+view);
             Image image = new Image(f.toURI().toString());
             imageView.setImage(image);
             imageView.setFitWidth(200);
-            imageView.setFitHeight(230);
+            imageView.setFitHeight(200*(1.4));
             return new SimpleObjectProperty<>(imageView);
         });
         colFilmView.setPrefWidth(200);
         TableColumn<Film, String> colNameFilm = new TableColumn("NAME");
         colNameFilm.setCellValueFactory((o) -> {
             Film sc = o.getValue();
-            String filmName = sc.getFilmName();
+            String filmName = "";
+            if(sc.getLimitAge()==0){
+                filmName = sc.getFilmName()+" (P)";
+            }else{
+                filmName = sc.getFilmName()+" (C"+sc.getLimitAge()+")";
+            }                  
             return new SimpleObjectProperty<>(filmName);
         });
         colNameFilm.setPrefWidth(250);

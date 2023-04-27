@@ -96,7 +96,7 @@ public class FXMLBillController implements Initializable {
     @FXML
     private TextField txtPhone;
     @FXML
-    private ComboBox cBVoicher;
+    private TextField txtVoucher;
     @FXML
     private Button buttonUseVoucher;
 
@@ -114,6 +114,7 @@ public class FXMLBillController implements Initializable {
     private int sale;
 
     BillDAO billDAO = new BillDAO();
+    List<Promotion> promotions = new ArrayList<>();
 
     public FXMLBillController(VBox vbox) {
         this.vbox = vbox;
@@ -211,13 +212,22 @@ public class FXMLBillController implements Initializable {
 
     //Nut su dung Voucher
     @FXML
+    public Promotion seachVoucherButtonHandler() {
+        Promotion promo = null;
+        for (Promotion promotion : promotions) {
+            if (promotion.getPromoName().toLowerCase().equals(this.txtVoucher.getText().toLowerCase().trim())) {
+                promo = promotion;
+            }
+        }
+        return promo;
+    }
+
     public void useVoucherButtonHandler() {
-        if (this.cBVoicher.getSelectionModel().isEmpty()) {
-            AlertUtils.getAlert("Please choice Voucher!!", Alert.AlertType.WARNING).show();
+        if (seachVoucherButtonHandler()==null) {
+            AlertUtils.getAlert("Please type Voucher Text again", Alert.AlertType.WARNING).show();
         } else {
-            String choice = this.cBVoicher.getSelectionModel().getSelectedItem().toString();
-            sale = promoLogic(choice);
-            String info = "Are you sure use " + choice + "?";
+            sale = promoLogic(seachVoucherButtonHandler().getPromoName());
+            String info = "Are you sure use " + seachVoucherButtonHandler() + "?";
             Alert alert = AlertUtils.getAlert(info, Alert.AlertType.CONFIRMATION);
             Optional<ButtonType> results = alert.showAndWait();
             if (results.get().getText().equalsIgnoreCase("OK")) {
@@ -230,6 +240,7 @@ public class FXMLBillController implements Initializable {
                 this.btotal.setText(formatter.format(total) + " VND");
                 this.buttonUseVoucher.setDisable(true);
             }
+
         }
 
     }
@@ -270,9 +281,9 @@ public class FXMLBillController implements Initializable {
         } else {
             this.time.setText(schedule.getStartTime().format(DateTimeFormatter.ofPattern("dd/MM HH:mm")));
         }
-        this.ftotal.setText(formatter.format(sumTicket) + " VND");
+        this.ftotal.setText(formatter.format(sumTicket).replace(",", ".") + " VND");
         total = total.add(sumTicket);
-        this.btotal.setText(formatter.format(total) + " VND");
+        this.btotal.setText(formatter.format(total).replace(",", ".") + " VND");
     }
 
     public void loadProduct() {
@@ -309,14 +320,13 @@ public class FXMLBillController implements Initializable {
 
         });
 
-        ptotal.setText(formatter.format(total) + " VND");
+        ptotal.setText(formatter.format(total).replace(",", ".") + " VND");
     }
 
     //Ham de load data cho comboBox voicher
     public void loadDataComboBox() {
         PromotionDAO pd = new PromotionDAO();
-        List<Promotion> promotions = pd.getPromoByDateTime("endTime");
-        this.cBVoicher.setItems(FXCollections.observableList(promotions));
+        promotions = pd.getPromoByDateTime("endTime");
     }
 
     @FXML
@@ -327,10 +337,10 @@ public class FXMLBillController implements Initializable {
 
     @FXML
     private void btnAcceptHanlder() throws Exception {
-        if (!this.cBVoicher.getSelectionModel().isEmpty()) {
-            b1.setPromotion((Promotion) this.cBVoicher.getSelectionModel().getSelectedItem());
-        } else {
+        if (seachVoucherButtonHandler()==null) {
             b1.setPromotion(null);
+        } else {
+            b1.setPromotion(seachVoucherButtonHandler());
         }
         b1.setPrintDate(printDate);
         b1.setCustomer(cus);
@@ -342,12 +352,12 @@ public class FXMLBillController implements Initializable {
             CustomerDAO cd = new CustomerDAO();
             cus.setTotalPoints(cus.getTotalPoints() + (total.intValue() / 1000));
             cd.update(cus);
-        }     
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLPrintBill.fxml"));
         loader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> p) {
-                return new FXMLPrintBillController(cus, schedule, printDate, total,cusMoney+sale);
+                return new FXMLPrintBillController(cus, schedule, printDate, total, cusMoney + sale);
             }
         });
         try {

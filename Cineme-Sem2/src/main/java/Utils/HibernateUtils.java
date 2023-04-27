@@ -35,7 +35,7 @@ public class HibernateUtils {
 //Kết nối DB Local
 //      props.put(Environment.URL, "jdbc:sqlserver://127.0.0.1:1433;database=CinemaDB");
 //      props.put(Environment.USER, "sa");    
-//      props.put(Environment.PASS, "a11321998");
+//      props.put(Environment.PASS, "123");
         props.put(Environment.SHOW_SQL, "true");
         props.put(Environment.FORMAT_SQL, "false");
         // Cấu hình cache 
@@ -86,14 +86,4 @@ public class HibernateUtils {
     public static SessionFactory getFACTORY() {
         return FACTORY;
     }
-
-    public static void main(String[] args) throws Exception {
-        SeatMapDAO seatDAO = new SeatMapDAO();
-        seatDAO.addSeatMapList();
-        RoomSeatDetailDAO rsdDAO = new RoomSeatDetailDAO();
-        rsdDAO.addList();
-        EmployeeDAO emDao = new EmployeeDAO();
-        emDao.insert();
-    }
-
 }

@@ -1,0 +1,40 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 7 thg 4, 2023, 15:23:11
+    Author     : thuhuytran
+*/
+.alert {
+    -fx-background-color: white; /* Màu nền của hộp thoại */
+    -fx-border-color: black; /* Màu viền của hộp thoại */
+}
+
+.alert .dialog-pane {
+    -fx-background-color: white; /* Màu nền của bảng thông báo */
+    -fx-border-color: black; /* Màu viền của bảng thông báo */
+}
+
+.alert .dialog-pane .header-panel {
+    -fx-background-color: white; /* Màu nền của phần tiêu đề */
+}
+
+.alert .dialog-pane .header-panel .header-text {
+    -fx-text-fill: black; /* Màu chữ của tiêu đề */
+}
+
+.alert .dialog-pane .content {
+    -fx-text-fill: black; /* Màu chữ của nội dung */
+}
+
+.alert .dialog-pane .button-bar {
+    -fx-background-color: white; /* Màu nền của thanh nút */
+}
+
+.alert .dialog-pane .button-bar .button {
+    -fx-background-color: #4286f4; /* Màu nền của các nút */
+    -fx-text-fill: white; /* Màu chữ của các nút */
+}
+
+
