@@ -21,7 +21,7 @@
          <children>
             <BorderPane minWidth="-Infinity" prefHeight="748.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <left>
-                  <AnchorPane prefHeight="623.0" prefWidth="200.0" stylesheets="@../../../../styles/fxmladmin.css" BorderPane.alignment="CENTER">
+                  <AnchorPane fx:id="apButton" prefHeight="623.0" prefWidth="200.0" stylesheets="@../../../../styles/fxmladmin.css" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="btnInsert" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#submit" prefHeight="42.0" prefWidth="177.0" styleClass="dark" text="INSERT" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -69,8 +69,8 @@
                <top>
                   <AnchorPane minWidth="-Infinity" prefHeight="46.0" prefWidth="1367.0" BorderPane.alignment="CENTER">
                      <children>
-                        <FontAwesomeIcon fx:id="txtIcon" fill="WHITE" glyphName="USERS" layoutX="626.0" layoutY="41.0" size="2em" />
-                        <Label fx:id="txtEm" alignment="CENTER" contentDisplay="CENTER" layoutX="666.0" layoutY="15.0" text="EMPLOYEE MANAGER" textAlignment="CENTER" textFill="WHITE">
+                        <FontAwesomeIcon fx:id="txtIcon" fill="WHITE" glyphName="USERS" layoutX="621.0" layoutY="25.0" size="2em" />
+                        <Label fx:id="txtEm" alignment="CENTER" contentDisplay="CENTER" layoutX="661.0" layoutY="-1.0" text="EMPLOYEE MANAGER" textAlignment="CENTER" textFill="#030303">
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font>
@@ -81,7 +81,7 @@
                <center>
                   <AnchorPane minWidth="-Infinity" prefHeight="702.0" prefWidth="990.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="5.0" prefHeight="290.0" prefWidth="1116.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="412.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="apForm" layoutX="5.0" prefHeight="290.0" prefWidth="1116.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="412.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="ins-form" />
@@ -200,7 +200,7 @@
                               <PasswordField fx:id="tfRPass" layoutX="913.0" layoutY="13.0" prefHeight="26.0" prefWidth="201.0" styleClass="fill-text" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="6.0" layoutY="302.0" prefHeight="398.0" prefWidth="1116.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="302.0">
+                        <AnchorPane fx:id="apView" layoutX="6.0" layoutY="302.0" prefHeight="398.0" prefWidth="1116.0" stylesheets="@../../../../styles/fxmladmin.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="302.0">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="ins-form" />

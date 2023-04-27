@@ -46,6 +46,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -65,7 +67,14 @@ public class FXMLAdminController implements Initializable {
     WorkSessionDAO workdao = new WorkSessionDAO();
     EmployeeDAO dao = new EmployeeDAO();
     List<Employee> emList;
+    @FXML
+    private AnchorPane apButton;
 
+    @FXML
+    private AnchorPane apForm;
+
+    @FXML
+    private AnchorPane apView;
     @FXML
     private ComboBox<String> cbGender;
 
@@ -789,6 +798,9 @@ public class FXMLAdminController implements Initializable {
         checkGender();
         showEmployee();
         power();
+         dao.setShadowLB(Color.WHITE, Color.WHITE, Color.RED, Color.WHITE, txtEm, apButton);
+        dao.setShadowLB(Color.WHITE, Color.WHITE, Color.YELLOW, Color.WHITE, txtEm,apForm);
+        dao.setShadowLB(Color.WHITE, Color.WHITE, Color.GREEN, Color.WHITE, txtEm, apView);
     }
 
 }

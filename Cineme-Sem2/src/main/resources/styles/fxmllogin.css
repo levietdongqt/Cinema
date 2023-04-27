@@ -31,13 +31,6 @@
     -fx-background-color:#2c6eb5;
 }
 
-
-.btn-submit:hover{
-    -fx-background-color:#5aa0ea;
-
-}
-
-
 /*nút close*/
 .bnt-close{
     -fx-background-color:none;
